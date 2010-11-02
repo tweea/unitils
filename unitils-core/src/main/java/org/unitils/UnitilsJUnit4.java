@@ -16,12 +16,10 @@
 package org.unitils;
 
 import org.junit.runner.RunWith;
-import org.springframework.test.context.TestExecutionListeners;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 /**
  * Base test class that will Unitils-enable your test. This base class will make sure that the
- * core unitils test listener methods are invoked in the expected order. See {@link org.unitils.core.TestExecutionListenerAdapter} for
+ * core unitils test listener methods are invoked in the expected order. See {@link org.unitils.core.TestListener} for
  * more information on the listener invocation order.
  * <p/>
  * This actually is an empty test class that only instructs JUnit4 to use a custom test runner for the test.
@@ -30,8 +28,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  *
  * @author Tim Ducheyne
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@TestExecutionListeners(value = UnitilsTestExecutionListener.class, inheritListeners = false)
+@RunWith(UnitilsJUnit4TestClassRunner.class)
 public abstract class UnitilsJUnit4 {
+
 
 }

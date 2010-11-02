@@ -57,16 +57,10 @@ public class LenientNumberComparator implements Comparator {
      */
     public Difference compare(Object left, Object right, boolean onlyFirstDifference, ReflectionComparator reflectionComparator) {
         // check if right and left have same number value (including NaN and Infinity)
-        final String differenceMessage = "Different primitive values";
-        if( left instanceof Long && right instanceof Long){
-            if (!((Long)left).equals(((Long)right))) {
-                return new Difference(differenceMessage, left, right);
-            }
-        }
         Double leftDouble = getDoubleValue(left);
         Double rightDouble = getDoubleValue(right);
         if (!leftDouble.equals(rightDouble)) {
-            return new Difference(differenceMessage, left, right);
+            return new Difference("Different primitive values", left, right);
         }
         return null;
     }

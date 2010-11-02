@@ -18,9 +18,8 @@ package org.unitils.inject;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.test.context.TestContext;
 import org.unitils.core.Module;
-import org.unitils.core.TestExecutionListenerAdapter;
+import org.unitils.core.TestListener;
 import org.unitils.core.UnitilsException;
 import org.unitils.core.util.ObjectToInjectHolder;
 import org.unitils.inject.annotation.*;
@@ -28,19 +27,18 @@ import org.unitils.inject.util.InjectionUtils;
 import org.unitils.inject.util.PropertyAccess;
 import org.unitils.inject.util.Restore;
 import org.unitils.inject.util.ValueToRestore;
+import static org.unitils.util.AnnotationUtils.getFieldsAnnotatedWith;
+import static org.unitils.util.ModuleUtils.getAnnotationPropertyDefaults;
+import static org.unitils.util.ModuleUtils.getEnumValueReplaceDefault;
 import org.unitils.util.PropertyUtils;
+import static org.unitils.util.ReflectionUtils.*;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import static java.lang.reflect.Modifier.isAbstract;
 import java.lang.reflect.Type;
 import java.util.*;
-
-import static java.lang.reflect.Modifier.isAbstract;
-import static org.unitils.util.AnnotationUtils.getFieldsAnnotatedWith;
-import static org.unitils.util.ModuleUtils.getAnnotationPropertyDefaults;
-import static org.unitils.util.ModuleUtils.getEnumValueReplaceDefault;
-import static org.unitils.util.ReflectionUtils.*;
 
 /**
  * Module for injecting annotated objects into other objects. The intended usage is to inject mock objects, but it can
@@ -466,24 +464,28 @@ public class InjectModule implements Module {
 
 
     /**
-     * @return The {@link org.unitils.core.TestExecutionListenerAdapter} for this module
+     * @return The {@link TestListener} for this module
      */
-    public TestExecutionListenerAdapter getTestListener() {
+    public TestListener getTestListener() {
         return new InjectTestListener();
     }
 
 
     /**
-     * The {@link org.unitils.core.TestExecutionListenerAdapter} for this module
+     * The {@link TestListener} for this module
      */
-    protected class InjectTestListener extends TestExecutionListenerAdapter {
+    protected class InjectTestListener extends TestListener {
 
         /**
          * Before executing a test method (i.e. after the fixture methods), the injection is performed, since
          * objects to inject or targets are possibly instantiated during the fixture.
+         *
+         * @param testObject The test object, not null
+         * @param testMethod The test method, not null
          */
         @Override
-        public void prepareTestInstance(Object testObject, TestContext testContext) throws Exception {
+        public void beforeTestMethod(Object testObject, Method testMethod) {
+
             if (createTestedObjectsIfNullEnabled) {
                 createTestedObjectsIfNull(testObject);
             }
@@ -492,9 +494,13 @@ public class InjectModule implements Module {
 
         /**
          * After test execution, if requested restore all values that were replaced in the static injection.
+         *
+         * @param testObject The test object, not null
+         * @param testMethod The test method, not null
+         * @param throwable  The throwable thrown during the test, null if none was thrown
          */
         @Override
-        public void afterTestMethod(Object testObject, Method testMethod, Throwable testThrowable, TestContext testContext) throws Exception {
+        public void afterTestMethod(Object testObject, Method testMethod, Throwable throwable) {
             restoreStaticInjectedObjects();
         }
     }

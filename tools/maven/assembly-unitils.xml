@@ -225,28 +225,6 @@
             </binaries>
         </moduleSet>
 
-        <!-- unitils-tapestry -->
-        <moduleSet>
-            <includes>
-                <include>org.unitils:unitils-tapestry</include>
-            </includes>
-            <sources>
-                <fileSets>
-                    <fileSet>
-                        <includes>
-                            <include>pom.xml</include>
-                            <include>src/main/**</include>
-                        </includes>
-                    </fileSet>
-                </fileSets>
-            </sources>
-            <binaries>
-                <includeDependencies>false</includeDependencies>
-                <outputDirectory>unitils-tapestry</outputDirectory>
-                <unpack>false</unpack>
-            </binaries>
-        </moduleSet>
-
     </moduleSets>
 
     <fileSets>

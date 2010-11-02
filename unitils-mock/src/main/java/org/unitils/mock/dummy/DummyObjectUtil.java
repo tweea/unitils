@@ -15,18 +15,17 @@
  */
 package org.unitils.mock.dummy;
 
-import static org.unitils.mock.core.proxy.ProxyFactory.createProxy;
-
 import org.unitils.mock.core.proxy.ProxyInvocation;
 import org.unitils.mock.core.proxy.ProxyInvocationHandler;
+import static org.unitils.mock.core.proxy.ProxyFactory.createProxy;
 import org.unitils.mock.mockbehavior.MockBehavior;
 import org.unitils.mock.mockbehavior.impl.DefaultValueReturningMockBehavior;
-import org.unitils.mock.mockbehavior.impl.DummyValueReturningMockBehavior;
 
 /**
- * Class for handling the dummy object behavior. A dummy object is a proxy that will return default values for every method. This can be
- * used to quickly create test objects without having to worry about correctly filling in every field.
- * 
+ * Class for handling the dummy object behavior. A dummy object is a proxy that will return
+ * default values for every method. This can be used to quickly create test objects without
+ * having to worry about correctly filling in every field.
+ *
  * @author Filip Neven
  * @author Tim Ducheyne
  */
@@ -34,20 +33,13 @@ public class DummyObjectUtil {
 
     /**
      * Creates the dummy proxy object.
-     * 
+     *
      * @param type The type for the proxy, not null
      * @return The proxy, not null
      */
+    @SuppressWarnings("unchecked")
     public static <T> T createDummy(Class<T> type) {
-        return createDummy(type, new DefaultValueReturningMockBehavior());
-    }
-
-    public static <T> T createStuffedDummy(Class<T> type) {
-        return createDummy(type, new DummyValueReturningMockBehavior());
-    }
-
-    public static <T> T createDummy(Class<T> type, MockBehavior mockBehaviour) {
-        return createProxy(type.getSimpleName(), new DummyObjectInvocationHandler(type, mockBehaviour), type, DummyObject.class, Cloneable.class);
+        return createProxy(type.getSimpleName(), new DummyObjectInvocationHandler(type), type, DummyObject.class, Cloneable.class);
     }
 
 
@@ -63,17 +55,16 @@ public class DummyObjectUtil {
         private Integer dummyObjectHashCode = new Object().hashCode();
 
         /* The behavior that will return the default values */
-        private MockBehavior dummyObjectBehavior;
+        private MockBehavior dummyObjectBehavior = new DefaultValueReturningMockBehavior();
 
 
-        public DummyObjectInvocationHandler(Class<?> dummyObjectType, MockBehavior mockBehavior) {
+        public DummyObjectInvocationHandler(Class<?> dummyObjectType) {
             this.dummyObjectType = dummyObjectType;
-            this.dummyObjectBehavior = mockBehavior;
         }
 
         /**
          * Handles the given method invocation of the dummy object.
-         * 
+         *
          * @param invocation The method invocation, not null
          * @return The result value for the method invocation
          */
@@ -82,5 +73,4 @@ public class DummyObjectUtil {
         }
 
     }
-
 }

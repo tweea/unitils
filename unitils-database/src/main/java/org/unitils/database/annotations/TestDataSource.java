@@ -15,12 +15,11 @@
  */
 package org.unitils.database.annotations;
 
-import java.lang.annotation.Retention;
-import java.lang.annotation.Target;
-
 import static java.lang.annotation.ElementType.FIELD;
 import static java.lang.annotation.ElementType.METHOD;
+import java.lang.annotation.Retention;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
+import java.lang.annotation.Target;
 
 /**
  * Annotation indicating that this field or method should be initialized with the <code>DataSource</code> that supplies
@@ -43,10 +42,4 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Target({METHOD, FIELD})
 @Retention(RUNTIME)
 public @interface TestDataSource {
-
-    /**
-     * @return The database name, empty string for the default database
-     */
-    String value() default "";
-
 }

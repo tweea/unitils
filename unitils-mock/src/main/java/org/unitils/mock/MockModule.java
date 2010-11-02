@@ -17,9 +17,8 @@ package org.unitils.mock;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.test.context.TestContext;
 import org.unitils.core.Module;
-import org.unitils.core.TestExecutionListenerAdapter;
+import org.unitils.core.TestListener;
 import org.unitils.core.UnitilsException;
 import org.unitils.mock.annotation.AfterCreateMock;
 import org.unitils.mock.annotation.Dummy;
@@ -28,7 +27,9 @@ import org.unitils.mock.core.PartialMockObject;
 import org.unitils.mock.core.Scenario;
 import org.unitils.mock.dummy.DummyObjectUtil;
 import org.unitils.util.AnnotationUtils;
+import static org.unitils.util.AnnotationUtils.getMethodsAnnotatedWith;
 import org.unitils.util.PropertyUtils;
+import static org.unitils.util.ReflectionUtils.*;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -36,9 +37,6 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Type;
 import java.util.Properties;
 import java.util.Set;
-
-import static org.unitils.util.AnnotationUtils.getMethodsAnnotatedWith;
-import static org.unitils.util.ReflectionUtils.*;
 
 /**
  * Module for testing with mock objects.
@@ -93,31 +91,26 @@ public class MockModule implements Module {
 
 
     public void logFullScenarioReport() {
-        Scenario scenario = getScenario();
-        if (scenario != null) {
-            logger.info("\n\n" + scenario.createFullReport());
-        }
+        String report = "\n\n" + getScenario().createFullReport();
+        logger.info(report);
     }
+
 
     public void logObservedScenario() {
-        Scenario scenario = getScenario();
-        if (scenario != null) {
-            logger.info("\n\nObserved scenario:\n\n" + scenario.createObservedInvocationsReport());
-        }
+        String report = "\n\nObserved scenario:\n\n" + getScenario().createObservedInvocationsReport();
+        logger.info(report);
     }
+
 
     public void logDetailedObservedScenario() {
-        Scenario scenario = getScenario();
-        if (scenario != null) {
-            logger.info("\n\nDetailed observed scenario:\n\n" + scenario.createDetailedObservedInvocationsReport());
-        }
+        String report = "\n\nDetailed observed scenario:\n\n" + getScenario().createDetailedObservedInvocationsReport();
+        logger.info(report);
     }
 
+
     public void logSuggestedAsserts() {
-        Scenario scenario = getScenario();
-        if (scenario != null) {
-            logger.info("\n\nSuggested assert statements:\n\n" + scenario.createSuggestedAssertsReport());
-        }
+        String report = "\n\nSuggested assert statements:\n\n" + getScenario().createSuggestedAssertsReport();
+        logger.info(report);
     }
 
 
@@ -175,22 +168,10 @@ public class MockModule implements Module {
     }
 
 
-    /**
-     * checks for the {@link Dummy} annotation on the testObject. If so it is created by the DummyObjectUtil. The two aproaches possible are
-     * stuffed or normal depending on the value in the {@link Dummy} annotation.
-     * 
-     * @param testObject
-     */
     protected void createAndInjectDummiesIntoTest(Object testObject) {
         Set<Field> dummyFields = AnnotationUtils.getFieldsAnnotatedWith(testObject.getClass(), Dummy.class);
         for (Field dummyField : dummyFields) {
-            Dummy dummyAnnotation = dummyField.getAnnotation(Dummy.class);
-            Object dummy = null;
-            if (dummyAnnotation.stuffed()) {
-                dummy = DummyObjectUtil.createStuffedDummy(dummyField.getType());
-            } else {
-                dummy = DummyObjectUtil.createDummy(dummyField.getType());
-            }
+            Object dummy = DummyObjectUtil.createDummy(dummyField.getType());
             setFieldValue(testObject, dummyField, dummy);
         }
     }
@@ -227,7 +208,7 @@ public class MockModule implements Module {
      *
      * @return the listener
      */
-    public TestExecutionListenerAdapter getTestListener() {
+    public TestListener getTestListener() {
         return new MockTestListener();
     }
 
@@ -236,17 +217,17 @@ public class MockModule implements Module {
      * Test listener that handles the scenario and mock creation, and makes sure a final syntax check
      * is performed after each test and that scenario reports are logged if required.
      */
-    protected class MockTestListener extends TestExecutionListenerAdapter {
+    protected class MockTestListener extends TestListener {
 
         @Override
-        public void prepareTestInstance(Object testObject, TestContext testContext) throws Exception {
+        public void beforeTestSetUp(Object testObject, Method testMethod) {
             createAndInjectPartialMocksIntoTest(testObject);
             createAndInjectMocksIntoTest(testObject);
             createAndInjectDummiesIntoTest(testObject);
         }
 
         @Override
-        public void afterTestMethod(Object testObject, Method testMethod, Throwable testThrowable, TestContext testContext) throws Exception {
+        public void afterTestTearDown(Object testObject, Method testMethod) {
             if (logFullScenarioReport) {
                 logFullScenarioReport();
                 return;
@@ -261,5 +242,9 @@ public class MockModule implements Module {
                 logSuggestedAsserts();
             }
         }
+
+
     }
+
+
 }
