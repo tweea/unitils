@@ -1,5 +1,5 @@
 /*
- * Copyright Unitils.org
+ * Copyright 2008,  Unitils.org
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,12 +24,11 @@ import org.apache.commons.logging.LogFactory;
 import org.objenesis.Objenesis;
 import org.objenesis.ObjenesisStd;
 import org.unitils.core.UnitilsException;
-
-import java.util.HashSet;
-import java.util.Set;
+import static org.unitils.util.ReflectionUtils.createInstanceOfType;
 
 import static java.util.Arrays.asList;
-import static org.unitils.util.ReflectionUtils.createInstanceOfType;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Utility class to create and work with proxy objects.
@@ -90,7 +89,7 @@ public class ProxyFactory {
 
         Factory proxy;
         if (initialize && !proxiedClass.isInterface()) {
-            proxy = (Factory) createInitializedOrUninitializedInstanceOfType(enhancedClass);
+            proxy = (Factory) createInitializedOrUnitializedInstanceOfType(enhancedClass);
         } else {
             proxy = (Factory) createUninitializedInstanceOfType(enhancedClass);
         }
@@ -108,7 +107,7 @@ public class ProxyFactory {
      * @return An instance of the given class
      */
     @SuppressWarnings("unchecked")
-    public static <T> T createInitializedOrUninitializedInstanceOfType(Class<T> clazz) {
+    public static <T> T createInitializedOrUnitializedInstanceOfType(Class<T> clazz) {
         try {
             return createInstanceOfType(clazz, true);
         } catch (UnitilsException e) {

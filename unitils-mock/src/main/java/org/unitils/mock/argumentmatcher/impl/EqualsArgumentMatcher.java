@@ -1,5 +1,5 @@
 /*
- * Copyright Unitils.org
+ * Copyright 2008,  Unitils.org
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,8 +16,6 @@
 package org.unitils.mock.argumentmatcher.impl;
 
 import org.unitils.mock.argumentmatcher.ArgumentMatcher;
-
-import static org.unitils.mock.argumentmatcher.ArgumentMatcher.MatchResult.*;
 
 /**
  * A matcher for checking whether an argument equals a given value.
@@ -51,18 +49,12 @@ public class EqualsArgumentMatcher implements ArgumentMatcher {
      *
      * @param argument                 The argument that were used by reference, not null
      * @param argumentAtInvocationTime Copy of the argument, taken at the time that the invocation was performed, not null
-     * @return The match result, not null
+     * @return True when passed object matches, false otherwise.
      */
-    public MatchResult matches(Object argument, Object argumentAtInvocationTime) {
-        if (value == null) {
-            if (argument == null) {
-                return SAME;
-            }
-            return NO_MATCH;
+    public boolean matches(Object argument, Object argumentAtInvocationTime) {
+        if (this.value == null) {
+            return argument == null;
         }
-        if (value.equals(argument)) {
-            return MATCH;
-        }
-        return NO_MATCH;
+        return this.value.equals(argument);
     }
 }

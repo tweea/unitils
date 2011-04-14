@@ -1,5 +1,5 @@
 /*
- * Copyright Unitils.org
+ * Copyright 2008,  Unitils.org
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,23 +24,6 @@ package org.unitils.mock.argumentmatcher;
  */
 public interface ArgumentMatcher {
 
-    public static enum MatchResult {
-
-        NO_MATCH(0),
-        MATCH(1),
-        SAME(2);
-
-        private int score;
-
-        MatchResult(int score) {
-            this.score = score;
-        }
-
-        public int getScore() {
-            return score;
-        }
-    }
-
     /**
      * Returns true if the given object matches this object's expected argument, false otherwise.
      *
@@ -50,8 +33,8 @@ public interface ArgumentMatcher {
      *
      * @param argument                 The argument that was used by reference, not null
      * @param argumentAtInvocationTime Copy of the argument, taken at the time that the invocation was performed, not null
-     * @return The match result, not null
+     * @return True when passed object matches, false otherwise.
      */
-    MatchResult matches(Object argument, Object argumentAtInvocationTime);
+    boolean matches(Object argument, Object argumentAtInvocationTime);
 
 }

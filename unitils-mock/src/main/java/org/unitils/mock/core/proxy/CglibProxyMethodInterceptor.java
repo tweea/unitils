@@ -1,5 +1,5 @@
 /*
- * Copyright Unitils.org
+ * Copyright 2006-2009,  Unitils.org
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,14 +18,13 @@ package org.unitils.mock.core.proxy;
 import net.sf.cglib.proxy.MethodInterceptor;
 import net.sf.cglib.proxy.MethodProxy;
 import org.unitils.core.UnitilsException;
-
-import java.lang.reflect.Method;
-import java.util.List;
-
-import static java.lang.reflect.Modifier.isAbstract;
-import static java.util.Arrays.asList;
 import static org.unitils.mock.core.proxy.ProxyUtils.getProxiedMethodStackTrace;
 import static org.unitils.util.MethodUtils.*;
+
+import java.lang.reflect.Method;
+import static java.lang.reflect.Modifier.isAbstract;
+import static java.util.Arrays.asList;
+import java.util.List;
 
 /**
  * A cglib method intercepter that will delegate the invocations to the given invocation hanlder.
@@ -126,8 +125,7 @@ public class CglibProxyMethodInterceptor<T> implements MethodInterceptor {
          */
         @Override
         public Object invokeOriginalBehavior() throws Throwable {
-            Method method = getMethod();
-            if (isAbstract(method.getModifiers())) {
+            if (isAbstract(getMethod().getModifiers())) {
                 throw new UnitilsException("Unable to invoke original behavior. The method is abstract, it does not have any behavior defined: " + getMethod());
             }
             return methodProxy.invokeSuper(getProxy(), getArguments().toArray());

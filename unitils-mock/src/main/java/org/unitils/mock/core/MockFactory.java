@@ -1,5 +1,5 @@
 /*
- * Copyright Unitils.org
+ * Copyright 2006-2009,  Unitils.org
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,12 +18,11 @@ package org.unitils.mock.core;
 import org.unitils.mock.Mock;
 
 /**
- * @author Tim Ducheyne
- * @author Filip Neven
+ * todo javadoc
  */
 public interface MockFactory {
 
 
-    <T> Mock<T> createChainedMock(String name, Class<T> mockedType);
+    <T> Mock<T> createMock(String name, Class<T> mockedType);
 
 }

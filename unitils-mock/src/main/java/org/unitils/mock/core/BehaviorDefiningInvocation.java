@@ -1,5 +1,5 @@
 /*
- * Copyright Unitils.org
+ * Copyright 2008,  Unitils.org
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,9 +21,9 @@ import org.unitils.mock.mockbehavior.MockBehavior;
 
 import java.util.List;
 
-import static org.unitils.mock.argumentmatcher.ArgumentMatcher.MatchResult.NO_MATCH;
-
 /**
+ * todo javadoc
+ *
  * @author Filip Neven
  * @author Tim Ducheyne
  * @author Kenny Claes
@@ -32,9 +32,13 @@ public class BehaviorDefiningInvocation extends ProxyInvocation {
 
 
     /* The argument matchers to use when matching the invocation */
-    protected List<ArgumentMatcher> argumentMatchers;
+    private List<ArgumentMatcher> argumentMatchers;
+
     /* The behavior to execute */
-    protected MockBehavior mockBehavior;
+    private MockBehavior mockBehavior;
+
+    /* True if this invocation was already matched and used before and should no longer be used */
+    private boolean used;
 
 
     /**
@@ -52,6 +56,15 @@ public class BehaviorDefiningInvocation extends ProxyInvocation {
         super(proxyInvocation);
         this.argumentMatchers = argumentMatchers;
         this.mockBehavior = mockBehavior;
+        this.used = false;
+    }
+
+
+    /**
+     * @return The argument matchers to use when matching the invocation, not null
+     */
+    public List<ArgumentMatcher> getArgumentMatchers() {
+        return argumentMatchers;
     }
 
 
@@ -62,11 +75,22 @@ public class BehaviorDefiningInvocation extends ProxyInvocation {
         return mockBehavior;
     }
 
-    /**
-     * @param mockBehavior The behavior to execute, not null
-     */
+
     public void setMockBehavior(MockBehavior mockBehavior) {
         this.mockBehavior = mockBehavior;
+    }
+
+
+    /**
+     * @return True if this invocation was already matched and used before and should no longer be used
+     */
+    public boolean isUsed() {
+        return used;
+    }
+
+
+    public void markAsUsed() {
+        this.used = true;
     }
 
 
@@ -74,31 +98,27 @@ public class BehaviorDefiningInvocation extends ProxyInvocation {
      * Returns whether or not the given {@link ProxyInvocation} matches this object's predefined <code>Method</code> and arguments.
      *
      * @param proxyInvocation the {@link ProxyInvocation} to match.
-     * @return A matching score for the invocation, -1 if there is no match
+     * @return true when given {@link ProxyInvocation} matches, false otherwise.
      */
-    public int matches(ProxyInvocation proxyInvocation) {
+    public boolean matches(ProxyInvocation proxyInvocation) {
         if (!getMethod().equals(proxyInvocation.getMethod())) {
-            return -1;
+            return false;
         }
         List<?> arguments = proxyInvocation.getArguments();
         List<?> argumentsAtInvocationTime = proxyInvocation.getArgumentsAtInvocationTime();
 
         if (arguments.size() != argumentMatchers.size()) {
-            return -1;
+            return false;
         }
 
-        int matchingScore = 0;
         for (int i = 0; i < arguments.size(); ++i) {
             Object argument = arguments.get(i);
             Object argumentAtInvocationTime = argumentsAtInvocationTime.get(i);
-
-            ArgumentMatcher.MatchResult matchResult = argumentMatchers.get(i).matches(argument, argumentAtInvocationTime);
-            if (matchResult == NO_MATCH) {
-                return -1;
+            if (!argumentMatchers.get(i).matches(argument, argumentAtInvocationTime)) {
+                return false;
             }
-            matchingScore += matchResult.getScore();
         }
-        return matchingScore;
+        return true;
     }
-
+    
 }

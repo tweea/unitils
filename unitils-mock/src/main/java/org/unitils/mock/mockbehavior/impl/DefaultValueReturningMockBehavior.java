@@ -1,5 +1,5 @@
 /*
- * Copyright Unitils.org
+ * Copyright 2008,  Unitils.org
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,23 +16,19 @@
 package org.unitils.mock.mockbehavior.impl;
 
 import org.unitils.core.UnitilsException;
-import org.unitils.mock.core.proxy.ProxyInvocation;
 import org.unitils.mock.mockbehavior.ValidatableMockBehavior;
+import org.unitils.mock.core.proxy.ProxyInvocation;
 
 import java.lang.reflect.Array;
-import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.util.*;
 
 /**
  * Mock behavior that returns a default value.
  * <p/>
- * Following defaults are used:
- * <ul>
+ * Following defaults are used:<ul>
  * <li>Number values: 0</li>
  * <li>Object values: null</li>
- * <li>Collections, arrays etc: empty values</li>
- * </ul>
+ * <li>Collectionn, arrays etc: empty values</li></ul>
  * <p/>
  *
  * @author Filip Neven
@@ -43,7 +39,8 @@ public class DefaultValueReturningMockBehavior implements ValidatableMockBehavio
 
 
     /**
-     * Checks whether the mock behavior can be executed for the given invocation. An exception is raised if the method is a void method.
+     * Checks whether the mock behavior can be executed for the given invocation.
+     * An exception is raised if the method is a void method.
      *
      * @param proxyInvocation The proxy method invocation, not null
      */
@@ -54,6 +51,7 @@ public class DefaultValueReturningMockBehavior implements ValidatableMockBehavio
         }
     }
 
+
     /**
      * Executes the mock behavior.
      *
@@ -63,14 +61,8 @@ public class DefaultValueReturningMockBehavior implements ValidatableMockBehavio
     @SuppressWarnings("unchecked")
     public Object execute(ProxyInvocation proxyInvocation) {
         Class<?> returnType = proxyInvocation.getMethod().getReturnType();
-        if (returnType == Void.TYPE) {
-            return null;
-        }
-        if (Boolean.class.equals(returnType) || Boolean.TYPE.equals(returnType)) {
-            return false;
-        }
-        if (returnType.isPrimitive() || Number.class.isAssignableFrom(returnType)) {
-            return resolveNumber(returnType);
+        if (Number.class.isAssignableFrom(returnType)) {
+            return 0;
         }
         if (List.class.equals(returnType)) {
             return new ArrayList();
@@ -81,48 +73,10 @@ public class DefaultValueReturningMockBehavior implements ValidatableMockBehavio
         if (Map.class.equals(returnType)) {
             return new HashMap();
         }
-        if (Collection.class.equals(returnType)) {
-            return new ArrayList();
-        }
         if (returnType.isArray()) {
-            return Array.newInstance(returnType.getComponentType(), 0);
+            Array.newInstance(returnType.getComponentType(), 0);
         }
         return null;
-    }
-
-
-    /**
-     * Checking for the default java implementations of Number, this avoids class cast exceptions when using them
-     *
-     * @param numberType The number type, not null
-     * @return The default value for that number type, e.g. 0F for floats
-     */
-    protected Number resolveNumber(Class<?> numberType) {
-        if (Integer.class.equals(numberType) || Integer.TYPE.equals(numberType)) {
-            return 0;
-        }
-        if (Short.class.equals(numberType) || Short.TYPE.equals(numberType)) {
-            return (short) 0;
-        }
-        if (BigInteger.class.isAssignableFrom(numberType)) {
-            return BigInteger.ZERO;
-        }
-        if (Long.class.equals(numberType) || Long.TYPE.equals(numberType)) {
-            return 0l;
-        }
-        if (BigDecimal.class.isAssignableFrom(numberType)) {
-            return BigDecimal.ZERO;
-        }
-        if (Double.class.equals(numberType) || Double.TYPE.equals(numberType)) {
-            return 0d;
-        }
-        if (Byte.class.equals(numberType) || Byte.TYPE.equals(numberType)) {
-            return (byte) 0;
-        }
-        if (Float.class.equals(numberType) || Float.TYPE.equals(numberType)) {
-            return 0f;
-        }
-        return 0;
     }
 
 }

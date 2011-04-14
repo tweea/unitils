@@ -1,5 +1,5 @@
 /*
- * Copyright Unitils.org
+ * Copyright 2006-2009,  Unitils.org
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,13 +17,12 @@ package org.unitils.mock.core;
 
 import org.unitils.core.UnitilsException;
 import org.unitils.mock.core.matching.MatchingInvocationBuilder;
+import static org.unitils.mock.core.proxy.ProxyFactory.createProxy;
 import org.unitils.mock.core.proxy.ProxyInvocation;
 import org.unitils.mock.core.proxy.ProxyInvocationHandler;
 import org.unitils.mock.mockbehavior.MockBehavior;
 import org.unitils.mock.mockbehavior.ValidatableMockBehavior;
 import org.unitils.mock.mockbehavior.impl.DefaultValueReturningMockBehavior;
-
-import static org.unitils.mock.core.proxy.ProxyFactory.createProxy;
 
 public class MockProxy<T> {
 
@@ -61,9 +60,6 @@ public class MockProxy<T> {
         BehaviorDefiningInvocation behaviorDefiningInvocation = getMatchingBehaviorDefiningInvocation(proxyInvocation);
         MockBehavior mockBehavior = getValidMockBehavior(proxyInvocation, behaviorDefiningInvocation);
 
-        ObservedInvocation observedInvocation = new ObservedInvocation(proxyInvocation, behaviorDefiningInvocation, mockBehavior);
-        scenario.addObservedMockInvocation(observedInvocation);
-
         Throwable throwable = null;
         Object result = null;
         if (mockBehavior != null) {
@@ -73,8 +69,8 @@ public class MockProxy<T> {
                 throwable = t;
             }
         }
-        observedInvocation.setResult(result);
 
+        scenario.addObservedMockInvocation(new ObservedInvocation(result, proxyInvocation, behaviorDefiningInvocation, mockBehavior));
         if (throwable != null) {
             throw throwable;
         }

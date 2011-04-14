@@ -1,5 +1,5 @@
 /*
- * Copyright Unitils.org
+ * Copyright 2008,  Unitils.org
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,7 +18,6 @@ package org.unitils.inject;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.unitils.core.CurrentTestInstance;
 import org.unitils.core.Module;
 import org.unitils.core.TestListener;
 import org.unitils.core.UnitilsException;
@@ -28,18 +27,18 @@ import org.unitils.inject.util.InjectionUtils;
 import org.unitils.inject.util.PropertyAccess;
 import org.unitils.inject.util.Restore;
 import org.unitils.inject.util.ValueToRestore;
-import org.unitils.util.PropertyUtils;
-
-import java.lang.annotation.Annotation;
-import java.lang.reflect.Field;
-import java.lang.reflect.Type;
-import java.util.*;
-
-import static java.lang.reflect.Modifier.isAbstract;
 import static org.unitils.util.AnnotationUtils.getFieldsAnnotatedWith;
 import static org.unitils.util.ModuleUtils.getAnnotationPropertyDefaults;
 import static org.unitils.util.ModuleUtils.getEnumValueReplaceDefault;
+import org.unitils.util.PropertyUtils;
 import static org.unitils.util.ReflectionUtils.*;
+
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import static java.lang.reflect.Modifier.isAbstract;
+import java.lang.reflect.Type;
+import java.util.*;
 
 /**
  * Module for injecting annotated objects into other objects. The intended usage is to inject mock objects, but it can
@@ -67,6 +66,7 @@ public class InjectModule implements Module {
 
     /* Map holding the default configuration of the inject annotations */
     private Map<Class<? extends Annotation>, Map<String, String>> defaultAnnotationPropertyValues;
+
     /* List holding all values to restore after test was performed */
     private List<ValueToRestore> valuesToRestoreAfterTest = new ArrayList<ValueToRestore>();
 
@@ -79,10 +79,12 @@ public class InjectModule implements Module {
      *
      * @param configuration The configuration, not null
      */
+    @SuppressWarnings("unchecked")
     public void init(Properties configuration) {
         defaultAnnotationPropertyValues = getAnnotationPropertyDefaults(InjectModule.class, configuration, InjectInto.class, InjectIntoStatic.class, InjectIntoByType.class, InjectIntoStaticByType.class);
         createTestedObjectsIfNullEnabled = PropertyUtils.getBoolean(PROPKEY_CREATE_TESTEDOBJECTS_IF_NULL_ENABLED, configuration);
     }
+
 
     /**
      * No after initialization needed for this module
@@ -146,6 +148,7 @@ public class InjectModule implements Module {
         injectAllStaticByType(test);
     }
 
+
     /**
      * Injects all fields that are annotated with {@link InjectInto}.
      *
@@ -157,6 +160,7 @@ public class InjectModule implements Module {
             inject(test, field);
         }
     }
+
 
     /**
      * Auto-injects all fields that are annotated with {@link InjectIntoByType}
@@ -170,6 +174,7 @@ public class InjectModule implements Module {
         }
     }
 
+
     /**
      * Injects all fields that are annotated with {@link InjectIntoStatic}.
      *
@@ -181,6 +186,7 @@ public class InjectModule implements Module {
             injectStatic(test, field);
         }
     }
+
 
     /**
      * Auto-injects all fields that are annotated with {@link InjectIntoStaticByType}
@@ -225,6 +231,7 @@ public class InjectModule implements Module {
         if (targets.size() == 0) {
             throw new UnitilsException(getSituatedErrorMessage(InjectInto.class, fieldToInject, "The target should either be specified explicitly using the target property, or by using the @" + TestedObject.class.getSimpleName() + " annotation"));
         }
+
         for (Object target : targets) {
             try {
                 InjectionUtils.injectInto(objectToInject, target, ognlExpression);
@@ -282,6 +289,7 @@ public class InjectModule implements Module {
         if (targets.size() == 0) {
             throw new UnitilsException(getSituatedErrorMessage(InjectIntoByType.class, fieldToInject, "The target should either be specified explicitly using the target property, or by using the @" + TestedObject.class.getSimpleName() + " annotation"));
         }
+
         for (Object target : targets) {
             try {
                 InjectionUtils.injectIntoByType(objectToInject, objectToInjectType, target, propertyAccess);
@@ -361,6 +369,7 @@ public class InjectModule implements Module {
      * @param valueToRestore the value, not null
      */
     protected void restore(ValueToRestore valueToRestore) {
+
         Object value = valueToRestore.getValue();
         Class<?> targetClass = valueToRestore.getTargetClass();
 
@@ -374,6 +383,7 @@ public class InjectModule implements Module {
             InjectionUtils.injectIntoStaticByType(value, valueToRestore.getFieldType(), targetClass, valueToRestore.getPropertyAccessType());
         }
     }
+
 
     /**
      * Stores the old value that was replaced during the injection so that it can be restored after the test was
@@ -418,32 +428,24 @@ public class InjectModule implements Module {
      * @return The target(s) for the injection
      */
     protected List<Object> getTargets(Class<? extends Annotation> annotationClass, Field annotatedField, String targetName, Object test) {
+
         List<Object> targets;
         if ("".equals(targetName)) {
             // Default targetName, so it is probably not specfied. Return all objects that are annotated with the TestedObject annotation.
             Set<Field> testedObjectFields = getFieldsAnnotatedWith(test.getClass(), TestedObject.class);
             targets = new ArrayList<Object>(testedObjectFields.size());
             for (Field testedObjectField : testedObjectFields) {
-                Object target = getTarget(test, testedObjectField);
-                targets.add(target);
+                targets.add(getFieldValue(test, testedObjectField));
             }
         } else {
             Field field = getFieldWithName(test.getClass(), targetName, false);
             if (field == null) {
                 throw new UnitilsException(getSituatedErrorMessage(annotationClass, annotatedField, "Target with name " + targetName + " does not exist"));
             }
-            Object target = getTarget(test, field);
+            Object target = getFieldValue(test, field);
             targets = Collections.singletonList(target);
         }
         return targets;
-    }
-
-    protected Object getTarget(Object test, Field field) {
-        Object target = getFieldValue(test, field);
-        if (target instanceof ObjectToInjectHolder<?>) {
-            target = ((ObjectToInjectHolder<?>) target).getObjectToInject();
-        }
-        return target;
     }
 
 
@@ -462,7 +464,7 @@ public class InjectModule implements Module {
 
 
     /**
-     * @return The {@link org.unitils.core.TestListener} for this module
+     * @return The {@link TestListener} for this module
      */
     public TestListener getTestListener() {
         return new InjectTestListener();
@@ -470,17 +472,19 @@ public class InjectModule implements Module {
 
 
     /**
-     * The {@link org.unitils.core.TestListener} for this module
+     * The {@link TestListener} for this module
      */
     protected class InjectTestListener extends TestListener {
 
         /**
          * Before executing a test method (i.e. after the fixture methods), the injection is performed, since
          * objects to inject or targets are possibly instantiated during the fixture.
+         *
+         * @param testObject The test object, not null
+         * @param testMethod The test method, not null
          */
         @Override
-        public void beforeTest(CurrentTestInstance currentTestInstance) throws Exception {
-            Object testObject = currentTestInstance.getTestObject();
+        public void beforeTestMethod(Object testObject, Method testMethod) {
 
             if (createTestedObjectsIfNullEnabled) {
                 createTestedObjectsIfNull(testObject);
@@ -490,9 +494,13 @@ public class InjectModule implements Module {
 
         /**
          * After test execution, if requested restore all values that were replaced in the static injection.
+         *
+         * @param testObject The test object, not null
+         * @param testMethod The test method, not null
+         * @param throwable  The throwable thrown during the test, null if none was thrown
          */
         @Override
-        public void afterTest(CurrentTestInstance currentTestInstance) throws Exception {
+        public void afterTestMethod(Object testObject, Method testMethod, Throwable throwable) {
             restoreStaticInjectedObjects();
         }
     }

@@ -1,5 +1,5 @@
 /*
- * Copyright Unitils.org
+ * Copyright 2006-2007,  Unitils.org
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,17 +15,13 @@
  */
 package org.unitils.mock.dummy;
 
-import junit.framework.Assert;
+import static junit.framework.Assert.*;
 import org.junit.Test;
 import org.unitils.mock.core.proxy.CloneUtil;
 
-import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.List;
-
-import static junit.framework.Assert.*;
 
 /**
  * @author Filip Neven
@@ -34,19 +30,19 @@ import static junit.framework.Assert.*;
 public class DummyObjectUtilTest {
 
     @Test
-    public void createDummyConcreteClass() {
+    public void createDummy_ConcreteClass() {
         ArrayList<?> list = DummyObjectUtil.createDummy(ArrayList.class);
         assertNotNull(list);
     }
 
     @Test
-    public void createDummyAbstractClass() {
+    public void createDummy_AbstractClass() {
         AbstractList<?> list = DummyObjectUtil.createDummy(AbstractList.class);
         assertNotNull(list);
     }
 
     @Test
-    public void createDummyInterface() {
+    public void createDummy_Interface() {
         List<?> list = DummyObjectUtil.createDummy(List.class);
         assertNotNull(list);
     }
@@ -64,26 +60,6 @@ public class DummyObjectUtilTest {
     }
 
     @Test
-    public void dummySameValueReturn() {
-        TestClass testClass = DummyObjectUtil.createDummy(TestClass.class);
-        TestClass result1 = testClass.getTestClass();
-        TestClass result2 = testClass.getTestClass();
-
-        assertNotNull(result1);
-        assertNotNull(result2);
-
-        Assert.assertEquals(result1, result2);
-
-        TestClass result3 = result1.getTestClass();
-        assertNotNull(result3);
-
-        assertFalse(result1.equals(result3));
-
-        TestClass result4 = result3.getTestClass();
-        assertNotNull(result4);
-    }
-
-    @Test
     public void noDefaultConstructor() {
         TestClass dummy = DummyObjectUtil.createDummy(TestClass.class);
         assertNotNull(dummy);
@@ -93,19 +69,8 @@ public class DummyObjectUtilTest {
     public void defaultBehavior() {
         TestClass dummy = DummyObjectUtil.createDummy(TestClass.class);
         assertTrue(dummy.getList().isEmpty());
-        assertEquals("", dummy.getString());
-        assertTrue(dummy.getTestClass() instanceof TestClass);
+        assertNull(dummy.getString());
         assertEquals(0, dummy.getInt());
-        assertEquals(new Integer(0), dummy.getInteger());
-        assertEquals(Long.valueOf(0), dummy.getLong());
-        assertEquals(new Integer(0), dummy.getInteger());
-        assertEquals((float) 0, dummy.getFloat());
-        assertEquals(new BigInteger("0"), dummy.getBigInteger());
-        assertEquals((double) 0, dummy.getDouble());
-        assertEquals(new Short("0"), dummy.getShort());
-        assertEquals(new BigDecimal("0"), dummy.getBigDecimal());
-        assertEquals(new Byte("0"), dummy.getByte());
-        assertTrue(dummy.getArray() instanceof Object[]);
     }
 
     @Test
@@ -129,7 +94,7 @@ public class DummyObjectUtilTest {
         assertEquals(dummy, clone);
     }
 
-    @SuppressWarnings({"UnusedDeclaration"})
+
     private class TestClass {
 
         public TestClass(String someValue) {
@@ -139,54 +104,12 @@ public class DummyObjectUtilTest {
             return null;
         }
 
-        public Object[] getArray() {
-            return new TestClass[]{
-                    new TestClass("test 123")
-            };
-        }
-
         public String getString() {
             return "someString";
         }
 
         public int getInt() {
             return 20;
-        }
-
-        public Integer getInteger() {
-            return 20;
-        }
-
-        public Long getLong() {
-            return 50L;
-        }
-
-        public BigInteger getBigInteger() {
-            return new BigInteger("5000");
-        }
-
-        public Float getFloat() {
-            return 50f;
-        }
-
-        public Double getDouble() {
-            return 50d;
-        }
-
-        public BigDecimal getBigDecimal() {
-            return new BigDecimal("50");
-        }
-
-        public Short getShort() {
-            return (short) 0;
-        }
-
-        public Byte getByte() {
-            return new Byte("1");
-        }
-
-        public TestClass getTestClass() {
-            return new TestClass("internal test class");
         }
     }
 }

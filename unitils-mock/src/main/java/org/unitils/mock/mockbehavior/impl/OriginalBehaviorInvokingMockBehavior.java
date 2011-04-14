@@ -1,5 +1,5 @@
 /*
- * Copyright Unitils.org
+ * Copyright 2008,  Unitils.org
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,8 +16,8 @@
 package org.unitils.mock.mockbehavior.impl;
 
 import org.unitils.core.UnitilsException;
-import org.unitils.mock.core.proxy.ProxyInvocation;
 import org.unitils.mock.mockbehavior.ValidatableMockBehavior;
+import org.unitils.mock.core.proxy.ProxyInvocation;
 
 import static java.lang.reflect.Modifier.isAbstract;
 
@@ -42,7 +42,7 @@ public class OriginalBehaviorInvokingMockBehavior implements ValidatableMockBeha
      */
     public void assertCanExecute(ProxyInvocation proxyInvocation) throws UnitilsException {
         if (isAbstract(proxyInvocation.getMethod().getModifiers())) {
-            throw new UnitilsException("Unable to invoke the original method behavior: the method is an abstract method.");
+            throw new UnitilsException("Trying to define mock behavior that invokes the original method behavior for an abstract method.");
         }
     }
 

@@ -1,5 +1,5 @@
 /*
- * Copyright Unitils.org
+ * Copyright 2008,  Unitils.org
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,11 +16,8 @@
 package org.unitils.mock.argumentmatcher.impl;
 
 import org.unitils.mock.argumentmatcher.ArgumentMatcher;
-import org.unitils.reflectionassert.ReflectionComparator;
-
-import static org.unitils.mock.argumentmatcher.ArgumentMatcher.MatchResult.MATCH;
-import static org.unitils.mock.argumentmatcher.ArgumentMatcher.MatchResult.NO_MATCH;
 import static org.unitils.mock.core.proxy.CloneUtil.createDeepClone;
+import org.unitils.reflectionassert.ReflectionComparator;
 import static org.unitils.reflectionassert.ReflectionComparatorFactory.createRefectionComparator;
 
 /**
@@ -57,14 +54,11 @@ public class RefEqArgumentMatcher implements ArgumentMatcher {
      *
      * @param argument                 The argument that were used by reference, not null
      * @param argumentAtInvocationTime Copy of the argument, taken at the time that the invocation was performed, not null
-     * @return The match result, not null
+     * @return True when passed object matches, false otherwise.
      */
-    public MatchResult matches(Object argument, Object argumentAtInvocationTime) {
+    public boolean matches(Object argument, Object argumentAtInvocationTime) {
         ReflectionComparator reflectionComparator = createRefectionComparator();
-        if (reflectionComparator.isEqual(value, argumentAtInvocationTime)) {
-            return MATCH;
-        }
-        return NO_MATCH;
+        return reflectionComparator.isEqual(this.value, argumentAtInvocationTime);
     }
 
 }
