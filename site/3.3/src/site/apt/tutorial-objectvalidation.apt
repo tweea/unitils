@@ -75,6 +75,8 @@ Objectvalidation
 	
 	* SunBeanRules
 	
+	* SunBeanRulesWithMocks: instead of creating the whole object graph it creates an object filled up with primitives & mocks.
+	
 	* UtilityClassRules: a utility class is:
 	
 		*  a class with only one private constructor.

@@ -35,9 +35,9 @@ public class ObjectValidationExample1 {
     @Test
     public void test() {
         objectValidator.
-            classToValidate(ValidBean.class).validatingEqualsAndHashCode().withAllFields().
-            classToValidate(ValidBeanWithByteArray.class).validatingEqualsAndHashCode().withAllFields().
-            classToValidate(ValidBeanOnlyId.class).validatingEqualsAndHashCode().withFieldNames("id").
+            classToValidate(ValidBean.class).checkingAllPossibilities().withAllFields().
+            classToValidate(ValidBeanWithByteArray.class).checkingAllPossibilities().withAllFields().
+            classToValidate(ValidBeanOnlyId.class).checkingAllPossibilities().withFieldNames("id").
             validate();
     }
 

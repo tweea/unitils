@@ -31,3 +31,6 @@ JBehave
 
 %{include|source=org/unitils/jbehave/SimpleMailTest.java|id=jbehavetest|verbatim=true|set-first-line=1|pad-line-numbers=2}
 	
+* {Rapportation}
+~~~~~~~~~~~~~~~~
+	JBehave generates rapports in the folder target/jbehave.

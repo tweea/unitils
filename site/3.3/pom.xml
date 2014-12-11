@@ -197,7 +197,7 @@
         <dependency>
             <groupId>org.unitils.objectvalidation</groupId>
             <artifactId>unitils-objectvalidation</artifactId>
-            <version>1.1.5</version>
+            <version>1.1.7</version>
         </dependency>
         <!-- END SNIPPET: objectvalidation -->
         <!-- START SNIPPET: batch -->
@@ -211,7 +211,7 @@
         <dependency>
             <groupId>org.unitils.jbehave</groupId>
             <artifactId>unitils-jbehave</artifactId>
-            <version>1.0.0</version>
+            <version>1.0.1</version>
         </dependency>
         <!-- END SNIPPET: jbehave -->
         <!-- START SNIPPET: compositetest -->
