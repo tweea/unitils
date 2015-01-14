@@ -13,7 +13,7 @@ Summary
 * {Features}
 ~~~~~~~~~~~~
 
-    {{{tutorial-reflectionassert.html} Reflection assert}}
+    {{{./tutorial-reflectionassert.html} Reflection assert}}
 
         * Equality assertion through reflection
 
@@ -21,7 +21,7 @@ Summary
 
         []
 
-    {{{tutorial-mock.html} Mock module}} - <Makes mocking easy and maintainable>
+    {{{./tutorial-mock.html} Mock module}} - <Makes mocking easy and maintainable>
 
         * Simple syntax for defining and asserting invoked behavior
 
@@ -31,7 +31,7 @@ Summary
 
         []
 
-    {{{tutorial-inject.html} Inject module}} - <Easily inject test artifacts into classes and instances>
+    {{{./tutorial-inject.html} Inject module}} - <Easily inject test artifacts into classes and instances>
 
         * Inject values by type and name
 
@@ -39,7 +39,7 @@ Summary
 
         []
 
-    {{{tutorial-io.html} IO module}} - <Support for performing IO in tests>
+    {{{./tutorial-io.html} IO module}} - <Support for performing IO in tests>
 
         * Creating temporary files and directories
 
@@ -47,7 +47,7 @@ Summary
 
         []
 
-    {{{tutorial-database.html} Database testing}} - <Support for testing with databases and loading of DbUnit data sets>
+    {{{./tutorial-database.html} Database testing}} - <Support for testing with databases and loading of DbUnit data sets>
 
         * Simplify test database connection setup
 
@@ -63,7 +63,7 @@ Summary
 
         []
 
-    {{{tutorial-dbmaintain.html} Automatic test database maintenance}} - <Use DbMaintain to automatically bring your unit test databases up to date before running your tests>
+    {{{./tutorial-dbmaintain.html} Automatic test database maintenance}} - <Use DbMaintain to automatically bring your unit test databases up to date before running your tests>
 
         * Automatic maintenance of databases with support for incremental, repeatable and post processing scripts
 
@@ -74,7 +74,7 @@ Summary
         []
 
 
-    {{{tutorial-hibernate.html} Hibernate module}} - <Support for Hibernate database testing>
+    {{{./tutorial-hibernate.html} Hibernate module}} - <Support for Hibernate database testing>
 
         * Hibernate SessionFactory creation and session management
 
@@ -83,7 +83,7 @@ Summary
         []
 
 
-    {{{tutorial-spring.html} Spring module}} - <Support for testing when your project uses Spring>
+    {{{./tutorial-spring.html} Spring module}} - <Support for testing when your project uses Spring>
 
         * ApplicationContext configuration and easy injection of spring managed beans into a unit test
 
@@ -92,7 +92,7 @@ Summary
         []
 
 
-    {{{tutorial-easymock.html} EasyMock module}} - <Helps you set up tests that use EasyMock as a mocking framework>
+    {{{./tutorial-easymock.html} EasyMock module}} - <Helps you set up tests that use EasyMock as a mocking framework>
 
         * Simplify EasyMock mock object creation
 
