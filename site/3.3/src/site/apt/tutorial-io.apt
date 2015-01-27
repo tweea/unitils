@@ -4,7 +4,7 @@ Injection
 ~~~~~~~~~~~~~~~~
     If you are using maven, you can add following dependency to your project.
 
-%{include|source=pom.xml|id=io|verbatim=true|set-first-line=1|pad-line-numbers=2}
+%{include|source=pom.xml|id=iodependency|verbatim=true|set-first-line=1|pad-line-numbers=2}
 
     If you are not using maven you can download the unitils-with-dependencies.zip. The required jar, unitils-io.jar, can be
     found in the unitils-io folder, the required dependencies, in the unitils-io/lib folder.

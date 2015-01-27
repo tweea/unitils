@@ -102,7 +102,7 @@ private ObjectValidator objectValidator;
 
  @Test 
  public void validatePersonBean() {
- 	objectValidator.classToValidate(PersonBean.class).validatingEqualsAndHashCode().withAllFields().validate();
+ 	objectValidator.classToValidate(PersonBean.class).checkingAllPossibilities().withAllFields().validate();
  }
 +-----+	
 	In the previous example we want to validate the PersonBean. So with this info the objectvalidator can create a ValidateEqualsAndHashCode

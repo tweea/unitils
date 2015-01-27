@@ -56,6 +56,7 @@
                     </dependencies>
                     <configuration>
                         <templateFile>${basedir}/maven-site-unitils.mv</templateFile>
+                        <outputEncoding>cp1252</outputEncoding>
                     </configuration>
                 </plugin>
             </plugins>
@@ -66,6 +67,11 @@
         <dependency>
                             <groupId>com.habitsoft</groupId>
                             <artifactId>html-dtd-cache</artifactId>
+                            <version>1.0</version>
+                        </dependency>
+                        <dependency><!-- add support for ssh/scp -->
+                            <groupId>org.apache.maven.wagon</groupId>
+                            <artifactId>wagon-ssh</artifactId>
                             <version>1.0</version>
                         </dependency>
         <dependency>
@@ -144,13 +150,13 @@
             <scope>test</scope>
         </dependency>
         <!-- END SNIPPET: easy -->
-        <!-- START SNIPPET: io -->
+        <!-- START SNIPPET: iodependency -->
         <dependency>
             <groupId>org.unitils</groupId>
             <artifactId>unitils-io</artifactId>
             <version>3.4.2</version>
         </dependency>
-        <!-- END SNIPPET: io -->
+        <!-- END SNIPPET: iodependency -->
         <!-- START SNIPPET: mail -->
         <dependency>
             <groupId>org.unitils.mail</groupId>
@@ -191,6 +197,12 @@
             <groupId>org.unitils.soapui</groupId>
             <artifactId>unitils-soapui</artifactId>
             <version>1.0.2</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>javafx</groupId>
+                    <artifactId>jfxrt</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <!-- END SNIPPET: soapui -->
         <!-- START SNIPPET: objectvalidation -->
