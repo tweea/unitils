@@ -71,7 +71,7 @@ public class SqlUnitilsGetBooleanIntegrationTest {
     @Test
     public void exceptionWhenNotABooleanValue() throws Exception {
         try {
-            SqlUnitils.getBoolean("select other from my_table"); ;
+            SqlUnitils.getBoolean("select other from my_table");
             fail("UnitilsException expected");
         } catch (UnitilsException e) {
             assertEquals("Unable to execute statement: 'select other from my_table'.\n" +
