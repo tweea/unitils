@@ -26,15 +26,14 @@ import static java.lang.annotation.ElementType.FIELD;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 /**
- * Annotation indicating that the the {@link org.unitils.inject.InjectModule} should try to inject the object assigned to
- * the annotated field to the object defined by the target attribute (or the object(s) assigned to the field annotated
- * with {@link TestedObject}.
+ * Annotation to inject the object assigned to the annotated field to the object defined by the target
+ * attribute (or the object(s) assigned to the field annotated with {@link TestedObject}.
  * <p/>
  * Explicit injection is used, which means that the object is injected to the property indicated by the {@link #property()}
  * attribute.
  *
- * @author Filip Neven
  * @author Tim Ducheyne
+ * @author Filip Neven
  */
 @Target(FIELD)
 @Retention(RUNTIME)
