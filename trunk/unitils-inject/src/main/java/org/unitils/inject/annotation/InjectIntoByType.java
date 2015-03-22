@@ -26,9 +26,8 @@ import static java.lang.annotation.ElementType.FIELD;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 /**
- * Annotation indicating that the the {@link org.unitils.inject.InjectModule} should try to inject the object assigned to
- * the annotated field to the object defined by the target attribute (or the object(s) assigned to the field annotated
- * with {@link TestedObject}.
+ * Annotation to inject the object assigned to the annotated field to the object defined by the target
+ * attribute (or the object(s) assigned to the field annotated with {@link TestedObject}.
  * <p/>
  * Automatic injection by type is used, which means that the object is injected to the most specific property with an
  * assignable type.

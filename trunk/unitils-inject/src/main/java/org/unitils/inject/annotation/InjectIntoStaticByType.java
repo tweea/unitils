@@ -28,8 +28,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 import static org.unitils.inject.util.Restore.DEFAULT;
 
 /**
- * Annotation indicating that the {@link org.unitils.inject.InjectModule} should try to inject the object assigned to
- * the annotated field to a static property of the class defined by the target attribute.
+ * Annotation to inject the object assigned to the annotated field to a static property of the class defined by the target attribute.
  * <p/>
  * Automatic injection by type is used, which means that a the object is injected to the most specific static property
  * with an assignable type.
