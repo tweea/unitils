@@ -55,13 +55,6 @@ public class AssertNotInvokedVerifyingMatchingInvocationHandler extends AssertVe
     protected String getAssertNotInvokedErrorMessage(MatchingInvocation matchingInvocation, ObservedInvocation observedInvocation) {
         String simpleMethodName = getSimpleMethodName(matchingInvocation.getMethod());
         StackTraceElement invokedAt = observedInvocation.getInvokedAt();
-
-
-        StringBuilder message = new StringBuilder();
-        message.append("Expected no invocation of ");
-        message.append(simpleMethodName);
-        message.append(", but it did occur\nat ");
-        message.append(invokedAt);
-        return message.toString();
+        return "Expected no invocation of " + simpleMethodName + ", but it did occur\nat " + invokedAt;
     }
 }

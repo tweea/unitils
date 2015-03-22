@@ -19,8 +19,6 @@ import org.unitils.mock.core.proxy.ProxyInvocation;
 import org.unitils.mock.core.proxy.ProxyInvocationHandler;
 import org.unitils.mock.mockbehavior.MockBehavior;
 
-import java.lang.reflect.Method;
-
 /**
  * @author Tim Ducheyne
  */
@@ -36,7 +34,6 @@ public class DummyProxyInvocationHandler implements ProxyInvocationHandler {
 
 
     public Object handleInvocation(ProxyInvocation proxyInvocation) throws Throwable {
-        Method method = proxyInvocation.getMethod();
         if (proxyInvocation.isEqualsMethod() || proxyInvocation.isHashCodeMethod()) {
             // don't handle equals and hash code to avoid loops
             return null;

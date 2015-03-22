@@ -90,11 +90,8 @@ public class DefaultDifferenceView implements DifferenceView {
     }
 
 
-    protected String formatDifferrence(ClassDifference classDifference, String fieldName) {
-        StringBuilder result = new StringBuilder();
-        result.append("Expected: object of type ").append(getShortClassName(classDifference.getLeftClass()));
-        result.append(", actual: object of type ").append(getShortClassName(classDifference.getRightClass())).append("\n");
-        return result.toString();
+    protected String formatDifference(ClassDifference classDifference, String fieldName) {
+        return "Expected: object of type " + getShortClassName(classDifference.getLeftClass()) + ", actual: object of type " + getShortClassName(classDifference.getRightClass()) + "\n";
     }
 
 
@@ -285,7 +282,7 @@ public class DefaultDifferenceView implements DifferenceView {
         }
 
         public String visit(ClassDifference classDifference, String fieldName) {
-            return formatDifferrence(classDifference, fieldName);
+            return formatDifference(classDifference, fieldName);
         }
 
         public String visit(MapDifference mapDifference, String fieldName) {

@@ -58,12 +58,6 @@ public class ScenarioReport {
         Object testObject = scenario.getTestObject();
         String summaryReport = observedInvocationsReport.createReport(observedInvocations, testObject);
         String detailedReport = detailedObservedInvocationsReport.createReport(observedInvocations, testObject);
-
-        StringBuilder result = new StringBuilder();
-        result.append("Observed scenario:\n\n");
-        result.append(summaryReport);
-        result.append("\nDetailed scenario:\n\n");
-        result.append(detailedReport);
-        return result.toString();
+        return "Observed scenario:\n\n" + summaryReport + "\nDetailed scenario:\n\n" + detailedReport;
     }
 }

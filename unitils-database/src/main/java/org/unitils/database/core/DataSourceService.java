@@ -60,7 +60,6 @@ public class DataSourceService {
         DataSourceProvider dataSourceProvider = dataSourceProviderManager.getDataSourceProvider();
         DataSourceWrapper dataSourceWrapper = dataSourceProvider.getDataSourceWrapper(databaseName);
 
-        DataSource dataSource = dataSourceWrapper.getWrappedDataSource();
         dbMaintainWrapper.updateDatabaseIfNeeded();
         return dataSourceWrapper;
     }

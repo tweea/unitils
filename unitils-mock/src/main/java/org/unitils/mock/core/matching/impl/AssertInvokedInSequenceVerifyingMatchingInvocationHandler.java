@@ -59,12 +59,7 @@ public class AssertInvokedInSequenceVerifyingMatchingInvocationHandler extends A
 
     protected String getAssertInvokedErrorMessage(MatchingInvocation matchingInvocation) {
         String simpleMethodName = getSimpleMethodName(matchingInvocation.getMethod());
-
-        StringBuilder message = new StringBuilder();
-        message.append("Expected invocation of ");
-        message.append(simpleMethodName);
-        message.append(", but it didn't occur.");
-        return message.toString();
+        return "Expected invocation of " + simpleMethodName + ", but it didn't occur.";
     }
 
     protected String getInvokedOutOfSequenceErrorMessage(MatchingInvocation matchingInvocation, ObservedInvocation observedInvocation, ObservedInvocation outOfSequenceInvocation) {
@@ -72,17 +67,6 @@ public class AssertInvokedInSequenceVerifyingMatchingInvocationHandler extends A
         String outOfSequenceSimpleMethodName = getSimpleMethodName(outOfSequenceInvocation.getMethod());
         StackTraceElement invokedAt = observedInvocation.getInvokedAt();
         StackTraceElement outOfSequenceInvokedAt = outOfSequenceInvocation.getInvokedAt();
-
-        StringBuilder message = new StringBuilder();
-        message.append("Invocation of ");
-        message.append(simpleMethodName);
-        message.append(" invoked at ");
-        message.append(invokedAt);
-        message.append("\nwas expected to be performed after ");
-        message.append(outOfSequenceSimpleMethodName);
-        message.append(" invoked at ");
-        message.append(outOfSequenceInvokedAt);
-        message.append("\nbut actually occurred before it.");
-        return message.toString();
+        return "Invocation of " + simpleMethodName + " invoked at " + invokedAt + "\nwas expected to be performed after " + outOfSequenceSimpleMethodName + " invoked at " + outOfSequenceInvokedAt + "\nbut actually occurred before it.";
     }
 }

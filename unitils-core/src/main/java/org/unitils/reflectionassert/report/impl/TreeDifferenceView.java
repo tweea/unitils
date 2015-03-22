@@ -88,11 +88,7 @@ public class TreeDifferenceView implements DifferenceView {
 
 
     protected String formatDifference(ClassDifference classDifference, String fieldName) {
-        StringBuilder result = new StringBuilder();
-        result.append((fieldName == null) ? "" : fieldName + ":");
-        result.append("Expected: object of type ").append(getShortClassName(classDifference.getLeftClass()));
-        result.append(", actual: object of type ").append(getShortClassName(classDifference.getRightClass())).append("\n");
-        return result.toString();
+        return ((fieldName == null) ? "" : fieldName + ":") + "Expected: object of type " + getShortClassName(classDifference.getLeftClass()) + ", actual: object of type " + getShortClassName(classDifference.getRightClass()) + "\n";
     }
 
 
@@ -211,18 +207,8 @@ public class TreeDifferenceView implements DifferenceView {
      * @return The string representation, not null
      */
     protected String formatValues(String fieldName, Object leftValue, Object rightValue) {
-        StringBuilder result = new StringBuilder();
-
         String prefix = (fieldName == null) ? "" : fieldName;
-        result.append(prefix);
-        result.append(" expected: ");
-        result.append(formatObject(leftValue));
-        result.append("\n");
-        result.append(prefix);
-        result.append("   actual: ");
-        result.append(formatObject(rightValue));
-        result.append("\n\n");
-        return result.toString();
+        return prefix + " expected: " + formatObject(leftValue) + "\n" + prefix + "   actual: " + formatObject(rightValue) + "\n\n";
     }
 
 

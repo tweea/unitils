@@ -34,7 +34,7 @@ public class LenientNumberComparator implements Comparator {
      *
      * @param left  The left object
      * @param right The right object
-     * @return True for Numbers and Charaters
+     * @return True for Numbers and Characters
      */
     public boolean canCompare(Object left, Object right) {
         if (left == null || right == null) {
@@ -59,7 +59,7 @@ public class LenientNumberComparator implements Comparator {
         // check if right and left have same number value (including NaN and Infinity)
         final String differenceMessage = "Different primitive values";
         if (left instanceof Long && right instanceof Long) {
-            if (!((Long) left).equals(((Long) right))) {
+            if (!left.equals(right)) {
                 return new Difference(differenceMessage, left, right);
             }
         }
@@ -82,6 +82,6 @@ public class LenientNumberComparator implements Comparator {
         if (object instanceof Number) {
             return ((Number) object).doubleValue();
         }
-        return (double) ((Character) object).charValue();
+        return (double) (Character) object;
     }
 }

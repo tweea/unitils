@@ -179,11 +179,7 @@ public class ObservedInvocationsReport {
      * @return The string representation, not null
      */
     protected String formatInvokedAt(ProxyInvocation proxyInvocation) {
-        StringBuilder result = new StringBuilder();
-        result.append("  .....  at ");
-        result.append(proxyInvocation.getInvokedAt());
-        result.append("\n");
-        return result.toString();
+        return "  .....  at " + proxyInvocation.getInvokedAt() + "\n";
     }
 
     /**

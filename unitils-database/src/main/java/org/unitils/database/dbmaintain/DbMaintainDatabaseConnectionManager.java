@@ -101,7 +101,6 @@ public class DbMaintainDatabaseConnectionManager implements DatabaseConnectionMa
         String url = databaseConfiguration.getUrl();
         String userName = databaseConfiguration.getUserName();
         String password = databaseConfiguration.getPassword();
-        String defaultSchemaName = databaseConfiguration.getDefaultSchemaName();
         List<String> schemaNames = databaseConfiguration.getSchemaNames();
         boolean disabled = databaseConfiguration.isUpdateDisabled();
         boolean defaultDatabase = databaseConfiguration.isDefaultDatabase();

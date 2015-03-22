@@ -69,26 +69,12 @@ public class MockService {
     protected String getNoMoreInvocationsErrorMessage(List<ObservedInvocation> unexpectedInvocations) {
         Object testObject = scenario.getTestObject();
         String report = scenarioReport.createReport();
-
-        StringBuilder message = new StringBuilder();
-        message.append("No more invocations expected, yet observed following calls:\n");
-        message.append(observedInvocationsReport.createReport(unexpectedInvocations, testObject));
-        message.append("\n");
-        message.append(report);
-        return message.toString();
+        return "No more invocations expected, yet observed following calls:\n" + observedInvocationsReport.createReport(unexpectedInvocations, testObject) + "\n" + report;
     }
 
     protected String getNoMoreMockInvocationsErrorMessage(Mock<?> mock, List<ObservedInvocation> unexpectedInvocations) {
         Object testObject = scenario.getTestObject();
         String report = scenarioReport.createReport();
-
-        StringBuilder message = new StringBuilder();
-        message.append("No more invocations expected for mock ");
-        message.append(mock);
-        message.append(", yet observed following calls:\n");
-        message.append(observedInvocationsReport.createReport(unexpectedInvocations, testObject));
-        message.append("\n");
-        message.append(report);
-        return message.toString();
+        return "No more invocations expected for mock " + mock + ", yet observed following calls:\n" + observedInvocationsReport.createReport(unexpectedInvocations, testObject) + "\n" + report;
     }
 }
