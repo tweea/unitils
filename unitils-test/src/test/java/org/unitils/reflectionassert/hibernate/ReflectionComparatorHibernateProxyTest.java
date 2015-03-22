@@ -85,17 +85,18 @@ public class ReflectionComparatorHibernateProxyTest extends UnitilsJUnit4 {
     @Test
     public void nullWhenBothSidesAreHibernateProxiesAndIdentifiersAreEqual() {
         // open 2 session two avoid the values being taken from the cache
-        Child childWithParentProxy1 = (Child) sessionFactory.openSession().get(Child.class, 1L);
-        Child childWithParentProxy2 = (Child) sessionFactory.openSession().get(Child.class, 1L);
+        Child childWithParentProxy1 = (Child) sessionFactory.getCurrentSession().get(Child.class, 1L);
+        Child childWithParentProxy2 = (Child) sessionFactory.getCurrentSession().get(Child.class, 1L);
         Difference result = reflectionComparator.getDifference(childWithParentProxy1, childWithParentProxy2);
         assertNull(result);
     }
 
+    // todo td  if you use openSession, the test will hang => document
     @Test
     public void differenceWhenBothSidesAreHibernateProxiesAndDifferentIdentifiers() {
         // open 2 session two avoid the values being taken from the cache
-        Child childWithParentProxy1 = (Child) sessionFactory.openSession().get(Child.class, 1L);
-        Child childWithParentProxy2 = (Child) sessionFactory.openSession().get(Child.class, 2L);
+        Child childWithParentProxy1 = (Child) sessionFactory.getCurrentSession().get(Child.class, 1L);
+        Child childWithParentProxy2 = (Child) sessionFactory.getCurrentSession().get(Child.class, 2L);
         Difference result = reflectionComparator.getDifference(childWithParentProxy1, childWithParentProxy2);
         assertNotNull(result);
     }
