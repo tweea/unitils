@@ -157,7 +157,6 @@ public class Context {
     }
 
     protected Object getPropertyValue(Property propertyAnnotation, Class<?> argumentType, Type genericArgumentType, String[] argumentClassifiers) {
-        Object instance;
         String propertyName = propertyAnnotation.value();
         boolean optional = propertyAnnotation.optional();
 

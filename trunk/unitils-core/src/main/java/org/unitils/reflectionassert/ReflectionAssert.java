@@ -16,8 +16,6 @@
 package org.unitils.reflectionassert;
 
 
-import junit.framework.Assert;
-import junit.framework.AssertionFailedError;
 import ognl.DefaultMemberAccess;
 import ognl.Ognl;
 import ognl.OgnlContext;
@@ -25,6 +23,7 @@ import ognl.OgnlException;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 import org.apache.commons.lang.StringUtils;
+import org.junit.Assert;
 import org.unitils.core.UnitilsException;
 import org.unitils.core.util.ReflectionUtils;
 import org.unitils.reflectionassert.difference.Difference;
@@ -35,7 +34,7 @@ import java.lang.reflect.Modifier;
 import java.util.Collection;
 import java.util.Set;
 
-import static junit.framework.Assert.assertNotNull;
+import static org.junit.Assert.assertNotNull;
 import static org.unitils.reflectionassert.ReflectionComparatorFactory.createRefectionComparator;
 import static org.unitils.reflectionassert.ReflectionComparatorMode.IGNORE_DEFAULTS;
 import static org.unitils.reflectionassert.ReflectionComparatorMode.LENIENT_ORDER;
@@ -75,9 +74,9 @@ public class ReflectionAssert {
      *
      * @param expected the expected object
      * @param actual   the given object
-     * @throws AssertionFailedError when both objects are not equals
+     * @throws AssertionError when both objects are not equals
      */
-    public static void assertLenientEquals(Object expected, Object actual) throws AssertionFailedError {
+    public static void assertLenientEquals(Object expected, Object actual) throws AssertionError {
         assertLenientEquals(null, expected, actual);
     }
 
@@ -91,9 +90,9 @@ public class ReflectionAssert {
      * @param expected the expected object
      * @param actual   the given object
      * @param modes    the comparator modes
-     * @throws AssertionFailedError when both objects are not equals
+     * @throws AssertionError when both objects are not equals
      */
-    public static void assertReflectionEquals(Object expected, Object actual, ReflectionComparatorMode... modes) throws AssertionFailedError {
+    public static void assertReflectionEquals(Object expected, Object actual, ReflectionComparatorMode... modes) throws AssertionError {
         assertReflectionEquals(null, expected, actual, modes);
     }
 
@@ -107,9 +106,9 @@ public class ReflectionAssert {
      * @param message  a message for when the assertion fails
      * @param expected the expected object
      * @param actual   the given object
-     * @throws AssertionFailedError when both objects are not equals
+     * @throws AssertionError when both objects are not equals
      */
-    public static void assertLenientEquals(String message, Object expected, Object actual) throws AssertionFailedError {
+    public static void assertLenientEquals(String message, Object expected, Object actual) throws AssertionError {
         assertReflectionEquals(message, expected, actual, LENIENT_ORDER, IGNORE_DEFAULTS);
     }
 
@@ -123,9 +122,9 @@ public class ReflectionAssert {
      * @param expected the expected object
      * @param actual   the given object
      * @param modes    the comparator modes
-     * @throws AssertionFailedError when both objects are not equals
+     * @throws AssertionError when both objects are not equals
      */
-    public static void assertReflectionEquals(String message, Object expected, Object actual, ReflectionComparatorMode... modes) throws AssertionFailedError {
+    public static void assertReflectionEquals(String message, Object expected, Object actual, ReflectionComparatorMode... modes) throws AssertionError {
         ReflectionComparator reflectionComparator = createRefectionComparator(modes);
         Difference difference = reflectionComparator.getDifference(expected, actual);
         if (difference != null) {
@@ -145,9 +144,9 @@ public class ReflectionAssert {
      * @param propertyName          the property, not null
      * @param expectedPropertyValue the expected value
      * @param actualObject          the object that contains the property
-     * @throws AssertionFailedError when both objects are not equals
+     * @throws AssertionError when both objects are not equals
      */
-    public static void assertPropertyLenientEquals(String propertyName, Object expectedPropertyValue, Object actualObject) throws AssertionFailedError {
+    public static void assertPropertyLenientEquals(String propertyName, Object expectedPropertyValue, Object actualObject) throws AssertionError {
         assertPropertyLenientEquals(null, propertyName, expectedPropertyValue, actualObject);
     }
 
@@ -165,9 +164,9 @@ public class ReflectionAssert {
      * @param expectedPropertyValue the expected value
      * @param actualObject          the object that contains the property
      * @param modes                 the comparator modes
-     * @throws AssertionFailedError when both objects are not equals
+     * @throws AssertionError when both objects are not equals
      */
-    public static void assertPropertyReflectionEquals(String propertyName, Object expectedPropertyValue, Object actualObject, ReflectionComparatorMode... modes) throws AssertionFailedError {
+    public static void assertPropertyReflectionEquals(String propertyName, Object expectedPropertyValue, Object actualObject, ReflectionComparatorMode... modes) throws AssertionError {
         assertPropertyReflectionEquals(null, propertyName, expectedPropertyValue, actualObject, modes);
     }
 
@@ -184,9 +183,9 @@ public class ReflectionAssert {
      * @param propertyName          the property, not null
      * @param expectedPropertyValue the expected value
      * @param actualObject          the object that contains the property
-     * @throws AssertionFailedError when both objects are not equals
+     * @throws AssertionError when both objects are not equals
      */
-    public static void assertPropertyLenientEquals(String message, String propertyName, Object expectedPropertyValue, Object actualObject) throws AssertionFailedError {
+    public static void assertPropertyLenientEquals(String message, String propertyName, Object expectedPropertyValue, Object actualObject) throws AssertionError {
         assertPropertyReflectionEquals(message, propertyName, expectedPropertyValue, actualObject, LENIENT_ORDER, IGNORE_DEFAULTS);
     }
 
@@ -203,9 +202,9 @@ public class ReflectionAssert {
      * @param expectedPropertyValue the expected value
      * @param actualObject          the object that contains the property
      * @param modes                 the comparator modes
-     * @throws AssertionFailedError when both objects are not equals
+     * @throws AssertionError when both objects are not equals
      */
-    public static void assertPropertyReflectionEquals(String message, String propertyName, Object expectedPropertyValue, Object actualObject, ReflectionComparatorMode... modes) throws AssertionFailedError {
+    public static void assertPropertyReflectionEquals(String message, String propertyName, Object expectedPropertyValue, Object actualObject, ReflectionComparatorMode... modes) throws AssertionError {
         assertNotNull("Actual object is null.", actualObject);
         Object propertyValue = getProperty(actualObject, propertyName);
         String formattedMessage = formatMessage(message, "Incorrect value for property: " + propertyName);
@@ -227,9 +226,9 @@ public class ReflectionAssert {
      * @param propertyName           the property, not null
      * @param expectedPropertyValues the expected values
      * @param actualObjects          the objects that contain the property
-     * @throws AssertionFailedError when both objects are not equals
+     * @throws AssertionError when both objects are not equals
      */
-    public static void assertPropertyLenientEquals(String propertyName, Collection<?> expectedPropertyValues, Collection<?> actualObjects) throws AssertionFailedError {
+    public static void assertPropertyLenientEquals(String propertyName, Collection<?> expectedPropertyValues, Collection<?> actualObjects) throws AssertionError {
         assertPropertyLenientEquals(null, propertyName, expectedPropertyValues, actualObjects);
     }
 
@@ -248,9 +247,9 @@ public class ReflectionAssert {
      * @param expectedPropertyValues the expected values
      * @param actualObjects          the objects that contain the property
      * @param modes                  the comparator modes
-     * @throws AssertionFailedError when both objects are not equals
+     * @throws AssertionError when both objects are not equals
      */
-    public static void assertPropertyReflectionEquals(String propertyName, Collection<?> expectedPropertyValues, Collection<?> actualObjects, ReflectionComparatorMode... modes) throws AssertionFailedError {
+    public static void assertPropertyReflectionEquals(String propertyName, Collection<?> expectedPropertyValues, Collection<?> actualObjects, ReflectionComparatorMode... modes) throws AssertionError {
         assertPropertyReflectionEquals(null, propertyName, expectedPropertyValues, actualObjects, modes);
     }
 
@@ -270,9 +269,9 @@ public class ReflectionAssert {
      * @param propertyName           the property, not null
      * @param expectedPropertyValues the expected values, not null
      * @param actualObjects          the objects that contain the property
-     * @throws AssertionFailedError when both objects are not equals
+     * @throws AssertionError when both objects are not equals
      */
-    public static void assertPropertyLenientEquals(String message, String propertyName, Collection<?> expectedPropertyValues, Collection<?> actualObjects) throws AssertionFailedError {
+    public static void assertPropertyLenientEquals(String message, String propertyName, Collection<?> expectedPropertyValues, Collection<?> actualObjects) throws AssertionError {
         assertPropertyReflectionEquals(message, propertyName, expectedPropertyValues, actualObjects, LENIENT_ORDER, IGNORE_DEFAULTS);
     }
 
@@ -312,9 +311,9 @@ public class ReflectionAssert {
      * @param expectedPropertyValues the expected values, not null
      * @param actualObjects          the objects that contain the property
      * @param modes                  the comparator modes
-     * @throws AssertionFailedError when both objects are not equals
+     * @throws AssertionError when both objects are not equals
      */
-    public static void assertPropertyReflectionEquals(String message, String propertyName, Collection<?> expectedPropertyValues, Collection<?> actualObjects, ReflectionComparatorMode... modes) throws AssertionFailedError {
+    public static void assertPropertyReflectionEquals(String message, String propertyName, Collection<?> expectedPropertyValues, Collection<?> actualObjects, ReflectionComparatorMode... modes) throws AssertionError {
         assertNotNull("Actual object list is null.", actualObjects);
         Collection<?> actualPropertyValues = CollectionUtils.collect(actualObjects, new OgnlTransformer(propertyName));
         assertReflectionEquals(message, expectedPropertyValues, actualPropertyValues, modes);
@@ -327,10 +326,7 @@ public class ReflectionAssert {
      * @return a failure message describing the difference found
      */
     protected static String getFailureMessage(String message, Difference difference) {
-        StringBuilder failureMessage = new StringBuilder();
-        failureMessage.append(message == null ? "" : message + "\n");
-        failureMessage.append(new DefaultDifferenceReport().createReport(difference));
-        return failureMessage.toString();
+        return (message == null ? "" : message + "\n") + new DefaultDifferenceReport().createReport(difference);
     }
 
     /**

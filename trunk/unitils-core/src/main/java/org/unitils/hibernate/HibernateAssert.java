@@ -72,7 +72,7 @@ public class HibernateAssert {
      */
     protected static String[] generateDatabaseUpdateScript(Configuration configuration, Session session, Dialect databaseDialect) {
         try {
-            DatabaseMetadata dbm = new DatabaseMetadata(session.connection(), databaseDialect);
+            DatabaseMetadata dbm = new DatabaseMetadata(session.connection(), databaseDialect); // todo td session.connection is deprecated
             return configuration.generateSchemaUpdateScript(databaseDialect, dbm);
         } catch (SQLException e) {
             throw new UnitilsException("Could not retrieve database metadata", e);

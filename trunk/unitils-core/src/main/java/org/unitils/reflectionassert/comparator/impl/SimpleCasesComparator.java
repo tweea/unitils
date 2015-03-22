@@ -144,6 +144,6 @@ public class SimpleCasesComparator implements Comparator {
         if (object instanceof Number) {
             return ((Number) object).doubleValue();
         }
-        return (double) ((Character) object).charValue();
+        return (double) (Character) object;
     }
 }

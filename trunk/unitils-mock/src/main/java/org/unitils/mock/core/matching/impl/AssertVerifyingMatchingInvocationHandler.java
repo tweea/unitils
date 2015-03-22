@@ -50,13 +50,7 @@ public abstract class AssertVerifyingMatchingInvocationHandler implements Matchi
     protected AssertionError createAssertionError(String assertionErrorMessage, MatchingInvocation matchingInvocation) {
         String report = scenarioReport.createReport();
         StackTraceElement assertedAt = matchingInvocation.getInvokedAt();
-
-        StringBuilder message = new StringBuilder(assertionErrorMessage);
-        message.append("\nAsserted at ");
-        message.append(assertedAt);
-        message.append("\n\n");
-        message.append(report);
-        throw new MockAssertionError(message.toString(), matchingInvocation.getInvokedAtTrace());
+        throw new MockAssertionError(assertionErrorMessage + "\nAsserted at " + assertedAt + "\n\n" + report, matchingInvocation.getInvokedAtTrace());
     }
 
     protected Object createChainedMock(MatchingInvocation matchingInvocation) {

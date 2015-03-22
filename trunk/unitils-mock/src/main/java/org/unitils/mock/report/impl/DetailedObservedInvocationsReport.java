@@ -87,11 +87,7 @@ public class DetailedObservedInvocationsReport extends ObservedInvocationsReport
      * @return The string representation, not null
      */
     protected String formatObservedAt(ProxyInvocation proxyInvocation) {
-        StringBuilder result = new StringBuilder();
-        result.append("- Observed at ");
-        result.append(proxyInvocation.getInvokedAt());
-        result.append("\n");
-        return result.toString();
+        return "- Observed at " + proxyInvocation.getInvokedAt() + "\n";
     }
 
     /**

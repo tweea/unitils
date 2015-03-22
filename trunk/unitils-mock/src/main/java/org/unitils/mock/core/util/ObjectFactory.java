@@ -38,7 +38,7 @@ public class ObjectFactory {
     @SuppressWarnings({"unchecked"})
     public <T> T createWithoutCallingConstructor(Class<T> type) {
         try {
-            return (T) objenesis.newInstance(type);
+            return objenesis.newInstance(type);
 
         } catch (Throwable t) {
             throw new UnitilsException("Unable to create instance of " + type, t);

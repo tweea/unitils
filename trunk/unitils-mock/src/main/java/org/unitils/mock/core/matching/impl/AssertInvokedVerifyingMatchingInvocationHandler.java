@@ -55,11 +55,6 @@ public class AssertInvokedVerifyingMatchingInvocationHandler extends AssertVerif
 
     protected String getAssertInvokedErrorMessage(MatchingInvocation matchingInvocation) {
         String simpleMethodName = getSimpleMethodName(matchingInvocation.getMethod());
-
-        StringBuilder message = new StringBuilder();
-        message.append("Expected invocation of ");
-        message.append(simpleMethodName);
-        message.append(", but it didn't occur.");
-        return message.toString();
+        return "Expected invocation of " + simpleMethodName + ", but it didn't occur.";
     }
 }
