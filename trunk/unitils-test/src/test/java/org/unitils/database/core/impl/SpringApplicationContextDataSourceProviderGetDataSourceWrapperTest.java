@@ -73,7 +73,7 @@ public class SpringApplicationContextDataSourceProviderGetDataSourceWrapperTest 
     public void getDataSourceWrapper() throws Exception {
         unitilsDataSourceBean1.setDialect("dialect");
         unitilsDataSourceBean1.setSchemaNames(asList("schema1", "schema2"));
-        unitilsDataSourceBean1.setUpdateEnabled(true);
+        unitilsDataSourceBean1.setUpdateDisabled(true);
         unitilsDataSourceBean1.setDefaultDatabase(true);
         unitilsDataSourceBeans.put("name", unitilsDataSourceBean1);
 

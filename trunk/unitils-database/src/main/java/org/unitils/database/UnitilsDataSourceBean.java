@@ -46,7 +46,7 @@ public class UnitilsDataSourceBean {
     protected List<String> schemaNames = new ArrayList<String>(3);
     /* The underlying DBMS implementation. E.g. 'oracle', 'db2', 'mysql', 'hsqldb', 'postgresql', 'derby' and 'mssql'. Optional, null if not defined */
     protected String dialect;
-    protected boolean updateEnabled;
+    protected boolean updateDisabled;
     protected boolean defaultDatabase;
 
 
@@ -105,12 +105,12 @@ public class UnitilsDataSourceBean {
     }
 
 
-    public boolean isUpdateEnabled() {
-        return updateEnabled;
+    public boolean isUpdateDisabled() {
+        return updateDisabled;
     }
 
-    public void setUpdateEnabled(boolean updateEnabled) {
-        this.updateEnabled = updateEnabled;
+    public void setUpdateDisabled(boolean updateDisabled) {
+        this.updateDisabled = updateDisabled;
     }
 
 

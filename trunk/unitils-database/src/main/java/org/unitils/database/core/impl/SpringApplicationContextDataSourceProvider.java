@@ -151,12 +151,12 @@ public class SpringApplicationContextDataSourceProvider implements DataSourcePro
     protected DatabaseConfiguration createDatabaseConfiguration(String databaseName, boolean defaultDatabase, UnitilsDataSourceBean unitilsDataSourceBean) {
         List<String> schemaNames = unitilsDataSourceBean.getSchemaNames();
         String dialect = unitilsDataSourceBean.getDialect();
-        boolean updateDisabled = unitilsDataSourceBean.isUpdateEnabled();
+        boolean disabled = unitilsDataSourceBean.isUpdateDisabled();
 
         String defaultSchemaName = null;
         if (!schemaNames.isEmpty()) {
             defaultSchemaName = schemaNames.get(0);
         }
-        return new DatabaseConfiguration(databaseName, dialect, null, null, null, null, defaultSchemaName, schemaNames, updateDisabled, defaultDatabase);
+        return new DatabaseConfiguration(databaseName, dialect, null, null, null, null, defaultSchemaName, schemaNames, disabled, defaultDatabase);
     }
 }

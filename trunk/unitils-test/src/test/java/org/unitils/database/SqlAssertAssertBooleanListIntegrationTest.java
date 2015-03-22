@@ -165,30 +165,14 @@ public class SqlAssertAssertBooleanListIntegrationTest {
     }
 
     @Test
-    public void assertionSuccessfulForNonBooleanValue() throws Exception {
-        executeUpdate("insert into my_table (other) values ('xxx')");
-        SqlAssert.assertBooleanList(asList(false), "select other from my_table");
-    }
-
-    @Test
-    public void assertionFailedForNonBooleanValue() throws Exception {
+    public void exceptionWhenNonBooleanValue() throws Exception {
         executeUpdate("insert into my_table (other) values ('xxx')");
         try {
-            SqlAssert.assertBooleanList(asList(true), "select other from my_table");
-            fail("AssertionError expected");
-        } catch (AssertionError e) {
-            assertEquals("Different result found for query 'select other from my_table':\n" +
-                    "Expected: [true], actual: [false]\n" +
-                    "\n" +
-                    "--- Found following differences ---\n" +
-                    "[0,0]: expected: true, actual: false\n" +
-                    "\n" +
-                    "--- Difference detail tree ---\n" +
-                    " expected: [true]\n" +
-                    "   actual: [false]\n" +
-                    "\n" +
-                    "[0,0] expected: true\n" +
-                    "[0,0]   actual: false\n\n", e.getMessage());
+            SqlAssert.assertBooleanList(asList(false), "select other from my_table");
+            fail("UnitilsException expected");
+        } catch (UnitilsException e) {
+            assertEquals("Unable to execute statement: 'select other from my_table'.\n" +
+                    "Reason: BadSqlGrammarException: StatementCallback; bad SQL grammar [select other from my_table]; nested exception is java.sql.SQLSyntaxErrorException: incompatible data type in conversion: from SQL type VARCHAR to java.lang.Boolean, value: xxx", e.getMessage());
         }
     }
 
@@ -209,7 +193,7 @@ public class SqlAssertAssertBooleanListIntegrationTest {
             fail("UnitilsException expected");
         } catch (UnitilsException e) {
             assertEquals("Unable to execute statement: 'xxx'.\n" +
-                    "Reason: BadSqlGrammarException: StatementCallback; bad SQL grammar [xxx]; nested exception is java.sql.SQLException: Unexpected token: XXX in statement [xxx]", e.getMessage());
+                    "Reason: BadSqlGrammarException: StatementCallback; bad SQL grammar [xxx]; nested exception is java.sql.SQLSyntaxErrorException: unexpected token: XXX", e.getMessage());
         }
     }
 }

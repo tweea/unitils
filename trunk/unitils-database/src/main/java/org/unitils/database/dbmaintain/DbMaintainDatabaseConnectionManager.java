@@ -58,6 +58,7 @@ public class DbMaintainDatabaseConnectionManager implements DatabaseConnectionMa
         if (isBlank(databaseName)) {
             databaseName = null;
         }
+        // todo cache on data source wrapper not on name => this will give strange reuslt when data source changes between tests, e.g. when using spring
         DatabaseConnection databaseConnection = databaseConnections.get(databaseName);
         if (databaseConnection == null) {
             databaseConnection = createDatabaseConnection(databaseName);

@@ -77,7 +77,7 @@ public class SqlUnitilsGetObjectListIntegrationTest {
             fail("UnitilsException expected");
         } catch (UnitilsException e) {
             assertEquals("Unable to execute statement: 'select other from my_table where value = 111'.\n" +
-                    "Reason: BadSqlGrammarException: StatementCallback; bad SQL grammar [select other from my_table where value = 111]; nested exception is java.sql.SQLException: Wrong data type: type: VARCHAR (12) expected: INTEGER value: xxx", e.getMessage());
+                    "Reason: BadSqlGrammarException: StatementCallback; bad SQL grammar [select other from my_table where value = 111]; nested exception is java.sql.SQLSyntaxErrorException: incompatible data type in conversion: from SQL type VARCHAR to java.lang.Integer, value: xxx", e.getMessage());
         }
     }
 
@@ -110,7 +110,7 @@ public class SqlUnitilsGetObjectListIntegrationTest {
             fail("UnitilsException expected");
         } catch (UnitilsException e) {
             assertEquals("Unable to execute statement: 'xxx'.\n" +
-                    "Reason: BadSqlGrammarException: StatementCallback; bad SQL grammar [xxx]; nested exception is java.sql.SQLException: Unexpected token: XXX in statement [xxx]", e.getMessage());
+                    "Reason: BadSqlGrammarException: StatementCallback; bad SQL grammar [xxx]; nested exception is java.sql.SQLSyntaxErrorException: unexpected token: XXX", e.getMessage());
         }
     }
 

@@ -69,9 +69,14 @@ public class SqlUnitilsGetBooleanIntegrationTest {
     }
 
     @Test
-    public void falseWhenNotABooleanValue() throws Exception {
-        boolean result = SqlUnitils.getBoolean("select other from my_table");
-        assertFalse(result);
+    public void exceptionWhenNotABooleanValue() throws Exception {
+        try {
+            SqlUnitils.getBoolean("select other from my_table"); ;
+            fail("UnitilsException expected");
+        } catch (UnitilsException e) {
+            assertEquals("Unable to execute statement: 'select other from my_table'.\n" +
+                    "Reason: BadSqlGrammarException: StatementCallback; bad SQL grammar [select other from my_table]; nested exception is java.sql.SQLSyntaxErrorException: incompatible data type in conversion: from SQL type VARCHAR to java.lang.Boolean, value: xxx", e.getMessage());
+        }
     }
 
     @Test
@@ -120,7 +125,7 @@ public class SqlUnitilsGetBooleanIntegrationTest {
             fail("UnitilsException expected");
         } catch (UnitilsException e) {
             assertEquals("Unable to execute statement: 'xxx'.\n" +
-                    "Reason: BadSqlGrammarException: StatementCallback; bad SQL grammar [xxx]; nested exception is java.sql.SQLException: Unexpected token: XXX in statement [xxx]", e.getMessage());
+                    "Reason: BadSqlGrammarException: StatementCallback; bad SQL grammar [xxx]; nested exception is java.sql.SQLSyntaxErrorException: unexpected token: XXX", e.getMessage());
         }
     }
 }
