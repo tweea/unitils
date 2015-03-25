@@ -21,6 +21,8 @@ import org.junit.Test;
 import java.util.List;
 
 import static java.util.Arrays.asList;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 import static org.unitils.reflectionassert.ReflectionAssert.assertLenientEquals;
 import static org.unitils.reflectionassert.ReflectionAssert.assertReflectionEquals;
 import static org.unitils.reflectionassert.ReflectionComparatorMode.LENIENT_ORDER;
@@ -130,5 +132,27 @@ public class ReflectionAssertCollectionsTest {
     @Test(expected = AssertionError.class)
     public void testAssertEquals_oneElementMore() {
         assertReflectionEquals(listA, listOneElementMore);
+    }
+
+
+    @Test
+    public void assertionFailureWhenDifferentSizes() {
+        List<Integer> list1 = asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 0);
+        List<Integer> list2 = asList(9, 2, 5, 3, 1, 6, 7, 8, 0, 4, 99);
+        try {
+            assertLenientEquals(list1, list2);
+            fail("AssertionError expected");
+        } catch (AssertionError e) {
+            assertEquals("\n" +
+                    "Expected: [1, 2, 3, 4, 5, 6, 7, 8, 9, 0]\n" +
+                    "  Actual: [9, 2, 5, 3, 1, 6, 7, 8, 0, 4, 99]\n" +
+                    "\n" +
+                    "--- Found following differences ---\n" +
+                    "Collections have a different size: Expected 10, actual 11.\n" +
+                    "\n" +
+                    "--- Difference detail tree ---\n" +
+                    " expected: [1, 2, 3, 4, 5, 6, 7, 8, 9, 0]\n" +
+                    "   actual: [9, 2, 5, 3, 1, 6, 7, 8, 0, 4, 99]\n\n", e.getMessage());
+        }
     }
 }
