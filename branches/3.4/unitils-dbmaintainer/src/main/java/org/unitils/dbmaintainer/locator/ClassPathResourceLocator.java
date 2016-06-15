@@ -1,6 +1,9 @@
 package org.unitils.dbmaintainer.locator;
 
+import static org.apache.commons.lang.StringUtils.replace;
+
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Enumeration;
@@ -80,7 +83,8 @@ public abstract class ClassPathResourceLocator {
         List<URL> listScriptResources = new ArrayList<URL>();
 
         for (int i = 0; i < scriptResources.length; i++) {
-            URL urlResource = scriptResources[i].getURL();
+            URL urlResource = fixJarUrl(scriptResources[i].getURL());
+
             listScriptResources.add(urlResource);
             logger.debug("Resource '" + urlResource.toString() + "' added to resourcelist ");
             try {
@@ -92,5 +96,16 @@ public abstract class ClassPathResourceLocator {
         }
 
         return listScriptResources;
+    }
+
+    public URL fixJarUrl(URL url) throws MalformedURLException {
+        if (url.getProtocol().equals("jar")) {
+            String fixedStr = url.toExternalForm();
+            fixedStr = replace(fixedStr, "#", "%23");
+            fixedStr =  replace(fixedStr, "@", "%40");
+
+            return new URL(fixedStr);
+        }
+        return url;
     }
 }
