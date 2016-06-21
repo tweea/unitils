@@ -582,3 +582,23 @@ public class UserDaoTest extends UnitilsJUnit4 {
 
 	Note that, if you use hibernate as persistence provider, you have to set the jpaVendorAdaptor property to 
 	<org.unitils.orm.jpa.util.provider.hibernate.UnitilsHibernateJpaVendorAdapter> for your test EntityManager config.
+	
+	
+	Another tip is to use Spring's {{{http://docs.spring.io/spring/docs/4.2.1.RELEASE/javadoc-api/org/springframework/context/annotation/Configuration.html}@Configuration}} annotation. It's a new feature in Spring 3.0 and with a little adjustment it's usable with Unitils. \
+	If we have a configuration class called AppConfig, than we can define it like this in our test.
+	
++-----+	
+public class SpringWithUnitilsTest extends UnitilsJUnit4  {
+
+    @SpringBeanByType
+    private HelloWorld obj;
+
+
+    @SpringApplicationContext
+    public ConfigurableApplicationContext createApplicationContext() {
+        return new AnnotationConfigApplicationContext(AppConfig.class);
+    }
+}
++-----+	
+	
+	
