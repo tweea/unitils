@@ -41,6 +41,8 @@
       <item name="spring" href="tutorial-spring.html" />
       <item name="springbatch" href="tutorial-springbatch.html" />
       <item name="easymock" href="tutorial-easymock.html" />
+    </menu>
+    <menu name="Third-party extensions">
       <item name="ftp" href="tutorial-ftp.html" />
       <item name="mail" href="tutorial-mail.html" />
       <item name="selenium" href="tutorial-selenium.html" />

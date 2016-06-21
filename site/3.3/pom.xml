@@ -161,28 +161,28 @@
         <dependency>
             <groupId>org.unitils.mail</groupId>
             <artifactId>unitils-mail</artifactId>
-            <version>1.0.0</version>
+            <version>1.0.2</version>
         </dependency>
         <!-- END SNIPPET: mail -->
         <!-- START SNIPPET: ftp -->
         <dependency>
             <groupId>org.unitils.ftp</groupId>
             <artifactId>unitils-ftp</artifactId>
-            <version>1.0.0</version>
+            <version>1.0.1</version>
         </dependency>
         <!-- END SNIPPET: ftp -->
         <!-- START SNIPPET: testlink -->
         <dependency>
             <groupId>org.unitils.testlink</groupId>
             <artifactId>unitils-testlink</artifactId>
-            <version>1.0.2</version>
+            <version>1.0.3</version>
         </dependency>
         <!-- END SNIPPET: testlink -->
         <!-- START SNIPPET: jodatime -->
         <dependency>
             <groupId>org.unitils.jodatime</groupId>
             <artifactId>unitils-jodatime</artifactId>
-            <version>1.0.1</version>
+            <version>1.0.3</version>
         </dependency>
         <!-- END SNIPPET: jodatime -->
         <!-- START SNIPPET: selenium -->
@@ -209,7 +209,7 @@
         <dependency>
             <groupId>org.unitils.objectvalidation</groupId>
             <artifactId>unitils-objectvalidation</artifactId>
-            <version>1.1.7</version>
+            <version>1.1.9</version>
         </dependency>
         <!-- END SNIPPET: objectvalidation -->
         <!-- START SNIPPET: batch -->
