@@ -31,6 +31,66 @@ JBehave
 
 %{include|source=org/unitils/jbehave/SimpleMailTest.java|id=jbehavetest|verbatim=true|set-first-line=1|pad-line-numbers=2}
 	
+	
+* {Database features}
+~~~~~~~~~~~~~~~~~~~~
+	Ofcourse you can use the annotations in the steps but if you reuse youre steps in multiple scenarios than it might be useful to put a meta tag in your story file. 
+
+	At the moment there are three tags that you can use.
+
+	* @SqlScript for executing scripts.
+
+	* @Dataset (@see {{{./tutorial-database.html} database testing}})
+	
+	* @ExpectedDataSet (@see {{{./tutorial-database.html} database testing}})
+
+	If you want to use this feature than you have to override the configureJBehave() method in your testclass and add the following...
+	
+%{include|source=org/unitils/jbehave/SimpleMail2Test.java|id=jbehavedatabasestep|verbatim=true|set-first-line=1|pad-line-numbers=2}	
+	
+	An example of how your story would look like:
+	
+%{include|source=org/unitils/jbehave/Mail.story|id=jbehavedatabasestory|verbatim=true|set-first-line=1|pad-line-numbers=2}	
+	
++-----+
+Warning:
+If you put f.e. an @Dataset meta tag on story and scenario level, than 
+the meta tag on scenario level overrides the meta tag on story level.
+
+The meta tag @SqlScript is always executed before the @DataSet meta tag.
++-----+
+	
+* {Testlink}
+~~~~~~~~~~~~
+	There is also an extra meta tag for Testlink, for if you want to use our {{{./tutorial-testlink.html} unitils-testlink}} module in combination with JBehave.
+	
+	If you want to use this feature than you have to override the configureJBehave() method in your testclass and add the following...
+	
+%{include|source=org/unitils/jbehave/TestlinkTest.java|id=jbehavetestlinktest|verbatim=true|set-first-line=1|pad-line-numbers=2}	
+
+	An example of how your story would look like:
+	
+%{include|source=org/unitils/jbehave/Mail.story|id=jbehavetestlinkstory|verbatim=true|set-first-line=1|pad-line-numbers=2}	
+	
+	You should add the correct properties in the unitils.properties for unitils-testlink to make it completely work.
+	
+* {Screenshots when a step fails}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	If you want that {{{./tutorial-selenium.html} unitils-selenium}} automatically creates a screenshot when a step fails, than you can add the SeleniumScreenshotReporter to your configuration.
+	
+%{include|source=org/unitils/jbehave/ScreenshotTest.java|id=jbehavescreenshotsstep|verbatim=true|set-first-line=1|pad-line-numbers=2}		
+
+	YourSeleniumSteps implements the org.unitils.jbehave.core.reporters.SeleniumSteps interface and contains a ScreenshotTakingwebdriver that can be used in your steps. In this case the screenshots are created in the "screenshots" directory in your target directory.
+	
+	
 * {Rapportation}
 ~~~~~~~~~~~~~~~~
-	JBehave generates rapports in the folder target/jbehave.
+	Jbehave creates rapports in the target/jbehave folder.
+	This is an overview of all the succeeded and failed tests.
+	
+[images/unitilsjbehave_reports.png]
+
+	If there is something wrong, than you can click on the story to check which scenarios are passing and which are failing and why it is failing.
+	
+[images/jbehave_error_report.png]	
+	

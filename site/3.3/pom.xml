@@ -189,7 +189,7 @@
         <dependency>
             <groupId>org.unitils.selenium</groupId>
             <artifactId>unitils-selenium</artifactId>
-            <version>1.0.4</version>
+            <version>1.0.8</version>
         </dependency>
         <!-- END SNIPPET: selenium -->
         <!-- START SNIPPET: soapui -->
@@ -223,7 +223,7 @@
         <dependency>
             <groupId>org.unitils.jbehave</groupId>
             <artifactId>unitils-jbehave</artifactId>
-            <version>1.0.1</version>
+            <version>1.0.2</version>
         </dependency>
         <!-- END SNIPPET: jbehave -->
         <!-- START SNIPPET: compositetest -->
@@ -243,7 +243,8 @@
             <groupId>org.tinyjee</groupId>
             <artifactId>doxia-include-macro</artifactId>
             <version>1.0</version>
-        </dependency> 
+        </dependency>
+     
         
     </dependencies>
 

@@ -19,7 +19,7 @@ import org.unitils.selenium.annotation.TestWebDriver;
  */
 //START SNIPPET: screenshotTakingWebdriverExample
 @RunWith(UnitilsBlockJUnit4ClassRunner.class)
-public class ScreenshotTakingWebdriverExample {
+public class ScreenshotTakingWebdriverExampleTest {
     
     @BaseUrl
     private String baseUrl;

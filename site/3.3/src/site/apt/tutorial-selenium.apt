@@ -91,7 +91,7 @@ Selenium
 	
 	But if you want to make screenshots while selenium is running your test, than you can create a org.unitils.selenium.ScreenshotTakingWebDriver and call the method saveScreenshot().
 
-%{include|source=org/unitils/selenium/ScreenshotTakingWebdriverExample.java|id=screenshotTakingWebdriverExample|verbatim=true|set-first-line=1|pad-line-numbers=2}
+%{include|source=org/unitils/selenium/ScreenshotTakingWebdriverExampleTest.java|id=screenshotTakingWebdriverExample|verbatim=true|set-first-line=1|pad-line-numbers=2}
 
 	The default location is under target/screenshot/[nameOfTheTest]. \
 	This is a nice feature for analists, they don't need to do stupid activities like taking screenshots anymore.
@@ -135,3 +135,28 @@ Selenium
 	You can print the selenium logging in a file or in the console.
 
 %{include|source=org/unitils/selenium/seleniumprop.properties|id=seleniumproplogging|verbatim=true|set-first-line=1|pad-line-numbers=2}
+
+* {Downloading files with Selenium}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	Downloading files with Selenium can be a little bit tricky. \
+	For Firefox and Chrome it's quite easy... just add the download folder property 
+	in your unitils.properties and the files are downloaded in that folder. The filetype property can be set, but it is only needed if you want to download a specific type of file.
+
+%{include|source=org/unitils/selenium/seleniumprop.properties|id=seleniumpropdownloadbasic|verbatim=true|set-first-line=1|pad-line-numbers=2}
+	
+	But if you want to test your application with Internet Explorer than it can be more difficult, because there appears a window that you can't get rid off.
+	There are a few options, you can work with {{{https://www.autoitscript.com/site/autoit}AutoIt}} or you can use a {{{http://docs.oracle.com/javase/7/docs/api/java/awt/Robot.html}robot}}.
+	We created a robot for downloading files with Internet Explorer 9.
+	If you add the following property in your unitils.properties, than you only have to change the property if you change your Internet Explorer..
+	
+%{include|source=org/unitils/selenium/seleniumprop.properties|id=seleniumpropdownloadRobotDownloader|verbatim=true|set-first-line=1|pad-line-numbers=2}
+
+	The following example will try to download a file with IE, verifies if the file actually exists and deletes the file at the end of the test.
+	
+%{include|source=org/unitils/selenium/downloader/DownloadFileExampleTest.java|id=downloadFileExample|verbatim=true|set-first-line=1|pad-line-numbers=2}
+	
+	If you know the link and you only want to test how the file looks like, than you can check it another way.
+	
+%{include|source=org/unitils/selenium/downloader/DownloadsTest.java|id=downloadUrlFileUtilsExample|verbatim=true|set-first-line=1|pad-line-numbers=2}
+
+	The files (downloaded with the RobotDownloader) are downloaded in the user downloads folder.

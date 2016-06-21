@@ -1,18 +1,20 @@
 package org.unitils.jbehave;
 
+import org.unitils.jbehave.core.reporters.UnitilsFormats;
 
 
 /**
- * Test if everything from the {@link org.unitils.mail.MailModule} works.
+ * explain how to use the testlink format.
  *
  * @author Willemijn Wouters
  *
- * @since 1.0.0
+ * @since
  *
  */
-//START SNIPPET: jbehavetest
-public class SimpleMailTest extends UnitilsJUnitStories {
+public class TestlinkTest extends UnitilsJUnitStories {
 
+
+    //START SNIPPET: jbehavetestlinktest
     /**
      * @see org.unitils.jbehave.UnitilsJUnitStories#configureJBehave()
      */
@@ -20,9 +22,7 @@ public class SimpleMailTest extends UnitilsJUnitStories {
     public JBehaveConfiguration configureJBehave() {
         return super.configureJBehave()
             .addSteps(new SimpleMailStep())
-            .storyFile("Mail.story")
-            .storyPackage("org/unitils/jbehave/stories");
+            .addFormat(UnitilsFormats.TESTLINK);
     }
-
+  //END SNIPPET: jbehavetestlinktest
 }
-//END SNIPPET: jbehavetest
