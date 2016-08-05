@@ -7,6 +7,7 @@ import java.util.Properties;
 import org.easymock.EasyMock;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.BeansException;
@@ -58,11 +59,16 @@ public class ProfileModuleTest {
     private static final String PACKAGEPROFILE = "org.unitils.spring.profile";
     
 
+    @BeforeClass
+    public static void setUpClass() {
+        Unitils.getInstance().init();
+    }
     /**
      * @throws java.lang.Exception
      */
     @Before
     public void setUp() throws Exception {
+        //annoCtx = EasyMockUnitils.createMock(AnnotationConfigApplicationContext.class);
         profileModule = new ProfileModule();
         Properties config = new ConfigurationLoader().loadConfiguration();
         profileModule.init(config);

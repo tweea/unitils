@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.Properties;
 
 import javax.sql.DataSource;
+import org.junit.AfterClass;
 
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -13,6 +14,7 @@ import org.junit.runner.RunWith;
 import org.unitils.UnitilsJUnit4TestClassRunner;
 import org.unitils.core.Unitils;
 import org.unitils.database.DatabaseModule;
+import org.unitils.database.DatabaseUnitils;
 import org.unitils.database.SQLUnitils;
 import org.unitils.database.annotations.TestDataSource;
 import org.unitils.database.sqlassert.SqlAssert;
@@ -46,14 +48,27 @@ public class MultiDatabaseIntTest {
     public static void beforeClass() throws FileNotFoundException, IOException {
         Properties config = getCorrectProperties();
 
+        //DataabseUnitils.clearSchemas(DATABASE2);
+        //DatabaseUnitils.clearSchemas(DATABASE1);
+       //DatabaseUnitils.updateDatabase(DATABASE2);
+        
+        
         DatabaseModule databaseModule = Unitils.getInstance().getModulesRepository().getModuleOfType(DatabaseModule.class);
         databaseModule.init(config);
         databaseModule.afterInit();
         DbUnitModule dbunitModule = Unitils.getInstance().getModulesRepository().getModuleOfType(DbUnitModule.class);
         dbunitModule.init(config);
         dbunitModule.afterInit();
+        //DatabaseUnitils.clearSchemas(DATABASE1);
+        //DatabaseUnitils.clearSchemas(DATABASE2);
+        DatabaseUnitils.generateDatasetDefinition(DATABASE1);
+        DatabaseUnitils.generateDatasetDefinition(DATABASE2);
+        DatabaseUnitils.updateSequences(DATABASE1);
+        DatabaseUnitils.updateSequences(DATABASE2);
+        
+        
 
-       // SQLUnitils.executeUpdate("CREATE TABLE PERSON (PERSONID INT NOT NULL, PERSONNAME VARCHAR(20));", databaseModule.getWrapper(DATABASE2).getDataSource());
+        //SQLUnitils.executeUpdate("CREATE TABLE PERSON (PERSONID INT NOT NULL, PERSONNAME VARCHAR(20));", databaseModule.getWrapper(DATABASE1).getDataSource());
     }
 
     /**
@@ -110,10 +125,15 @@ public class MultiDatabaseIntTest {
 
 
     }
+    
+    @AfterClass
+    public static void afterTestClass() {
+        Unitils.getInstance().init();
+    }
 
     private static Properties getCorrectProperties() {
         Properties config = (Properties) Unitils.getInstance().getConfiguration().clone();
-        config.setProperty("database.names", "database1, database2");
+        config.setProperty("database.names", "database1,database2");
         config.setProperty("database.userName", "sa");
         config.setProperty("database.password", "");
         config.setProperty("database.schemaNames", "public");
@@ -130,7 +150,7 @@ public class MultiDatabaseIntTest {
         //config.setProperty("database.dialect.database1", "hsqldb");
         config.setProperty("database.dialect.database2", "h2");
         //config.setProperty("database.dialect.database2", "hsqldb");
-        config.setProperty("database.dbMaintain.enabled", "true");
+        config.setProperty("database.dbMaintain.enabled", "false");
         config.setProperty("dbMaintainer.autoCreateExecutedScriptsTable", "true");
         config.setProperty("dbMaintainer.autoCreateDbMaintainScriptsTable", "true");
         config.setProperty("updateDataBaseSchema.enabled", "true");

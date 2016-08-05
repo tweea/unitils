@@ -101,7 +101,6 @@ public class DtdDataSetStructureGeneratorTest extends UnitilsJUnit4 {
             "   COLUMN1 CDATA #IMPLIED" +
             "   COLUMN2 CDATA #IMPLIED>";
 
-
         dataSetStructureGenerator.generateDataSetStructure();
 
         assertTrue(dtdFile.exists());
@@ -120,6 +119,7 @@ public class DtdDataSetStructureGeneratorTest extends UnitilsJUnit4 {
             st = conn.createStatement();
             st.execute("create table tableOne(columnA varchar(1) not null, columnB varchar(1) not null, columnC varchar(1))");
             st.execute("create table tableTwo(column1 varchar(1), column2 varchar(1))");
+            st.executeQuery("drop table if exists DBMAINTAIN_SCRIPTS");
 
         } finally {
             closeQuietly(conn, st, null);
@@ -146,6 +146,7 @@ public class DtdDataSetStructureGeneratorTest extends UnitilsJUnit4 {
             } catch (SQLException e) {
                 // Ignored
             }
+            
         } finally {
             closeQuietly(conn, st, null);
         }
@@ -157,6 +158,7 @@ public class DtdDataSetStructureGeneratorTest extends UnitilsJUnit4 {
         configuration.setProperty("dbMaintainer.autoCreateDbMaintainScriptsTable", "false");
         configuration.setProperty("updateDataBaseSchema.enabled", "false");
         configuration.setProperty("dbMaintainer.autoCreateExecutedScriptsTable", "false");
+        configuration.setProperty("dbMaintainer.fromScratch.enabled", "true");
 
         DatabaseModule databaseModule = Unitils.getInstance().getModulesRepository().getModuleOfType(DatabaseModule.class);
         databaseModule.init(configuration);
