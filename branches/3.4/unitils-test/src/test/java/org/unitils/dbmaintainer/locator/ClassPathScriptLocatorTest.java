@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Properties;
 
 import org.easymock.EasyMock;
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -53,9 +54,13 @@ public class ClassPathScriptLocatorTest {
         urlList.add(getClass().getResource(scriptDir + "002_Initial_TESTcreate.sql"));
         urlList.add(getClass().getResource(scriptDir + "003_Initial_TESTcreate.sql"));
         Assert.assertFalse("Some of the needed resources is not found", urlList.contains(null));
-        configuration = Unitils.getInstance().getConfiguration();
+        configuration = (Properties) Unitils.getInstance().getConfiguration().clone();
     }
 
+    @AfterClass
+    public static void afterTestClass() {
+        Unitils.getInstance().init();
+    }
     /*** */
     @Test
     public void loadScriptsTest() {

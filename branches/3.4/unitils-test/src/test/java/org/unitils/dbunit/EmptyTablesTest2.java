@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.util.Properties;
 
 import javax.sql.DataSource;
+import org.junit.AfterClass;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -161,7 +162,10 @@ public class EmptyTablesTest2 {
        SqlAssert.assertMultipleRowSqlResult("select * from person", expected);
     }
 
-
+@AfterClass
+    public static void afterTestClass() {
+        Unitils.getInstance().init();
+    }
 
     private static Properties getCorrectProperties() {
         Properties config = (Properties) Unitils.getInstance().getConfiguration().clone();
@@ -177,7 +181,7 @@ public class EmptyTablesTest2 {
         config.setProperty("database.dialect.database2", "h2");
         config.setProperty("database.dbMaintain.enabled", "true");
         config.setProperty("dbMaintainer.autoCreateExecutedScriptsTable", "true");
-        config.setProperty("dbMaintainer.autoCreateDbMaintainScriptsTable", "false");
+        config.setProperty("dbMaintainer.autoCreateDbMaintainScriptsTable", "true");
         config.setProperty("updateDataBaseSchema.enabled", "true");
 
         config.setProperty("dbMaintainer.updateSequences.enabled", "true");
@@ -187,7 +191,7 @@ public class EmptyTablesTest2 {
         config.setProperty("unitils.module.jpa.enabled", "false");
         config.setProperty("unitils.module.spring.enabled", "false");
         config.setProperty("dbMaintainer.script.locations", "src/test/resources/dbscripts");
-        config.setProperty("dbMaintainer.fromScratch.enabled", "false");
+        config.setProperty("dbMaintainer.fromScratch.enabled", "true");
         return config;
     }
 }

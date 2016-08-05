@@ -13,6 +13,7 @@ import java.util.Properties;
 import javax.sql.DataSource;
 
 import org.apache.commons.io.FilenameUtils;
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -76,6 +77,11 @@ public class DatabaseModuleMultipleDatabasesTest {
         Assert.assertNotNull(obj.dataSource);
         Assert.assertEquals("jdbc:h2:~/test", obj.dataSource.getConnection().getMetaData().getURL());
 
+    }
+    
+    @AfterClass
+    public static void afterTestClass() {
+        Unitils.getInstance().init();
     }
 
     private DataSourceWrapper getWrapper1() {

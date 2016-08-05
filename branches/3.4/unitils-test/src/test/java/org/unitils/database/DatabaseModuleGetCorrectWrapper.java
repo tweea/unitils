@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Properties;
+import org.junit.AfterClass;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -123,7 +124,10 @@ public class DatabaseModuleGetCorrectWrapper {
         sut.getWrapper(databaseName);
 
     }
-    
+    @AfterClass
+    public static void afterTestClass() {
+        Unitils.getInstance().init();
+    }
     
     private static Properties getCorrectProperties() {
         Properties config = (Properties) Unitils.getInstance().getConfiguration().clone();

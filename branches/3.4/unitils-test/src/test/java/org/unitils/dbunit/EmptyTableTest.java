@@ -1,6 +1,8 @@
 package org.unitils.dbunit;
 
 import java.util.Properties;
+import org.junit.After;
+import org.junit.AfterClass;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -45,6 +47,11 @@ public class EmptyTableTest {
         SqlAssert.assertSingleRowSqlResult("select * from person where personID='8'", new String[]{"8", "Myrthe"});
     }
     
+    @AfterClass
+    public static void afterTestClass() {
+        Unitils.getInstance().init();
+    }
+    
     private static Properties getCorrectProperties() {
         Properties config = (Properties) Unitils.getInstance().getConfiguration().clone();
         config.setProperty("database.names", "database1, database2");
@@ -59,17 +66,17 @@ public class EmptyTableTest {
         config.setProperty("database.dialect.database2", "h2");
         config.setProperty("database.dbMaintain.enabled", "false");
         config.setProperty("dbMaintainer.autoCreateExecutedScriptsTable", "true");
-        config.setProperty("dbMaintainer.autoCreateDbMaintainScriptsTable", "false");
+        config.setProperty("dbMaintainer.autoCreateDbMaintainScriptsTable", "true");
         config.setProperty("updateDataBaseSchema.enabled", "true");
         
         config.setProperty("dbMaintainer.updateSequences.enabled", "true");
-        config.setProperty("dbMaintainer.keepRetryingAfterError.enabled","false");
+        config.setProperty("dbMaintainer.keepRetryingAfterError.enabled","true");
         config.setProperty("org.unitils.dbmaintainer.script.ScriptSource.implClassName", "org.unitils.dbmaintainer.script.impl.DefaultScriptSource");
         config.setProperty("unitils.module.hibernate.enabled", "false");
         config.setProperty("unitils.module.jpa.enabled", "false");
         config.setProperty("unitils.module.spring.enabled", "false");
         config.setProperty("dbMaintainer.script.locations", "src/test/resources/dbscripts");
-        config.setProperty("dbMaintainer.fromScratch.enabled", "false");
+        config.setProperty("dbMaintainer.fromScratch.enabled", "true");
         return config;
     }
 }
