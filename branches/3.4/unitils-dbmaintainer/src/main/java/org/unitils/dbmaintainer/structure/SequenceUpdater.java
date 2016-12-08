@@ -32,5 +32,11 @@ public interface SequenceUpdater extends DatabaseAccessing {
      * easily.
      */
     void updateSequences();
+    
+    /**
+     * Sets all the sequences to the lowest acceptable value.
+     * This can be defined with the property "sequenceUpdater.sequencevalue.lowestacceptable".
+     */
+    void restartSequences();
 
 }

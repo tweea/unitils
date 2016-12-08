@@ -214,6 +214,13 @@ public class DataSourceWrapper {
     public void updateSequences() {
         getConfiguredDatabaseTaskInstance(SequenceUpdater.class).updateSequences();
     }
+    /**
+     * Sets all the sequences to the lowest acceptable value.
+     * This can be defined with the property "sequenceUpdater.sequencevalue.lowestacceptable".
+     */
+    public void restartSequences() {
+        getConfiguredDatabaseTaskInstance(SequenceUpdater.class).restartSequences();
+    }
 
     /**
      * @return A configured instance of {@link DatabaseAccessing} of the given type
