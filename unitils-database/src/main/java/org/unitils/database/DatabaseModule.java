@@ -106,6 +106,12 @@ public class DatabaseModule implements Module {
     public static final String PROPERTY_UPDATEDATABASESCHEMA_ENABLED = "updateDataBaseSchema.enabled";
 
     /**
+     * Sets all the sequences to the lowest acceptable value.
+     * This can be defined with the property "sequenceUpdater.sequencevalue.lowestacceptable".
+     */
+    public static final String PROPERTY_RESET_SEQUENCES = "reset.sequences.to.lowest.value.before.test";
+    
+    /**
      * Property indicating whether the datasource injected onto test fields
      * annotated with @TestDataSource or retrieved using
      * {@link #getTransactionalDataSourceAndActivateTransactionIfNeeded(Object)}
@@ -458,7 +464,6 @@ public class DatabaseModule implements Module {
                 for (String databaseName : databaseNames) {
                     DataSourceWrapper wrapper = getWrapper(databaseName);
                     setWrapper(wrapper);
-
                 }
 
             } else {
@@ -472,6 +477,8 @@ public class DatabaseModule implements Module {
                 throw new UnitilsException(e.getMessage(), e);
             }
             startTransactionForTestMethod(testObject, testMethod);
+            
+            
         }
 
         @Override
@@ -509,6 +516,10 @@ public class DatabaseModule implements Module {
         if (!wrappers.keySet().contains(wrapper.getDatabaseName())) {
             wrappers.put(wrapper.getDatabaseName(), wrapper);
             registerTransactionManagementConfiguration(wrapper);
+            
+            if (PropertyUtils.getBoolean(PROPERTY_RESET_SEQUENCES, false, configuration)) {
+                wrapper.restartSequences();
+            }
         }
 
     }
