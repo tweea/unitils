@@ -67,6 +67,19 @@ public class DefaultSequenceUpdater extends BaseDatabaseAccessor implements Sequ
             incrementIdentityColumnsWithLowValue(dbSupport);
         }
     }
+    
+    /**
+     * Sets all the sequences to the lowest acceptable value.
+     * This can be defined with the property "sequenceUpdater.sequencevalue.lowestacceptable".
+     */
+    @Override
+    public void restartSequences() {
+        for (DbSupport dbSupport : dbSupports) {
+            restartWithLowValue(dbSupport);
+        }
+        
+    }
+
 
 
     /**
@@ -112,5 +125,24 @@ public class DefaultSequenceUpdater extends BaseDatabaseAccessor implements Sequ
             }
         }
     }
+    
+    
+    /**
+     * Sets all the sequences to the lowest acceptable value.
+     * This can be defined with the property "sequenceUpdater.sequencevalue.lowestacceptable".
+     * 
+     * @param dbSupport
+     */
+    public void restartWithLowValue(DbSupport dbSupport) {
+        if (!dbSupport.supportsSequences()) {
+            return;
+        }
+        Set<String> sequenceNames = dbSupport.getSequenceNames();
+        for (String sequenceName : sequenceNames) {
+            dbSupport.incrementSequenceToValue(sequenceName, lowestAcceptableSequenceValue);
+        }
+    }
 
+
+   
 }

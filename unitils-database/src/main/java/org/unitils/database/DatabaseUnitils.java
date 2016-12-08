@@ -193,6 +193,10 @@ public class DatabaseUnitils {
     public static void updateSequences(String databaseName) {
         getDatabaseModule().getWrapper(databaseName).updateSequences();
     }
+    
+    public static void restartSequences(String databaseName) {
+        getDatabaseModule().getWrapper(databaseName).restartSequences();
+    }
 
 
     /**
