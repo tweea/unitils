@@ -19,6 +19,8 @@ import static org.easymock.EasyMock.reportMatcher;
 import static org.unitils.reflectionassert.ReflectionComparatorMode.IGNORE_DEFAULTS;
 import static org.unitils.reflectionassert.ReflectionComparatorMode.LENIENT_ORDER;
 
+import org.easymock.EasyMock;
+import org.easymock.internal.MocksControl;
 import org.unitils.core.Unitils;
 import org.unitils.core.UnitilsException;
 import org.unitils.easymock.util.Calls;
@@ -160,6 +162,16 @@ public class EasyMockUnitils {
      */
     public static void replay() {
         getEasyMockModule().replay();
+    }
+    
+    /**
+     * If you create a mock with {@link EasyMock} than you can add the mock to the controllist in the {@link EasyMockModule} with this method.
+     * @param object
+     */
+    public static void addMockstoControlsList(Object... objects) {
+        for (Object object : objects) {
+            getEasyMockModule().addMocksControlToList(MocksControl.getControl(object));
+        }
     }
 
 
