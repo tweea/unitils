@@ -15,21 +15,27 @@
  */
 package org.unitils.core.junit;
 
+import java.lang.reflect.Method;
+
 import org.junit.runners.model.Statement;
-import org.unitils.core.engine.UnitilsTestListener;
+import org.unitils.core.TestListener;
 
 /**
  * @author Tim Ducheyne
  */
 public class AfterTestMethodStatement extends Statement {
 
-    protected UnitilsTestListener unitilsTestListener;
+    protected TestListener unitilsTestListener;
     protected Statement nextStatement;
+    private Object testObject;
+    private Method testMethod;
 
 
-    public AfterTestMethodStatement(UnitilsTestListener unitilsTestListener, Statement nextStatement) {
+    public AfterTestMethodStatement(TestListener unitilsTestListener, Statement nextStatement, Method testMethod, Object testObject) {
         this.unitilsTestListener = unitilsTestListener;
         this.nextStatement = nextStatement;
+        this.testObject = testObject;
+        this.testMethod = testMethod;
     }
 
 
@@ -42,7 +48,7 @@ public class AfterTestMethodStatement extends Statement {
             testThrowable = e;
         }
         try {
-            unitilsTestListener.afterTestMethod(testThrowable);
+            unitilsTestListener.afterTestMethod(testObject, testMethod, testThrowable);
         } catch (Throwable e) {
             if (testThrowable == null) {
                 throw e;

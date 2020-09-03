@@ -1,5 +1,5 @@
 /*
- * Copyright 2013,  Unitils.org
+ * Copyright 2008,  Unitils.org
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,34 +15,30 @@
  */
 package org.unitils.inject.annotation;
 
-import org.unitils.core.annotation.AnnotationDefault;
-import org.unitils.core.annotation.FieldAnnotation;
-import org.unitils.inject.listener.InjectIntoFieldAnnotationListener;
+import static java.lang.annotation.ElementType.FIELD;
+import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
-import static java.lang.annotation.ElementType.FIELD;
-import static java.lang.annotation.RetentionPolicy.RUNTIME;
-
 /**
- * Annotation to inject the object assigned to the annotated field to the object defined by the target
- * attribute (or the object(s) assigned to the field annotated with {@link TestedObject}.
+ * Annotation indicating that the the {@link org.unitils.inject.InjectModule} should try to inject the object assigned to
+ * the annotated field to the object defined by the target attribute (or the object(s) assigned to the field annotated
+ * with {@link TestedObject}.
  * <p/>
  * Explicit injection is used, which means that the object is injected to the property indicated by the {@link #property()}
  * attribute.
  *
- * @author Tim Ducheyne
  * @author Filip Neven
+ * @author Tim Ducheyne
  */
 @Target(FIELD)
 @Retention(RUNTIME)
-@FieldAnnotation(InjectIntoFieldAnnotationListener.class)
 public @interface InjectInto {
 
     /**
-     * The name(s) of the field(s) that references the object to which the object in the annotated field should be injected.
-     * If not specified, the targets are defined by the fields annotated with {@link TestedObject}
+     * The name of the field that references the object to which the object in the annotated field should be injected.
+     * If not specified, the target is defined by the field annotated with {@link TestedObject}
      *
      * @return the target field, null for tested object
      */
@@ -55,5 +51,4 @@ public @interface InjectInto {
      */
     String property();
 
-    @AnnotationDefault("inject.autoCreateInnerFields") boolean autoCreateInnerFields() default true;
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2013,  Unitils.org
+ * Copyright 2008,  Unitils.org
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,12 +15,17 @@
  */
 package org.unitils.database;
 
-import org.unitils.core.Unitils;
-import org.unitils.database.core.DataSourceService;
-import org.unitils.database.core.DataSourceWrapper;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.unitils.core.UnitilsException;
+import static org.unitils.thirdparty.org.apache.commons.dbutils.DbUtils.closeQuietly;
 
-import java.util.List;
-
+import javax.sql.DataSource;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Utilities for executing statements and queries.
@@ -28,335 +33,159 @@ import java.util.List;
  * @author Tim Ducheyne
  * @author Filip Neven
  */
-public class SqlUnitils {
+public class SQLUnitils {
+
+
+    /* The logger instance for this class */
+    private static final Log logger = LogFactory.getLog(SQLUnitils.class);
+
 
     /**
-     * Executes the given update statement on the default database.
+     * Executes the given update statement.
      *
-     * @param sql The sql string for retrieving the items
+     * @param sql        The sql string for retrieving the items
+     * @param dataSource The data source, not null
      * @return The nr of updates
      */
-    public static int executeUpdate(String sql) {
-        return executeUpdate(sql, null);
+    public static int executeUpdate(String sql, DataSource dataSource) {
+        logger.debug(sql);
 
-    }
-
-    /**
-     * Executes the given update statement on the database with the given name.
-     *
-     * @param sql          The sql string for retrieving the items
-     * @param databaseName The database name, null for the default database
-     * @return The nr of updates
-     */
-    public static int executeUpdate(String sql, String databaseName) {
-        DataSourceWrapper dataSourceWrapper = getDataSourceService().getDataSourceWrapper(databaseName);
-        return dataSourceWrapper.executeUpdate(sql);
+        Connection connection = null;
+        Statement statement = null;
+        
+        try {
+            connection = dataSource.getConnection();
+            statement = connection.createStatement();
+            return statement.executeUpdate(sql);
+        } catch (Exception e) {
+            throw new UnitilsException("Error while executing statement: " + sql, e);
+        } finally {
+            closeQuietly(connection, statement, null);
+        }
     }
 
 
     /**
      * Executes the given statement ignoring all exceptions.
      *
-     * @param sql The sql string for retrieving the items
-     * @return The nr of updates, -1 if not successful
+     * @param sql        The sql string for retrieving the items
+     * @param dataSource The data source, not null
+     * @return The nr of updates, -1 if not succesful
      */
-    public static int executeUpdateQuietly(String sql) {
-        return executeUpdateQuietly(sql, null);
+    public static int executeUpdateQuietly(String sql, DataSource dataSource) {
+        try {
+            return executeUpdate(sql, dataSource);
+        } catch (UnitilsException e) {
+            // Ignored
+            return -1;
+        }
     }
 
+
     /**
-     * Executes the given statement ignoring all exceptions.
+     * Returns the long extracted from the result of the given query. If no value is found, a {@link UnitilsException}
+     * is thrown.
      *
-     * @param sql          The sql string for retrieving the items
-     * @param databaseName The database name, null for the default database
-     * @return The nr of updates, -1 if not successful
+     * @param sql        The sql string for retrieving the items
+     * @param dataSource The data source, not null
+     * @return The long item value
      */
-    public static int executeUpdateQuietly(String sql, String databaseName) {
-        DataSourceWrapper dataSourceWrapper = getDataSourceService().getDataSourceWrapper(databaseName);
-        return dataSourceWrapper.executeUpdateQuietly(sql);
+    public static long getItemAsLong(String sql, DataSource dataSource) {
+        logger.debug(sql);
+
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
+        try {
+            connection = dataSource.getConnection();
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery(sql);
+            if (resultSet.next()) {
+                return resultSet.getLong(1);
+            }
+        } catch (Exception e) {
+            throw new UnitilsException("Error while executing statement: " + sql, e);
+        } finally {
+            closeQuietly(connection, statement, resultSet);
+        }
+
+        // in case no value was found, throw an exception
+        throw new UnitilsException("No item value found: " + sql);
     }
 
 
     /**
-     * @param tableName The table, not null
-     * @return The nr of rows in the given table for the default database
-     */
-    public static long getTableCount(String tableName) {
-        return getTableCount(tableName, null);
-    }
-
-    /**
-     * @param tableName    The table, not null
-     * @param databaseName The database name, null for the default database
-     * @return The nr of rows in the given table
-     */
-    public static long getTableCount(String tableName, String databaseName) {
-        DataSourceWrapper dataSourceWrapper = getDataSourceService().getDataSourceWrapper(databaseName);
-        return dataSourceWrapper.getTableCount(tableName);
-    }
-
-    /**
-     * @param tableName The table, not null
-     * @return True if the given table is empty for the default database
-     */
-    public static boolean isTableEmpty(String tableName) {
-        return isTableEmpty(tableName, null);
-    }
-
-    /**
-     * Utility method to check whether the given table is empty on the database with the given name.
+     * Returns the value extracted from the result of the given query. If no value is found, a {@link UnitilsException}
+     * is thrown.
      *
-     * @param tableName    The table, not null
-     * @param databaseName The database name, null for the default database
-     * @return True if the given table is empty
+     * @param sql        The sql string for retrieving the items
+     * @param dataSource The data source, not null
+     * @return The string item value
      */
-    public static boolean isTableEmpty(String tableName, String databaseName) {
-        DataSourceWrapper dataSourceWrapper = getDataSourceService().getDataSourceWrapper(databaseName);
-        return dataSourceWrapper.isTableEmpty(tableName);
+    public static String getItemAsString(String sql, DataSource dataSource) {
+        logger.debug(sql);
+
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
+        try {
+            connection = dataSource.getConnection();
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery(sql);
+            if (resultSet.next()) {
+                return resultSet.getString(1);
+            }
+        } catch (Exception e) {
+            throw new UnitilsException("Error while executing statement: " + sql, e);
+        } finally {
+            closeQuietly(connection, statement, resultSet);
+        }
+
+        // in case no value was found, throw an exception
+        throw new UnitilsException("No item value found: " + sql);
     }
 
 
     /**
-     * Returns the string extracted from the result of the given query on the default database.
-     * If no value is found, a {@link org.unitils.core.UnitilsException} is thrown.
+     * Returns the items extracted from the result of the given query.
      *
-     * @param sql The sql string for retrieving the items, not null
-     * @return The string value, not null
+     * @param sql        The sql string for retrieving the items
+     * @param dataSource The data source, not null
+     * @return The items, not null
      */
-    public static String getString(String sql) {
-        return getString(sql, null);
-    }
+    public static Set<String> getItemsAsStringSet(String sql, DataSource dataSource) {
+        logger.debug(sql);
 
-    /**
-     * Returns the string extracted from the result of the given query on the database with the given name.
-     * If no value is found, a {@link org.unitils.core.UnitilsException} is thrown.
-     *
-     * @param sql          The sql string for retrieving the items
-     * @param databaseName The database name, null for the default database
-     * @return The string value
-     */
-    public static String getString(String sql, String databaseName) {
-        DataSourceWrapper dataSourceWrapper = getDataSourceService().getDataSourceWrapper(databaseName);
-        return dataSourceWrapper.getString(sql);
-    }
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
+        try {
+            connection = dataSource.getConnection();
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery(sql);
+            Set<String> result = new HashSet<String>();
+            while (resultSet.next()) {
+                result.add(resultSet.getString(1));
+            }
+            return result;
 
-    /**
-     * Returns the strings extracted from the result of the given query on the default database.
-     *
-     * @param sql The sql string for retrieving the items, not null
-     * @return The strings, not null
-     */
-    public static List<String> getStringList(String sql) {
-        return getStringList(sql, null);
-    }
-
-    /**
-     * Returns the value extracted from the result of the given query on the database with the given name.
-     * If no value is found, a {@link org.unitils.core.UnitilsException} is thrown.
-     *
-     * @param sql          The sql string for retrieving the items, not null
-     * @param databaseName The database name, null for the default database
-     * @return The string value, not null
-     */
-    public static List<String> getStringList(String sql, String databaseName) {
-        DataSourceWrapper dataSourceWrapper = getDataSourceService().getDataSourceWrapper(databaseName);
-        return dataSourceWrapper.getStringList(sql);
+        } catch (Exception e) {
+            throw new UnitilsException("Error while executing statement: " + sql, e);
+        } finally {
+            closeQuietly(connection, statement, resultSet);
+        }
     }
 
 
     /**
-     * Returns the boolean extracted from the result of the given query on the default database.
-     * If no value is found, a {@link org.unitils.core.UnitilsException} is thrown.
+     * Utility method to check whether the given table is empty.
      *
-     * @param sql The sql string for retrieving the items, not null
-     * @return The boolean value
+     * @param tableName  The table, not null
+     * @param dataSource The data source, not null
+     * @return True if empty
      */
-    public static boolean getBoolean(String sql) {
-        return getBoolean(sql, null);
+    public static boolean isEmpty(String tableName, DataSource dataSource) {
+        return getItemAsLong("select count(1) from " + tableName, dataSource) == 0;
     }
 
-    /**
-     * Returns the boolean extracted from the result of the given query on the database with the given name.
-     * If no value is found, a {@link org.unitils.core.UnitilsException} is thrown.
-     *
-     * @param sql          The sql string for retrieving the items, not null
-     * @param databaseName The database name, null for the default database
-     * @return The boolean value
-     */
-    public static boolean getBoolean(String sql, String databaseName) {
-        DataSourceWrapper dataSourceWrapper = getDataSourceService().getDataSourceWrapper(databaseName);
-        return dataSourceWrapper.getBoolean(sql);
-    }
-
-    /**
-     * Returns the booleans extracted from the result of the given query on the default database.
-     *
-     * @param sql The sql string for retrieving the items, not null
-     * @return The booleans, not null
-     */
-    public static List<Boolean> getBooleanList(String sql) {
-        return getBooleanList(sql, null);
-    }
-
-    /**
-     * Returns the booleans extracted from the result of the given query on the database with the given name.
-     *
-     * @param sql          The sql string for retrieving the items, not null
-     * @param databaseName The database name, null for the default database
-     * @return The booleans, not null
-     */
-    public static List<Boolean> getBooleanList(String sql, String databaseName) {
-        DataSourceWrapper dataSourceWrapper = getDataSourceService().getDataSourceWrapper(databaseName);
-        return dataSourceWrapper.getBooleanList(sql);
-    }
-
-
-    /**
-     * Returns the int extracted from the result of the given query on the default database.
-     * If no value is found, a {@link org.unitils.core.UnitilsException} is thrown.
-     *
-     * @param sql The sql string for retrieving the items, not null
-     * @return The int value
-     */
-    public static int getInteger(String sql) {
-        return getInteger(sql, null);
-    }
-
-    /**
-     * Returns the int extracted from the result of the given query on the database with the given name.
-     * If no value is found, a {@link org.unitils.core.UnitilsException} is thrown.
-     *
-     * @param sql          The sql string for retrieving the items, not null
-     * @param databaseName The database name, null for the default database
-     * @return The int value
-     */
-    public static int getInteger(String sql, String databaseName) {
-        DataSourceWrapper dataSourceWrapper = getDataSourceService().getDataSourceWrapper(databaseName);
-        return dataSourceWrapper.getInteger(sql);
-    }
-
-    /**
-     * Returns the integers extracted from the result of the given query on the default database.
-     *
-     * @param sql The sql string for retrieving the items, not null
-     * @return The integers, not null
-     */
-    public static List<Integer> getIntegerList(String sql) {
-        return getIntegerList(sql, null);
-    }
-
-    /**
-     * Returns the int extracted from the result of the given query on the database with the given name.
-     *
-     * @param sql          The sql string for retrieving the items, not null
-     * @param databaseName The database name, null for the default database
-     * @return The integers, not null
-     */
-    public static List<Integer> getIntegerList(String sql, String databaseName) {
-        DataSourceWrapper dataSourceWrapper = getDataSourceService().getDataSourceWrapper(databaseName);
-        return dataSourceWrapper.getIntegerList(sql);
-    }
-
-
-    /**
-     * Returns the long extracted from the result of the given query on the default database.
-     * If no value is found, a {@link org.unitils.core.UnitilsException} is thrown.
-     *
-     * @param sql The sql string for retrieving the items, not null
-     * @return The long value
-     */
-    public static long getLong(String sql) {
-        return getLong(sql, null);
-    }
-
-    /**
-     * Returns the long extracted from the result of the given query on the database with the given name.
-     * If no value is found, a {@link org.unitils.core.UnitilsException} is thrown.
-     *
-     * @param sql          The sql string for retrieving the items, not null
-     * @param databaseName The database name, null for the default database
-     * @return The long value
-     */
-    public static long getLong(String sql, String databaseName) {
-        DataSourceWrapper dataSourceWrapper = getDataSourceService().getDataSourceWrapper(databaseName);
-        return dataSourceWrapper.getLong(sql);
-    }
-
-    /**
-     * Returns the longs extracted from the result of the given query on the default database.
-     *
-     * @param sql The sql string for retrieving the items, not null
-     * @return The longs, not null
-     */
-    public static List<Long> getLongList(String sql) {
-        return getLongList(sql, null);
-    }
-
-    /**
-     * Returns the longs extracted from the result of the given query on the database with the given name.
-     *
-     * @param sql          The sql string for retrieving the items, not null
-     * @param databaseName The database name, null for the default database
-     * @return The longs, not null
-     */
-    public static List<Long> getLongList(String sql, String databaseName) {
-        DataSourceWrapper dataSourceWrapper = getDataSourceService().getDataSourceWrapper(databaseName);
-        return dataSourceWrapper.getLongList(sql);
-    }
-
-
-    /**
-     * Returns the objects of the given type extracted from the result of the given query on the default database.
-     * If no value is found, a {@link org.unitils.core.UnitilsException} is thrown.
-     *
-     * @param sql  The sql string for retrieving the items, not null
-     * @param type The result type, not null
-     * @return The value, not null
-     */
-    public static <T> T getObject(String sql, Class<T> type) {
-        return getObject(sql, type, null);
-    }
-
-    /**
-     * Returns the objects of the given type extracted from the result of the given query on the database with the given name.
-     * If no value is found, a {@link org.unitils.core.UnitilsException} is thrown.
-     *
-     * @param sql          The sql string for retrieving the items, not null
-     * @param type         The result type, not null
-     * @param databaseName The database name, null for the default database
-     * @return The value, not null
-     */
-    public static <T> T getObject(String sql, Class<T> type, String databaseName) {
-        DataSourceWrapper dataSourceWrapper = getDataSourceService().getDataSourceWrapper(databaseName);
-        return dataSourceWrapper.getObject(sql, type);
-    }
-
-    /**
-     * Returns the objects of the given type extracted from the result of the given query on the default database.
-     *
-     * @param sql  The sql string for retrieving the items, not null
-     * @param type The result type, not null
-     * @return The values, not null
-     */
-    public static <T> List<T> getObjectList(String sql, Class<T> type) {
-        return getObjectList(sql, type, null);
-    }
-
-    /**
-     * Returns the objects of the given type extracted from the result of the given query on the database with the given name.
-     *
-     * @param sql          The sql string for retrieving the items, not null
-     * @param type         The result type, not null
-     * @param databaseName The database name, null for the default database
-     * @return The values, not null
-     */
-    public static <T> List<T> getObjectList(String sql, Class<T> type, String databaseName) {
-        DataSourceWrapper dataSourceWrapper = getDataSourceService().getDataSourceWrapper(databaseName);
-        return dataSourceWrapper.getObjectList(sql, type);
-    }
-
-
-    protected static DataSourceService getDataSourceService() {
-        return Unitils.getInstanceOfType(DataSourceService.class);
-    }
 }

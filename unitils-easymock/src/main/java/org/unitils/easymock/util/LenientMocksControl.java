@@ -1,5 +1,5 @@
 /*
- * Copyright 2013,  Unitils.org
+ * Copyright 2008,  Unitils.org
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,16 +15,17 @@
  */
 package org.unitils.easymock.util;
 
-import org.easymock.ArgumentsMatcher;
+import java.util.List;
+
 import org.easymock.IAnswer;
 import org.easymock.IArgumentMatcher;
-import org.easymock.classextension.internal.MocksClassControl;
-import org.easymock.internal.*;
-import org.unitils.core.UnitilsException;
+import org.easymock.internal.IMocksControlState;
+import org.easymock.internal.Invocation;
+import org.easymock.internal.LastControl;
+import org.easymock.internal.MocksControl;
+import org.easymock.internal.Range;
+import org.easymock.internal.RecordState;
 import org.unitils.reflectionassert.ReflectionComparatorMode;
-
-import java.lang.reflect.Method;
-import java.util.List;
 
 /**
  * An EasyMock mock control that uses the reflection argument matcher for all arguments of a method invocation.
@@ -49,10 +50,13 @@ import java.util.List;
  * @see ReflectionComparatorMode
  * @see org.unitils.reflectionassert.ReflectionComparator
  */
-public class LenientMocksControl extends MocksClassControl {
+public class LenientMocksControl extends MocksControl {
 
+
+    /***/
+    private static final long serialVersionUID = -4612378998272988410L;
     /* The interceptor that wraps the record state */
-    protected InvocationInterceptor invocationInterceptor;
+    private InvocationInterceptor invocationInterceptor;
 
 
     /**
@@ -61,8 +65,9 @@ public class LenientMocksControl extends MocksClassControl {
      * @param modes the modes for the reflection argument matcher
      */
     public LenientMocksControl(ReflectionComparatorMode... modes) {
-        this(MockType.DEFAULT, modes);
+        this(org.easymock.MockType.DEFAULT, modes);
     }
+
 
     /**
      * Creates a mock control.<ul>
@@ -74,14 +79,14 @@ public class LenientMocksControl extends MocksClassControl {
      * @param type  the EasyMock mock type
      * @param modes the modes for the reflection argument matcher
      */
-    public LenientMocksControl(MockType type, ReflectionComparatorMode... modes) {
+    public LenientMocksControl(org.easymock.MockType type, ReflectionComparatorMode... modes) {
         super(type);
         this.invocationInterceptor = new InvocationInterceptor(modes);
     }
 
 
     /**
-     * Overridden to be able to replace the record behavior that going to record all method invocations.
+     * Overriden to be able to replace the record behavior that going to record all method invocations.
      * The interceptor will make sure that reflection argument matchers will be reported for the
      * arguments of all recorded method invocations.
      *
@@ -97,6 +102,7 @@ public class LenientMocksControl extends MocksClassControl {
         return mocksControlState;
     }
 
+
     /**
      * A wrapper for the record state in easy mock that will intercept the invoke method
      * so that it can install reflection argument matchers for all arguments of the recorded method invocation.
@@ -107,12 +113,13 @@ public class LenientMocksControl extends MocksClassControl {
      * Because some of the methods are declared final and some classes explicitly cast to subtypes, creating a wrapper
      * seems to be the only way to be able to intercept the matcher behavior.
      */
-    protected class InvocationInterceptor implements IMocksControlState {
+    private class InvocationInterceptor implements IMocksControlState {
 
         /* The wrapped record state */
-        protected RecordState recordState;
+        private RecordState recordState;
+
         /* The modes for the reflection argument matchers */
-        protected ReflectionComparatorMode[] modes;
+        private ReflectionComparatorMode[] modes;
 
 
         /**
@@ -135,17 +142,20 @@ public class LenientMocksControl extends MocksClassControl {
             this.recordState = recordState;
         }
 
+
         /**
-         * Overridden to report reflection argument matchers for all arguments of the given method invocation.
+         * Overriden to report reflection argument matchers for all arguments of the given method invocation.
          *
          * @param invocation the method invocation, not null
          * @return the result of the invocation
          */
+        @Override
         public Object invoke(Invocation invocation) {
             LastControl.reportLastControl(LenientMocksControl.this);
             createMatchers(invocation);
             return recordState.invoke(invocation);
         }
+
 
         /**
          * Reports report reflection argument matchers for all arguments of the given method invocation.
@@ -153,12 +163,12 @@ public class LenientMocksControl extends MocksClassControl {
          *
          * @param invocation the method invocation, not null
          */
-        protected void createMatchers(Invocation invocation) {
+        private void createMatchers(Invocation invocation) {
             List<IArgumentMatcher> matchers = LastControl.pullMatchers();
             if (matchers != null && !matchers.isEmpty()) {
                 if (matchers.size() != invocation.getArguments().length) {
-                    throw new UnitilsException("This mocks control does not support mixing of no-argument matchers and per-argument matchers.\n" +
-                            "Either no matchers are defined (the reflection argument matcher is then used by default) or all matchers are defined explicitly (Eg by using refEq()).");
+                    throw new IllegalStateException("This mock control does not support mixing of no-argument matchers and per-argument matchers. " +
+                            "Either no matchers are defined and the reflection argument matcher is used by default or all matchers are defined explicitly (Eg by using refEq()).");
                 }
                 // put all matchers back since pull removes them
                 for (IArgumentMatcher matcher : matchers) {
@@ -166,62 +176,79 @@ public class LenientMocksControl extends MocksClassControl {
                 }
                 return;
             }
-            for (Object argument : invocation.getArguments()) {
+            Object[] arguments = invocation.getArguments();
+            if (arguments == null) {
+                return;
+            }
+
+            for (Object argument : arguments) {
                 LastControl.reportMatcher(new ReflectionArgumentMatcher<Object>(argument, modes));
             }
         }
 
         // Pass through delegation
 
+        @Override
         public void assertRecordState() {
             recordState.assertRecordState();
         }
 
+        @Override
         public void andReturn(Object value) {
             recordState.andReturn(value);
         }
 
+        @Override
         public void andThrow(Throwable throwable) {
             recordState.andThrow(throwable);
         }
 
-        public void andAnswer(IAnswer answer) {
+        @Override
+        public void andAnswer(IAnswer<?> answer) {
             recordState.andAnswer(answer);
         }
 
+        @Override
         public void andStubReturn(Object value) {
             recordState.andStubReturn(value);
         }
 
+        @Override
         public void andStubThrow(Throwable throwable) {
             recordState.andStubThrow(throwable);
         }
 
-        public void andStubAnswer(IAnswer answer) {
+        @Override
+        public void andStubAnswer(IAnswer<?> answer) {
             recordState.andStubAnswer(answer);
         }
 
+        @Override
         public void asStub() {
             recordState.asStub();
         }
 
+        @Override
         public void times(Range range) {
             recordState.times(range);
         }
 
+        @Override
         public void checkOrder(boolean value) {
             recordState.checkOrder(value);
         }
 
+        @Override
         public void replay() {
             recordState.replay();
         }
 
+        @Override
         public void verify() {
             recordState.verify();
         }
 
-        public void setDefaultReturnValue(Object value) {
+        /*public void setDefaultReturnValue(Object value) {
             recordState.setDefaultReturnValue(value);
         }
 
@@ -233,14 +260,53 @@ public class LenientMocksControl extends MocksClassControl {
             recordState.setDefaultVoidCallable();
         }
 
-        @SuppressWarnings("deprecation")
         public void setDefaultMatcher(ArgumentsMatcher matcher) {
             recordState.setDefaultMatcher(matcher);
         }
 
-        @SuppressWarnings("deprecation")
         public void setMatcher(Method method, ArgumentsMatcher matcher) {
             recordState.setMatcher(method, matcher);
+        }*/
+
+
+        /**
+         * @see org.easymock.internal.IMocksControlState#andDelegateTo(java.lang.Object)
+         */
+        @Override
+        public void andDelegateTo(Object value) {
+            recordState.andDelegateTo(value);
+
+        }
+
+
+        /**
+         * @see org.easymock.internal.IMocksControlState#andStubDelegateTo(java.lang.Object)
+         */
+        @Override
+        public void andStubDelegateTo(Object value) {
+            recordState.andStubDelegateTo(value);
+
+        }
+
+
+        /**
+         * @see org.easymock.internal.IMocksControlState#checkIsUsedInOneThread(boolean)
+         */
+        @Override
+        public void checkIsUsedInOneThread(boolean value) {
+            recordState.checkIsUsedInOneThread(value);
+
+        }
+
+
+        /**
+         * @see org.easymock.internal.IMocksControlState#makeThreadSafe(boolean)
+         */
+        @Override
+        public void makeThreadSafe(boolean value) {
+            recordState.makeThreadSafe(value);
+
         }
     }
+
 }

@@ -16,7 +16,7 @@
 package org.unitils.core.junit;
 
 import org.junit.runners.model.Statement;
-import org.unitils.core.engine.UnitilsTestListener;
+import org.unitils.core.TestListener;
 
 /**
  * @author Tim Ducheyne
@@ -24,11 +24,11 @@ import org.unitils.core.engine.UnitilsTestListener;
 public class BeforeTestClassStatement extends Statement {
 
     protected Class<?> testClass;
-    protected UnitilsTestListener unitilsTestListener;
+    protected TestListener unitilsTestListener;
     protected Statement nextStatement;
 
 
-    public BeforeTestClassStatement(Class<?> testClass, UnitilsTestListener unitilsTestListener, Statement nextStatement) {
+    public BeforeTestClassStatement(Class<?> testClass, TestListener unitilsTestListener, Statement nextStatement) {
         this.testClass = testClass;
         this.unitilsTestListener = unitilsTestListener;
         this.nextStatement = nextStatement;

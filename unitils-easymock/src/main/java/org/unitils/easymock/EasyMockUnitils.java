@@ -1,5 +1,5 @@
 /*
- * Copyright 2013,  Unitils.org
+ * Copyright 2008,  Unitils.org
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,15 +15,21 @@
  */
 package org.unitils.easymock;
 
-import org.unitils.core.Unitils;
-import org.unitils.easymock.annotation.Mock;
-import org.unitils.easymock.core.MockService;
-import org.unitils.easymock.util.*;
-import org.unitils.reflectionassert.ReflectionComparatorMode;
-
 import static org.easymock.EasyMock.reportMatcher;
 import static org.unitils.reflectionassert.ReflectionComparatorMode.IGNORE_DEFAULTS;
 import static org.unitils.reflectionassert.ReflectionComparatorMode.LENIENT_ORDER;
+
+import org.easymock.EasyMock;
+import org.easymock.internal.MocksControl;
+import org.unitils.core.Unitils;
+import org.unitils.core.UnitilsException;
+import org.unitils.easymock.util.Calls;
+import org.unitils.easymock.util.Dates;
+import org.unitils.easymock.util.Defaults;
+import org.unitils.easymock.util.InvocationOrder;
+import org.unitils.easymock.util.Order;
+import org.unitils.easymock.util.ReflectionArgumentMatcher;
+import org.unitils.reflectionassert.ReflectionComparatorMode;
 
 /**
  * Utility facade for handling EasyMock things such as replay or manually creating a mock.
@@ -32,6 +38,7 @@ import static org.unitils.reflectionassert.ReflectionComparatorMode.LENIENT_ORDE
  * @author Filip Neven
  */
 public class EasyMockUnitils {
+
 
     /**
      * Expects the given object argument but uses a reflection argument matcher to compare
@@ -48,6 +55,7 @@ public class EasyMockUnitils {
         return refEq(object, IGNORE_DEFAULTS, LENIENT_ORDER);
     }
 
+
     /**
      * Expects the given object argument but uses a reflection argument matcher with the given comparator modes
      * to compare the given value with the actual value during the test.
@@ -62,6 +70,7 @@ public class EasyMockUnitils {
         reportMatcher(reflectionArgumentMatcher);
         return object;
     }
+
 
     /**
      * Creates a regular EasyMock mock object of the given type.
@@ -80,6 +89,7 @@ public class EasyMockUnitils {
         return createRegularMock(mockType, InvocationOrder.DEFAULT, Calls.DEFAULT);
     }
 
+
     /**
      * Creates a regular EasyMock mock object of the given type.
      * <p/>
@@ -93,8 +103,9 @@ public class EasyMockUnitils {
      * @return a mock for the given class or interface, not null
      */
     public static <T> T createRegularMock(Class<T> mockType, InvocationOrder invocationOrder, Calls calls) {
-        return getMockService().createRegularMock(mockType, invocationOrder, calls);
+        return getEasyMockModule().createRegularMock(mockType, invocationOrder, calls);
     }
+
 
     /**
      * Creates a lenient mock object of the given type. The {@link org.unitils.easymock.util.LenientMocksControl} is used
@@ -119,6 +130,10 @@ public class EasyMockUnitils {
      * Creates a lenient mock object of the given type. The {@link org.unitils.easymock.util.LenientMocksControl} is used
      * for creating the mock.
      * <p/>
+     * Same as {@link #createMock(Class, InvocationOrder, Calls, Order, Dates, Defaults)} with a default invocation order,
+     * default calls, default order, default dates and default defaults value. These defaults can be set in the
+     * unitils configuration.
+     * <p/>
      * An instance of the mock control is stored, so that it can be set to the replay/verify state when
      * {@link #replay()} or {@link #verify()} is called.
      *
@@ -132,7 +147,7 @@ public class EasyMockUnitils {
      * @return a mock for the given class or interface, not null
      */
     public static <T> T createMock(Class<T> mockType, InvocationOrder invocationOrder, Calls calls, Order order, Dates dates, Defaults defaults) {
-        return getMockService().createMock(mockType, invocationOrder, calls, order, dates, defaults);
+        return getEasyMockModule().createMock(mockType, invocationOrder, calls, order, dates, defaults);
     }
 
     /**
@@ -146,7 +161,22 @@ public class EasyMockUnitils {
      * After each test, the expected behavior is verified automatically, or explicitly by calling {@link #verify()}.
      */
     public static void replay() {
-        getMockService().replay();
+        getEasyMockModule().replay();
+    }
+    
+    /**
+     * If you create a mock with {@link EasyMock} than you can add the mock to the controllist in the {@link EasyMockModule} with this method.
+     * @param object
+     */
+    public static void addMockstoControlsList(Object... objects) {
+        for (Object object : objects) {
+            getEasyMockModule().addMocksControlToList(MocksControl.getControl(object));
+        }
+    }
+
+
+    public static void reset() {
+        getEasyMockModule().reset();
     }
 
     /**
@@ -163,19 +193,25 @@ public class EasyMockUnitils {
      * by calling this method.
      */
     public static void verify() {
-        getMockService().verify();
-    }
-
-    public static void reset() {
-        getMockService().reset();
-    }
-
-    public static void clearMocks() {
-        getMockService().clearMocks();
+        getEasyMockModule().verify();
     }
 
 
-    protected static MockService getMockService() {
-        return Unitils.getInstanceOfType(MockService.class);
+    /**
+     * Gets the instance EasyMockModule that is registered in the modules repository.
+     * This instance implements the actual behavior of the static methods in this class, such as {@link #replay()}.
+     * This way, other implementations can be plugged in, while keeping the simplicity of using static methods.
+     *
+     * @return the instance, not null
+     * @throws UnitilsException when no such module could be found
+     */
+    private static EasyMockModule getEasyMockModule() {
+        Unitils unitils = Unitils.getInstance();
+        EasyMockModule module = unitils.getModulesRepository().getModuleOfType(EasyMockModule.class);
+        if (module == null) {
+            throw new UnitilsException("Unable to find an instance of an EasyMockModule in the modules repository.");
+        }
+        return module;
     }
+
 }

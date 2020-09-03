@@ -1,5 +1,5 @@
 /*
- * Copyright 2013,  Unitils.org
+ * Copyright 2008,  Unitils.org
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,20 +15,18 @@
  */
 package org.unitils.inject.annotation;
 
-import org.unitils.core.annotation.AnnotationDefault;
-import org.unitils.core.annotation.FieldAnnotation;
-import org.unitils.inject.listener.InjectIntoStaticByTypeFieldAnnotationListener;
-import org.unitils.inject.util.Restore;
+import static java.lang.annotation.ElementType.FIELD;
+import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
-import static java.lang.annotation.ElementType.FIELD;
-import static java.lang.annotation.RetentionPolicy.RUNTIME;
-import static org.unitils.inject.util.Restore.DEFAULT;
+import org.unitils.inject.util.PropertyAccess;
+import org.unitils.inject.util.Restore;
 
 /**
- * Annotation to inject the object assigned to the annotated field to a static property of the class defined by the target attribute.
+ * Annotation indicating that the {@link org.unitils.inject.InjectModule} should try to inject the object assigned to
+ * the annotated field to a static property of the class defined by the target attribute.
  * <p/>
  * Automatic injection by type is used, which means that a the object is injected to the most specific static property
  * with an assignable type.
@@ -44,7 +42,6 @@ import static org.unitils.inject.util.Restore.DEFAULT;
  */
 @Target(FIELD)
 @Retention(RUNTIME)
-@FieldAnnotation(InjectIntoStaticByTypeFieldAnnotationListener.class)
 public @interface InjectIntoStaticByType {
 
     /**
@@ -52,7 +49,14 @@ public @interface InjectIntoStaticByType {
      *
      * @return the target class, null for tested object
      */
-    Class<?> target();
+    Class<?>[] target() default {};
+
+    /**
+     * The property access that is used for injection
+     *
+     * @return the access type, not null
+     */
+    PropertyAccess propertyAccess() default PropertyAccess.DEFAULT;
 
     /**
      * The action that needs to be performed after the test was performed. Should the old value be put back,
@@ -60,8 +64,6 @@ public @interface InjectIntoStaticByType {
      *
      * @return the reset type, not null
      */
-    @AnnotationDefault("inject.defaultRestore") Restore restore() default DEFAULT;
-
-    @AnnotationDefault("inject.failWhenNoMatch") boolean failWhenNoMatch() default true;
+    Restore restore() default Restore.DEFAULT;
 
 }

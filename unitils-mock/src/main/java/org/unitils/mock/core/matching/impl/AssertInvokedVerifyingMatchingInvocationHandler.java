@@ -1,5 +1,5 @@
 /*
- * Copyright 2013,  Unitils.org
+ * Copyright 2006-2009,  Unitils.org
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,13 +16,9 @@
 package org.unitils.mock.core.matching.impl;
 
 import org.unitils.mock.Mock;
-import org.unitils.mock.core.MatchingInvocation;
+import org.unitils.mock.core.BehaviorDefiningInvocation;
 import org.unitils.mock.core.MockFactory;
-import org.unitils.mock.core.ObservedInvocation;
 import org.unitils.mock.core.Scenario;
-import org.unitils.mock.report.ScenarioReport;
-
-import static org.unitils.core.util.ReflectionUtils.getSimpleMethodName;
 
 
 /**
@@ -31,21 +27,14 @@ import static org.unitils.core.util.ReflectionUtils.getSimpleMethodName;
  */
 public class AssertInvokedVerifyingMatchingInvocationHandler extends AssertVerifyingMatchingInvocationHandler {
 
-    protected Scenario scenario;
 
-
-    public AssertInvokedVerifyingMatchingInvocationHandler(Scenario scenario, MockFactory mockFactory, ScenarioReport scenarioReport) {
-        super(mockFactory, scenarioReport);
-        this.scenario = scenario;
+    public AssertInvokedVerifyingMatchingInvocationHandler(Scenario scenario, MockFactory mockFactory) {
+        super(scenario, mockFactory);
     }
 
 
-    protected String performAssertion(MatchingInvocation matchingInvocation) {
-        ObservedInvocation observedInvocation = scenario.verifyInvocation(matchingInvocation);
-        if (observedInvocation == null) {
-            return getAssertInvokedErrorMessage(matchingInvocation);
-        }
-        return null;
+    protected void performAssertion(Scenario scenario, BehaviorDefiningInvocation behaviorDefiningInvocation) {
+        scenario.assertInvoked(behaviorDefiningInvocation);
     }
 
     protected Object performChainedAssertion(Mock<?> mock) {
@@ -53,8 +42,4 @@ public class AssertInvokedVerifyingMatchingInvocationHandler extends AssertVerif
     }
 
 
-    protected String getAssertInvokedErrorMessage(MatchingInvocation matchingInvocation) {
-        String simpleMethodName = getSimpleMethodName(matchingInvocation.getMethod());
-        return "Expected invocation of " + simpleMethodName + ", but it didn't occur.";
-    }
 }

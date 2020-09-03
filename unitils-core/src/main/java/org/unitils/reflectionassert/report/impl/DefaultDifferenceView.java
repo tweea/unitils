@@ -1,5 +1,5 @@
 /*
- * Copyright 2013,  Unitils.org
+ * Copyright 2008,  Unitils.org
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,16 +15,15 @@
  */
 package org.unitils.reflectionassert.report.impl;
 
+import static org.apache.commons.lang.ClassUtils.getShortClassName;
 import org.unitils.core.util.ObjectFormatter;
 import org.unitils.reflectionassert.difference.*;
 import org.unitils.reflectionassert.report.DifferenceView;
+import static org.unitils.reflectionassert.report.impl.DefaultDifferenceReport.MAX_LINE_SIZE;
+import static org.unitils.reflectionassert.report.impl.DefaultDifferenceReport.MatchType.NO_MATCH;
 
 import java.util.List;
 import java.util.Map;
-
-import static org.apache.commons.lang.ClassUtils.getShortClassName;
-import static org.unitils.reflectionassert.report.impl.DefaultDifferenceReport.MAX_LINE_SIZE;
-import static org.unitils.reflectionassert.report.impl.DefaultDifferenceReport.MatchType.NO_MATCH;
 
 /**
  * Formatter that will output all leaf differences in the tree and, in case of an unordered collection difference,
@@ -90,8 +89,11 @@ public class DefaultDifferenceView implements DifferenceView {
     }
 
 
-    protected String formatDifference(ClassDifference classDifference, String fieldName) {
-        return "Expected: object of type " + getShortClassName(classDifference.getLeftClass()) + ", actual: object of type " + getShortClassName(classDifference.getRightClass()) + "\n";
+    protected String formatDifferrence(ClassDifference classDifference, String fieldName) {
+        StringBuilder result = new StringBuilder();
+        result.append("Expected: object of type ").append(getShortClassName(classDifference.getLeftClass()));
+        result.append(", actual: object of type ").append(getShortClassName(classDifference.getRightClass())).append("\n");
+        return result.toString();
     }
 
 
@@ -170,11 +172,8 @@ public class DefaultDifferenceView implements DifferenceView {
 
         result.append(fieldName == null ? "" : fieldName + ": ");
         if (unorderedCollectionDifference.getRightList().size() != unorderedCollectionDifference.getLeftList().size()) {
-            result.append("Collections have a different size: Expected ");
-            result.append(unorderedCollectionDifference.getLeftList().size());
-            result.append(", actual ");
-            result.append(unorderedCollectionDifference.getRightList().size());
-            result.append(".\n");
+            result.append("Collections have a different size: Expected " + unorderedCollectionDifference.getLeftList().size() + ", actual " +
+                    unorderedCollectionDifference.getRightList().size() + ".\n");
         }
 
         Map<Integer, Integer> bestMatchingIndexes = unorderedCollectionDifference.getBestMatchingIndexes();
@@ -282,7 +281,7 @@ public class DefaultDifferenceView implements DifferenceView {
         }
 
         public String visit(ClassDifference classDifference, String fieldName) {
-            return formatDifference(classDifference, fieldName);
+            return formatDifferrence(classDifference, fieldName);
         }
 
         public String visit(MapDifference mapDifference, String fieldName) {

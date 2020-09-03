@@ -15,6 +15,8 @@
  */
 package org.unitils.dbunit.datasetfactory.impl;
 
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Predicate;
 import org.dbunit.dataset.AbstractTableMetaData;
 import org.dbunit.dataset.Column;
 import org.dbunit.dataset.DataSetException;
@@ -49,9 +51,39 @@ public class DbUnitTableMetaData extends AbstractTableMetaData {
     }
 
     public void addColumn(Column column) {
-        boolean added = columns.add(column);
-        if (added) {
-            columnNames.add(column.getColumnName());
+        if (!CollectionUtils.exists(columnNames, new FindColumnPredicate(column.getColumnName()))) {
+            boolean added = columns.add(column);
+            if (added) {
+                columnNames.add(column.getColumnName());
+            }
+        }
+       
+    }
+    
+  
+    
+    private class FindColumnPredicate implements Predicate {
+        
+        private String columnName;
+        
+        
+        
+        /**
+         * @param columnName
+         */
+        protected FindColumnPredicate(String columnName) {
+            super();
+            this.columnName = columnName;
+        }
+
+
+
+        @Override
+        public boolean evaluate(Object column) {
+            if (column instanceof String) {
+                return ((String) column).equalsIgnoreCase(columnName);
+            }
+            return false;
         }
     }
 

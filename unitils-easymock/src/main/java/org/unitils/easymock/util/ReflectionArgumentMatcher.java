@@ -1,5 +1,5 @@
 /*
- * Copyright 2013,  Unitils.org
+ * Copyright 2008,  Unitils.org
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -38,8 +38,11 @@ import org.unitils.reflectionassert.ReflectionComparatorMode;
  */
 public class ReflectionArgumentMatcher<T> extends Equals {
 
+
+    /***/
+    private static final long serialVersionUID = 7522941628619033502L;
     /* The comparator for lenient comparing expected and actual argument values */
-    protected ReflectionComparator reflectionComparator;
+    private ReflectionComparator reflectionComparator;
 
 
     /**
@@ -53,6 +56,7 @@ public class ReflectionArgumentMatcher<T> extends Equals {
         super(expected);
         this.reflectionComparator = ReflectionComparatorFactory.createRefectionComparator(modes);
     }
+
 
     /**
      * Checks whether the given actual value is equal to the expected value.
@@ -70,4 +74,6 @@ public class ReflectionArgumentMatcher<T> extends Equals {
     public boolean matches(Object actual) {
         return reflectionComparator.isEqual(getExpected(), actual);
     }
+
+
 }

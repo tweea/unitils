@@ -1,5 +1,5 @@
 /*
- * Copyright 2013,  Unitils.org
+ * Copyright 2011,  Unitils.org
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.unitils.io;
 
 import org.junit.Before;
@@ -22,8 +23,8 @@ import java.io.File;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import static org.unitils.core.util.FileUtils.writeStringToFile;
 import static org.unitils.io.IOUnitils.createTempFile;
+import static org.unitils.util.FileUtils.writeStringToFile;
 
 /**
  * @author Tim Ducheyne
@@ -52,15 +53,11 @@ public class IOUnitilsCreateTempFileTest {
     @Test
     public void fileAlreadyExists() throws Exception {
         File file = createTempFile(fileName);
-        writeStringToFile(file, "test", "UTF-8");
+        writeStringToFile(file, "test");
 
         File result = createTempFile(fileName);
 
         assertEquals(0, result.length());
     }
 
-    @Test
-    public void constructionForCoverage() {
-        new IOUnitils();
-    }
 }

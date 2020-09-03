@@ -1,17 +1,19 @@
 /*
- * Copyright 2013,  Unitils.org
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ *  * Copyright 2010,  Unitils.org
+ *  *
+ *  * Licensed under the Apache License, Version 2.0 (the "License");
+ *  * you may not use this file except in compliance with the License.
+ *  * You may obtain a copy of the License at
+ *  *
+ *  *     http://www.apache.org/licenses/LICENSE-2.0
+ *  *
+ *  * Unless required by applicable law or agreed to in writing, software
+ *  * distributed under the License is distributed on an "AS IS" BASIS,
+ *  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  * See the License for the specific language governing permissions and
+ *  * limitations under the License.
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
  */
 package org.unitils.reflectionassert.comparator.impl;
 
@@ -34,7 +36,7 @@ public class LenientNumberComparator implements Comparator {
      *
      * @param left  The left object
      * @param right The right object
-     * @return True for Numbers and Characters
+     * @return True for Numbers and Charaters
      */
     public boolean canCompare(Object left, Object right) {
         if (left == null || right == null) {
@@ -59,7 +61,7 @@ public class LenientNumberComparator implements Comparator {
         // check if right and left have same number value (including NaN and Infinity)
         final String differenceMessage = "Different primitive values";
         if (left instanceof Long && right instanceof Long) {
-            if (!left.equals(right)) {
+            if (!((Long) left).equals(((Long) right))) {
                 return new Difference(differenceMessage, left, right);
             }
         }
@@ -78,10 +80,10 @@ public class LenientNumberComparator implements Comparator {
      * @param object the Character or Number, not null
      * @return the value as a Double (this way NaN and infinity can be compared)
      */
-    protected Double getDoubleValue(Object object) {
+    private Double getDoubleValue(Object object) {
         if (object instanceof Number) {
             return ((Number) object).doubleValue();
         }
-        return (double) (Character) object;
+        return (double) ((Character) object).charValue();
     }
 }

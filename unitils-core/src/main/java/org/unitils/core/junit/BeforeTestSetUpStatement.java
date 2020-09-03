@@ -15,10 +15,10 @@
  */
 package org.unitils.core.junit;
 
-import org.junit.runners.model.Statement;
-import org.unitils.core.engine.UnitilsTestListener;
-
 import java.lang.reflect.Method;
+
+import org.junit.runners.model.Statement;
+import org.unitils.core.TestListener;
 
 /**
  * @author Tim Ducheyne
@@ -27,11 +27,11 @@ public class BeforeTestSetUpStatement extends Statement {
 
     protected Object testObject;
     protected Method testMethod;
-    protected UnitilsTestListener unitilsTestListener;
+    protected TestListener unitilsTestListener;
     protected Statement nextStatement;
 
 
-    public BeforeTestSetUpStatement(Object testObject, Method testMethod, UnitilsTestListener unitilsTestListener, Statement nextStatement) {
+    public BeforeTestSetUpStatement(Object testObject, Method testMethod, TestListener unitilsTestListener, Statement nextStatement) {
         this.testObject = testObject;
         this.testMethod = testMethod;
         this.unitilsTestListener = unitilsTestListener;

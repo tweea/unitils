@@ -1,5 +1,5 @@
 /*
- * Copyright 2013,  Unitils.org
+ * Copyright 2008,  Unitils.org
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,15 +15,14 @@
  */
 package org.unitils.reflectionassert.report.impl;
 
-import org.unitils.core.util.ObjectFormatter;
 import org.unitils.reflectionassert.difference.*;
 import org.unitils.reflectionassert.report.DifferenceView;
+import static org.unitils.reflectionassert.report.impl.DefaultDifferenceReport.MatchType.NO_MATCH;
+import org.unitils.core.util.ObjectFormatter;
+import static org.apache.commons.lang.ClassUtils.getShortClassName;
 
 import java.util.List;
 import java.util.Map;
-
-import static org.apache.commons.lang.ClassUtils.getShortClassName;
-import static org.unitils.reflectionassert.report.impl.DefaultDifferenceReport.MatchType.NO_MATCH;
 
 /**
  * Formatter that will output all objects in the difference tree. For an unordered collection difference,
@@ -88,7 +87,11 @@ public class TreeDifferenceView implements DifferenceView {
 
 
     protected String formatDifference(ClassDifference classDifference, String fieldName) {
-        return ((fieldName == null) ? "" : fieldName + ":") + "Expected: object of type " + getShortClassName(classDifference.getLeftClass()) + ", actual: object of type " + getShortClassName(classDifference.getRightClass()) + "\n";
+        StringBuilder result = new StringBuilder();
+        result.append((fieldName == null) ? "" : fieldName + ":");
+        result.append("Expected: object of type ").append(getShortClassName(classDifference.getLeftClass()));
+        result.append(", actual: object of type ").append(getShortClassName(classDifference.getRightClass())).append("\n");
+        return result.toString();
     }
 
 
@@ -207,8 +210,18 @@ public class TreeDifferenceView implements DifferenceView {
      * @return The string representation, not null
      */
     protected String formatValues(String fieldName, Object leftValue, Object rightValue) {
+        StringBuilder result = new StringBuilder();
+
         String prefix = (fieldName == null) ? "" : fieldName;
-        return prefix + " expected: " + formatObject(leftValue) + "\n" + prefix + "   actual: " + formatObject(rightValue) + "\n\n";
+        result.append(prefix);
+        result.append(" expected: ");
+        result.append(formatObject(leftValue));
+        result.append("\n");
+        result.append(prefix);
+        result.append("   actual: ");
+        result.append(formatObject(rightValue));
+        result.append("\n\n");
+        return result.toString();
     }
 
 

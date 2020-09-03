@@ -1,5 +1,5 @@
 /*
- * Copyright 2013,  Unitils.org
+ * Copyright 2006-2009,  Unitils.org
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,13 +16,9 @@
 package org.unitils.mock.core.matching.impl;
 
 import org.unitils.mock.Mock;
-import org.unitils.mock.core.MatchingInvocation;
+import org.unitils.mock.core.BehaviorDefiningInvocation;
 import org.unitils.mock.core.MockFactory;
-import org.unitils.mock.core.ObservedInvocation;
 import org.unitils.mock.core.Scenario;
-import org.unitils.mock.report.ScenarioReport;
-
-import static org.unitils.core.util.ReflectionUtils.getSimpleMethodName;
 
 
 /**
@@ -31,42 +27,18 @@ import static org.unitils.core.util.ReflectionUtils.getSimpleMethodName;
  */
 public class AssertInvokedInSequenceVerifyingMatchingInvocationHandler extends AssertVerifyingMatchingInvocationHandler {
 
-    protected Scenario scenario;
 
-
-    public AssertInvokedInSequenceVerifyingMatchingInvocationHandler(Scenario scenario, MockFactory mockFactory, ScenarioReport scenarioReport) {
-        super(mockFactory, scenarioReport);
-        this.scenario = scenario;
+    public AssertInvokedInSequenceVerifyingMatchingInvocationHandler(Scenario scenario, MockFactory mockFactory) {
+        super(scenario, mockFactory);
     }
 
 
-    protected String performAssertion(MatchingInvocation matchingInvocation) {
-        ObservedInvocation observedInvocation = scenario.verifyInvocation(matchingInvocation);
-        if (observedInvocation == null) {
-            return getAssertInvokedErrorMessage(matchingInvocation);
-        }
-        ObservedInvocation outOfSequenceObservedInvocation = scenario.verifyInvocationInSequence(observedInvocation);
-        if (outOfSequenceObservedInvocation != null) {
-            return getInvokedOutOfSequenceErrorMessage(matchingInvocation, observedInvocation, outOfSequenceObservedInvocation);
-        }
-        return null;
+    protected void performAssertion(Scenario scenario, BehaviorDefiningInvocation behaviorDefiningInvocation) {
+        scenario.assertInvokedInOrder(behaviorDefiningInvocation);
     }
 
     protected Object performChainedAssertion(Mock<?> mock) {
         return mock.assertInvokedInSequence();
     }
 
-
-    protected String getAssertInvokedErrorMessage(MatchingInvocation matchingInvocation) {
-        String simpleMethodName = getSimpleMethodName(matchingInvocation.getMethod());
-        return "Expected invocation of " + simpleMethodName + ", but it didn't occur.";
-    }
-
-    protected String getInvokedOutOfSequenceErrorMessage(MatchingInvocation matchingInvocation, ObservedInvocation observedInvocation, ObservedInvocation outOfSequenceInvocation) {
-        String simpleMethodName = getSimpleMethodName(matchingInvocation.getMethod());
-        String outOfSequenceSimpleMethodName = getSimpleMethodName(outOfSequenceInvocation.getMethod());
-        StackTraceElement invokedAt = observedInvocation.getInvokedAt();
-        StackTraceElement outOfSequenceInvokedAt = outOfSequenceInvocation.getInvokedAt();
-        return "Invocation of " + simpleMethodName + " invoked at " + invokedAt + "\nwas expected to be performed after " + outOfSequenceSimpleMethodName + " invoked at " + outOfSequenceInvokedAt + "\nbut actually occurred before it.";
-    }
 }

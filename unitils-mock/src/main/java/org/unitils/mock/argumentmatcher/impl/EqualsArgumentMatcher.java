@@ -1,36 +1,37 @@
 /*
- * Copyright 2013,  Unitils.org
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ *  * Copyright 2010,  Unitils.org
+ *  *
+ *  * Licensed under the Apache License, Version 2.0 (the "License");
+ *  * you may not use this file except in compliance with the License.
+ *  * You may obtain a copy of the License at
+ *  *
+ *  *     http://www.apache.org/licenses/LICENSE-2.0
+ *  *
+ *  * Unless required by applicable law or agreed to in writing, software
+ *  * distributed under the License is distributed on an "AS IS" BASIS,
+ *  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  * See the License for the specific language governing permissions and
+ *  * limitations under the License.
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
  */
 package org.unitils.mock.argumentmatcher.impl;
 
 import org.unitils.mock.argumentmatcher.ArgumentMatcher;
-import org.unitils.mock.core.proxy.Argument;
 
 import static org.unitils.mock.argumentmatcher.ArgumentMatcher.MatchResult.*;
 
 /**
  * A matcher for checking whether an argument equals a given value.
  *
- * @author Tim Ducheyne
  * @author Kenny Claes
  * @author Filip Neven
+ * @author Tim Ducheyne
  */
-public class EqualsArgumentMatcher<T> extends ArgumentMatcher<T> {
+public class EqualsArgumentMatcher implements ArgumentMatcher {
 
     /* The excepted value */
-    protected T value;
+    private final Object value;
 
 
     /**
@@ -38,28 +39,30 @@ public class EqualsArgumentMatcher<T> extends ArgumentMatcher<T> {
      *
      * @param value The expected value
      */
-    public EqualsArgumentMatcher(T value) {
+    public EqualsArgumentMatcher(Object value) {
         this.value = value;
     }
 
 
     /**
      * Returns true if the given object matches the expected argument, false otherwise.
-     * <p/>
+     *
      * The argumentAtInvocationTime is a copy (deep clone) of the arguments at the time of
      * the invocation. This way the original values can still be used later-on even when changes
      * occur to the original values (pass-by-value vs pass-by-reference).
      *
-     * @param argument The argument to match, not null
+     * @param argument                 The argument that were used by reference, not null
+     * @param argumentAtInvocationTime Copy of the argument, taken at the time that the invocation was performed, not null
      * @return The match result, not null
      */
-    @Override
-    public MatchResult matches(Argument<T> argument) {
-        T argumentValue = argument.getValue();
-        if (value == argumentValue) {
-            return SAME;
+    public MatchResult matches(Object argument, Object argumentAtInvocationTime) {
+        if (value == null) {
+            if (argument == null) {
+                return SAME;
+            }
+            return NO_MATCH;
         }
-        if (value != null && argumentValue != null && value.equals(argumentValue)) {
+        if (value.equals(argument)) {
             return MATCH;
         }
         return NO_MATCH;

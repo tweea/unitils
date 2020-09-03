@@ -26,10 +26,10 @@ import java.util.Properties;
 
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
-import static org.unitils.core.util.ReflectionUtils.createInstanceOfType;
+import static org.unitils.util.ReflectionUtils.createInstanceOfType;
 
 /**
- * Helper class for dealing with configuration properties.
+ * todo javadoc
  * <p/>
  * If classifiers are used, it will first look for a property using all classifiers, then look for
  * a property without the last classifier etc. If still no property was found, it will look for the property
@@ -39,13 +39,12 @@ import static org.unitils.core.util.ReflectionUtils.createInstanceOfType;
  *
  * @author Tim Ducheyne
  */
-public class Configuration {
+public class Configuration extends UnitilsConfiguration {
 
     /* All configuration properties, not null */
     protected Properties properties;
 
     protected Properties overridingProperties;
-
 
     /**
      * Creates a configuration for the given properties.
@@ -53,23 +52,8 @@ public class Configuration {
      * @param properties All configuration properties, not null
      */
     public Configuration(Properties properties) {
+        super(properties);
         this.properties = properties;
-    }
-
-
-    /**
-     * @param propertyName The property name, not null
-     * @return True if the property exists
-     */
-    public boolean containsProperty(String propertyName) {
-        return properties.containsKey(propertyName);
-    }
-
-    /**
-     * @return All properties, not null
-     */
-    public Properties getProperties() {
-        return properties;
     }
 
     public Properties getOverridingProperties() {
@@ -586,6 +570,7 @@ public class Configuration {
         return result;
     }
 
+    // todo javadoc
     public <T> T getValueOfType(Class<T> type, String propertyName, String... classifiers) {
         String value = getString(propertyName, classifiers);
         return toValueOfType(type, value, propertyName, classifiers);
@@ -700,9 +685,9 @@ public class Configuration {
             return null;
         }
         try {
-            T instance = createInstanceOfType(value, true);
+            T instance = (T) createInstanceOfType(value, true);
             if (instance instanceof Factory) {
-                return (T) ((Factory) instance).create();
+                return (T) ((Factory<?>) instance).create();
             }
             return instance;
         } catch (Exception e) {
@@ -723,7 +708,7 @@ public class Configuration {
 
     @SuppressWarnings({"unchecked"})
     protected <T> T toInstance(Class<T> type, String value, String propertyName, String... classifiers) {
-        T instance = toInstance(value, propertyName, classifiers);
+        T instance = (T) toInstance(value, propertyName, classifiers);
         if (instance != null && !type.isAssignableFrom(instance.getClass())) {
             throw new UnitilsException("Value " + value + " of " + nameToString(propertyName, classifiers) + " is not of the expected type " + type.getName());
         }

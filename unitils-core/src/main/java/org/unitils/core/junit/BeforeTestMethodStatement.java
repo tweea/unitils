@@ -15,27 +15,33 @@
  */
 package org.unitils.core.junit;
 
+import java.lang.reflect.Method;
+
 import org.junit.runners.model.Statement;
-import org.unitils.core.engine.UnitilsTestListener;
+import org.unitils.core.TestListener;
 
 /**
  * @author Tim Ducheyne
  */
 public class BeforeTestMethodStatement extends Statement {
 
-    protected UnitilsTestListener unitilsTestListener;
+    protected TestListener unitilsTestListener;
     protected Statement nextStatement;
+    protected Method testMethod;
+    protected Object testObject;
 
 
-    public BeforeTestMethodStatement(UnitilsTestListener unitilsTestListener, Statement nextStatement) {
+    public BeforeTestMethodStatement(TestListener unitilsTestListener, Statement nextStatement, Method method, Object testObject) {
         this.unitilsTestListener = unitilsTestListener;
         this.nextStatement = nextStatement;
+        this.testMethod = method;
+        this.testObject = testObject;
     }
 
 
     @Override
     public void evaluate() throws Throwable {
-        unitilsTestListener.beforeTestMethod();
+        unitilsTestListener.beforeTestMethod(testObject, testMethod);
         nextStatement.evaluate();
     }
 }

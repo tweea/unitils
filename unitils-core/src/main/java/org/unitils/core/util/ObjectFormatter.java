@@ -1,21 +1,21 @@
 /*
- * Copyright 2013,  Unitils.org
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ *  * Copyright 2010,  Unitils.org
+ *  *
+ *  * Licensed under the Apache License, Version 2.0 (the "License");
+ *  * you may not use this file except in compliance with the License.
+ *  * You may obtain a copy of the License at
+ *  *
+ *  *     http://www.apache.org/licenses/LICENSE-2.0
+ *  *
+ *  * Unless required by applicable law or agreed to in writing, software
+ *  * distributed under the License is distributed on an "AS IS" BASIS,
+ *  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  * See the License for the specific language governing permissions and
+ *  * limitations under the License.
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
  */
 package org.unitils.core.util;
-
-import org.unitils.core.UnitilsException;
 
 import java.io.File;
 import java.lang.reflect.AccessibleObject;
@@ -42,19 +42,22 @@ import static org.unitils.reflectionassert.util.HibernateUtil.getUnproxiedValue;
  */
 public class ObjectFormatter {
 
+    public static final String MOCK_NAME_CHAIN_SEPARATOR = "##chained##";
+
     /* The maximum recursion depth */
     protected int maxDepth;
     /* The maximum nr of elements for arrays and collections to display */
     protected int maxNrArrayOrCollectionElements;
-    protected ArrayAndCollectionFormatter arrayAndCollectionFormatter;
 
+    protected ArrayAndCollectionFormatter arrayAndCollectionFormatter;
 
     /**
      * Creates a formatter with a maximum recursion depth of 3.
      */
     public ObjectFormatter() {
-        this(null, null);
+        this(3, 15);
     }
+
 
     /**
      * Creates a formatter with the given maximum recursion depth.
@@ -64,10 +67,10 @@ public class ObjectFormatter {
      * @param maxDepth                       The max depth > 0
      * @param maxNrArrayOrCollectionElements The maximum nr of elements for arrays and collections to display  > 0
      */
-    public ObjectFormatter(Integer maxDepth, Integer maxNrArrayOrCollectionElements) {
-        this.maxDepth = maxDepth == null ? 3 : maxDepth;
-        this.maxNrArrayOrCollectionElements = maxNrArrayOrCollectionElements == null ? 15 : maxNrArrayOrCollectionElements;
-        this.arrayAndCollectionFormatter = new ArrayAndCollectionFormatter(this.maxNrArrayOrCollectionElements, this);
+    public ObjectFormatter(int maxDepth, int maxNrArrayOrCollectionElements) {
+        this.maxDepth = maxDepth;
+        this.maxNrArrayOrCollectionElements = maxNrArrayOrCollectionElements;
+        this.arrayAndCollectionFormatter = new ArrayAndCollectionFormatter(maxNrArrayOrCollectionElements, this);
     }
 
 
@@ -106,13 +109,13 @@ public class ObjectFormatter {
             return;
         }
         Class<?> type = object.getClass();
-        if (formatObjectToFormat(object, type, result)) {
-            return;
-        }
         if (formatCharacter(object, type, result)) {
             return;
         }
         if (formatPrimitiveOrEnum(object, type, result)) {
+            return;
+        }
+        if (formatMock(object, result)) {
             return;
         }
         if (formatProxy(object, type, result)) {
@@ -133,24 +136,17 @@ public class ObjectFormatter {
             arrayAndCollectionFormatter.formatMap((Map<?, ?>) object, currentDepth, result);
             return;
         }
-        if (formatFile(object, result)) {
-            return;
-        }
         if (currentDepth >= maxDepth) {
             result.append(getShortClassName(type));
             result.append("<...>");
             return;
         }
+        if (formatFile(object, result)) {
+            return;
+        }
         formatObject(object, currentDepth, result);
     }
 
-    private boolean formatObjectToFormat(Object object, Class<?> type, StringBuilder result) {
-        if (object instanceof ObjectToFormat) {
-            result.append(((ObjectToFormat) object).$formatObject());
-            return true;
-        }
-        return false;
-    }
 
     protected boolean formatJavaLang(Object object, StringBuilder result, Class<?> type) {
         if (type.getName().startsWith("java.lang")) {
@@ -196,6 +192,7 @@ public class ObjectFormatter {
         return false;
     }
 
+
     /**
      * Formats the given object by formatting the inner fields.
      *
@@ -211,6 +208,7 @@ public class ObjectFormatter {
         result.append(">");
     }
 
+
     /**
      * Formats the field values of the given object.
      *
@@ -223,43 +221,66 @@ public class ObjectFormatter {
         Field[] fields = clazz.getDeclaredFields();
         AccessibleObject.setAccessible(fields, true);
 
-        boolean firstField = true;
-        for (Field field : fields) {
+        for (int i = 0; i < fields.length; i++) {
             // skip transient and static fields
+            Field field = fields[i];
             if (isTransient(field.getModifiers()) || isStatic(field.getModifiers()) || field.isSynthetic()) {
                 continue;
             }
-            Object fieldValue;
             try {
-                fieldValue = getFieldValue(object, field);
+                if (i > 0) {
+                    result.append(", ");
+                }
+                result.append(field.getName());
+                result.append("=");
+                formatImpl(field.get(object), currentDepth + 1, result);
+
             } catch (IllegalAccessException e) {
                 // this can't happen. Would get a Security exception instead
                 // throw a runtime exception in case the impossible happens.
-                throw new UnitilsException("Unable to format field " + field, e);
+                throw new InternalError("Unexpected IllegalAccessException");
             }
-            if (!firstField) {
-                result.append(", ");
-            }
-            firstField = false;
-            result.append(field.getName());
-            result.append("=");
-
-            formatImpl(fieldValue, currentDepth + 1, result);
         }
 
         // format fields declared in superclass
         Class<?> superclazz = clazz.getSuperclass();
-        if (superclazz != null && !superclazz.getName().startsWith("java.lang")) {
-            if (!firstField) {
-                result.append(", ");
-            }
+        while (superclazz != null && !superclazz.getName().startsWith("java.lang")) {
             formatFields(object, superclazz, currentDepth, result);
+            superclazz = superclazz.getSuperclass();
         }
     }
 
-    protected Object getFieldValue(Object object, Field field) throws IllegalAccessException {
-        return field.get(object);
+
+    protected boolean formatMock(Object object, StringBuilder result) {
+        try {
+            Class<?> proxyUtilsClass = getProxyUtilsClass();
+            if (proxyUtilsClass == null) {
+                return false;
+            }
+            String mockName = (String) proxyUtilsClass.getMethod("getMockName", Object.class).invoke(null, object);
+            if (mockName == null) {
+                return false;
+            }
+            mockName = mockName.replaceAll(MOCK_NAME_CHAIN_SEPARATOR, ".");
+            if (isDummy(object)) {
+                result.append("Dummy<");
+            } else {
+                result.append("Mock<");
+            }
+            result.append(mockName);
+            result.append(">");
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
+
+    protected boolean isDummy(Object object) {
+        Class<?> clazz = object.getClass();
+        Class<?> dummyObjectClass = getDummyObjectClass();
+        return dummyObjectClass != null && dummyObjectClass.isAssignableFrom(clazz);
+    }
+
 
     protected boolean formatProxy(Object object, Class<?> type, StringBuilder result) {
         if (Proxy.isProxyClass(type)) {
@@ -286,4 +307,29 @@ public class ObjectFormatter {
         }
         return false;
     }
+
+    /**
+     * @return The interface that represents a dummy object. If the DummyObject interface is not in the
+     *         classpath, null is returned.
+     */
+    protected Class<?> getDummyObjectClass() {
+        try {
+            return Class.forName("org.unitils.mock.dummy.DummyObject");
+        } catch (ClassNotFoundException e) {
+            return null;
+        }
+    }
+
+
+    /**
+     * @return The proxy utils. null if not in classpath
+     */
+    protected Class<?> getProxyUtilsClass() {
+        try {
+            return Class.forName("org.unitils.mock.core.proxy.ProxyUtils");
+        } catch (ClassNotFoundException e) {
+            return null;
+        }
+    }
+
 }

@@ -15,16 +15,20 @@
  */
 package org.unitils;
 
+import java.lang.reflect.Method;
+
 import org.junit.runner.notification.RunNotifier;
 import org.junit.runners.BlockJUnit4ClassRunner;
 import org.junit.runners.model.FrameworkMethod;
 import org.junit.runners.model.InitializationError;
 import org.junit.runners.model.Statement;
+import org.unitils.core.TestListener;
 import org.unitils.core.Unitils;
-import org.unitils.core.engine.UnitilsTestListener;
-import org.unitils.core.junit.*;
-
-import java.lang.reflect.Method;
+import org.unitils.core.junit.AfterTestMethodStatement;
+import org.unitils.core.junit.AfterTestTearDownStatement;
+import org.unitils.core.junit.BeforeTestClassStatement;
+import org.unitils.core.junit.BeforeTestMethodStatement;
+import org.unitils.core.junit.BeforeTestSetUpStatement;
 
 /**
  * @author Tim Ducheyne
@@ -32,7 +36,7 @@ import java.lang.reflect.Method;
 public class UnitilsBlockJUnit4ClassRunner extends BlockJUnit4ClassRunner {
 
     protected Object test;
-    protected UnitilsTestListener unitilsTestListener;
+    protected TestListener unitilsTestListener;
 
 
     public UnitilsBlockJUnit4ClassRunner(Class<?> testClass) throws InitializationError {
@@ -47,7 +51,7 @@ public class UnitilsBlockJUnit4ClassRunner extends BlockJUnit4ClassRunner {
 
         Statement statement = super.classBlock(notifier);
         statement = new BeforeTestClassStatement(testClass, unitilsTestListener, statement);
-        statement = new AfterTestClassStatement(unitilsTestListener, statement);
+        //statement = new AfterTestClassStatement(unitilsTestListener, statement);
         return statement;
     }
 
@@ -56,8 +60,8 @@ public class UnitilsBlockJUnit4ClassRunner extends BlockJUnit4ClassRunner {
         this.test = test;
 
         Statement statement = super.methodInvoker(method, test);
-        statement = new BeforeTestMethodStatement(unitilsTestListener, statement);
-        statement = new AfterTestMethodStatement(unitilsTestListener, statement);
+        statement = new BeforeTestMethodStatement(unitilsTestListener, statement, method.getMethod(), test);
+        statement = new AfterTestMethodStatement(unitilsTestListener, statement, method.getMethod(), test);
         return statement;
     }
 
@@ -67,13 +71,13 @@ public class UnitilsBlockJUnit4ClassRunner extends BlockJUnit4ClassRunner {
 
         Statement statement = super.methodBlock(method);
         statement = new BeforeTestSetUpStatement(test, testMethod, unitilsTestListener, statement);
-        statement = new AfterTestTearDownStatement(unitilsTestListener, statement);
+        statement = new AfterTestTearDownStatement(unitilsTestListener, statement, test, testMethod);
         return statement;
     }
 
 
-    protected UnitilsTestListener getUnitilsTestListener() {
-        return Unitils.getUnitilsTestListener();
+    protected TestListener getUnitilsTestListener() {
+        return Unitils.getInstance().getTestListener();
     }
 }
 

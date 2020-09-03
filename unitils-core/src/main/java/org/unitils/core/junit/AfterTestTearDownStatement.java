@@ -15,27 +15,38 @@
  */
 package org.unitils.core.junit;
 
+import java.lang.reflect.Method;
+
 import org.junit.runners.model.Statement;
-import org.unitils.core.engine.UnitilsTestListener;
+import org.unitils.core.TestListener;
 
 /**
  * @author Tim Ducheyne
  */
 public class AfterTestTearDownStatement extends Statement {
 
-    protected UnitilsTestListener unitilsTestListener;
+    protected TestListener unitilsTestListener;
     protected Statement nextStatement;
+    private Object testObject;
+    private Method testMethod;
 
 
-    public AfterTestTearDownStatement(UnitilsTestListener unitilsTestListener, Statement nextStatement) {
+
+    public AfterTestTearDownStatement(TestListener unitilsTestListener, Statement nextStatement, Object testObject, Method testMethod) {
         this.unitilsTestListener = unitilsTestListener;
         this.nextStatement = nextStatement;
+        this.testObject = testObject;
+        this.testMethod = testMethod;
     }
 
 
     @Override
     public void evaluate() throws Throwable {
+        try {
         nextStatement.evaluate();
-        unitilsTestListener.afterTestTearDown();
+        } finally {
+            unitilsTestListener.afterTestTearDown(testObject, testMethod);
+        }
+
     }
 }

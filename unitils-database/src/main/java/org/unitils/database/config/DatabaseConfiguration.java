@@ -1,5 +1,5 @@
 /*
- * Copyright 2013,  Unitils.org
+ * Copyright 2012,  Unitils.org
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,9 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.unitils.database.config;
 
 import java.util.List;
+
+import org.apache.commons.lang.StringUtils;
 
 /**
  * @author Tim Ducheyne
@@ -35,7 +38,7 @@ public class DatabaseConfiguration {
 
 
     public DatabaseConfiguration(String databaseName, String dialect, String driverClassName, String url, String userName, String password, String defaultSchemaName, List<String> schemaNames, boolean updateDisabled, boolean defaultDatabase) {
-        this.databaseName = databaseName;
+        this.databaseName = StringUtils.isEmpty(databaseName) ? "" : databaseName;
         this.dialect = dialect;
         this.driverClassName = driverClassName;
         this.url = url;

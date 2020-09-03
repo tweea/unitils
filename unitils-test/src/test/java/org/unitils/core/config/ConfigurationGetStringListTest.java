@@ -68,17 +68,17 @@ public class ConfigurationGetStringListTest {
 
     @Test(expected = UnitilsException.class)
     public void notFound() {
-        configuration.getStringList("xxx");
+        configuration.getStringList("xxx", true);
     }
 
     @Test(expected = UnitilsException.class)
     public void notFoundWhenOnlyEmptyValues() {
-        configuration.getStringList("propertyWithOnlyEmptyValues");
+        configuration.getStringList("propertyWithOnlyEmptyValues", true);
     }
 
     @Test(expected = UnitilsException.class)
     public void notFoundWhenEmpty() {
-        configuration.getStringList("empty");
+        configuration.getStringList("empty", true);
     }
 
     @Test

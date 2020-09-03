@@ -1,5 +1,5 @@
 /*
- * Copyright 2013,  Unitils.org
+ * Copyright 2008,  Unitils.org
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,13 +16,14 @@
 package org.unitils.reflectionassert.hibernate;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import java.io.Serializable;
 
-import static javax.persistence.FetchType.LAZY;
-
 /**
+ * todo javadoc
+ *
  * @author Tim Peeters
  * @author Tim Ducheyne
  * @author Filip Neven
@@ -30,9 +31,8 @@ import static javax.persistence.FetchType.LAZY;
 @Entity
 public class Child implements Serializable {
 
-    @Id
     private Long id;
-    @ManyToOne(fetch = LAZY, optional = false)
+
     private Parent parent;
 
 
@@ -40,23 +40,29 @@ public class Child implements Serializable {
         this(null, null);
     }
 
+
     public Child(Long id, Parent parent) {
         this.id = id;
         this.parent = parent;
     }
 
 
+    @Id
     public Long getId() {
         return id;
     }
+
 
     public void setId(Long id) {
         this.id = id;
     }
 
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     public Parent getParent() {
         return parent;
     }
+
 
     public void setParent(Parent parent) {
         this.parent = parent;

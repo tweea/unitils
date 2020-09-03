@@ -1,5 +1,5 @@
 /*
- * Copyright 2013,  Unitils.org
+ * Copyright 2012,  Unitils.org
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.unitils.database.config;
 
 import org.unitils.core.UnitilsException;
@@ -38,7 +39,10 @@ public class DatabaseConfigurations {
         this.databaseConfigurations = databaseConfigurations;
     }
 
-
+    /**
+     * This is the configuration for the default database.
+     * @return {@link DatabaseConfiguration}
+     */
     public DatabaseConfiguration getDatabaseConfiguration() {
         return defaultDatabaseConfiguration;
     }

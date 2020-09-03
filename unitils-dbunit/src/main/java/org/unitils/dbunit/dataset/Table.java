@@ -1,5 +1,5 @@
 /*
- * Copyright 2013,  Unitils.org
+ * Copyright 2006-2009,  Unitils.org
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,12 +15,13 @@
  */
 package org.unitils.dbunit.dataset;
 
-import org.unitils.dbunit.dataset.comparison.RowDifference;
-import org.unitils.dbunit.dataset.comparison.TableDifference;
-
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+
+import org.dbunit.dataset.Column;
+import org.unitils.dbunit.dataset.comparison.RowDifference;
+import org.unitils.dbunit.dataset.comparison.TableDifference;
 
 /**
  * A data set table
@@ -31,9 +32,12 @@ import java.util.List;
 public class Table {
 
     /* The name of the table */
-    protected String name;
+    private String name;
+
     /* The data set rows */
-    protected List<Row> rows = new ArrayList<Row>();
+    private List<Row> rows = new ArrayList<Row>();
+    
+    private List<Column> columns = new ArrayList<Column>();
 
 
     /**
@@ -45,6 +49,7 @@ public class Table {
         this.name = name;
     }
 
+
     /**
      * @return The name of the table, not null
      */
@@ -52,12 +57,14 @@ public class Table {
         return name;
     }
 
+
     /**
      * @return The data set rows, not null
      */
     public List<Row> getRows() {
         return rows;
     }
+
 
     /**
      * @return True if the table does not contain any rows
@@ -74,6 +81,7 @@ public class Table {
     public void addRow(Row row) {
         rows.add(row);
     }
+
 
     /**
      * Compares the table with the given actual table.
@@ -97,6 +105,7 @@ public class Table {
         }
         return result;
     }
+
 
     /**
      * Compares the given rows with the columns of the actual table.
@@ -131,5 +140,29 @@ public class Table {
                 result.addMissingRow(row);
             }
         }
+    }
+    
+    
+    /**
+     * @return the columns
+     */
+    public List<Column> getColumns() {
+        return columns;
+    }
+    
+    public void addColumns(Column[] columns2) {
+        for (Column column : columns2) {
+            addColumn(column);
+        }
+    }
+    
+    /**
+     * 
+     */
+    public void addColumn(Column column) {
+        if (!columns.contains(column)) {
+            columns.add(column);
+        }
+
     }
 }
