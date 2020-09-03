@@ -20,14 +20,13 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>org.sonatype.oss</groupId>
-        <artifactId>oss-parent</artifactId>
-        <version>9</version>
+        <groupId>net.sf.matrixjavalib</groupId>
+        <artifactId>genesis8</artifactId>
+        <version>38</version>
     </parent>
 
-    <groupId>org.unitils</groupId>
     <artifactId>unitils</artifactId>
-    <version>3.4.7-SNAPSHOT</version>
+    <version>4.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <modules>
@@ -65,19 +64,18 @@
 
     <properties>
         <spring.version>4.2.6.RELEASE</spring.version>
-        <project.build.java.target>1.6</project.build.java.target>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
     <!-- Environment Settings -->
     <issueManagement>
-        <system>jira</system>
-        <url>http://jira.unitils.org/browse/UNI</url>
+        <system>GitHub</system>
+        <url>https://github.com/tweea/unitils/issues</url>
     </issueManagement>
     <scm>
-        <connection>scm:svn:https://svn.code.sf.net/p/unitils/code/branches/3.4</connection>
-        <developerConnection>scm:svn:https://svn.code.sf.net/p/unitils/code/branches/3.4</developerConnection>
-        <url>https://svn.code.sf.net/p/unitils/code/branches/3.4</url>
+        <connection>scm:git:https://github.com/tweea/unitils.git</connection>
+        <developerConnection>scm:git:https://github.com/tweea/unitils.git</developerConnection>
+        <url>https://github.com/tweea/unitils</url>
+        <tag>HEAD</tag>
     </scm>
     <mailingLists>
         <mailingList>
@@ -91,6 +89,9 @@
         </developer>
         <developer>
             <name>Filip Neven</name>
+        </developer>
+        <developer>
+            <name>Tweea Tang</name>
         </developer>
     </developers>
 
@@ -109,67 +110,17 @@
         </testResources>
         <plugins>
             <plugin>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.1</version>
-                <configuration>
-                    <encoding>${project.build.sourceEncoding}</encoding>
-                    <source>${project.build.java.target}</source>
-                    <target>${project.build.java.target}</target>
-                </configuration>
-            </plugin>
-            <plugin>
-                <artifactId>maven-assembly-plugin</artifactId>
-                <configuration>
-                    <outputDirectory>${project.build.directory}/dist</outputDirectory>
-                    <descriptors>
-                        <descriptor>tools/maven/assembly-unitils.xml</descriptor>
-                        <descriptor>tools/maven/assembly-unitils-with-dependencies.xml</descriptor>
-                    </descriptors>
-                </configuration>
-            </plugin>
-            <plugin>
                 <artifactId>maven-release-plugin</artifactId>
                 <configuration>
-                    <goals>deploy package assembly:assembly javadoc:aggregate</goals>
-                    <tagBase>https://svn.code.sf.net/p/unitils/code/tags/releases/</tagBase>
+                    <goals>deploy package javadoc:aggregate</goals>
                     <mavenExecutorId>forked-path</mavenExecutorId>
                 </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-gpg-plugin</artifactId>
-                <version>1.5</version>
-                <executions>
-                    <execution>
-                        <id>sign-artifacts</id>
-                        <phase>verify</phase>
-                        <goals>
-                            <goal>sign</goal>
-                        </goals>
-                        
-                    </execution>
-                </executions>
-                
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-source-plugin</artifactId>
-                <version>2.2.1</version>
-                <executions>
-                    <execution>
-                        <id>attach-sources</id>
-                        <goals>
-                            <goal>jar-no-fork</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
-                <version>2.9.1</version>
                 <configuration>
-                    <additionalparam>-Xdoclint:none</additionalparam>
+                    <additionalJOption>-Xdoclint:none</additionalJOption>
                 </configuration>
                 <executions>
                     <execution>
@@ -180,27 +131,6 @@
                     </execution>
                 </executions>
             </plugin>
-            <!--<plugin>
-                <groupId>org.sonatype.plugins</groupId>
-                <artifactId>nexus-staging-maven-plugin</artifactId>
-                <version>1.6.7</version>
-                <extensions>true</extensions>
-                <configuration>
-                    <serverId>ossrh</serverId>
-                    <nexusUrl>https://oss.sonatype.org/</nexusUrl>
-                    <autoReleaseAfterClose>true</autoReleaseAfterClose>
-                </configuration>
-            </plugin>-->
         </plugins>
     </build>
-    <distributionManagement>
-    <snapshotRepository>
-      <id>ossrh</id>
-      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-    </snapshotRepository>
-    <repository>
-      <id>ossrh</id>
-      <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-    </repository>
-  </distributionManagement>
 </project>
