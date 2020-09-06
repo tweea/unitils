@@ -1,12 +1,9 @@
 /*
- * Copyright 2008,  Unitils.org
- *
+ * Copyright 2008, Unitils.org
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -14,12 +11,6 @@
  * limitations under the License.
  */
 package org.unitils.spring;
-
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNotSame;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 import java.util.List;
 import java.util.Properties;
@@ -32,6 +23,12 @@ import org.unitils.core.ConfigurationLoader;
 import org.unitils.core.UnitilsException;
 import org.unitils.spring.annotation.SpringApplicationContext;
 
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
 /**
  * Test for ApplicationContext creation in the {@link SpringModule}.
  *
@@ -43,17 +40,16 @@ public class SpringModuleApplicationContextTest {
     /* Tested object */
     SpringModule springModule;
 
-
     /**
      * Initializes the test and test fixture.
      */
     @Before
-    public void setUp() throws Exception {
+    public void setUp()
+        throws Exception {
         Properties configuration = new ConfigurationLoader().loadConfiguration();
         springModule = new SpringModule();
         springModule.init(configuration);
     }
-
 
     /**
      * Tests creating an application context using SpringApplicationContext on class level
@@ -66,7 +62,6 @@ public class SpringModuleApplicationContextTest {
         assertNotNull(applicationContext);
     }
 
-
     /**
      * Tests creating an application context using SpringApplicationContext on field level
      */
@@ -77,7 +72,6 @@ public class SpringModuleApplicationContextTest {
 
         assertNotNull(applicationContext);
     }
-
 
     /**
      * Tests creating an application context using SpringApplicationContext on field level
@@ -90,7 +84,6 @@ public class SpringModuleApplicationContextTest {
         assertNotNull(applicationContext);
     }
 
-
     /**
      * Tests creating an application context using a custom create method.
      */
@@ -102,7 +95,6 @@ public class SpringModuleApplicationContextTest {
         assertNotNull(applicationContext);
     }
 
-
     /**
      * Tests creating an application context using a custom create method with an application context argument.
      */
@@ -113,7 +105,6 @@ public class SpringModuleApplicationContextTest {
 
         assertNotNull(applicationContext);
     }
-
 
     /**
      * Tests for more than 1 annotation with values. An exception should have been raised.
@@ -129,7 +120,6 @@ public class SpringModuleApplicationContextTest {
         }
     }
 
-
     /**
      * Tests for more than 1 custom create methods. An exception should have been raised.
      */
@@ -144,7 +134,6 @@ public class SpringModuleApplicationContextTest {
         }
     }
 
-
     /**
      * Tests getting an application context a second time, the same application context should be returned.
      */
@@ -157,7 +146,6 @@ public class SpringModuleApplicationContextTest {
         assertNotNull(applicationContext1);
         assertSame(applicationContext1, applicationContext2);
     }
-
 
     /**
      * Tests invalidating a cached application context.
@@ -174,7 +162,6 @@ public class SpringModuleApplicationContextTest {
         assertNotSame(applicationContext1, applicationContext2);
     }
 
-
     /**
      * Tests invalidating a cached application context using the class name.
      */
@@ -190,7 +177,6 @@ public class SpringModuleApplicationContextTest {
         assertNotSame(applicationContext1, applicationContext2);
     }
 
-
     /**
      * Tests invalidating a cached application context using a wrong class name.
      */
@@ -204,7 +190,6 @@ public class SpringModuleApplicationContextTest {
         assertNotNull(applicationContext1);
         assertSame(applicationContext1, applicationContext2);
     }
-
 
     /**
      * Tests creating an application context using a custom create method with a wrong signature.
@@ -220,7 +205,6 @@ public class SpringModuleApplicationContextTest {
         }
     }
 
-
     /**
      * Tests creating an application context for an unknown location.
      */
@@ -235,11 +219,12 @@ public class SpringModuleApplicationContextTest {
         }
     }
 
-
     /**
      * Test SpringTest class with class level locations.
      */
-    @SpringApplicationContext({"classpath:org/unitils/spring/services-config.xml", "classpath:org/unitils/spring/services-config.xml"})
+    @SpringApplicationContext({
+        "classpath:org/unitils/spring/services-config.xml", "classpath:org/unitils/spring/services-config.xml"
+    })
     private class SpringTest {
     }
 
@@ -247,18 +232,19 @@ public class SpringModuleApplicationContextTest {
      * Test SpringTest class with field level locations.
      */
     private class SpringTestField {
-
-        @SpringApplicationContext({"classpath:org/unitils/spring/services-config.xml", "classpath:org/unitils/spring/services-config.xml"})
+        @SpringApplicationContext({
+            "classpath:org/unitils/spring/services-config.xml", "classpath:org/unitils/spring/services-config.xml"
+        })
         protected ApplicationContext field = null;
-
     }
 
     /**
      * Test SpringTest class with setter level locations.
      */
     private class SpringTestSetter {
-
-        @SpringApplicationContext({"classpath:org/unitils/spring/services-config.xml", "classpath:org/unitils/spring/services-config.xml"})
+        @SpringApplicationContext({
+            "classpath:org/unitils/spring/services-config.xml", "classpath:org/unitils/spring/services-config.xml"
+        })
         public void setField(ApplicationContext field) {
         }
     }
@@ -267,7 +253,6 @@ public class SpringModuleApplicationContextTest {
      * Test SpringTest class with a custom create method.
      */
     private class SpringTestCreateMethod {
-
         @SpringApplicationContext
         protected ApplicationContext createMethod() {
             return new ClassPathXmlApplicationContext("classpath:org/unitils/spring/services-config.xml");
@@ -278,7 +263,6 @@ public class SpringModuleApplicationContextTest {
      * Test SpringTest class with a custom create method with application context argument.
      */
     private class SpringTestCreateMethodWithApplicationContext {
-
         @SpringApplicationContext
         protected ApplicationContext createMethod(List<String> locations) {
             assertTrue(locations.isEmpty());
@@ -289,13 +273,18 @@ public class SpringModuleApplicationContextTest {
     /**
      * Test SpringTest class mixing multiple annotations.
      */
-    @SpringApplicationContext({"1"})
+    @SpringApplicationContext({
+        "1"
+    })
     private class SpringTestMultipleAnnotationsWithValues {
-
-        @SpringApplicationContext({"2"})
+        @SpringApplicationContext({
+            "2"
+        })
         protected ApplicationContext field1;
 
-        @SpringApplicationContext({"3"})
+        @SpringApplicationContext({
+            "3"
+        })
         protected ApplicationContext field2;
     }
 
@@ -303,7 +292,6 @@ public class SpringModuleApplicationContextTest {
      * Test SpringTest class with 2 custom create methods.
      */
     private class SpringTestTwoCreateMethods {
-
         @SpringApplicationContext
         protected ApplicationContext createMethod1(List<String> locations) {
             return null;
@@ -319,7 +307,6 @@ public class SpringModuleApplicationContextTest {
      * Test SpringTest class with a custom create method having a wrong signature.
      */
     private class SpringTestCreateMethodWrongSignature {
-
         @SpringApplicationContext
         protected List<?> createMethod(String a) {
             return null;
@@ -332,5 +319,4 @@ public class SpringModuleApplicationContextTest {
     @SpringApplicationContext("xxxxxxx")
     public class SpringTestWrongLocation {
     }
-
 }

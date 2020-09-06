@@ -10,21 +10,20 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.unitils.thirdparty.org.apache.commons.io.IOUtils;
 
-
 /**
  * FileHandler: Util class for DbUnitModule..
  * 
  * @author Jeroen Horemans
  * @author Thomas De Rycke
  * @author Willemijn Wouters
- * 
  * @since 3.4
- * 
  */
 public class FileHandler {
     private static final Log LOGGER = LogFactory.getLog(FileHandler.class);
+
     /**
      * Create temporary files to store the XML.
+     * 
      * @param dataSetResourceName
      * @return
      */
@@ -46,6 +45,7 @@ public class FileHandler {
 
     /**
      * Write {@link InputStream} to {@link File}
+     * 
      * @param file
      */
     public void writeToFile(File file, InputStream in) {
@@ -64,14 +64,14 @@ public class FileHandler {
             LOGGER.trace("inputstream visualised: \n" + IOUtils.toString(in));
             fos.close();
             LOGGER.debug("End writing preprocessed dataset to file: " + path);
-        } catch(IOException e) {
+        } catch (IOException e) {
             LOGGER.error(e.getMessage(), e);
         }
     }
 
-
     /**
      * Delete all the files
+     * 
      * @param files
      */
     public void deleteFiles(List<File> files) {

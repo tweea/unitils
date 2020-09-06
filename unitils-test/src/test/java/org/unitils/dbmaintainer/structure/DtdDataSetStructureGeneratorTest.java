@@ -1,11 +1,5 @@
 package org.unitils.dbmaintainer.structure;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.unitils.dbmaintainer.structure.impl.DtdDataSetStructureGenerator.PROPKEY_DTD_FILENAME;
-import static org.unitils.dbmaintainer.util.DatabaseModuleConfigUtils.getConfiguredDatabaseTaskInstance;
-import static org.unitils.thirdparty.org.apache.commons.dbutils.DbUtils.closeQuietly;
-
 import java.io.File;
 import java.io.FileReader;
 import java.sql.Connection;
@@ -31,13 +25,20 @@ import org.unitils.dbmaintainer.structure.impl.DtdDataSetStructureGenerator;
 import org.unitils.thirdparty.org.apache.commons.io.IOUtils;
 import org.unitils.util.PropertyUtils;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.unitils.dbmaintainer.structure.impl.DtdDataSetStructureGenerator.PROPKEY_DTD_FILENAME;
+import static org.unitils.dbmaintainer.util.DatabaseModuleConfigUtils.getConfiguredDatabaseTaskInstance;
+import static org.unitils.thirdparty.org.apache.commons.dbutils.DbUtils.closeQuietly;
+
 /**
  * Test class for the FlatXmlDataSetDtdGenerator
  *
  * @author Tim Ducheyne
  * @author Filip Neven
  */
-public class DtdDataSetStructureGeneratorTest extends UnitilsJUnit4 {
+public class DtdDataSetStructureGeneratorTest
+    extends UnitilsJUnit4 {
 
     /* Tested object */
     private DataSetStructureGenerator dataSetStructureGenerator;
@@ -45,11 +46,11 @@ public class DtdDataSetStructureGeneratorTest extends UnitilsJUnit4 {
     /* The file to which to write the DTD */
     private File dtdFile;
 
-    /* DataSource for the test database*/
+    /* DataSource for the test database */
     private DataSource dataSource = null;
 
     private static String dialect;
-    
+
     private List<String> schemas;
 
     /**
@@ -58,7 +59,8 @@ public class DtdDataSetStructureGeneratorTest extends UnitilsJUnit4 {
      * tableTwo(column1, column2)
      */
     @Before
-    public void setUp() throws Exception {
+    public void setUp()
+        throws Exception {
         dtdFile = File.createTempFile("testDTD", ".dtd");
 
         Properties configuration = (Properties) new ConfigurationLoader().loadConfiguration().clone();
@@ -75,31 +77,24 @@ public class DtdDataSetStructureGeneratorTest extends UnitilsJUnit4 {
         createTestTables();
     }
 
-
     /**
      * Clean-up test database.
      */
     @After
-    public void tearDown() throws Exception {
+    public void tearDown()
+        throws Exception {
         dropTestTables();
     }
-
 
     /**
      * Tests the generation of the DTD file.
      */
     @Test
-    public void testGenerateDtd() throws Exception {
-        String expectedContent = "<!ELEMENT DATASET ( (TABLEONE | TABLETWO)*)> " +
-            "<!ELEMENT TABLEONE EMPTY>" +
-            "<!ATTLIST TABLEONE" +
-            "   COLUMNA CDATA #IMPLIED" +
-            "   COLUMNB CDATA #IMPLIED" +
-            "   COLUMNC CDATA #IMPLIED>" +
-            "<!ELEMENT TABLETWO EMPTY>" +
-            "<!ATTLIST TABLETWO" +
-            "   COLUMN1 CDATA #IMPLIED" +
-            "   COLUMN2 CDATA #IMPLIED>";
+    public void testGenerateDtd()
+        throws Exception {
+        String expectedContent = "<!ELEMENT DATASET ( (TABLEONE | TABLETWO)*)> " + "<!ELEMENT TABLEONE EMPTY>" + "<!ATTLIST TABLEONE"
+            + "   COLUMNA CDATA #IMPLIED" + "   COLUMNB CDATA #IMPLIED" + "   COLUMNC CDATA #IMPLIED>" + "<!ELEMENT TABLETWO EMPTY>" + "<!ATTLIST TABLETWO"
+            + "   COLUMN1 CDATA #IMPLIED" + "   COLUMN2 CDATA #IMPLIED>";
 
         dataSetStructureGenerator.generateDataSetStructure();
 
@@ -111,7 +106,8 @@ public class DtdDataSetStructureGeneratorTest extends UnitilsJUnit4 {
     /**
      * Creates the test tables
      */
-    private void createTestTables() throws SQLException {
+    private void createTestTables()
+        throws SQLException {
         Connection conn = null;
         Statement st = null;
         try {
@@ -120,17 +116,16 @@ public class DtdDataSetStructureGeneratorTest extends UnitilsJUnit4 {
             st.execute("create table tableOne(columnA varchar(1) not null, columnB varchar(1) not null, columnC varchar(1))");
             st.execute("create table tableTwo(column1 varchar(1), column2 varchar(1))");
             st.executeQuery("drop table if exists DBMAINTAIN_SCRIPTS");
-
         } finally {
             closeQuietly(conn, st, null);
         }
     }
 
-
     /**
      * Removes the test database tables
      */
-    private void dropTestTables() throws SQLException {
+    private void dropTestTables()
+        throws SQLException {
         Connection conn = null;
         Statement st = null;
         try {
@@ -146,7 +141,6 @@ public class DtdDataSetStructureGeneratorTest extends UnitilsJUnit4 {
             } catch (SQLException e) {
                 // Ignored
             }
-            
         } finally {
             closeQuietly(conn, st, null);
         }
@@ -165,5 +159,4 @@ public class DtdDataSetStructureGeneratorTest extends UnitilsJUnit4 {
         databaseModule.afterInit();
         dataSource = databaseModule.getWrapper("").getTransactionalDataSourceAndActivateTransactionIfNeeded(this);
     }
-
 }

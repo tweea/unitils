@@ -1,12 +1,9 @@
 /*
- * Copyright 2008,  Unitils.org
- *
+ * Copyright 2008, Unitils.org
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -15,11 +12,12 @@
  */
 package org.unitils.reflectionassert;
 
-import junit.framework.AssertionFailedError;
-import org.junit.Test;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import org.junit.Test;
+
+import junit.framework.AssertionFailedError;
 
 /**
  * Tests for correct handling of traversed instances pairs in ReflectionAssert.
@@ -31,8 +29,6 @@ import java.util.List;
  * @author Filip Neven
  */
 public class ReflectionAssertTraversedInstanceTest {
-
-
     /**
      * Test comparing objects with two lists which have intersecting list elements
      * <p/>
@@ -70,7 +66,6 @@ public class ReflectionAssertTraversedInstanceTest {
         ReflectionAssert.assertLenientEquals(root1, root2);
     }
 
-
     /**
      * Test comparing objects with two lists which have intersecting list elements
      * <p/>
@@ -103,15 +98,14 @@ public class ReflectionAssertTraversedInstanceTest {
         ReflectionAssert.assertLenientEquals(root1, root2);
     }
 
-
     /**
      * Test class with to child lists.
      */
     private class Parent {
-
         private String name;
 
         private List<Parent> children1;
+
         private List<Parent> children2;
 
         public Parent(String name) {
@@ -132,5 +126,4 @@ public class ReflectionAssertTraversedInstanceTest {
             return name;
         }
     }
-
 }

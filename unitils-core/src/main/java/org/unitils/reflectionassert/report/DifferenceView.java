@@ -1,12 +1,9 @@
 /*
- * Copyright 2008,  Unitils.org
- *
+ * Copyright 2008, Unitils.org
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -17,7 +14,6 @@ package org.unitils.reflectionassert.report;
 
 import org.unitils.reflectionassert.difference.Difference;
 
-
 /**
  * An interface for classes that can create a string representation of a Difference.
  *
@@ -25,14 +21,12 @@ import org.unitils.reflectionassert.difference.Difference;
  * @author Filip Neven
  */
 public interface DifferenceView {
-
-
     /**
      * Creates a string representation of the given difference tree.
      *
-     * @param difference The root difference, not null
+     * @param difference
+     *     The root difference, not null
      * @return The string representation, not null
      */
     String createView(Difference difference);
-
 }

@@ -1,12 +1,9 @@
 /*
- * Copyright 2008,  Unitils.org
- *
+ * Copyright 2008, Unitils.org
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -33,7 +30,8 @@ import org.unitils.database.DatabaseUnitils;
  * @author Filip Neven
  * @author Tim Ducheyne
  */
-public class DbUnitDatabaseConnection extends AbstractDatabaseConnection {
+public class DbUnitDatabaseConnection
+    extends AbstractDatabaseConnection {
 
     /* DataSource that provides access to JDBC connections */
     private DataSource dataSource;
@@ -41,31 +39,33 @@ public class DbUnitDatabaseConnection extends AbstractDatabaseConnection {
     /* Name of the database schema */
     private String schemaName;
 
-    /* Connection that is currently in use by DBUnit. Is stored to enable returning it to the connection pool after
-     the DBUnit operation finished */
+    /*
+     * Connection that is currently in use by DBUnit. Is stored to enable returning it to the connection pool after
+     * the DBUnit operation finished
+     */
     private Connection currentlyUsedConnection, currentlyUsedNativeConnection;
-
 
     /**
      * Creates a new instance that wraps the given <code>DataSource</code>
      *
-     * @param dataSource The data source, not null
-     * @param schemaName The database schema, not null
+     * @param dataSource
+     *     The data source, not null
+     * @param schemaName
+     *     The database schema, not null
      */
     public DbUnitDatabaseConnection(DataSource dataSource, String schemaName) {
         this.dataSource = dataSource;
         this.schemaName = schemaName;
     }
 
-
     /**
      * Method that is invoked by DBUnit when the connection is no longer needed. This method is not implemented,
      * connections are 'closed' (returned to the connection pool) after every DBUnit operation
      */
-    public void close() throws SQLException {
+    public void close()
+        throws SQLException {
         // Nothing to be done. Connections are closed (i.e. returned to the pool) after every dbUnit operation
     }
-
 
     /**
      * @return The database schema name
@@ -74,7 +74,6 @@ public class DbUnitDatabaseConnection extends AbstractDatabaseConnection {
         return schemaName;
     }
 
-
     /**
      * Returns a <code>Connection</code> that can be used by DBUnit. A reference to the connection is kept, to be able
      * to 'close' it (return it to the connection pool) after the DBUnit operation finished. If an open connection
@@ -82,39 +81,41 @@ public class DbUnitDatabaseConnection extends AbstractDatabaseConnection {
      *
      * @return A JDBC connection
      */
-    public Connection getConnection() throws SQLException {
+    public Connection getConnection()
+        throws SQLException {
         if (currentlyUsedConnection == null) {
             currentlyUsedConnection = DataSourceUtils.getConnection(dataSource);
             currentlyUsedNativeConnection = getNativeConnection(currentlyUsedConnection);
         }
-        
-        
-        /*if (dataSource instanceof BasicDataSource) {
-            BasicDataSource tempDataSource = (BasicDataSource) dataSource;
-            boolean canAccess = tempDataSource.isAccessToUnderlyingConnectionAllowed();
-            if (!canAccess) {
-                tempDataSource.setAccessToUnderlyingConnectionAllowed(true);
-            }
-            if (tempDataSource.getDriverClassName().toLowerCase().contains("oracle")  && currentlyUsedNativeConnection instanceof DelegatingConnection) {
-                DelegatingConnection tempConnection = (DelegatingConnection) currentlyUsedNativeConnection;
-                return tempConnection.getInnermostDelegate();
-            }
-            if (!canAccess) {
-                tempDataSource.setAccessToUnderlyingConnectionAllowed(false);
-            } 
-            
-        }
-        return currentlyUsedNativeConnection;*/
-        
+
+        /*
+         * if (dataSource instanceof BasicDataSource) {
+         * BasicDataSource tempDataSource = (BasicDataSource) dataSource;
+         * boolean canAccess = tempDataSource.isAccessToUnderlyingConnectionAllowed();
+         * if (!canAccess) {
+         * tempDataSource.setAccessToUnderlyingConnectionAllowed(true);
+         * }
+         * if (tempDataSource.getDriverClassName().toLowerCase().contains("oracle") && currentlyUsedNativeConnection instanceof DelegatingConnection) {
+         * DelegatingConnection tempConnection = (DelegatingConnection) currentlyUsedNativeConnection;
+         * return tempConnection.getInnermostDelegate();
+         * }
+         * if (!canAccess) {
+         * tempDataSource.setAccessToUnderlyingConnectionAllowed(false);
+         * }
+         * }
+         * return currentlyUsedNativeConnection;
+         */
+
         return DatabaseUnitils.getGoodConnection(currentlyUsedNativeConnection, dataSource);
     }
 
-
     /**
-     * @param connection The wrapper connection, not null
+     * @param connection
+     *     The wrapper connection, not null
      * @return The 'native' connection, which is wrapped by the given connection. Could be the supplied connection itself
      */
-    protected Connection getNativeConnection(Connection connection) throws SQLException {
+    protected Connection getNativeConnection(Connection connection)
+        throws SQLException {
         DatabaseMetaData metaData = connection.getMetaData();
         if (metaData != null) {
             Connection targetConnection = metaData.getConnection();
@@ -125,18 +126,18 @@ public class DbUnitDatabaseConnection extends AbstractDatabaseConnection {
         return connection;
     }
 
-
     /**
      * Closes the <code>Connection</code> that was last retrieved using the {@link #getConnection} method
      *
-     * @throws SQLException When connection close fails
+     * @throws SQLException
+     *     When connection close fails
      */
-    public void closeJdbcConnection() throws SQLException {
+    public void closeJdbcConnection()
+        throws SQLException {
         if (currentlyUsedConnection != null) {
             DataSourceUtils.releaseConnection(currentlyUsedConnection, dataSource);
             currentlyUsedConnection = null;
             currentlyUsedNativeConnection = null;
         }
     }
-
 }

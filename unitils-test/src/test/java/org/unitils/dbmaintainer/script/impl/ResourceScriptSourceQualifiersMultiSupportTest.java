@@ -21,14 +21,11 @@ import org.unitils.inject.annotation.TestedObject;
 import org.unitils.reflectionassert.ReflectionAssert;
 import org.unitils.reflectionassert.ReflectionComparatorMode;
 
-
 /**
  * test qualifiers and multi user support in {@link ResourceScriptSource}.
  *
  * @author wiw
- *
  * @since
- *
  */
 @RunWith(UnitilsBlockJUnit4ClassRunner.class)
 public class ResourceScriptSourceQualifiersMultiSupportTest {
@@ -36,12 +33,13 @@ public class ResourceScriptSourceQualifiersMultiSupportTest {
 
     @Rule
     public TemporaryFolder tempFolder = new TemporaryFolder(new File("target/test-classes/" + LOCATION));
+
     @TestedObject
     private ResourceScriptSource scriptSource;
+
     private Properties configuration;
 
     private static final String PROPKEY_EXTENTION = "dbMaintainer.script.fileExtensions";
-
 
     @Before
     public void setUp() {
@@ -50,7 +48,8 @@ public class ResourceScriptSourceQualifiersMultiSupportTest {
     }
 
     @Test
-    public void testCheckIfFileMustBeAddedToScriptList() throws Exception {
+    public void testCheckIfFileMustBeAddedToScriptList()
+        throws Exception {
         String schema1 = "USERS";
         String schema2 = "pEoplE";
 
@@ -71,17 +70,20 @@ public class ResourceScriptSourceQualifiersMultiSupportTest {
 
     /**
      * test {@link DefaultScriptSource#checkIfThereAreNoQualifiers(String)}
+     * 
      * @throws Exception
      */
     @Test
-    public void testCheckIfThereAreNoQualifiers() throws Exception {
+    public void testCheckIfThereAreNoQualifiers()
+        throws Exception {
         Assert.assertTrue(scriptSource.checkIfThereAreNoQualifiers("01_products.sql"));
         Assert.assertFalse(scriptSource.checkIfThereAreNoQualifiers("01_#refdata_#postgres_products.sql"));
         Assert.assertFalse(scriptSource.checkIfThereAreNoQualifiers("#refdata_#postgres_products.sql"));
     }
 
     @Test
-    public void testContainsOneOfQualifiers_withoutIncludes() throws Exception {
+    public void testContainsOneOfQualifiers_withoutIncludes()
+        throws Exception {
         scriptSource = new ResourceScriptSource();
         Properties configuration = new Properties();
         configuration.setProperty(DefaultScriptSource.PROPKEY_QUALIFIERS, "include1, include2, include3, exclude1, exclude2, exclude3");
@@ -100,7 +102,8 @@ public class ResourceScriptSourceQualifiersMultiSupportTest {
     }
 
     @Test
-    public void testContainsOneOfQualifiers_withIncludes() throws Exception {
+    public void testContainsOneOfQualifiers_withIncludes()
+        throws Exception {
         scriptSource = new ResourceScriptSource();
         Properties configuration = new Properties();
         configuration.setProperty(DefaultScriptSource.PROPKEY_QUALIFIERS, "include1, include2, include3, exclude1, exclude2, exclude3");
@@ -120,7 +123,8 @@ public class ResourceScriptSourceQualifiersMultiSupportTest {
     }
 
     @Test
-    public void testGetScriptsAt_multiUserSupport() throws Exception {
+    public void testGetScriptsAt_multiUserSupport()
+        throws Exception {
         File parentFile = tempFolder.newFolder("test1");
         tempFolder.newFile("test1/file1.txt");
         tempFolder.newFile("test1/file2.sql");
@@ -143,12 +147,13 @@ public class ResourceScriptSourceQualifiersMultiSupportTest {
         }
 
         Assert.assertEquals(3, actual.size());
-        ReflectionAssert.assertReflectionEquals(Arrays.asList("file2.sql", "@users_addusers.sql", "01_@users_addusers.sql"), actualNames, ReflectionComparatorMode.LENIENT_ORDER);
-
+        ReflectionAssert.assertReflectionEquals(Arrays.asList("file2.sql", "@users_addusers.sql", "01_@users_addusers.sql"), actualNames,
+            ReflectionComparatorMode.LENIENT_ORDER);
     }
 
     @Test
-    public void testGetScriptsAt_qualifiers() throws Exception {
+    public void testGetScriptsAt_qualifiers()
+        throws Exception {
         String nameFolder = "getscriptsat_qualifiers";
         File parentFile = tempFolder.newFolder(nameFolder);
 
@@ -170,7 +175,6 @@ public class ResourceScriptSourceQualifiersMultiSupportTest {
 
         scriptSource.init(configuration);
 
-
         List<Script> actual = new ArrayList<Script>();
 
         scriptSource.getScriptsAt(actual, path, nameFolder, "users", true);
@@ -181,14 +185,15 @@ public class ResourceScriptSourceQualifiersMultiSupportTest {
 
         Assert.assertEquals(3, actualNames.size());
 
-        ReflectionAssert.assertLenientEquals(Arrays.asList("01_%23include1_products.sql", "%23include1_%23include2_products.sql", "01_%23include1_%23include2_products.sql"), actualNames);
+        ReflectionAssert.assertLenientEquals(
+            Arrays.asList("01_%23include1_products.sql", "%23include1_%23include2_products.sql", "01_%23include1_%23include2_products.sql"), actualNames);
     }
 
     @Test
-    public void testGetScriptsAt_qualifiersAndMultiUserSupport_defaultDatabase() throws Exception {
+    public void testGetScriptsAt_qualifiersAndMultiUserSupport_defaultDatabase()
+        throws Exception {
         String nameFolder = "getscriptsat";
         File parentFile = tempFolder.newFolder(nameFolder);
-
 
         tempFolder.newFile(nameFolder + "/01_#include1_products.sql");
         tempFolder.newFile(nameFolder + "/01_#include2_@users_products.sql");
@@ -224,12 +229,11 @@ public class ResourceScriptSourceQualifiersMultiSupportTest {
         expected.add("%23include1_%23include2_products.sql");
         expected.add("01_%23include1_%23include2_products.sql");
 
-        //Assert.assertEquals(5, actual.size());
+        // Assert.assertEquals(5, actual.size());
         ReflectionAssert.assertReflectionEquals(expected, actualNames, ReflectionComparatorMode.LENIENT_ORDER);
     }
 
     public String getPath(File file) {
-
         File baseFile = new File("target/test-classes/");
         String path = "";
         path = file.getAbsolutePath().substring(baseFile.getAbsolutePath().length());

@@ -1,12 +1,9 @@
 /*
- * Copyright 2008,  Unitils.org
- *
+ * Copyright 2008, Unitils.org
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -15,20 +12,25 @@
  */
 package org.unitils.core;
 
+import java.util.Properties;
+
 import org.apache.commons.logging.Log;
 import org.junit.After;
-import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 import org.unitils.UnitilsJUnit4;
-import static org.unitils.core.ConfigurationLoader.*;
 import org.unitils.core.util.PropertiesReader;
 import org.unitils.inject.annotation.InjectIntoByType;
 import org.unitils.inject.annotation.InjectIntoStaticByType;
 import org.unitils.inject.annotation.TestedObject;
 import org.unitils.mock.Mock;
 
-import java.util.Properties;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+import static org.unitils.core.ConfigurationLoader.DEFAULT_PROPERTIES_FILE_NAME;
+import static org.unitils.core.ConfigurationLoader.PROPKEY_CUSTOM_CONFIGURATION;
+import static org.unitils.core.ConfigurationLoader.PROPKEY_LOCAL_CONFIGURATION;
 
 /**
  * Test for {@link ConfigurationLoader}.
@@ -37,7 +39,8 @@ import java.util.Properties;
  * @author Tim Ducheyne
  * @author Filip Neven
  */
-public class ConfigurationLoaderTest extends UnitilsJUnit4 {
+public class ConfigurationLoaderTest
+    extends UnitilsJUnit4 {
 
     /* System under Test */
     @TestedObject
@@ -66,7 +69,6 @@ public class ConfigurationLoaderTest extends UnitilsJUnit4 {
     /* The default local property filename */
     private final String LOCAL_PROPERTIES_FILE_NAME = "unitils-local.properties";
 
-
     @Before
     public void setUp() {
         configurationLoader = new ConfigurationLoader();
@@ -83,13 +85,11 @@ public class ConfigurationLoaderTest extends UnitilsJUnit4 {
         unitilsDefaultProperties.put(PROPKEY_LOCAL_CONFIGURATION, LOCAL_PROPERTIES_FILE_NAME);
     }
 
-
     @After
     public void cleanup() {
         System.clearProperty(PROPKEY_CUSTOM_CONFIGURATION);
         System.clearProperty(PROPKEY_LOCAL_CONFIGURATION);
     }
-
 
     /**
      * Test scenario:
@@ -105,7 +105,6 @@ public class ConfigurationLoaderTest extends UnitilsJUnit4 {
             propertiesReader.returns(null).loadPropertiesFileFromClasspath(null);
             configurationLoader.loadConfiguration();
             fail("Exception expected.");
-
         } catch (UnitilsException ue) {
             assertEquals(expectedMessage, ue.getMessage());
         }
@@ -133,7 +132,6 @@ public class ConfigurationLoaderTest extends UnitilsJUnit4 {
         assertNoLocalConfigurationFound(LOCAL_PROPERTIES_FILE_NAME);
     }
 
-
     /**
      * Test scenario:
      * <ul>
@@ -155,7 +153,6 @@ public class ConfigurationLoaderTest extends UnitilsJUnit4 {
         assertCustomPropertiesLoaded(returnedProperties);
         assertNoLocalConfigurationFound(LOCAL_PROPERTIES_FILE_NAME);
     }
-
 
     /**
      * Test scenario:
@@ -179,7 +176,6 @@ public class ConfigurationLoaderTest extends UnitilsJUnit4 {
         assertCustomPropertiesLoaded(returnedProperties);
         assertLocalPropertiesLoaded(returnedProperties);
     }
-
 
     /**
      * Test scenario:
@@ -205,7 +201,6 @@ public class ConfigurationLoaderTest extends UnitilsJUnit4 {
         assertLocalPropertiesLoaded(returnedProperties);
     }
 
-
     @Test
     public void customConfigurationFileNameOverriddenBySystemProperty() {
         System.setProperty(PROPKEY_CUSTOM_CONFIGURATION, "custom-filename.properties");
@@ -216,7 +211,6 @@ public class ConfigurationLoaderTest extends UnitilsJUnit4 {
         propertiesReader.assertInvoked().loadPropertiesFileFromClasspath("custom-filename.properties");
     }
 
-
     @Test
     public void localConfigurationFileNameOverriddenBySystemProperty() {
         System.setProperty(PROPKEY_LOCAL_CONFIGURATION, "custom-local-filename.properties");
@@ -226,7 +220,6 @@ public class ConfigurationLoaderTest extends UnitilsJUnit4 {
 
         propertiesReader.assertInvoked().loadPropertiesFileFromClasspath("custom-local-filename.properties");
     }
-
 
     private void assertNoCustomConfigurationFound(String fileName) {
         usedLogger.assertInvoked().warn("No custom configuration file " + fileName + " found.");

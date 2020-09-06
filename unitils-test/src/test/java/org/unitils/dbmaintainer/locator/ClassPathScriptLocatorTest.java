@@ -23,21 +23,17 @@ import org.unitils.inject.annotation.TestedObject;
  * Will test finding scripts on the classpath.
  * 
  * @author tdr
- * 
  * @since 1.0.2
- * 
  */
 @RunWith(UnitilsJUnit4TestClassRunner.class)
 public class ClassPathScriptLocatorTest {
-
     @TestedObject
     private ClassPathScriptLocator classPathScriptLocator;
 
     @Mock
     private ResourcePickingStrategie resourcePickingStrategie;
-    
-    private Properties configuration;
 
+    private Properties configuration;
 
     private List<URL> urlList;
 
@@ -47,8 +43,8 @@ public class ClassPathScriptLocatorTest {
      * @throws Exception
      */
     @Before
-    public void setUp() throws Exception {
-
+    public void setUp()
+        throws Exception {
         urlList = new ArrayList<URL>();
         urlList.add(getClass().getResource(scriptDir + "001_Initial_TESTcreate.sql"));
         urlList.add(getClass().getResource(scriptDir + "002_Initial_TESTcreate.sql"));
@@ -61,6 +57,7 @@ public class ClassPathScriptLocatorTest {
     public static void afterTestClass() {
         Unitils.getInstance().init();
     }
+
     /*** */
     @Test
     public void loadScriptsTest() {
@@ -77,10 +74,6 @@ public class ClassPathScriptLocatorTest {
         classPathScriptLocator = new ClassPathScriptLocator();
         classPathScriptLocator.loadScripts(scriptList, path, resourcePickingStrategie, scriptExtensions, "users", true, configuration);
 
-
         Assert.assertTrue(classPathScriptLocator.scriptList.size() == 3);
-
     }
-
-
 }

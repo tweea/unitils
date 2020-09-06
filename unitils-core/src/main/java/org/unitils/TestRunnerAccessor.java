@@ -1,4 +1,3 @@
-
 package org.unitils;
 
 import java.lang.reflect.Method;
@@ -10,11 +9,11 @@ import java.lang.reflect.Method;
  * @author jef
  */
 public interface TestRunnerAccessor {
-
     /**
      * Execute a test method on a given tested object.
+     * 
      * @param testedObject
-     * @param testMethod 
+     * @param testMethod
      */
     void executeTestMethod(Object testedObject, Method testMethod);
 }

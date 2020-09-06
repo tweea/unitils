@@ -1,12 +1,9 @@
 /*
- * Copyright 2008,  Unitils.org
- *
+ * Copyright 2008, Unitils.org
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -15,16 +12,17 @@
  */
 package org.unitils.reflectionassert.comparator.impl;
 
-import org.unitils.reflectionassert.ReflectionComparator;
-import org.unitils.reflectionassert.comparator.Comparator;
-import org.unitils.reflectionassert.difference.CollectionDifference;
-import org.unitils.reflectionassert.difference.Difference;
-import static org.unitils.util.CollectionUtils.convertToCollection;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
+
+import org.unitils.reflectionassert.ReflectionComparator;
+import org.unitils.reflectionassert.comparator.Comparator;
+import org.unitils.reflectionassert.difference.CollectionDifference;
+import org.unitils.reflectionassert.difference.Difference;
+
+import static org.unitils.util.CollectionUtils.convertToCollection;
 
 /**
  * Comparator for collections and arrays.
@@ -34,14 +32,15 @@ import java.util.List;
  * @author Tim Ducheyne
  * @author Filip Neven
  */
-public class CollectionComparator implements Comparator {
-
-
+public class CollectionComparator
+    implements Comparator {
     /**
      * Returns true when both objects are arrays or collections.
      *
-     * @param left  The left object
-     * @param right The right object
+     * @param left
+     *     The left object
+     * @param right
+     *     The right object
      * @return True in case of arrays/collections
      */
     public boolean canCompare(Object left, Object right) {
@@ -54,14 +53,17 @@ public class CollectionComparator implements Comparator {
         return false;
     }
 
-
     /**
      * Compared the given collections/arrays.
      *
-     * @param left                 The left collection/array, not null
-     * @param right                The right collection/array, not null
-     * @param onlyFirstDifference  True if only the first difference should be returned
-     * @param reflectionComparator The root comparator for inner comparisons, not null
+     * @param left
+     *     The left collection/array, not null
+     * @param right
+     *     The right collection/array, not null
+     * @param onlyFirstDifference
+     *     True if only the first difference should be returned
+     * @param reflectionComparator
+     *     The root comparator for inner comparisons, not null
      * @return A CollectionDifference or null if both collections are equal
      */
     public Difference compare(Object left, Object right, boolean onlyFirstDifference, ReflectionComparator reflectionComparator) {
@@ -86,7 +88,7 @@ public class CollectionComparator implements Comparator {
             }
         }
 
-        // check for missing elements 
+        // check for missing elements
         int leftElementIndex = elementIndex;
         while (leftIterator.hasNext()) {
             leftIterator.next();
@@ -103,5 +105,4 @@ public class CollectionComparator implements Comparator {
         }
         return difference;
     }
-
 }

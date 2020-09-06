@@ -15,24 +15,21 @@ import org.unitils.dbmaintainer.locator.resourcepickingstrategie.ResourcePicking
 import org.unitils.dbunit.datasetfactory.DataSetResolver;
 import org.unitils.util.PropertyUtils;
 
-
-
 /**
  * Utils class to generate the correct names for the datasets.
  *
  * @author Willemijn Wouters
- *
  * @since 3.4.4
- *
  */
-public class DataSetFileNamesHandler  {
-
+public class DataSetFileNamesHandler {
     /**
      * Gets the name of the default testdata file at class level The default name is constructed as follows: 'classname without
      * packagename'.xml
      *
-     * @param testClass The test class, not null
-     * @param extension The configured extension of dataset files
+     * @param testClass
+     *     The test class, not null
+     * @param extension
+     *     The configured extension of dataset files
      * @return The default filename, not null
      */
     public String getDefaultDataSetFileNameClassLevel(Class<?> testClass, String extension) {
@@ -42,14 +39,13 @@ public class DataSetFileNamesHandler  {
         if (className.contains(".")) {
             className = className.replace(".", "/");
 
-            //builder.append(className.substring(className.lastIndexOf(".") + 1));
+            // builder.append(className.substring(className.lastIndexOf(".") + 1));
         }
         builder.append(className);
         builder.append(".");
         builder.append(extension);
         return builder.toString();
     }
-
 
     /**
      * Gets the name of the default testdata file at class level The default name is constructed as follows: 'classname without
@@ -64,7 +60,7 @@ public class DataSetFileNamesHandler  {
         String className = testClass.getName();
         StringBuilder builder = new StringBuilder();
         if (className.contains(".")) {
-            //className = className.replace(".", "/");
+            // className = className.replace(".", "/");
             className = className.substring(className.lastIndexOf(".") + 1);
         }
         builder.append(className);
@@ -79,9 +75,12 @@ public class DataSetFileNamesHandler  {
      * Gets the name of the expected dataset file. The default name of this file is constructed as follows: 'classname without
      * packagename'.'testname'-result.xml.
      *
-     * @param method The test method, not null
-     * @param testClass The test class, not null
-     * @param extension The configured extension of dataset files, not null
+     * @param method
+     *     The test method, not null
+     * @param testClass
+     *     The test class, not null
+     * @param extension
+     *     The configured extension of dataset files, not null
      * @return The expected dataset filename, not null
      */
     public String getDefaultExpectedDataSetFileName(Method method, Class<?> testClass, String extension) {
@@ -90,21 +89,20 @@ public class DataSetFileNamesHandler  {
     }
 
     /**
-     *
      * @param nameResource
      * @param packageTestClass
      * @return {@link String}
      */
     public String generateResourceName(String nameResource, Package packageTestClass) {
-        //check if the packagename is in the nameResource
+        // check if the packagename is in the nameResource
         String cloneResource = new String(nameResource);
 
         String packageName = (packageTestClass != null) ? packageTestClass.getName() : "";
         String tempName = "";
         if (cloneResource.startsWith(packageName.replace(".", "/"))) {
-            cloneResource = tempName = cloneResource.substring(packageName.length()) ;
+            cloneResource = tempName = cloneResource.substring(packageName.length());
         } else if (cloneResource.startsWith(packageName)) {
-            cloneResource = tempName = cloneResource.substring(packageName.length() + 1) ;
+            cloneResource = tempName = cloneResource.substring(packageName.length() + 1);
         } else {
             tempName = cloneResource;
         }
@@ -126,9 +124,7 @@ public class DataSetFileNamesHandler  {
         return getDefaultDataSetFileNameClassLevel(testClass, extension);
     }
 
-
     /**
-     *
      * @param locator
      * @param nameResource
      * @param strategy
@@ -147,12 +143,14 @@ public class DataSetFileNamesHandler  {
         if (in == null) {
             File resolvedFile = getDataSetResolver().resolve(testClass, generateResourceName(nameResource, testClass.getPackage()));
             if (resolvedFile == null) {
-                throw new UnitilsException((new StringBuilder()).append("DataSetResource file with name '").append(nameResource).append("' cannot be found").toString());
+                throw new UnitilsException(
+                    (new StringBuilder()).append("DataSetResource file with name '").append(nameResource).append("' cannot be found").toString());
             }
             try {
                 in = new FileInputStream(resolvedFile);
             } catch (FileNotFoundException e) {
-                throw new UnitilsException((new StringBuilder()).append("DataSetResource file with name '").append(nameResource).append("' cannot be found").toString());
+                throw new UnitilsException(
+                    (new StringBuilder()).append("DataSetResource file with name '").append(nameResource).append("' cannot be found").toString());
             }
         }
 
@@ -176,5 +174,4 @@ public class DataSetFileNamesHandler  {
     protected FileHandler getFileHandler() {
         return PropertyUtils.getInstance("org.unitils.dbunit.util.FileHandler.implClassName", new FileHandler(), getUnitilsConfiguration());
     }
-
 }

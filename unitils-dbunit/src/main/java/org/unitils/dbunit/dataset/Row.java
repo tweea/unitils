@@ -1,12 +1,9 @@
 /*
- * Copyright 2006-2009,  Unitils.org
- *
+ * Copyright 2006-2009, Unitils.org
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -15,12 +12,12 @@
  */
 package org.unitils.dbunit.dataset;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.unitils.core.UnitilsException;
 import org.unitils.dbunit.dataset.comparison.ColumnDifference;
 import org.unitils.dbunit.dataset.comparison.RowDifference;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * A data set row
@@ -36,11 +33,11 @@ public class Row {
     /* The columns of the row */
     private List<Column> columns = new ArrayList<Column>();
 
-
     /**
      * Gets the column for the given name. The name is case insensitive.
      *
-     * @param columnName The name of the column, not null
+     * @param columnName
+     *     The name of the column, not null
      * @return The column, null if not found
      */
     public Column getColumn(String columnName) {
@@ -57,14 +54,12 @@ public class Row {
         return null;
     }
 
-
     /**
      * @return The primary key columns, empty if none defined
      */
     public List<Column> getPrimaryKeyColumns() {
         return primaryKeyColumns;
     }
-
 
     /**
      * @return The columns of the row, not null
@@ -73,12 +68,13 @@ public class Row {
         return columns;
     }
 
-
     /**
      * Adds a column to the row. A column can only be added once.
      *
-     * @param primaryKeyColumn The column to add, not null
-     * @throws UnitilsException When a value for the same column was already added
+     * @param primaryKeyColumn
+     *     The column to add, not null
+     * @throws UnitilsException
+     *     When a value for the same column was already added
      */
     public void addPrimaryKeyColumn(Column primaryKeyColumn) {
         Column existingColumn = getColumn(primaryKeyColumn.getName());
@@ -88,12 +84,13 @@ public class Row {
         primaryKeyColumns.add(primaryKeyColumn);
     }
 
-
     /**
      * Adds a column to the row. A column can only be added once.
      *
-     * @param column The column to add, not null
-     * @throws UnitilsException When a value for the same column was already added
+     * @param column
+     *     The column to add, not null
+     * @throws UnitilsException
+     *     When a value for the same column was already added
      */
     public void addColumn(Column column) {
         Column existingColumn = getColumn(column.getName());
@@ -103,9 +100,9 @@ public class Row {
         columns.add(column);
     }
 
-
     /**
-     * @param actualRow The row to compare with, not null
+     * @param actualRow
+     *     The row to compare with, not null
      * @return True if the pk columns did not match
      */
     public boolean hasDifferentPrimaryKeyColumns(Row actualRow) {
@@ -118,11 +115,11 @@ public class Row {
         return false;
     }
 
-
     /**
      * Compares the row with the given actual row.
      *
-     * @param actualRow The row to compare with, not null
+     * @param actualRow
+     *     The row to compare with, not null
      * @return The difference, null if none found
      */
     public RowDifference compare(Row actualRow) {
@@ -136,13 +133,15 @@ public class Row {
         return rowDifference;
     }
 
-
     /**
      * Compares the given columns with the columns of the actual row.
      *
-     * @param columns   The columns to compare, not null
-     * @param actualRow The columns to compare with, not null
-     * @param result    The result to add the differences to, not null
+     * @param columns
+     *     The columns to compare, not null
+     * @param actualRow
+     *     The columns to compare with, not null
+     * @param result
+     *     The result to add the differences to, not null
      */
     protected void compareColumns(List<Column> columns, Row actualRow, RowDifference result) {
         for (Column column : columns) {
@@ -157,5 +156,4 @@ public class Row {
             }
         }
     }
-
 }

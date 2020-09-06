@@ -1,12 +1,9 @@
 /*
- * Copyright 2008,  Unitils.org
- *
+ * Copyright 2008, Unitils.org
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -15,15 +12,15 @@
  */
 package org.unitils.dbunit.annotation;
 
-import static java.lang.annotation.ElementType.METHOD;
-import static java.lang.annotation.ElementType.TYPE;
-import static java.lang.annotation.RetentionPolicy.RUNTIME;
-
 import java.lang.annotation.Inherited;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
 import org.unitils.dbunit.datasetfactory.DataSetFactory;
+
+import static java.lang.annotation.ElementType.METHOD;
+import static java.lang.annotation.ElementType.TYPE;
+import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 /**
  * Annotation indicating that after having executed a test method, the contents of the unit test database should be
@@ -41,7 +38,9 @@ import org.unitils.dbunit.datasetfactory.DataSetFactory;
  * <p/>
  * Examples:
  * <p/>
- * <pre><code>
+ * 
+ * <pre>
+ * <code>
  * '    @ExpectedDataSet
  *      public class MyTestClass extends UnitilsJUnit3 {
  * '
@@ -52,11 +51,15 @@ import org.unitils.dbunit.datasetfactory.DataSetFactory;
  *          public void testMethod2(){
  *          }
  *      }
- * </code></pre>
+ * </code>
+ * </pre>
+ * 
  * Will check the resulting contents of the unit test database using a data set file named MyTestClass.testMethod1-result.xml
  * in the same directory as the class for testMethod1 and aCustomFileName.xml for testMethod2.
  * <p/>
- * <pre><code>
+ * 
+ * <pre>
+ * <code>
  *      public class MyTestClass extends UnitilsJUnit3 {
  * '
  *          public void testMethod1(){
@@ -66,19 +69,21 @@ import org.unitils.dbunit.datasetfactory.DataSetFactory;
  *          public void testMethod2(){
  *          }
  *      }
- * </code></pre>
+ * </code>
+ * </pre>
+ * 
  * Will not perform any dataset check for testMethod1 (there is no class level expected data set). And will use a data set
  * file named MyTestClass.testMethod2-result.xml for testMethod2.
  *
  * @author Filip Neven
  * @author Tim Ducheyne
  */
-@Target({TYPE, METHOD})
+@Target({
+    TYPE, METHOD
+})
 @Retention(RUNTIME)
 @Inherited
 public @interface ExpectedDataSet {
-
-
     /**
      * The file name of the data set. If left empty, the default filename will be
      * used: 'classname'.'methodname'-result.xml. If that file also does not exist, an exception is thrown.
@@ -90,7 +95,7 @@ public @interface ExpectedDataSet {
     Class<? extends DataSetFactory> factory() default DataSetFactory.class;
 
     /**
-     * The name of the database. 
+     * The name of the database.
      * If you want to use the default database defined in the unitils.properties, than you should leave this empty.
      * 
      * @return {@link String}

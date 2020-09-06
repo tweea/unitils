@@ -23,56 +23,56 @@ import org.junit.runners.Suite;
 import org.junit.runners.model.FrameworkMethod;
 import org.junit.runners.model.TestClass;
 
-
 /**
  * Parameterized runner.
  * 
  * @author Jeroen Horemans
  * @author Thomas De Rycke
  * @author Willemijn Wouters
- * 
  * @since 3.4
- * 
  */
-public class UnitilsParameterized extends Suite {
+public class UnitilsParameterized
+    extends Suite {
     private Class<?> clazz;
+
     private static final Log LOGGER = LogFactory.getLog(UnitilsParameterized.class);
+
     private static final String METHOD = "Method ";
+
     /**
-     * 
      * TestClassRunnerForParameters.
      * 
      * @author wiw
-     * 
-     * @since 
-     *
+     * @since
      */
-    protected class TestClassRunnerForParameters extends UnitilsJUnit4TestClassRunner {
-
+    protected class TestClassRunnerForParameters
+        extends UnitilsJUnit4TestClassRunner {
         private final int fParameterSetNumber;
 
         private final List<Object[]> fParameterList;
 
         private org.junit.internal.runners.TestClass testClassInternalRunners;
+
         /**
          * @param javaClass
          * @param parametersList
          * @param i
-         * @throws Exception 
+         * @throws Exception
          */
-        public TestClassRunnerForParameters(Class<?> javaClass, List<Object[]> parametersList, int i) throws Exception {
+        public TestClassRunnerForParameters(Class<?> javaClass, List<Object[]> parametersList, int i)
+            throws Exception {
             super(javaClass);
             this.fParameterList = parametersList;
             this.fParameterSetNumber = i;
             this.testClassInternalRunners = new org.junit.internal.runners.TestClass(javaClass);
         }
-        
 
         /**
          * @see org.junit.internal.runners.JUnit4ClassRunner#createTest()
          */
         @Override
-        protected Object createTest() throws Exception {
+        protected Object createTest()
+            throws Exception {
             return getfTestClass().getOnlyConstructor().newInstance(computeParams());
         }
 
@@ -80,20 +80,23 @@ public class UnitilsParameterized extends Suite {
          * @return
          */
         private TestClass getfTestClass() {
-            return  new TestClass(clazz);
+            return new TestClass(clazz);
         }
 
         /**
          * @return
-         * @throws Exception 
+         * @throws Exception
          */
-        protected Object[] computeParams() throws Exception {
+        protected Object[] computeParams()
+            throws Exception {
             try {
                 return fParameterList.get(fParameterSetNumber);
             } catch (ClassCastException e) {
-                throw new Exception(String.format("%s.%s() must return a Collection of arrays.", getTestClass().getName(), getParametersMethod(getfTestClass()).getName()));
+                throw new Exception(
+                    String.format("%s.%s() must return a Collection of arrays.", getTestClass().getName(), getParametersMethod(getfTestClass()).getName()));
             }
         }
+
         /**
          * @see org.junit.internal.runners.JUnit4ClassRunner#getName()
          */
@@ -109,7 +112,6 @@ public class UnitilsParameterized extends Suite {
                     } else {
                         name.append("null,");
                     }
-
                 }
             } catch (IndexOutOfBoundsException e) {
                 LOGGER.error(e.getMessage(), e);
@@ -131,7 +133,8 @@ public class UnitilsParameterized extends Suite {
          * @see org.junit.internal.runners.JUnit4ClassRunner#validate()
          */
         @Override
-        protected void validate() throws InitializationError {
+        protected void validate()
+            throws InitializationError {
             testClassInternalRunners = new org.junit.internal.runners.TestClass(clazz);
             UnitilsMethodValidator validator = new UnitilsMethodValidator(testClassInternalRunners);
             List<Throwable> errors = validator.validateMethodsForParameterizedRunner();
@@ -139,35 +142,35 @@ public class UnitilsParameterized extends Suite {
                 throw new InitializationError(errors);
             }
         }
-        
     }
-    private final List<Runner> runners= new ArrayList<Runner>();
 
-    
+    private final List<Runner> runners = new ArrayList<Runner>();
 
     /**
      * Only called reflectively. Do not use programmatically.
-     * @param klass 
-     * @throws Throwable 
+     * 
+     * @param klass
+     * @throws Throwable
      */
-    public UnitilsParameterized(Class<?> klass) throws Throwable {
+    public UnitilsParameterized(Class<?> klass)
+        throws Throwable {
         super(klass, Collections.<Runner>emptyList());
         this.clazz = klass;
         List<Object[]> parametersList = getParametersList(getTestClass());
-        for (int i= 0; i < parametersList.size(); i++) {
+        for (int i = 0; i < parametersList.size(); i++) {
             runners.add(new TestClassRunnerForParameters(getTestClass().getJavaClass(), parametersList, i));
-
         }
     }
 
     /**
      * @param testClass
      * @return {@link List}
-     * @throws Throwable 
-     * @throws Exception 
+     * @throws Throwable
+     * @throws Exception
      */
     @SuppressWarnings("unchecked")
-    private List<Object[]> getParametersList(TestClass testClass) throws Exception, Throwable {
+    private List<Object[]> getParametersList(TestClass testClass)
+        throws Exception, Throwable {
         return (List<Object[]>) getParametersMethod(testClass).invokeExplosively(null);
     }
 
@@ -175,19 +178,20 @@ public class UnitilsParameterized extends Suite {
      * @param testClass
      * @return
      */
-    protected FrameworkMethod getParametersMethod(TestClass testClass) throws Exception {
+    protected FrameworkMethod getParametersMethod(TestClass testClass)
+        throws Exception {
         List<FrameworkMethod> methods = testClass.getAnnotatedMethods(Parameters.class);
-        
+
         for (FrameworkMethod each : methods) {
             int modifiers = each.getMethod().getModifiers();
             if (Modifier.isStatic(modifiers) && Modifier.isPublic(modifiers)) {
                 return each;
             }
-
         }
 
         throw new Exception("No public static parameters method on class " + testClass.getName());
     }
+
     /**
      * @see org.junit.runners.Suite#getChildren()
      */
@@ -195,19 +199,19 @@ public class UnitilsParameterized extends Suite {
     protected List<Runner> getChildren() {
         return Collections.unmodifiableList(runners);
     }
+
     /**
-     * 
      * UnitilsMethodValidator.
      * 
      * @author wiw
-     * 
-     * @since 
-     *
+     * @since
      */
-    protected static class UnitilsMethodValidator extends MethodValidator {
-
+    protected static class UnitilsMethodValidator
+        extends MethodValidator {
         private org.junit.internal.runners.TestClass testclass;
+
         private List<Throwable> errors = new ArrayList<Throwable>();
+
         /**
          * @param testClass
          */
@@ -215,25 +219,23 @@ public class UnitilsParameterized extends Suite {
             super(testClass);
             this.testclass = testClass;
         }
+
         public List<Throwable> validateMethodsForParameterizedRunner() {
             validateArgConstructor();
             validateStaticMethods();
             validateInstanceMethods();
 
             return errors;
-        }   
+        }
 
-
-
-        //private methods
+        // private methods
         protected void validateTestMethods(Class<? extends Annotation> annotation, boolean isStatic) {
-            List<Method> methods= testclass.getAnnotatedMethods(annotation);
+            List<Method> methods = testclass.getAnnotatedMethods(annotation);
 
             for (Method each : methods) {
                 if (Modifier.isStatic(each.getModifiers()) != isStatic) {
-                    String state= isStatic ? "should" : "should not";
-                    errors.add(new Exception(METHOD + each.getName() + "() "
-                        + state + " be static"));
+                    String state = isStatic ? "should" : "should not";
+                    errors.add(new Exception(METHOD + each.getName() + "() " + state + " be static"));
                 }
                 if (!Modifier.isPublic(each.getDeclaringClass().getModifiers())) {
                     errors.add(new Exception("Class " + each.getDeclaringClass().getName() + " should be public"));
@@ -245,7 +247,7 @@ public class UnitilsParameterized extends Suite {
                     errors.add(new Exception(METHOD + each.getName() + " should be void"));
                 }
                 if (each.getParameterTypes().length != 0) {
-                    errors.add(new Exception(METHOD + each.getName()  + " should have no parameters"));
+                    errors.add(new Exception(METHOD + each.getName() + " should have no parameters"));
                 }
             }
         }
@@ -259,7 +261,7 @@ public class UnitilsParameterized extends Suite {
             validateTestMethods(Before.class, false);
             validateTestMethods(Test.class, false);
 
-            List<Method> methods= testclass.getAnnotatedMethods(Test.class);
+            List<Method> methods = testclass.getAnnotatedMethods(Test.class);
             if (methods.size() == 0) {
                 errors.add(new Exception("No runnable methods"));
             }
@@ -273,16 +275,15 @@ public class UnitilsParameterized extends Suite {
             validateTestMethods(BeforeClass.class, true);
             validateTestMethods(AfterClass.class, true);
         }
+
         public void validateArgConstructor() {
             org.junit.runners.model.TestClass clazz = new org.junit.runners.model.TestClass(testclass.getJavaClass());
             Constructor<?> onlyConstructor = clazz.getOnlyConstructor();
-            
+
             if (onlyConstructor.getParameterTypes().length == 0) {
                 errors.add(new Exception("Test class shouldn't have a public zero-argument constructor"));
             }
-
         }
-
 
         /**
          * @return the errors
@@ -290,7 +291,5 @@ public class UnitilsParameterized extends Suite {
         protected List<Throwable> getErrors() {
             return errors;
         }
-        
-        
     }
 }

@@ -1,7 +1,5 @@
 package org.unitils.dbmaintainer.locator;
 
-import static org.apache.commons.lang.StringUtils.replace;
-
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -15,20 +13,18 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.unitils.core.UnitilsException;
 
+import static org.apache.commons.lang.StringUtils.replace;
 
 /**
  * Abstract class to locate resources on the classpath.
  * Will also look in jars that are in the classpath.
  *
  * @author tdr
- *
  * @since 1.0.2
- *
  */
 public abstract class ClassPathResourceLocator {
     /* The logger instance for this class */
     private static Log logger = LogFactory.getLog(ClassPathResourceLocator.class);
-
 
     protected List<URL> resourceList;
 
@@ -50,7 +46,6 @@ public abstract class ClassPathResourceLocator {
             Enumeration<URL> resources = getClass().getClassLoader().getResources(path);
 
             while (resources.hasMoreElements()) {
-
                 URL url = resources.nextElement();
 
                 resourceList.add(url);
@@ -60,7 +55,6 @@ public abstract class ClassPathResourceLocator {
                     List<URL> subResources = searchResources(url);
                     resourceList.addAll(subResources);
                 }
-
             }
         } catch (IOException e) {
             throw new UnitilsException("Unable to scan for resources in path " + path + "", e);
@@ -69,7 +63,6 @@ public abstract class ClassPathResourceLocator {
         return resourceList;
     }
 
-
     /**
      * Will use the Spring {@link PathMatchingResourcePatternResolver} to find a resource that corresponds to the <code>url</code>.
      *
@@ -77,7 +70,8 @@ public abstract class ClassPathResourceLocator {
      * @return List<URL>
      * @throws IOException
      */
-    protected List<URL> searchResources(URL url) throws IOException {
+    protected List<URL> searchResources(URL url)
+        throws IOException {
         PathMatchingResourcePatternResolver p = new PathMatchingResourcePatternResolver();
         Resource[] scriptResources = p.getResources(url.toString() + "**");
         List<URL> listScriptResources = new ArrayList<URL>();
@@ -89,7 +83,6 @@ public abstract class ClassPathResourceLocator {
             logger.debug("Resource '" + urlResource.toString() + "' added to resourcelist ");
             try {
                 urlResource.openStream();
-
             } catch (Exception e) {
                 logger.error(" Resource '" + urlResource.toString() + "' is not found.");
             }
@@ -98,11 +91,12 @@ public abstract class ClassPathResourceLocator {
         return listScriptResources;
     }
 
-    public URL fixJarUrl(URL url) throws MalformedURLException {
+    public URL fixJarUrl(URL url)
+        throws MalformedURLException {
         if (url.getProtocol().equals("jar")) {
             String fixedStr = url.toExternalForm();
             fixedStr = replace(fixedStr, "#", "%23");
-            fixedStr =  replace(fixedStr, "@", "%40");
+            fixedStr = replace(fixedStr, "@", "%40");
 
             return new URL(fixedStr);
         }

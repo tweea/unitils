@@ -1,12 +1,9 @@
 /*
- * Copyright 2008,  Unitils.org
- *
+ * Copyright 2008, Unitils.org
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -16,23 +13,6 @@
 package org.unitils.dbmaintainer.clean.impl;
 
 import java.util.List;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
-import static org.unitils.core.dbsupport.DbSupportFactory.getDefaultDbSupport;
-import static org.unitils.core.util.SQLTestUtils.dropTestMaterializedViews;
-import static org.unitils.core.util.SQLTestUtils.dropTestSequences;
-import static org.unitils.core.util.SQLTestUtils.dropTestSynonyms;
-import static org.unitils.core.util.SQLTestUtils.dropTestTables;
-import static org.unitils.core.util.SQLTestUtils.dropTestTriggers;
-import static org.unitils.core.util.SQLTestUtils.dropTestTypes;
-import static org.unitils.core.util.SQLTestUtils.dropTestViews;
-import static org.unitils.database.SQLUnitils.executeUpdate;
-import static org.unitils.dbmaintainer.clean.impl.DefaultDBClearer.PROPKEY_PRESERVE_MATERIALIZED_VIEWS;
-import static org.unitils.dbmaintainer.clean.impl.DefaultDBClearer.PROPKEY_PRESERVE_SEQUENCES;
-import static org.unitils.dbmaintainer.clean.impl.DefaultDBClearer.PROPKEY_PRESERVE_SYNONYMS;
-import static org.unitils.dbmaintainer.clean.impl.DefaultDBClearer.PROPKEY_PRESERVE_TABLES;
-import static org.unitils.dbmaintainer.clean.impl.DefaultDBClearer.PROPKEY_PRESERVE_VIEWS;
-
 import java.util.Properties;
 
 import javax.sql.DataSource;
@@ -51,7 +31,25 @@ import org.unitils.core.dbsupport.DefaultSQLHandler;
 import org.unitils.core.dbsupport.SQLHandler;
 import org.unitils.database.DataSourceWrapper;
 import org.unitils.database.DatabaseModule;
+import org.unitils.dbmaintainer.clean.DBClearer;
 import org.unitils.util.PropertyUtils;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
+import static org.unitils.core.dbsupport.DbSupportFactory.getDefaultDbSupport;
+import static org.unitils.core.util.SQLTestUtils.dropTestMaterializedViews;
+import static org.unitils.core.util.SQLTestUtils.dropTestSequences;
+import static org.unitils.core.util.SQLTestUtils.dropTestSynonyms;
+import static org.unitils.core.util.SQLTestUtils.dropTestTables;
+import static org.unitils.core.util.SQLTestUtils.dropTestTriggers;
+import static org.unitils.core.util.SQLTestUtils.dropTestTypes;
+import static org.unitils.core.util.SQLTestUtils.dropTestViews;
+import static org.unitils.database.SQLUnitils.executeUpdate;
+import static org.unitils.dbmaintainer.clean.impl.DefaultDBClearer.PROPKEY_PRESERVE_MATERIALIZED_VIEWS;
+import static org.unitils.dbmaintainer.clean.impl.DefaultDBClearer.PROPKEY_PRESERVE_SEQUENCES;
+import static org.unitils.dbmaintainer.clean.impl.DefaultDBClearer.PROPKEY_PRESERVE_SYNONYMS;
+import static org.unitils.dbmaintainer.clean.impl.DefaultDBClearer.PROPKEY_PRESERVE_TABLES;
+import static org.unitils.dbmaintainer.clean.impl.DefaultDBClearer.PROPKEY_PRESERVE_VIEWS;
 
 /**
  * Test class for the {@link DBClearer} with configuratin to preserve all items.
@@ -60,7 +58,8 @@ import org.unitils.util.PropertyUtils;
  * @author Filip Neven
  * @author Scott Prater
  */
-public class DefaultDBClearerPreserveTest extends UnitilsJUnit4 {
+public class DefaultDBClearerPreserveTest
+    extends UnitilsJUnit4 {
 
     /* The logger instance for this class */
     private static Log logger = LogFactory.getLog(DefaultDBClearerPreserveTest.class);
@@ -73,25 +72,25 @@ public class DefaultDBClearerPreserveTest extends UnitilsJUnit4 {
 
     /* The DbSupport object */
     private DbSupport dbSupport;
-    
-    private String dialect;
-    
-    private List<String> schemas;
 
+    private String dialect;
+
+    private List<String> schemas;
 
     /**
      * Configures the tested object. Creates a test table, index, view and sequence
      */
     @Before
-    public void setUp() throws Exception {
+    public void setUp()
+        throws Exception {
         Properties configuration = (Properties) new ConfigurationLoader().loadConfiguration().clone();
         schemas = PropertyUtils.getStringList("database.schemaNames", configuration);
         initDatabaseModule(configuration);
-        
+
         SQLHandler sqlHandler = new DefaultSQLHandler(dataSource);
-        
+
         dbSupport = getDefaultDbSupport(configuration, sqlHandler, dialect, schemas.get(0));
-        
+
         // first create database, otherwise items to preserve do not yet exist
         cleanupTestDatabase();
         createTestDatabase();
@@ -108,50 +107,49 @@ public class DefaultDBClearerPreserveTest extends UnitilsJUnit4 {
         if (dbSupport.supportsSynonyms()) {
             configuration.setProperty(PROPKEY_PRESERVE_SYNONYMS, "Test_Synonym, " + dbSupport.quoted("Test_CASE_Synonym"));
         }
-        
-        
+
         // create clearer instance
         defaultDbClearer = new DefaultDBClearer();
         defaultDbClearer.init(configuration, sqlHandler, dialect, schemas);
     }
 
-
     /**
      * Removes all test tables.
      */
     @After
-    public void tearDown() throws Exception {
+    public void tearDown()
+        throws Exception {
         cleanupTestDatabase();
     }
-
 
     /**
      * Checks if the tables are correctly dropped.
      */
     @Test
-    public void testClearDatabase_tables() throws Exception {
+    public void testClearDatabase_tables()
+        throws Exception {
         assertEquals(2, dbSupport.getTableNames().size());
         defaultDbClearer.clearSchemas();
         assertEquals(2, dbSupport.getTableNames().size());
     }
-
 
     /**
      * Checks if the views are correctly dropped
      */
     @Test
-    public void testClearDatabase_views() throws Exception {
+    public void testClearDatabase_views()
+        throws Exception {
         assertEquals(2, dbSupport.getViewNames().size());
         defaultDbClearer.clearSchemas();
         assertEquals(2, dbSupport.getViewNames().size());
     }
 
-
     /**
      * Checks if the materialized views are correctly dropped
      */
     @Test
-    public void testClearDatabase_materializedViews() throws Exception {
+    public void testClearDatabase_materializedViews()
+        throws Exception {
         if (!dbSupport.supportsMaterializedViews()) {
             logger.warn("Current dialect does not support materialized views. Skipping test.");
             return;
@@ -161,12 +159,12 @@ public class DefaultDBClearerPreserveTest extends UnitilsJUnit4 {
         assertEquals(2, dbSupport.getMaterializedViewNames().size());
     }
 
-
     /**
      * Checks if the synonyms are correctly dropped
      */
     @Test
-    public void testClearDatabase_synonyms() throws Exception {
+    public void testClearDatabase_synonyms()
+        throws Exception {
         if (!dbSupport.supportsSynonyms()) {
             logger.warn("Current dialect does not support synonyms. Skipping test.");
             return;
@@ -176,12 +174,12 @@ public class DefaultDBClearerPreserveTest extends UnitilsJUnit4 {
         assertEquals(2, dbSupport.getSynonymNames().size());
     }
 
-
     /**
      * Tests if the triggers are correctly dropped
      */
     @Test
-    public void testClearDatabase_sequences() throws Exception {
+    public void testClearDatabase_sequences()
+        throws Exception {
         if (!dbSupport.supportsSequences()) {
             logger.warn("Current dialect does not support sequences. Skipping test.");
             return;
@@ -191,11 +189,11 @@ public class DefaultDBClearerPreserveTest extends UnitilsJUnit4 {
         assertEquals(2, dbSupport.getSequenceNames().size());
     }
 
-
     /**
      * Creates all test database structures (view, tables...)
      */
-    private void createTestDatabase() throws Exception {
+    private void createTestDatabase()
+        throws Exception {
         String dialect = dbSupport.getDatabaseDialect();
         if ("hsqldb".equals(dialect)) {
             createTestDatabaseHsqlDb();
@@ -216,11 +214,11 @@ public class DefaultDBClearerPreserveTest extends UnitilsJUnit4 {
         }
     }
 
-
     /**
      * Drops all created test database structures (views, tables...)
      */
-    private void cleanupTestDatabase() throws Exception {
+    private void cleanupTestDatabase()
+        throws Exception {
         String dialect = dbSupport.getDatabaseDialect();
         if ("hsqldb".equals(dialect)) {
             cleanupTestDatabaseHsqlDb();
@@ -246,7 +244,8 @@ public class DefaultDBClearerPreserveTest extends UnitilsJUnit4 {
     /**
      * Creates all test database structures (view, tables...)
      */
-    private void createTestDatabaseHsqlDb() throws Exception {
+    private void createTestDatabaseHsqlDb()
+        throws Exception {
         // create tables
         executeUpdate("create table test_table (col1 int not null identity, col2 varchar(12) not null)", dataSource);
         executeUpdate("create table \"Test_CASE_Table\" (col1 int, foreign key (col1) references test_table(col1))", dataSource);
@@ -257,21 +256,23 @@ public class DefaultDBClearerPreserveTest extends UnitilsJUnit4 {
         executeUpdate("create sequence test_sequence", dataSource);
         executeUpdate("create sequence \"Test_CASE_Sequence\"", dataSource);
         // create triggers
-        executeUpdate("create trigger test_trigger before insert on \"Test_CASE_Table\" call \"org.unitils.core.dbsupport.HsqldbDbSupportTest.TestTrigger\"", dataSource);
-        executeUpdate("create trigger \"Test_CASE_Trigger\" before insert on \"Test_CASE_Table\" call \"org.unitils.core.dbsupport.HsqldbDbSupportTest.TestTrigger\"", dataSource);
+        executeUpdate("create trigger test_trigger before insert on \"Test_CASE_Table\" call \"org.unitils.core.dbsupport.HsqldbDbSupportTest.TestTrigger\"",
+            dataSource);
+        executeUpdate(
+            "create trigger \"Test_CASE_Trigger\" before insert on \"Test_CASE_Table\" call \"org.unitils.core.dbsupport.HsqldbDbSupportTest.TestTrigger\"",
+            dataSource);
     }
-
 
     /**
      * Drops all created test database structures (views, tables...)
      */
-    private void cleanupTestDatabaseHsqlDb() throws Exception {
+    private void cleanupTestDatabaseHsqlDb()
+        throws Exception {
         dropTestTables(dbSupport, "test_table", "\"Test_CASE_Table\"");
         dropTestViews(dbSupport, "test_view", "\"Test_CASE_View\"");
         dropTestSequences(dbSupport, "test_sequence", "\"Test_CASE_Sequence\"");
         dropTestTriggers(dbSupport, "test_trigger", "\"Test_CASE_Trigger\"");
     }
-
 
     /**
      * Test trigger for hypersonic.
@@ -279,8 +280,8 @@ public class DefaultDBClearerPreserveTest extends UnitilsJUnit4 {
      * @author Filip Neven
      * @author Tim Ducheyne
      */
-    public static class TestTrigger implements Trigger {
-
+    public static class TestTrigger
+        implements Trigger {
         public void fire(int i, String string, String string1, Object[] objects, Object[] objects1) {
         }
     }
@@ -292,7 +293,8 @@ public class DefaultDBClearerPreserveTest extends UnitilsJUnit4 {
     /**
      * Creates all test database structures (view, tables...)
      */
-    private void createTestDatabaseMySql() throws Exception {
+    private void createTestDatabaseMySql()
+        throws Exception {
         // create tables
         executeUpdate("create table test_table (col1 int not null primary key AUTO_INCREMENT, col2 varchar(12) not null)", dataSource);
         executeUpdate("create table `Test_CASE_Table` (col1 int, foreign key (col1) references test_table(col1))", dataSource);
@@ -304,11 +306,11 @@ public class DefaultDBClearerPreserveTest extends UnitilsJUnit4 {
         executeUpdate("create trigger `Test_CASE_Trigger` after insert on `Test_CASE_Table` FOR EACH ROW begin end", dataSource);
     }
 
-
     /**
      * Drops all created test database structures (views, tables...)
      */
-    private void cleanupTestDatabaseMySql() throws Exception {
+    private void cleanupTestDatabaseMySql()
+        throws Exception {
         dropTestTables(dbSupport, "test_table", "`Test_CASE_Table`");
         dropTestViews(dbSupport, "test_view", "`Test_CASE_View`");
         dropTestTriggers(dbSupport, "test_trigger", "`Test_CASE_Trigger`");
@@ -321,7 +323,8 @@ public class DefaultDBClearerPreserveTest extends UnitilsJUnit4 {
     /**
      * Creates all test database structures (view, tables...)
      */
-    private void createTestDatabaseOracle() throws Exception {
+    private void createTestDatabaseOracle()
+        throws Exception {
         // create tables
         executeUpdate("create table test_table (col1 varchar(10) not null primary key, col2 varchar(12) not null)", dataSource);
         executeUpdate("create table \"Test_CASE_Table\" (col1 varchar(10), foreign key (col1) references test_table(col1))", dataSource);
@@ -338,18 +341,21 @@ public class DefaultDBClearerPreserveTest extends UnitilsJUnit4 {
         executeUpdate("create sequence test_sequence", dataSource);
         executeUpdate("create sequence \"Test_CASE_Sequence\"", dataSource);
         // create triggers
-        executeUpdate("create or replace trigger test_trigger before insert on \"Test_CASE_Table\" begin dbms_output.put_line('test'); end test_trigger", dataSource);
-        executeUpdate("create or replace trigger \"Test_CASE_Trigger\" before insert on \"Test_CASE_Table\" begin dbms_output.put_line('test'); end \"Test_CASE_Trigger\"", dataSource);
+        executeUpdate("create or replace trigger test_trigger before insert on \"Test_CASE_Table\" begin dbms_output.put_line('test'); end test_trigger",
+            dataSource);
+        executeUpdate(
+            "create or replace trigger \"Test_CASE_Trigger\" before insert on \"Test_CASE_Table\" begin dbms_output.put_line('test'); end \"Test_CASE_Trigger\"",
+            dataSource);
         // create types
         executeUpdate("create type test_type AS (col1 int)", dataSource);
         executeUpdate("create type \"Test_CASE_Type\" AS (col1 int)", dataSource);
     }
 
-
     /**
      * Drops all created test database structures (views, tables...)
      */
-    private void cleanupTestDatabaseOracle() throws Exception {
+    private void cleanupTestDatabaseOracle()
+        throws Exception {
         dropTestTables(dbSupport, "test_table", "\"Test_CASE_Table\"");
         dropTestViews(dbSupport, "test_view", "\"Test_CASE_View\"");
         dropTestMaterializedViews(dbSupport, "test_mview", "\"Test_CASE_MView\"");
@@ -366,7 +372,8 @@ public class DefaultDBClearerPreserveTest extends UnitilsJUnit4 {
     /**
      * Creates all test database structures (view, tables...)
      */
-    private void createTestDatabasePostgreSql() throws Exception {
+    private void createTestDatabasePostgreSql()
+        throws Exception {
         // create tables
         executeUpdate("create table test_table (col1 varchar(10) not null primary key, col2 varchar(12) not null)", dataSource);
         executeUpdate("create table \"Test_CASE_Table\" (col1 varchar(10), foreign key (col1) references test_table(col1))", dataSource);
@@ -390,11 +397,11 @@ public class DefaultDBClearerPreserveTest extends UnitilsJUnit4 {
         executeUpdate("create type \"Test_CASE_Type\" AS (col1 int)", dataSource);
     }
 
-
     /**
      * Drops all created test database structures (views, tables...)
      */
-    private void cleanupTestDatabasePostgreSql() throws Exception {
+    private void cleanupTestDatabasePostgreSql()
+        throws Exception {
         dropTestTables(dbSupport, "test_table", "\"Test_CASE_Table\"");
         dropTestViews(dbSupport, "test_view", "\"Test_CASE_View\"");
         dropTestSequences(dbSupport, "test_sequence", "\"Test_CASE_Sequence\"");
@@ -409,7 +416,8 @@ public class DefaultDBClearerPreserveTest extends UnitilsJUnit4 {
     /**
      * Creates all test database structures (view, tables...)
      */
-    private void createTestDatabaseDb2() throws Exception {
+    private void createTestDatabaseDb2()
+        throws Exception {
         // create tables
         executeUpdate("create table test_table (col1 int not null primary key generated by default as identity, col2 varchar(12) not null)", dataSource);
         executeUpdate("create table \"Test_CASE_Table\" (col1 int, foreign key (col1) references test_table(col1))", dataSource);
@@ -427,11 +435,11 @@ public class DefaultDBClearerPreserveTest extends UnitilsJUnit4 {
         executeUpdate("create type \"Test_CASE_Type\" AS (col1 int) MODE DB2SQL", dataSource);
     }
 
-
     /**
      * Drops all created test database structures (views, tables...)
      */
-    private void cleanupTestDatabaseDb2() throws Exception {
+    private void cleanupTestDatabaseDb2()
+        throws Exception {
         dropTestTables(dbSupport, "test_table", "\"Test_CASE_Table\"");
         dropTestViews(dbSupport, "test_view", "\"Test_CASE_View\"");
         dropTestSynonyms(dbSupport, "test_synonym", "\"Test_CASE_Synonym\"");
@@ -447,7 +455,8 @@ public class DefaultDBClearerPreserveTest extends UnitilsJUnit4 {
     /**
      * Creates all test database structures (view, tables...)
      */
-    private void createTestDatabaseDerby() throws Exception {
+    private void createTestDatabaseDerby()
+        throws Exception {
         // create tables
         executeUpdate("create table \"TEST_TABLE\" (col1 int not null primary key generated by default as identity, col2 varchar(12) not null)", dataSource);
         executeUpdate("create table \"Test_CASE_Table\" (col1 int, foreign key (col1) references test_table(col1))", dataSource);
@@ -459,16 +468,20 @@ public class DefaultDBClearerPreserveTest extends UnitilsJUnit4 {
         executeUpdate("create synonym \"Test_CASE_Synonym\" for \"Test_CASE_Table\"", dataSource);
         // create triggers
         executeUpdate("call SYSCS_UTIL.SYSCS_SET_DATABASE_PROPERTY('testKey', 'test')", dataSource);
-        executeUpdate("create trigger test_trigger no cascade before insert on \"Test_CASE_Table\" FOR EACH ROW MODE DB2SQL VALUES SYSCS_UTIL.SYSCS_GET_DATABASE_PROPERTY('testKey')", dataSource);
-        executeUpdate("create trigger \"Test_CASE_Trigger\" no cascade before insert on \"Test_CASE_Table\" FOR EACH ROW MODE DB2SQL VALUES SYSCS_UTIL.SYSCS_GET_DATABASE_PROPERTY('testKey')", dataSource);
+        executeUpdate(
+            "create trigger test_trigger no cascade before insert on \"Test_CASE_Table\" FOR EACH ROW MODE DB2SQL VALUES SYSCS_UTIL.SYSCS_GET_DATABASE_PROPERTY('testKey')",
+            dataSource);
+        executeUpdate(
+            "create trigger \"Test_CASE_Trigger\" no cascade before insert on \"Test_CASE_Table\" FOR EACH ROW MODE DB2SQL VALUES SYSCS_UTIL.SYSCS_GET_DATABASE_PROPERTY('testKey')",
+            dataSource);
     }
-
 
     /**
      * Drops all created test database structures (views, tables...) First drop the views, since Derby doesn't support
      * "drop table ... cascade" (yet, as of Derby 10.3)
      */
-    private void cleanupTestDatabaseDerby() throws Exception {
+    private void cleanupTestDatabaseDerby()
+        throws Exception {
         dropTestSynonyms(dbSupport, "test_synonym", "\"Test_CASE_Synonym\"");
         dropTestViews(dbSupport, "test_view", "\"Test_CASE_View\"");
         dropTestTriggers(dbSupport, "test_trigger", "\"Test_CASE_Trigger\"");
@@ -482,7 +495,8 @@ public class DefaultDBClearerPreserveTest extends UnitilsJUnit4 {
     /**
      * Creates all test database structures (view, tables...)
      */
-    private void createTestDatabaseMsSql() throws Exception {
+    private void createTestDatabaseMsSql()
+        throws Exception {
         // create tables
         executeUpdate("create table test_table (col1 int not null primary key identity, col2 varchar(12) not null)", dataSource);
         executeUpdate("create table \"Test_CASE_Table\" (col1 int, foreign key (col1) references test_table(col1))", dataSource);
@@ -500,30 +514,29 @@ public class DefaultDBClearerPreserveTest extends UnitilsJUnit4 {
         executeUpdate("create type \"Test_CASE_Type\" from int", dataSource);
     }
 
-
     /**
      * Drops all created test database structures (views, tables...) First drop the views, since Derby doesn't support
      * "drop table ... cascade" (yet, as of Derby 10.3)
      */
-    private void cleanupTestDatabaseMsSql() throws Exception {
+    private void cleanupTestDatabaseMsSql()
+        throws Exception {
         dropTestSynonyms(dbSupport, "test_synonym", "\"Test_CASE_Synonym\"");
         dropTestViews(dbSupport, "test_view", "\"Test_CASE_View\"");
         dropTestTriggers(dbSupport, "test_trigger", "\"Test_CASE_Trigger\"");
         dropTestTables(dbSupport, "\"Test_CASE_Table\"", "test_table");
         dropTestTypes(dbSupport, "test_type", "\"Test_CASE_Type\"");
     }
-    
+
     private void initDatabaseModule(Properties configuration) {
         dialect = PropertyUtils.getString("database.dialect", configuration);
         configuration.setProperty("dbMaintainer.autoCreateExecutedScriptsTable", "false");
         configuration.setProperty("dbMaintainer.autoCreateDbMaintainScriptsTable", "false");
         configuration.setProperty("updateDataBaseSchema.enabled", "false");
-       
+
         DatabaseModule databaseModule = Unitils.getInstance().getModulesRepository().getModuleOfType(DatabaseModule.class);
         databaseModule.init(configuration);
         databaseModule.afterInit();
-        
-        
+
         DataSourceWrapper wrapper = databaseModule.getWrapper("");
         databaseModule.setWrapper(wrapper);
         dataSource = wrapper.getTransactionalDataSourceAndActivateTransactionIfNeeded(this);

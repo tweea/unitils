@@ -1,28 +1,26 @@
 /*
- *
- *  * Copyright 2010,  Unitils.org
- *  *
- *  * Licensed under the Apache License, Version 2.0 (the "License");
- *  * you may not use this file except in compliance with the License.
- *  * You may obtain a copy of the License at
- *  *
- *  *     http://www.apache.org/licenses/LICENSE-2.0
- *  *
- *  * Unless required by applicable law or agreed to in writing, software
- *  * distributed under the License is distributed on an "AS IS" BASIS,
- *  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  * See the License for the specific language governing permissions and
- *  * limitations under the License.
- *
+ * * Copyright 2010, Unitils.org
+ * *
+ * * Licensed under the Apache License, Version 2.0 (the "License");
+ * * you may not use this file except in compliance with the License.
+ * * You may obtain a copy of the License at
+ * *
+ * * http://www.apache.org/licenses/LICENSE-2.0
+ * *
+ * * Unless required by applicable law or agreed to in writing, software
+ * * distributed under the License is distributed on an "AS IS" BASIS,
+ * * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * * See the License for the specific language governing permissions and
+ * * limitations under the License.
  */
 package org.unitils.reflectionassert.comparator.impl;
+
+import java.util.Calendar;
+import java.util.Date;
 
 import org.unitils.reflectionassert.ReflectionComparator;
 import org.unitils.reflectionassert.comparator.Comparator;
 import org.unitils.reflectionassert.difference.Difference;
-
-import java.util.Calendar;
-import java.util.Date;
 
 /**
  * Comparator for simple cases.
@@ -33,15 +31,16 @@ import java.util.Date;
  * @author Tim Ducheyne
  * @author Filip Neven
  */
-public class SimpleCasesComparator implements Comparator {
-
-
+public class SimpleCasesComparator
+    implements Comparator {
     /**
      * Returns true if both object are the same instance, have a null value, are an Enum/Number/Character or
      * are a java.lang type.
      *
-     * @param left  The left object
-     * @param right The right object
+     * @param left
+     *     The left object
+     * @param right
+     *     The right object
      * @return True for simple cases
      */
     public boolean canCompare(Object left, Object right) {
@@ -69,14 +68,17 @@ public class SimpleCasesComparator implements Comparator {
         return false;
     }
 
-
     /**
      * Compares the given values.
      *
-     * @param left                 The left value
-     * @param right                The right value
-     * @param onlyFirstDifference  True if only the first difference should be returned
-     * @param reflectionComparator The root comparator for inner comparisons, not null
+     * @param left
+     *     The left value
+     * @param right
+     *     The right value
+     * @param onlyFirstDifference
+     *     True if only the first difference should be returned
+     * @param reflectionComparator
+     *     The root comparator for inner comparisons, not null
      * @return A Difference if both values are different, null otherwise
      */
     public Difference compare(Object left, Object right, boolean onlyFirstDifference, ReflectionComparator reflectionComparator) {
@@ -132,11 +134,11 @@ public class SimpleCasesComparator implements Comparator {
         return null;
     }
 
-
     /**
      * Gets the double value for the given left Character or Number instance.
      *
-     * @param object the Character or Number, not null
+     * @param object
+     *     the Character or Number, not null
      * @return the value as a Double (this way NaN and infinity can be compared)
      */
     private Double getDoubleValue(Object object) {
@@ -145,5 +147,4 @@ public class SimpleCasesComparator implements Comparator {
         }
         return (double) ((Character) object).charValue();
     }
-
 }

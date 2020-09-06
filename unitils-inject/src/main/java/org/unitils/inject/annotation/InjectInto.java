@@ -1,12 +1,9 @@
 /*
- * Copyright 2008,  Unitils.org
- *
+ * Copyright 2008, Unitils.org
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -15,11 +12,11 @@
  */
 package org.unitils.inject.annotation;
 
-import static java.lang.annotation.ElementType.FIELD;
-import static java.lang.annotation.RetentionPolicy.RUNTIME;
-
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
+
+import static java.lang.annotation.ElementType.FIELD;
+import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 /**
  * Annotation indicating that the the {@link org.unitils.inject.InjectModule} should try to inject the object assigned to
@@ -35,7 +32,6 @@ import java.lang.annotation.Target;
 @Target(FIELD)
 @Retention(RUNTIME)
 public @interface InjectInto {
-
     /**
      * The name of the field that references the object to which the object in the annotated field should be injected.
      * If not specified, the target is defined by the field annotated with {@link TestedObject}
@@ -50,5 +46,4 @@ public @interface InjectInto {
      * @return the ognl expression, not null
      */
     String property();
-
 }

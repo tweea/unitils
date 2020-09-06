@@ -1,12 +1,9 @@
 /*
- * Copyright 2008,  Unitils.org
- *
+ * Copyright 2008, Unitils.org
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -17,12 +14,13 @@ package org.unitils.database;
 
 import java.sql.Connection;
 
+import javax.sql.DataSource;
+
 import org.apache.commons.dbcp.BasicDataSource;
 import org.apache.commons.dbcp.DelegatingConnection;
 import org.unitils.core.Unitils;
 import org.unitils.core.dbsupport.SQLHandler;
-
-import javax.sql.DataSource;
+import org.unitils.dbmaintainer.DBMaintainer;
 
 /**
  * Class providing access to the functionality of the database module using static methods. Meant
@@ -32,17 +30,15 @@ import javax.sql.DataSource;
  * @author Tim Ducheyne
  */
 public class DatabaseUnitils {
-
-
     /**
      * Returns the DataSource that connects to the test database
      *
      * @return The DataSource that connects to the test database
      */
     public static DataSource getDataSource(String databaseName) {
-    	return getDatabaseModule().getWrapper(databaseName).getTransactionalDataSourceAndActivateTransactionIfNeeded(getTestObject());
+        return getDatabaseModule().getWrapper(databaseName).getTransactionalDataSourceAndActivateTransactionIfNeeded(getTestObject());
     }
-    
+
     /**
      * Returns the DataSource that connects to the test database
      *
@@ -51,8 +47,7 @@ public class DatabaseUnitils {
     public static DataSource getDataSource() {
         return getDataSource("");
     }
-    
-    
+
     /**
      * Flushes all pending updates to the database. This method is useful when the effect of updates
      * needs to be checked directly on the database.
@@ -65,31 +60,26 @@ public class DatabaseUnitils {
         getDatabaseModule().flushDatabaseUpdates(getTestObject());
     }
 
-
     /**
      * Starts a new transaction on the transaction manager configured in unitils
      */
     public static void startTransaction() {
         getDatabaseModule().startTransaction(getTestObject());
     }
-    
-    
+
     /**
      * Commits the current unitils transaction
      */
     public static void commitTransaction() {
         getDatabaseModule().commitTransaction(getTestObject());
     }
-    
-    
+
     /**
      * Performs a rollback of the current unitils transaction
-     *
      */
     public static void rollbackTransaction() {
         getDatabaseModule().rollbackTransaction(getTestObject());
     }
-
 
     /**
      * Determines whether the test database is outdated and, if that is the case, updates the database with the
@@ -98,7 +88,7 @@ public class DatabaseUnitils {
     public static void updateDatabase() {
         updateDatabase("");
     }
-    
+
     /**
      * Determines whether the test database is outdated and, if that is the case, updates the database with the
      * latest changes. See {@link DBMaintainer} for more information.
@@ -106,7 +96,6 @@ public class DatabaseUnitils {
     public static void updateDatabase(String databaseName) {
         getDatabaseModule().getWrapper(databaseName).updateDatabase();
     }
-
 
     /**
      * Updates the database version to the current version, without issuing any other updates to the database.
@@ -117,7 +106,7 @@ public class DatabaseUnitils {
     public static void resetDatabaseState() {
         resetDatabaseState("");
     }
-    
+
     /**
      * Updates the database version to the current version, without issuing any other updates to the database.
      * This method can be used for example after you've manually brought the database to the latest version, but
@@ -128,10 +117,9 @@ public class DatabaseUnitils {
         DatabaseModule databaseModule = getDatabaseModule();
         DataSourceWrapper wrapper = databaseModule.getWrapper(databaseName);
         SQLHandler sqlHandler = wrapper.getDefaultSqlHandler();
-        
+
         databaseModule.resetDatabaseState(sqlHandler, wrapper);
     }
-
 
     /**
      * Clears all configured schema's. I.e. drops all tables, views and other database objects.
@@ -139,7 +127,7 @@ public class DatabaseUnitils {
     public static void clearSchemas() {
         clearSchemas("");
     }
-    
+
     /**
      * Clears all configured schema's. I.e. drops all tables, views and other database objects.
      */
@@ -147,14 +135,13 @@ public class DatabaseUnitils {
         getDatabaseModule().getWrapper(databaseName).clearSchemas();
     }
 
-
     /**
      * Cleans all configured schema's. I.e. removes all data from its database tables.
      */
     public static void cleanSchemas() {
         cleanSchemas("");
     }
-    
+
     /**
      * Cleans all configured schema's. I.e. removes all data from its database tables.
      */
@@ -162,21 +149,19 @@ public class DatabaseUnitils {
         getDatabaseModule().getWrapper(databaseName).cleanSchemas();
     }
 
-
     /**
      * Disables all foreign key and not-null constraints on the configured schema's.
      */
     public static void disableConstraints() {
         disableConstraints("");
     }
-    
+
     /**
      * Disables all foreign key and not-null constraints on the configured schema's.
      */
     public static void disableConstraints(String databaseName) {
         getDatabaseModule().getWrapper(databaseName).disableConstraints();
     }
-
 
     /**
      * Updates all sequences that have a value below a certain configurable treshold to become equal
@@ -185,7 +170,7 @@ public class DatabaseUnitils {
     public static void updateSequences() {
         updateSequences("");
     }
-    
+
     /**
      * Updates all sequences that have a value below a certain configurable treshold to become equal
      * to this treshold
@@ -193,7 +178,7 @@ public class DatabaseUnitils {
     public static void updateSequences(String databaseName) {
         getDatabaseModule().getWrapper(databaseName).updateSequences();
     }
-    
+
     /**
      * Sets all the sequences to the lowest acceptable value.
      * This can be defined with the property "sequenceUpdater.sequencevalue.lowestacceptable".
@@ -202,7 +187,6 @@ public class DatabaseUnitils {
         getDatabaseModule().getWrapper(databaseName).restartSequences();
     }
 
-
     /**
      * Generates a definition file that defines the structure of dataset's, i.e. a XSD of DTD that
      * describes the structure of the database.
@@ -210,7 +194,7 @@ public class DatabaseUnitils {
     public static void generateDatasetDefinition() {
         generateDatasetDefinition("");
     }
-    
+
     /**
      * Generates a definition file that defines the structure of dataset's, i.e. a XSD of DTD that
      * describes the structure of the database.
@@ -218,7 +202,6 @@ public class DatabaseUnitils {
     public static void generateDatasetDefinition(String databaseName) {
         getDatabaseModule().getWrapper(databaseName).generateDatasetDefinition();
     }
-
 
     /**
      * Gets the instance DatabaseModule that is registered in the modules repository.
@@ -230,7 +213,7 @@ public class DatabaseUnitils {
     private static DatabaseModule getDatabaseModule() {
         return Unitils.getInstance().getModulesRepository().getModuleOfType(DatabaseModule.class);
     }
-    
+
     /**
      * @return The current test object
      */
@@ -238,11 +221,13 @@ public class DatabaseUnitils {
         Object testObject = Unitils.getInstance().getTestContext().getTestObject();
         return testObject;
     }
-    
+
     /**
      * This method gets a {@link Connection} from the {@link DataSource} and checks if it is a {@link oracle.jdbc.driver.OracleConnection}.
-     * There is a bug with commons-dbcp 1.4: if you want to create a {@link oracle.sql.BLOB} or a {@link java.sql.Clob} than you must get the inner {@link Connection} but you get another {@link Connection}.
+     * There is a bug with commons-dbcp 1.4: if you want to create a {@link oracle.sql.BLOB} or a {@link java.sql.Clob} than you must get the inner
+     * {@link Connection} but you get another {@link Connection}.
      * This is fixed in this method.
+     * 
      * @param connection
      * @param dataSource
      * @return
@@ -250,12 +235,12 @@ public class DatabaseUnitils {
     public static Connection getGoodConnection(Connection connection, DataSource dataSource) {
         if (dataSource instanceof BasicDataSource) {
             BasicDataSource tempDataSource = (BasicDataSource) dataSource;
-            if (tempDataSource.getDriverClassName().toLowerCase().contains("oracle")  && connection instanceof DelegatingConnection) {
+            if (tempDataSource.getDriverClassName().toLowerCase().contains("oracle") && connection instanceof DelegatingConnection) {
                 boolean canAccess = tempDataSource.isAccessToUnderlyingConnectionAllowed();
                 if (!canAccess) {
                     tempDataSource.setAccessToUnderlyingConnectionAllowed(true);
                 }
-                
+
                 DelegatingConnection tempConnection = (DelegatingConnection) connection;
                 Connection innermostDelegate = tempConnection.getInnermostDelegate();
                 if (!canAccess) {

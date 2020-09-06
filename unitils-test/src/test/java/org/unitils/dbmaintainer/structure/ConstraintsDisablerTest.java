@@ -1,12 +1,9 @@
 /*
- * Copyright 2008,  Unitils.org
- *
+ * Copyright 2008, Unitils.org
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -16,33 +13,27 @@
 package org.unitils.dbmaintainer.structure;
 
 import java.util.List;
+import java.util.Properties;
+
+import javax.sql.DataSource;
+
 import org.junit.After;
-
-import static org.junit.Assert.fail;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.unitils.UnitilsJUnit4;
 import org.unitils.core.ConfigurationLoader;
 import org.unitils.core.UnitilsException;
 import org.unitils.core.dbsupport.DbSupport;
-import org.unitils.core.dbsupport.SQLHandler;
-
-import static org.unitils.core.dbsupport.DbSupportFactory.getDefaultDbSupport;
-
 import org.unitils.core.dbsupport.DefaultSQLHandler;
+import org.unitils.core.dbsupport.SQLHandler;
+import org.unitils.database.annotations.TestDataSource;
+import org.unitils.util.PropertyUtils;
 
+import static org.junit.Assert.fail;
+import static org.unitils.core.dbsupport.DbSupportFactory.getDefaultDbSupport;
 import static org.unitils.database.SQLUnitils.executeUpdate;
 import static org.unitils.database.SQLUnitils.executeUpdateQuietly;
-
-import org.unitils.database.annotations.TestDataSource;
-
 import static org.unitils.dbmaintainer.util.DatabaseModuleConfigUtils.getConfiguredDatabaseTaskInstance;
-
-import javax.sql.DataSource;
-
-import java.util.Properties;
-import org.unitils.util.PropertyUtils;
 
 /**
  * Test class for the ConstraintsDisabler. This test is independent of the dbms that is used. The database dialect that
@@ -51,7 +42,8 @@ import org.unitils.util.PropertyUtils;
  * @author Filip Neven
  * @author Tim Ducheyne
  */
-public class ConstraintsDisablerTest extends UnitilsJUnit4 {
+public class ConstraintsDisablerTest
+    extends UnitilsJUnit4 {
 
     /* The tested object */
     private ConstraintsDisabler constraintsDisabler;
@@ -64,7 +56,7 @@ public class ConstraintsDisablerTest extends UnitilsJUnit4 {
     protected DataSource dataSource = null;
 
     private static String dialect = "h2";
-    
+
     private List<String> schemas;
 
     /**
@@ -72,7 +64,8 @@ public class ConstraintsDisablerTest extends UnitilsJUnit4 {
      * dialect
      */
     @Before
-    public void setUp() throws Exception {
+    public void setUp()
+        throws Exception {
         Properties configuration = new ConfigurationLoader().loadConfiguration();
         schemas = PropertyUtils.getStringList("database.schemaNames", configuration);
         SQLHandler sqlHandler = new DefaultSQLHandler(dataSource);
@@ -83,21 +76,21 @@ public class ConstraintsDisablerTest extends UnitilsJUnit4 {
         createTestTables();
     }
 
-
     /**
      * Drops the test tables, to avoid influencing other tests
      */
     @After
-    public void tearDown() throws Exception {
+    public void tearDown()
+        throws Exception {
         cleanupTestDatabase();
     }
-
 
     /**
      * Tests whether foreign key constraints are correctly disabled
      */
     @Test
-    public void testDisableConstraints_foreignKey() throws Exception {
+    public void testDisableConstraints_foreignKey()
+        throws Exception {
         try {
             executeUpdate("insert into table2 (col1) values ('test')", dataSource);
             fail("UnitilsException should have been thrown");
@@ -109,13 +102,13 @@ public class ConstraintsDisablerTest extends UnitilsJUnit4 {
         executeUpdate("insert into table2 (col1) values ('test')", dataSource);
     }
 
-
     /**
      * Tests whether foreign key constraints are disabled before the alternate keys. Otherwise the disabling of
      * the alternate key will result in an error (issue UNI-36).
      */
     @Test
-    public void testDisableConstraints_foreignKeyToAlternateKey() throws Exception {
+    public void testDisableConstraints_foreignKeyToAlternateKey()
+        throws Exception {
         try {
             executeUpdate("insert into table3 (col1) values ('test')", dataSource);
             fail("UnitilsException should have been thrown");
@@ -127,12 +120,12 @@ public class ConstraintsDisablerTest extends UnitilsJUnit4 {
         executeUpdate("insert into table3 (col1) values ('test')", dataSource);
     }
 
-
     /**
      * Tests whether not-null constraints are correctly disabled
      */
     @Test
-    public void testDisableConstraints_notNull() throws Exception {
+    public void testDisableConstraints_notNull()
+        throws Exception {
         try {
             executeUpdate("insert into table1 (col1, col2) values ('test', null)", dataSource);
             fail("UnitilsException should have been thrown");
@@ -144,7 +137,6 @@ public class ConstraintsDisablerTest extends UnitilsJUnit4 {
         executeUpdate("insert into table1 (col1, col2) values ('test', null)", dataSource);
     }
 
-
     /**
      * Creates the test tables
      */
@@ -154,7 +146,6 @@ public class ConstraintsDisablerTest extends UnitilsJUnit4 {
         executeUpdate("create table table3 (col1 varchar(10), foreign key (col1) references table1(col2))", dataSource);
     }
 
-
     /**
      * Drops the test tables
      */
@@ -163,5 +154,4 @@ public class ConstraintsDisablerTest extends UnitilsJUnit4 {
         executeUpdateQuietly("drop table table2", dataSource);
         executeUpdateQuietly("drop table table1", dataSource);
     }
-
 }

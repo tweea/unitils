@@ -10,19 +10,14 @@ import org.unitils.inject.InjectMultipleTargetsTest.Person;
 import org.unitils.inject.annotation.InjectIntoByType;
 import org.unitils.inject.annotation.TestedObject;
 
-
 /**
  * Check if the obj is still injected in the targets using {@link org.unitils.inject.annotation.TestedObject}.
  *
  * @author Willemijn Wouters
- *
  * @since 3.4.3
- *
  */
 @RunWith(UnitilsBlockJUnit4ClassRunner.class)
 public class InjectMultipleTargets2Test {
-
-
     /**
      * with tested objects
      */
@@ -46,7 +41,7 @@ public class InjectMultipleTargets2Test {
 
         Assert.assertNotNull(person.getAddress());
         Assert.assertNotNull(person2.getAddress());
-        Assert.assertNotNull(animal2.getAddress());;
+        Assert.assertNotNull(animal2.getAddress());
+        ;
     }
-
 }

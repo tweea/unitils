@@ -1,12 +1,9 @@
 /*
- * Copyright 2008,  Unitils.org
- *
+ * Copyright 2008, Unitils.org
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -15,37 +12,31 @@
  */
 package org.unitils.dbmaintainer.clean.impl;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
+
+import javax.sql.DataSource;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.junit.After;
-
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.unitils.UnitilsJUnit4;
 import org.unitils.core.ConfigurationLoader;
-
-import static org.unitils.core.dbsupport.DbSupportFactory.PROPKEY_DATABASE_SCHEMA_NAMES;
-
 import org.unitils.core.dbsupport.DefaultSQLHandler;
 import org.unitils.core.dbsupport.SQLHandler;
-
-import static org.unitils.database.SQLUnitils.*;
-
 import org.unitils.database.annotations.TestDataSource;
 import org.unitils.dbmaintainer.util.DatabaseModuleConfigUtils;
-
-import static org.unitils.dbmaintainer.util.DatabaseModuleConfigUtils.PROPKEY_DATABASE_DIALECT;
-
 import org.unitils.util.PropertyUtils;
 
-import javax.sql.DataSource;
-
-import java.util.Properties;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.unitils.core.dbsupport.DbSupportFactory.PROPKEY_DATABASE_SCHEMA_NAMES;
+import static org.unitils.database.SQLUnitils.executeUpdate;
+import static org.unitils.database.SQLUnitils.executeUpdateQuietly;
+import static org.unitils.database.SQLUnitils.isEmpty;
+import static org.unitils.dbmaintainer.util.DatabaseModuleConfigUtils.PROPKEY_DATABASE_DIALECT;
 
 /**
  * Test class for the DBCleaner with multiple schemas.
@@ -55,7 +46,8 @@ import java.util.Properties;
  * @author Tim Ducheyne
  * @author Filip Neven
  */
-public class DefaultDBCleanerMultiSchemaTest extends UnitilsJUnit4 {
+public class DefaultDBCleanerMultiSchemaTest
+    extends UnitilsJUnit4 {
 
     /* The logger instance for this class */
     private static Log logger = LogFactory.getLog(DefaultDBCleanerMultiSchemaTest.class);
@@ -69,7 +61,7 @@ public class DefaultDBCleanerMultiSchemaTest extends UnitilsJUnit4 {
 
     /* True if current test is not for the current dialect */
     private boolean disabled;
-    
+
     private static String dialect;
 
     private List<String> schemas;
@@ -78,7 +70,8 @@ public class DefaultDBCleanerMultiSchemaTest extends UnitilsJUnit4 {
      * Initializes the test fixture.
      */
     @Before
-    public void setUp() throws Exception {
+    public void setUp()
+        throws Exception {
         Properties configuration = new ConfigurationLoader().loadConfiguration();
         dialect = PropertyUtils.getString(DatabaseModuleConfigUtils.PROPKEY_DATABASE_DIALECT, configuration);
         this.disabled = !"hsqldb".equals(PropertyUtils.getString(PROPKEY_DATABASE_DIALECT, configuration));
@@ -97,24 +90,24 @@ public class DefaultDBCleanerMultiSchemaTest extends UnitilsJUnit4 {
         createTestTables();
     }
 
-
     /**
      * Removes the test database tables from the test database, to avoid inference with other tests
      */
     @After
-    public void tearDown() throws Exception {
+    public void tearDown()
+        throws Exception {
         if (disabled) {
             return;
         }
         dropTestTables();
     }
 
-
     /**
      * Tests if the tables in all schemas are correctly cleaned.
      */
     @Test
-    public void testCleanDatabase() throws Exception {
+    public void testCleanDatabase()
+        throws Exception {
         if (disabled) {
             logger.warn("Test is not for current dialect. Skipping test.");
             return;
@@ -127,7 +120,6 @@ public class DefaultDBCleanerMultiSchemaTest extends UnitilsJUnit4 {
         assertTrue(isEmpty("SCHEMA_A.TEST", dataSource));
         assertTrue(isEmpty("SCHEMA_B.TEST", dataSource));
     }
-
 
     /**
      * Creates the test tables.
@@ -146,7 +138,6 @@ public class DefaultDBCleanerMultiSchemaTest extends UnitilsJUnit4 {
         executeUpdate("insert into SCHEMA_B.TEST values('test')", dataSource);
     }
 
-
     /**
      * Removes the test database tables
      */
@@ -157,6 +148,4 @@ public class DefaultDBCleanerMultiSchemaTest extends UnitilsJUnit4 {
         executeUpdateQuietly("drop table SCHEMA_B.TEST", dataSource);
         executeUpdateQuietly("drop schema SCHEMA_B", dataSource);
     }
-
-
 }

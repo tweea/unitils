@@ -1,12 +1,9 @@
 /*
- * Copyright 2008,  Unitils.org
- *
+ * Copyright 2008, Unitils.org
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -14,12 +11,6 @@
  * limitations under the License.
  */
 package org.unitils.dbunit;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.unitils.database.SQLUnitils.executeUpdate;
-import static org.unitils.database.SQLUnitils.executeUpdateQuietly;
-import static org.unitils.database.SQLUnitils.getItemAsString;
 
 import java.util.Properties;
 
@@ -36,22 +27,28 @@ import org.unitils.dbunit.annotation.DataSet;
 import org.unitils.dbunit.datasetloadstrategy.DataSetLoadStrategy;
 import org.unitils.dbunit.util.DbUnitDatabaseConnection;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.unitils.database.SQLUnitils.executeUpdate;
+import static org.unitils.database.SQLUnitils.executeUpdateQuietly;
+import static org.unitils.database.SQLUnitils.getItemAsString;
+
 /**
  * Tests DbUnitModule's feature for using different DataSetOperations
  *
  * @author Filip Neven
  * @author Tim Ducheyne
  */
-public class DbUnitModuleDataSetOperationTest extends UnitilsJUnit4 {
-
+public class DbUnitModuleDataSetOperationTest
+    extends UnitilsJUnit4 {
     private DbUnitModule dbUnitModule;
 
     @TestDataSource
     private DataSource dataSource;
 
-
     @Before
-    public void setUp() throws Exception {
+    public void setUp()
+        throws Exception {
         Properties configuration = new ConfigurationLoader().loadConfiguration();
         dbUnitModule = new DbUnitModule();
         dbUnitModule.init(configuration);
@@ -62,38 +59,36 @@ public class DbUnitModuleDataSetOperationTest extends UnitilsJUnit4 {
         MockDataSetLoadStrategy.operationExecuted = false;
     }
 
-
     @After
-    public void tearDown() throws Exception {
+    public void tearDown()
+        throws Exception {
         dropTestTables();
     }
 
-
     @Test
-    public void testLoadDataSet_defaultDataSetOperation() throws Exception {
+    public void testLoadDataSet_defaultDataSetOperation()
+        throws Exception {
         dbUnitModule.insertDataSet(DataSetTest.class.getMethod("testMethod1"), new DataSetTest());
         assertLoadedDataSet("DbUnitModuleDataSetOperationTest$DataSetTest.xml");
     }
 
-
     @Test
-    public void testLoadDataSet_customDataSetOperation() throws Exception {
+    public void testLoadDataSet_customDataSetOperation()
+        throws Exception {
         dbUnitModule.insertDataSet(DataSetTest.class.getMethod("testMethodCustomDataSetOperation"), new DataSetTest());
         assertTrue(MockDataSetLoadStrategy.operationExecuted);
     }
-    
-
 
     /**
      * Utility method to assert that the correct data set was loaded.
      *
-     * @param expectedDataSetName the name of the data set, not null
+     * @param expectedDataSetName
+     *     the name of the data set, not null
      */
     private void assertLoadedDataSet(String expectedDataSetName) {
         String dataSet = getItemAsString("select dataset from test", dataSource);
         assertEquals(expectedDataSetName, dataSet);
     }
-
 
     /**
      * Creates the test tables.
@@ -102,7 +97,6 @@ public class DbUnitModuleDataSetOperationTest extends UnitilsJUnit4 {
         executeUpdate("create table test(dataset varchar(100))", dataSource);
     }
 
-
     /**
      * Removes the test database tables
      */
@@ -110,13 +104,11 @@ public class DbUnitModuleDataSetOperationTest extends UnitilsJUnit4 {
         executeUpdateQuietly("drop table test", dataSource);
     }
 
-
     /**
      * Test class with a class level dataset
      */
     @DataSet
     public class DataSetTest {
-
         public void testMethod1() {
         }
 
@@ -125,9 +117,8 @@ public class DbUnitModuleDataSetOperationTest extends UnitilsJUnit4 {
         }
     }
 
-
-    public static class MockDataSetLoadStrategy implements DataSetLoadStrategy {
-
+    public static class MockDataSetLoadStrategy
+        implements DataSetLoadStrategy {
         private static boolean operationExecuted;
 
         public void execute(DbUnitDatabaseConnection dbUnitDatabaseConnection, IDataSet dataSet) {

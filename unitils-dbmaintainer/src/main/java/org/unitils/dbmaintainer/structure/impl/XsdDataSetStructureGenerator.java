@@ -1,12 +1,9 @@
 /*
- * Copyright 2008,  Unitils.org
- *
+ * Copyright 2008, Unitils.org
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -15,19 +12,20 @@
  */
 package org.unitils.dbmaintainer.structure.impl;
 
-import org.unitils.core.UnitilsException;
-import org.unitils.core.dbsupport.DbSupport;
-import org.unitils.dbmaintainer.structure.DataSetStructureGenerator;
-import org.unitils.dbmaintainer.util.BaseDatabaseAccessor;
-import static org.unitils.thirdparty.org.apache.commons.io.IOUtils.closeQuietly;
-import org.unitils.util.PropertyUtils;
-
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.Writer;
 import java.util.Properties;
 import java.util.Set;
+
+import org.unitils.core.UnitilsException;
+import org.unitils.core.dbsupport.DbSupport;
+import org.unitils.dbmaintainer.structure.DataSetStructureGenerator;
+import org.unitils.dbmaintainer.util.BaseDatabaseAccessor;
+import org.unitils.util.PropertyUtils;
+
+import static org.unitils.thirdparty.org.apache.commons.io.IOUtils.closeQuietly;
 
 /**
  * Implementation of {@link DataSetStructureGenerator} that generates xml schema files for data sets.
@@ -38,7 +36,9 @@ import java.util.Set;
  * @author Tim Ducheyne
  * @author Filip Neven
  */
-public class XsdDataSetStructureGenerator extends BaseDatabaseAccessor implements DataSetStructureGenerator {
+public class XsdDataSetStructureGenerator
+    extends BaseDatabaseAccessor
+    implements DataSetStructureGenerator {
 
     /* Property key for the target directory for the generated xsd files */
     public static final String PROPKEY_XSD_DIR_NAME = "dataSetStructureGenerator.xsd.dirName";
@@ -52,18 +52,17 @@ public class XsdDataSetStructureGenerator extends BaseDatabaseAccessor implement
     /* The suffix to use when defining complex types for the table definitions */
     private String complexTypeSuffix;
 
-
     /**
      * Initializes the generator.
      *
-     * @param configuration The config, not null
+     * @param configuration
+     *     The config, not null
      */
     @Override
     protected void doInit(Properties configuration) {
         xsdDirectoryName = PropertyUtils.getString(PROPKEY_XSD_DIR_NAME, configuration);
         complexTypeSuffix = PropertyUtils.getString(PROPKEY_XSD_COMPLEX_TYPE_SUFFIX, configuration);
     }
-
 
     /**
      * Generates the XSDs, and writes them to the target directory specified by the property {@link #PROPKEY_XSD_DIR_NAME}.
@@ -78,11 +77,11 @@ public class XsdDataSetStructureGenerator extends BaseDatabaseAccessor implement
         }
     }
 
-
     /**
      * Generates a general dataset xsd that will refer to database schema specific dataset XSDs.
      *
-     * @param xsdDirectory The target directory, not null
+     * @param xsdDirectory
+     *     The target directory, not null
      */
     protected void generateDataSetXsd(File xsdDirectory) {
         Writer writer = null;
@@ -91,7 +90,8 @@ public class XsdDataSetStructureGenerator extends BaseDatabaseAccessor implement
 
             String defaultSchemaName = defaultDbSupport.getSchemaName();
             writer.write("<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n");
-            writer.write("<xsd:schema xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" elementFormDefault=\"qualified\" xmlns:dflt=\"" + defaultSchemaName + "\">\n");
+            writer.write(
+                "<xsd:schema xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" elementFormDefault=\"qualified\" xmlns:dflt=\"" + defaultSchemaName + "\">\n");
 
             for (DbSupport dbSupport : dbSupports) {
                 String schemaName = dbSupport.getSchemaName();
@@ -112,7 +112,6 @@ public class XsdDataSetStructureGenerator extends BaseDatabaseAccessor implement
             writer.write("\t\t</xsd:complexType>\n");
             writer.write("\t</xsd:element>\n");
             writer.write("</xsd:schema>\n");
-
         } catch (Exception e) {
             throw new UnitilsException("Error generating xsd file: " + xsdDirectory, e);
         } finally {
@@ -120,12 +119,13 @@ public class XsdDataSetStructureGenerator extends BaseDatabaseAccessor implement
         }
     }
 
-
     /**
      * Generates an XSD for the database schema of the given db support.
      *
-     * @param dbSupport    The db support, not null
-     * @param xsdDirectory The target directory, not null
+     * @param dbSupport
+     *     The db support, not null
+     * @param xsdDirectory
+     *     The target directory, not null
      */
     protected void generateDatabaseSchemaXsd(DbSupport dbSupport, File xsdDirectory) {
         Writer writer = null;
@@ -133,7 +133,8 @@ public class XsdDataSetStructureGenerator extends BaseDatabaseAccessor implement
             writer = new BufferedWriter(new FileWriter(new File(xsdDirectory, dbSupport.getSchemaName() + ".xsd")));
 
             writer.write("<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n");
-            writer.write("<xsd:schema xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" elementFormDefault=\"qualified\" xmlns=\"" + dbSupport.getSchemaName() + "\" targetNamespace=\"" + dbSupport.getSchemaName() + "\">\n");
+            writer.write("<xsd:schema xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" elementFormDefault=\"qualified\" xmlns=\"" + dbSupport.getSchemaName()
+                + "\" targetNamespace=\"" + dbSupport.getSchemaName() + "\">\n");
 
             Set<String> tableNames = dbSupport.getTableNames();
             for (String tableName : tableNames) {
@@ -150,12 +151,10 @@ public class XsdDataSetStructureGenerator extends BaseDatabaseAccessor implement
                 writer.write("\t</xsd:complexType>\n");
             }
             writer.write("</xsd:schema>\n");
-
         } catch (Exception e) {
             throw new UnitilsException("Error generating xsd file: " + xsdDirectory, e);
         } finally {
             closeQuietly(writer);
         }
     }
-
 }

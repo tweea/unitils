@@ -19,18 +19,15 @@ import org.unitils.util.ReflectionUtils;
  * @author Jeroen Horemans
  * @author Thomas De Rycke
  * @author Willemijn Wouters
- * 
  * @since 3.4
- * 
  */
 
 @SuppressWarnings("deprecation")
 @RunWith(UnitilsJUnit4TestClassRunner.class)
 public class UnitilsParameterizedTest {
-
     @Test
-    public void testValidateTestMethods() throws Throwable {
-
+    public void testValidateTestMethods()
+        throws Throwable {
         UnitilsMethodValidator methodValidator = new UnitilsMethodValidator(new TestClass(JustATestClass.class));
         methodValidator.validateTestMethods(Test.class, false);
         Assert.assertEquals(getErrors().get(0).getMessage(), methodValidator.getErrors().get(0).getMessage());
@@ -48,43 +45,63 @@ public class UnitilsParameterizedTest {
     }
 
     @Test(expected = Exception.class)
-    public void testComputeParams() throws Throwable {
+    public void testComputeParams()
+        throws Throwable {
         List<Object[]> data = new ArrayList<Object[]>();
         List<int[]> data2 = new ArrayList<int[]>();
-        data2.add(new int[]{1});
-        data2.add(new int[]{1, 2});
-        data2.add(new int[]{1, 2, 3});
-        TestClassRunnerForParameters runner = new UnitilsParameterized(UnitilsParametersNullParametersStveParametersTest.class).new TestClassRunnerForParameters(UnitilsParametersNullParametersStveParametersTest.class, data, 1);   
+        data2.add(new int[] {
+            1
+        });
+        data2.add(new int[] {
+            1, 2
+        });
+        data2.add(new int[] {
+            1, 2, 3
+        });
+        TestClassRunnerForParameters runner = new UnitilsParameterized(
+            UnitilsParametersNullParametersStveParametersTest.class).new TestClassRunnerForParameters(UnitilsParametersNullParametersStveParametersTest.class,
+                data, 1);
         ReflectionUtils.setFieldValue(runner, "fParameterList", data2);
         runner.computeParams();
     }
-    
+
     @Test(expected = IndexOutOfBoundsException.class)
-    public void testGetName() throws Throwable {
+    public void testGetName()
+        throws Throwable {
         List<Object[]> data = new ArrayList<Object[]>();
         List<int[]> data2 = new ArrayList<int[]>();
-        data2.add(new int[]{1});
-        data2.add(new int[]{1, 2});
-        data2.add(new int[]{1, 2, 3});
-        TestClassRunnerForParameters runner = new UnitilsParameterized(UnitilsParametersNullParametersStveParametersTest.class).new TestClassRunnerForParameters(UnitilsParametersNullParametersStveParametersTest.class, data, 6);   
+        data2.add(new int[] {
+            1
+        });
+        data2.add(new int[] {
+            1, 2
+        });
+        data2.add(new int[] {
+            1, 2, 3
+        });
+        TestClassRunnerForParameters runner = new UnitilsParameterized(
+            UnitilsParametersNullParametersStveParametersTest.class).new TestClassRunnerForParameters(UnitilsParametersNullParametersStveParametersTest.class,
+                data, 6);
         ReflectionUtils.setFieldValue(runner, "fParameterList", data2);
         runner.getName();
     }
-    
-    @Test
-	public void testValidateArgConstructorNoParameters() throws Exception {
-		UnitilsMethodValidator validator = new UnitilsMethodValidator(new TestClass(JustATestClass.class));
-		validator.validateArgConstructor();
-		Assert.assertFalse(validator.getErrors().isEmpty());
-	}
 
     @Test
-   	public void testValidateArgConstructorWithParameters() throws Exception {
-   		UnitilsMethodValidator validator = new UnitilsMethodValidator(new TestClass(Testclass3.class));
-   		validator.validateArgConstructor();
-   		Assert.assertTrue(validator.getErrors().isEmpty());
-   	}
-    
+    public void testValidateArgConstructorNoParameters()
+        throws Exception {
+        UnitilsMethodValidator validator = new UnitilsMethodValidator(new TestClass(JustATestClass.class));
+        validator.validateArgConstructor();
+        Assert.assertFalse(validator.getErrors().isEmpty());
+    }
+
+    @Test
+    public void testValidateArgConstructorWithParameters()
+        throws Exception {
+        UnitilsMethodValidator validator = new UnitilsMethodValidator(new TestClass(Testclass3.class));
+        validator.validateArgConstructor();
+        Assert.assertTrue(validator.getErrors().isEmpty());
+    }
+
     private List<Throwable> getErrors() {
         List<Throwable> lst = new ArrayList<Throwable>();
         lst.add(new Exception("Method test1() should not be static"));
@@ -95,20 +112,18 @@ public class UnitilsParameterizedTest {
     }
 
     private class Testclass2 {
-        //just an empty testclass
-    }
-    
-    private class Testclass3 {
-    	
-    	public Testclass3() {
-    		//do nothing
-    	}
-    }
-    
-    private class TestClass4 {
-    	public TestClass4(int i) {
-    		//do nothing
-    	}
+        // just an empty testclass
     }
 
+    private class Testclass3 {
+        public Testclass3() {
+            // do nothing
+        }
+    }
+
+    private class TestClass4 {
+        public TestClass4(int i) {
+            // do nothing
+        }
+    }
 }

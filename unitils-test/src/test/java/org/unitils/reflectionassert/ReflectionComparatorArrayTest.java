@@ -1,12 +1,9 @@
 /*
- * Copyright 2008,  Unitils.org
- *
+ * Copyright 2008, Unitils.org
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -15,15 +12,16 @@
  */
 package org.unitils.reflectionassert;
 
-import junit.framework.TestCase;
-import static org.unitils.reflectionassert.ReflectionComparatorFactory.createRefectionComparator;
-import static org.unitils.reflectionassert.ReflectionComparatorMode.LENIENT_ORDER;
-import org.unitils.reflectionassert.difference.Difference;
-import static org.unitils.reflectionassert.util.InnerDifferenceFinder.getInnerDifference;
-
 import java.util.Arrays;
 import java.util.Collection;
 
+import org.unitils.reflectionassert.difference.Difference;
+
+import junit.framework.TestCase;
+
+import static org.unitils.reflectionassert.ReflectionComparatorFactory.createRefectionComparator;
+import static org.unitils.reflectionassert.ReflectionComparatorMode.LENIENT_ORDER;
+import static org.unitils.reflectionassert.util.InnerDifferenceFinder.getInnerDifference;
 
 /**
  * Test class for {@link ReflectionComparator}.
@@ -32,7 +30,8 @@ import java.util.Collection;
  * @author Tim Ducheyne
  * @author Filip Neven
  */
-public class ReflectionComparatorArrayTest extends TestCase {
+public class ReflectionComparatorArrayTest
+    extends TestCase {
 
     /* Test array */
     private Element[] arrayA;
@@ -55,7 +54,7 @@ public class ReflectionComparatorArrayTest extends TestCase {
     /* Test array with inner array for element 2 */
     private Element[] arrayInnerA;
 
-    /* Same as innerA but different instance  */
+    /* Same as innerA but different instance */
     private Element[] arrayInnerB;
 
     /* Same as innerA and innerB but different string value for inner element 2 */
@@ -67,11 +66,11 @@ public class ReflectionComparatorArrayTest extends TestCase {
     /* Class under test */
     private ReflectionComparator reflectionComparator, lenientOrderComparator;
 
-
     /**
      * Initializes the test fixture.
      */
-    protected void setUp() throws Exception {
+    protected void setUp()
+        throws Exception {
         super.setUp();
 
         arrayA = createArray("test 2", null, true);
@@ -90,7 +89,6 @@ public class ReflectionComparatorArrayTest extends TestCase {
         lenientOrderComparator = createRefectionComparator(LENIENT_ORDER);
     }
 
-
     /**
      * Test for two equal arrays.
      */
@@ -99,7 +97,6 @@ public class ReflectionComparatorArrayTest extends TestCase {
         assertNull(result);
     }
 
-
     /**
      * Test for two equal arrays as an inner field of an object.
      */
@@ -107,7 +104,6 @@ public class ReflectionComparatorArrayTest extends TestCase {
         Difference result = reflectionComparator.getDifference(arrayInnerA, arrayInnerB);
         assertNull(result);
     }
-
 
     /**
      * Test for two arrays that contain different values.
@@ -120,7 +116,6 @@ public class ReflectionComparatorArrayTest extends TestCase {
         assertEquals("XXXXXX", difference.getRightValue());
     }
 
-
     /**
      * Test for two arrays that have a different size.
      */
@@ -130,7 +125,6 @@ public class ReflectionComparatorArrayTest extends TestCase {
         assertSame(arrayA, result.getLeftValue());
         assertSame(arrayDifferentSize, result.getRightValue());
     }
-
 
     /**
      * Test for objects with inner arrays that contain different values.
@@ -144,7 +138,6 @@ public class ReflectionComparatorArrayTest extends TestCase {
         assertEquals("XXXXXX", innerDifference.getRightValue());
     }
 
-
     /**
      * Tests for objects with inner arrays that have a different size.
      */
@@ -155,7 +148,6 @@ public class ReflectionComparatorArrayTest extends TestCase {
         assertSame(arrayA, difference.getLeftValue());
         assertSame(arrayDifferentSize, difference.getRightValue());
     }
-
 
     /**
      * Tests for objects with inner arrays that have a element order.
@@ -172,7 +164,6 @@ public class ReflectionComparatorArrayTest extends TestCase {
         assertEquals("test 1", difference2.getRightValue());
     }
 
-
     /**
      * Tests for objects with inner arrays that have a element order but with lenient order checking.
      */
@@ -180,7 +171,6 @@ public class ReflectionComparatorArrayTest extends TestCase {
         Difference result = lenientOrderComparator.getDifference(arrayA, arrayDifferentOrder);
         assertNull(result);
     }
-
 
     /**
      * Tests for objects with inner arrays that have a element order but with lenient order checking.
@@ -191,7 +181,6 @@ public class ReflectionComparatorArrayTest extends TestCase {
         assertSame(arrayA, result.getLeftValue());
         assertSame(arrayDifferentOrderDifferentValue, result.getRightValue());
     }
-
 
     /**
      * Tests for arrays but right value is not an array.
@@ -204,7 +193,7 @@ public class ReflectionComparatorArrayTest extends TestCase {
     }
 
     /**
-     * Test for an array and a collection containing equal values  (array == collection).
+     * Test for an array and a collection containing equal values (array == collection).
      */
     public void testGetDifference_equalsLeftCollection() {
         Difference result = reflectionComparator.getDifference(arrayA, Arrays.asList(arrayA));
@@ -212,16 +201,15 @@ public class ReflectionComparatorArrayTest extends TestCase {
     }
 
     /**
-     * Test for an array and a collection containing equal values  (array == collection).
+     * Test for an array and a collection containing equal values (array == collection).
      */
     public void testGetDifference_equalsRightCollection() {
         Difference result = reflectionComparator.getDifference(Arrays.asList(arrayA), arrayA);
         assertNull(result);
     }
 
-
     /**
-     * Test for an array and a collection containing different values  (array != collection).
+     * Test for an array and a collection containing different values (array != collection).
      */
     public void testGetDifference_notEqualsCollectionDifferentValues() {
         Difference result = reflectionComparator.getDifference(arrayA, Arrays.asList(arrayDifferentValue));
@@ -230,7 +218,6 @@ public class ReflectionComparatorArrayTest extends TestCase {
         assertEquals("test 2", difference.getLeftValue());
         assertEquals("XXXXXX", difference.getRightValue());
     }
-
 
     /**
      * Test for an array and a collection having a different size (array != collection).
@@ -243,7 +230,6 @@ public class ReflectionComparatorArrayTest extends TestCase {
         assertSame(collectionDifferentSize, result.getRightValue());
     }
 
-
     /**
      * Tests for objects with inner arrays that have a element order but with lenient order checking.
      */
@@ -251,7 +237,6 @@ public class ReflectionComparatorArrayTest extends TestCase {
         Difference result = lenientOrderComparator.getDifference(arrayA, arrayDifferentOrder);
         assertNull(result);
     }
-
 
     /**
      * Tests for objects with inner arrays that have a element order but with lenient order checking.
@@ -263,7 +248,6 @@ public class ReflectionComparatorArrayTest extends TestCase {
         assertEquals("test 2", innerDifference.getLeftValue());
         assertEquals("XXXXXX", innerDifference.getRightValue());
     }
-
 
     /**
      * Tests for objects with inner arrays that have a element order but with lenient order checking.
@@ -281,13 +265,15 @@ public class ReflectionComparatorArrayTest extends TestCase {
         assertEquals("XXXXXX", innerDifference2.getRightValue());
     }
 
-
     /**
      * Creates an array.
      *
-     * @param stringValueElement2 the value for the 2nd element in the array
-     * @param innerElement2       the value for the inner array of the 2nd element in the array
-     * @param addElement3         true for an array of 3 elements, false for 2 elements
+     * @param stringValueElement2
+     *     the value for the 2nd element in the array
+     * @param innerElement2
+     *     the value for the inner array of the 2nd element in the array
+     * @param addElement3
+     *     true for an array of 3 elements, false for 2 elements
      * @return the test array
      */
     private Element[] createArray(String stringValueElement2, Element[] innerElement2, boolean addElement3) {
@@ -300,11 +286,11 @@ public class ReflectionComparatorArrayTest extends TestCase {
         return array;
     }
 
-
     /**
      * Creates an array and reverses the elements.
      *
-     * @param stringValueElement2 the value for the 2nd element in the array
+     * @param stringValueElement2
+     *     the value for the 2nd element in the array
      * @return the test array
      */
     private Element[] createReverseArray(String stringValueElement2) {
@@ -314,7 +300,6 @@ public class ReflectionComparatorArrayTest extends TestCase {
         array[0] = temp;
         return array;
     }
-
 
     /**
      * Test class with failing equals.
@@ -330,8 +315,10 @@ public class ReflectionComparatorArrayTest extends TestCase {
         /**
          * Creates and initializes the element.
          *
-         * @param string the string value
-         * @param inner  the inner array
+         * @param string
+         *     the string value
+         * @param inner
+         *     the inner array
          */
         public Element(String string, Element[] inner) {
             this.string = string;
@@ -359,13 +346,12 @@ public class ReflectionComparatorArrayTest extends TestCase {
         /**
          * Always returns false
          *
-         * @param o the object to compare to
+         * @param o
+         *     the object to compare to
          */
         @Override
         public boolean equals(Object o) {
             return false;
         }
     }
-
-
 }

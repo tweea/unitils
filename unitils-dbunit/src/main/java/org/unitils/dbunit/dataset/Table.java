@@ -1,12 +1,9 @@
 /*
- * Copyright 2006-2009,  Unitils.org
- *
+ * Copyright 2006-2009, Unitils.org
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -36,19 +33,18 @@ public class Table {
 
     /* The data set rows */
     private List<Row> rows = new ArrayList<Row>();
-    
-    private List<Column> columns = new ArrayList<Column>();
 
+    private List<Column> columns = new ArrayList<Column>();
 
     /**
      * Creates a data set table.
      *
-     * @param name The name of the table, not null
+     * @param name
+     *     The name of the table, not null
      */
     public Table(String name) {
         this.name = name;
     }
-
 
     /**
      * @return The name of the table, not null
@@ -57,14 +53,12 @@ public class Table {
         return name;
     }
 
-
     /**
      * @return The data set rows, not null
      */
     public List<Row> getRows() {
         return rows;
     }
-
 
     /**
      * @return True if the table does not contain any rows
@@ -76,17 +70,18 @@ public class Table {
     /**
      * Adds a data set row
      *
-     * @param row The row to add, not null
+     * @param row
+     *     The row to add, not null
      */
     public void addRow(Row row) {
         rows.add(row);
     }
 
-
     /**
      * Compares the table with the given actual table.
      *
-     * @param actualTable The table to compare with, not null
+     * @param actualTable
+     *     The table to compare with, not null
      * @return The difference, null if none found
      */
     public TableDifference compare(Table actualTable) {
@@ -106,13 +101,15 @@ public class Table {
         return result;
     }
 
-
     /**
      * Compares the given rows with the columns of the actual table.
      *
-     * @param rows        The rows to compare, not null
-     * @param actualTable The rows to compare with, not null
-     * @param result      The result to add the differences to, not null
+     * @param rows
+     *     The rows to compare, not null
+     * @param actualTable
+     *     The rows to compare with, not null
+     * @param result
+     *     The result to add the differences to, not null
      */
     protected void compareRows(List<Row> rows, Table actualTable, TableDifference result) {
         List<Row> rowsWithoutMatch = new ArrayList<Row>(rows);
@@ -141,21 +138,20 @@ public class Table {
             }
         }
     }
-    
-    
+
     /**
      * @return the columns
      */
     public List<Column> getColumns() {
         return columns;
     }
-    
+
     public void addColumns(Column[] columns2) {
         for (Column column : columns2) {
             addColumn(column);
         }
     }
-    
+
     /**
      * 
      */
@@ -163,6 +159,5 @@ public class Table {
         if (!columns.contains(column)) {
             columns.add(column);
         }
-
     }
 }

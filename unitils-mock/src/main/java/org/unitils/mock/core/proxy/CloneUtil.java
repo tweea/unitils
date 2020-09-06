@@ -1,27 +1,19 @@
 /*
- *
- *  * Copyright 2010,  Unitils.org
- *  *
- *  * Licensed under the Apache License, Version 2.0 (the "License");
- *  * you may not use this file except in compliance with the License.
- *  * You may obtain a copy of the License at
- *  *
- *  *     http://www.apache.org/licenses/LICENSE-2.0
- *  *
- *  * Unless required by applicable law or agreed to in writing, software
- *  * distributed under the License is distributed on an "AS IS" BASIS,
- *  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  * See the License for the specific language governing permissions and
- *  * limitations under the License.
- *
+ * * Copyright 2010, Unitils.org
+ * *
+ * * Licensed under the Apache License, Version 2.0 (the "License");
+ * * you may not use this file except in compliance with the License.
+ * * You may obtain a copy of the License at
+ * *
+ * * http://www.apache.org/licenses/LICENSE-2.0
+ * *
+ * * Unless required by applicable law or agreed to in writing, software
+ * * distributed under the License is distributed on an "AS IS" BASIS,
+ * * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * * See the License for the specific language governing permissions and
+ * * limitations under the License.
  */
 package org.unitils.mock.core.proxy;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.objenesis.Objenesis;
-import org.objenesis.ObjenesisStd;
-import org.unitils.core.UnitilsException;
 
 import java.lang.reflect.AccessibleObject;
 import java.lang.reflect.Array;
@@ -31,7 +23,14 @@ import java.util.Collection;
 import java.util.IdentityHashMap;
 import java.util.Map;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.objenesis.Objenesis;
+import org.objenesis.ObjenesisStd;
+import org.unitils.core.UnitilsException;
+
 import static java.lang.reflect.Modifier.isStatic;
+
 import static org.unitils.mock.core.proxy.ProxyUtils.isProxy;
 
 /**
@@ -50,42 +49,43 @@ public class CloneUtil {
     /* Objenesis instance for creating new instances of types */
     private static Objenesis objenesis = new ObjenesisStd();
 
-
     /**
      * Creates a deep clone of the given object. If for some reason, the clone cannot be made, a warning is logged
      * and the object itself will be returned. This is also true for all inner objects. If an inner object
      * cannot be cloned, the object itself is used instead.
      *
-     * @param object The object to clone
+     * @param object
+     *     The object to clone
      * @return The cloned instance
      */
-    @SuppressWarnings({"unchecked"})
+    @SuppressWarnings({
+        "unchecked"
+    })
     public static <T> T createDeepClone(T object) {
         try {
             return (T) cloneObject(object, new IdentityHashMap<Object, Object>());
-
         } catch (Throwable e) {
             throw new UnitilsException("Unexpected exception during cloning of " + object, e);
         }
     }
 
-
     /**
      * Actual implementation of the cloning.
-     *
      * It will try several ways to clone the object. First it will look for the simple cases: null, primitives,
      * immutables... If not it will check whether it's an array and clone it using the {@link #cloneArray} method.
      * Finally it will see whether the object is cloneable and the clone method can be used. If not, Objenisis is
      * used to create the instance. The last step is to recursively do the same operation for the inner fields.
-     *
      * An object is cloned once. All created clones are put in a cache and if an object is to be cloned a second time,
      * the cached instance is used. This way the object graph is preserved.
      *
-     * @param instanceToClone The instance, not null
-     * @param cloneCache      The cached clones, not null
+     * @param instanceToClone
+     *     The instance, not null
+     * @param cloneCache
+     *     The cached clones, not null
      * @return The clone, the instance to clone if the clone could not be made
      */
-    protected static Object cloneObject(Object instanceToClone, Map<Object, Object> cloneCache) throws Throwable {
+    protected static Object cloneObject(Object instanceToClone, Map<Object, Object> cloneCache)
+        throws Throwable {
         if (instanceToClone == null) {
             return null;
         }
@@ -129,9 +129,9 @@ public class CloneUtil {
         return clonedInstance;
     }
 
-
     /**
-     * @param instanceToClone The instance, not null
+     * @param instanceToClone
+     *     The instance, not null
      * @return True if the instance is immutable, e.g. a primitive
      */
     protected static boolean isImmutable(Object instanceToClone) {
@@ -140,14 +140,16 @@ public class CloneUtil {
         if (clazz.isPrimitive() || clazz.isEnum() || clazz.isAnnotation()) {
             return true;
         }
-        if (instanceToClone instanceof Number || instanceToClone instanceof String || instanceToClone instanceof Character || instanceToClone instanceof Boolean) {
+        if (instanceToClone instanceof Number || instanceToClone instanceof String || instanceToClone instanceof Character
+            || instanceToClone instanceof Boolean) {
             return true;
         }
         return false;
     }
 
     /**
-     * @param instanceToClone The instance, not null
+     * @param instanceToClone
+     *     The instance, not null
      * @return True if the instance is should not be cloned, e.g. a java lang class or a data source
      */
     protected static boolean isJdkClass(Object instanceToClone) {
@@ -162,11 +164,11 @@ public class CloneUtil {
         return false;
     }
 
-
     /**
      * If the given value is cloneable and the cloning succeeds, the clone is returned, else null is returned.
      *
-     * @param instanceToClone The instance, not null
+     * @param instanceToClone
+     *     The instance, not null
      * @return The clone if it could be cloned, else null
      */
     protected static Object createInstanceUsingClone(Object instanceToClone) {
@@ -174,38 +176,40 @@ public class CloneUtil {
             Method cloneMethod = Object.class.getDeclaredMethod("clone");
             cloneMethod.setAccessible(true);
             return cloneMethod.invoke(instanceToClone);
-
         } catch (Throwable t) {
             return null;
         }
     }
 
-
     /**
      * Tries to create an instance of the same type as the given value using Objenesis.
      *
-     * @param instanceToClone The instance, not null
+     * @param instanceToClone
+     *     The instance, not null
      * @return The new instance if it could be created, else null
      */
     protected static Object createInstanceUsingObjenesis(Object instanceToClone) {
         try {
             return objenesis.newInstance(instanceToClone.getClass());
-
         } catch (Throwable t) {
             return null;
         }
     }
 
-
     /**
      * Clones all values in all fields of the given class and superclasses.
      *
-     * @param clazz           The current class
-     * @param instanceToClone The instance, not null
-     * @param clonedInstance  The clone, not null
-     * @param cloneCache      The cached clones, not null
+     * @param clazz
+     *     The current class
+     * @param instanceToClone
+     *     The instance, not null
+     * @param clonedInstance
+     *     The clone, not null
+     * @param cloneCache
+     *     The cached clones, not null
      */
-    protected static void cloneFields(Class<?> clazz, Object instanceToClone, Object clonedInstance, Map<Object, Object> cloneCache) throws Throwable {
+    protected static void cloneFields(Class<?> clazz, Object instanceToClone, Object clonedInstance, Map<Object, Object> cloneCache)
+        throws Throwable {
         if (clazz == null || Object.class.equals(clazz)) {
             return;
         }
@@ -225,15 +229,17 @@ public class CloneUtil {
         cloneFields(clazz.getSuperclass(), instanceToClone, clonedInstance, cloneCache);
     }
 
-
     /**
      * Clones the given array and all it's elements.
      *
-     * @param arrayToClone The array, not null
-     * @param cloneCache   The cached clones, not null
+     * @param arrayToClone
+     *     The array, not null
+     * @param cloneCache
+     *     The cached clones, not null
      * @return The cloned array, not null
      */
-    protected static Object cloneArray(Object arrayToClone, Map<Object, Object> cloneCache) throws Throwable {
+    protected static Object cloneArray(Object arrayToClone, Map<Object, Object> cloneCache)
+        throws Throwable {
         int lenght = Array.getLength(arrayToClone);
         Object clonedArray = Array.newInstance(arrayToClone.getClass().getComponentType(), lenght);
         // Make sure we put the array in the cache before we start cloning the elements, since the array itself may also
@@ -247,5 +253,4 @@ public class CloneUtil {
         }
         return clonedArray;
     }
-
 }

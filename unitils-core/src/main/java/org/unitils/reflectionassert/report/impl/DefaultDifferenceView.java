@@ -1,12 +1,9 @@
 /*
- * Copyright 2008,  Unitils.org
- *
+ * Copyright 2008, Unitils.org
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -15,15 +12,22 @@
  */
 package org.unitils.reflectionassert.report.impl;
 
-import static org.apache.commons.lang.ClassUtils.getShortClassName;
-import org.unitils.core.util.ObjectFormatter;
-import org.unitils.reflectionassert.difference.*;
-import org.unitils.reflectionassert.report.DifferenceView;
-import static org.unitils.reflectionassert.report.impl.DefaultDifferenceReport.MAX_LINE_SIZE;
-import static org.unitils.reflectionassert.report.impl.DefaultDifferenceReport.MatchType.NO_MATCH;
-
 import java.util.List;
 import java.util.Map;
+
+import org.unitils.core.util.ObjectFormatter;
+import org.unitils.reflectionassert.difference.ClassDifference;
+import org.unitils.reflectionassert.difference.CollectionDifference;
+import org.unitils.reflectionassert.difference.Difference;
+import org.unitils.reflectionassert.difference.DifferenceVisitor;
+import org.unitils.reflectionassert.difference.MapDifference;
+import org.unitils.reflectionassert.difference.ObjectDifference;
+import org.unitils.reflectionassert.difference.UnorderedCollectionDifference;
+import org.unitils.reflectionassert.report.DifferenceView;
+
+import static org.apache.commons.lang.ClassUtils.getShortClassName;
+import static org.unitils.reflectionassert.report.impl.DefaultDifferenceReport.MAX_LINE_SIZE;
+import static org.unitils.reflectionassert.report.impl.DefaultDifferenceReport.MatchType.NO_MATCH;
 
 /**
  * Formatter that will output all leaf differences in the tree and, in case of an unordered collection difference,
@@ -32,8 +36,8 @@ import java.util.Map;
  * @author Tim Ducheyne
  * @author Filip Neven
  */
-public class DefaultDifferenceView implements DifferenceView {
-
+public class DefaultDifferenceView
+    implements DifferenceView {
     /**
      * True when an unordered collection is being formatted.
      */
@@ -52,31 +56,34 @@ public class DefaultDifferenceView implements DifferenceView {
     /**
      * Creates a string representation of the given difference tree.
      *
-     * @param difference The root difference, not null
+     * @param difference
+     *     The root difference, not null
      * @return The string representation, not null
      */
     public String createView(Difference difference) {
         return difference.accept(differenceFormatterVisitor, null);
     }
 
-
     /**
      * Creates a string representation of a simple difference.
      *
-     * @param difference The difference, not null
-     * @param fieldName  The current fieldName, null for root
+     * @param difference
+     *     The difference, not null
+     * @param fieldName
+     *     The current fieldName, null for root
      * @return The string representation, not null
      */
     protected String formatDifference(Difference difference, String fieldName) {
         return formatValues(fieldName, difference.getLeftValue(), difference.getRightValue());
     }
 
-
     /**
      * Creates a string representation of an object difference.
      *
-     * @param objectDifference The difference, not null
-     * @param fieldName        The current fieldName, null for root
+     * @param objectDifference
+     *     The difference, not null
+     * @param fieldName
+     *     The current fieldName, null for root
      * @return The string representation, not null
      */
     protected String formatDifference(ObjectDifference objectDifference, String fieldName) {
@@ -88,7 +95,6 @@ public class DefaultDifferenceView implements DifferenceView {
         return result.toString();
     }
 
-
     protected String formatDifferrence(ClassDifference classDifference, String fieldName) {
         StringBuilder result = new StringBuilder();
         result.append("Expected: object of type ").append(getShortClassName(classDifference.getLeftClass()));
@@ -96,12 +102,13 @@ public class DefaultDifferenceView implements DifferenceView {
         return result.toString();
     }
 
-
     /**
      * Creates a string representation of a collection difference.
      *
-     * @param collectionDifference The difference, not null
-     * @param fieldName            The current fieldName, null for root
+     * @param collectionDifference
+     *     The difference, not null
+     * @param fieldName
+     *     The current fieldName, null for root
      * @return The string representation, not null
      */
     protected String formatDifference(CollectionDifference collectionDifference, String fieldName) {
@@ -124,12 +131,13 @@ public class DefaultDifferenceView implements DifferenceView {
         return result.toString();
     }
 
-
     /**
      * Creates a string representation of a map difference.
      *
-     * @param mapDifference The difference, not null
-     * @param fieldName     The current fieldName, null for root
+     * @param mapDifference
+     *     The difference, not null
+     * @param fieldName
+     *     The current fieldName, null for root
      * @return The string representation, not null
      */
     protected String formatDifference(MapDifference mapDifference, String fieldName) {
@@ -159,12 +167,13 @@ public class DefaultDifferenceView implements DifferenceView {
         return objectFormatter.format(object);
     }
 
-
     /**
      * Creates a string representation of an unordered collection difference.
      *
-     * @param unorderedCollectionDifference The difference, not null
-     * @param fieldName                     The current fieldName, null for root
+     * @param unorderedCollectionDifference
+     *     The difference, not null
+     * @param fieldName
+     *     The current fieldName, null for root
      * @return The string representation, not null
      */
     protected String formatDifference(UnorderedCollectionDifference unorderedCollectionDifference, String fieldName) {
@@ -172,8 +181,8 @@ public class DefaultDifferenceView implements DifferenceView {
 
         result.append(fieldName == null ? "" : fieldName + ": ");
         if (unorderedCollectionDifference.getRightList().size() != unorderedCollectionDifference.getLeftList().size()) {
-            result.append("Collections have a different size: Expected " + unorderedCollectionDifference.getLeftList().size() + ", actual " +
-                    unorderedCollectionDifference.getRightList().size() + ".\n");
+            result.append("Collections have a different size: Expected " + unorderedCollectionDifference.getLeftList().size() + ", actual "
+                + unorderedCollectionDifference.getRightList().size() + ".\n");
         }
 
         Map<Integer, Integer> bestMatchingIndexes = unorderedCollectionDifference.getBestMatchingIndexes();
@@ -203,13 +212,15 @@ public class DefaultDifferenceView implements DifferenceView {
         return result.toString();
     }
 
-
     /**
      * Formats and appends the given fieldname and object values.
      *
-     * @param fieldName  The field name, null if there is no field name
-     * @param leftValue  The left value
-     * @param rightValue The right value
+     * @param fieldName
+     *     The field name, null if there is no field name
+     * @param leftValue
+     *     The left value
+     * @param rightValue
+     *     The right value
      * @return The string representation, not null
      */
     protected String formatValues(String fieldName, Object leftValue, Object rightValue) {
@@ -243,13 +254,15 @@ public class DefaultDifferenceView implements DifferenceView {
         return result.toString();
     }
 
-
     /**
      * Adds the inner field name to the given field name.
      *
-     * @param fieldName      The field
-     * @param innerFieldName The field to append, not null
-     * @param includePoint   True if a point should be added
+     * @param fieldName
+     *     The field
+     * @param innerFieldName
+     *     The field to append, not null
+     * @param includePoint
+     *     True if a point should be added
      * @return The field name
      */
     protected String createFieldName(String fieldName, String innerFieldName, boolean includePoint) {
@@ -266,12 +279,11 @@ public class DefaultDifferenceView implements DifferenceView {
         return result.toString();
     }
 
-
     /**
      * The visitor for visiting the difference tree.
      */
-    protected class DifferenceFormatterVisitor implements DifferenceVisitor<String, String> {
-
+    protected class DifferenceFormatterVisitor
+        implements DifferenceVisitor<String, String> {
         public String visit(Difference difference, String fieldName) {
             return formatDifference(difference, fieldName);
         }
@@ -296,6 +308,4 @@ public class DefaultDifferenceView implements DifferenceView {
             return formatDifference(unorderedCollectionDifference, fieldName);
         }
     }
-
-
 }

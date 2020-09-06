@@ -1,12 +1,9 @@
 /*
- * Copyright 2008,  Unitils.org
- *
+ * Copyright 2008, Unitils.org
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -37,65 +34,69 @@ package org.unitils.reflectionassert.difference;
  * @author Filip Neven
  */
 public interface DifferenceVisitor<T, A> {
-
-
     /**
      * Visits a simple difference.
      *
-     * @param difference The difference
-     * @param argument   An optional argument, null if NA
+     * @param difference
+     *     The difference
+     * @param argument
+     *     An optional argument, null if NA
      * @return The result
      */
     T visit(Difference difference, A argument);
 
-
     /**
      * Visits an object difference.
      *
-     * @param objectDifference The difference
-     * @param argument         An optional argument, null if NA
+     * @param objectDifference
+     *     The difference
+     * @param argument
+     *     An optional argument, null if NA
      * @return The result
      */
     T visit(ObjectDifference objectDifference, A argument);
 
-
     /**
      * Visits a class difference.
      *
-     * @param classDifference The difference
-     * @param argument        An optional argument, null if NA
+     * @param classDifference
+     *     The difference
+     * @param argument
+     *     An optional argument, null if NA
      * @return The result
      */
     T visit(ClassDifference classDifference, A argument);
 
-
     /**
      * Visits a map difference.
      *
-     * @param mapDifference The difference
-     * @param argument      An optional argument, null if NA
+     * @param mapDifference
+     *     The difference
+     * @param argument
+     *     An optional argument, null if NA
      * @return The result
      */
     T visit(MapDifference mapDifference, A argument);
 
-
     /**
      * Visits a collection difference.
      *
-     * @param collectionDifference The difference
-     * @param argument             An optional argument, null if NA
+     * @param collectionDifference
+     *     The difference
+     * @param argument
+     *     An optional argument, null if NA
      * @return The result
      */
     T visit(CollectionDifference collectionDifference, A argument);
 
-
     /**
      * Visits an unordered collection difference.
      *
-     * @param unorderedCollectionDifference The difference
-     * @param argument                      An optional argument, null if NA
+     * @param unorderedCollectionDifference
+     *     The difference
+     * @param argument
+     *     An optional argument, null if NA
      * @return The result
      */
     T visit(UnorderedCollectionDifference unorderedCollectionDifference, A argument);
-
 }

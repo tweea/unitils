@@ -1,12 +1,9 @@
 /*
- * Copyright 2008,  Unitils.org
- *
+ * Copyright 2008, Unitils.org
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -14,6 +11,9 @@
  * limitations under the License.
  */
 package org.unitils.dbmaintainer.structure.impl;
+
+import java.util.Properties;
+import java.util.Set;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -23,9 +23,6 @@ import org.unitils.dbmaintainer.structure.SequenceUpdater;
 import org.unitils.dbmaintainer.util.BaseDatabaseAccessor;
 import org.unitils.util.PropertyUtils;
 
-import java.util.Properties;
-import java.util.Set;
-
 /**
  * Implementation of {@link SequenceUpdater}. All sequences and identity columns that have a value lower than the value
  * defined by {@link #PROPKEY_LOWEST_ACCEPTABLE_SEQUENCE_VALUE} are set to this value.
@@ -33,7 +30,9 @@ import java.util.Set;
  * @author Filip Neven
  * @author Tim Ducheyne
  */
-public class DefaultSequenceUpdater extends BaseDatabaseAccessor implements SequenceUpdater {
+public class DefaultSequenceUpdater
+    extends BaseDatabaseAccessor
+    implements SequenceUpdater {
 
     /* Property key for the lowest acceptacle sequence value */
     public static final String PROPKEY_LOWEST_ACCEPTABLE_SEQUENCE_VALUE = "sequenceUpdater.sequencevalue.lowestacceptable";
@@ -44,17 +43,16 @@ public class DefaultSequenceUpdater extends BaseDatabaseAccessor implements Sequ
     /* The lowest acceptable sequence value */
     protected long lowestAcceptableSequenceValue;
 
-
     /**
      * Initializes the lowest acceptable sequence value using the given configuration object
      *
-     * @param configuration The config, not null
+     * @param configuration
+     *     The config, not null
      */
     @Override
     protected void doInit(Properties configuration) {
         lowestAcceptableSequenceValue = PropertyUtils.getLong(PROPKEY_LOWEST_ACCEPTABLE_SEQUENCE_VALUE, configuration);
     }
-
 
     /**
      * Updates all database sequences and identity columns to a sufficiently high value, so that test data be inserted
@@ -67,7 +65,7 @@ public class DefaultSequenceUpdater extends BaseDatabaseAccessor implements Sequ
             incrementIdentityColumnsWithLowValue(dbSupport);
         }
     }
-    
+
     /**
      * Sets all the sequences to the lowest acceptable value.
      * This can be defined with the property "sequenceUpdater.sequencevalue.lowestacceptable".
@@ -77,15 +75,13 @@ public class DefaultSequenceUpdater extends BaseDatabaseAccessor implements Sequ
         for (DbSupport dbSupport : dbSupports) {
             restartWithLowValue(dbSupport);
         }
-        
     }
-
-
 
     /**
      * Increments all sequences whose value is too low.
      *
-     * @param dbSupport The database support, not null
+     * @param dbSupport
+     *     The database support, not null
      */
     private void incrementSequencesWithLowValue(DbSupport dbSupport) {
         if (!dbSupport.supportsSequences()) {
@@ -100,11 +96,11 @@ public class DefaultSequenceUpdater extends BaseDatabaseAccessor implements Sequ
         }
     }
 
-
     /**
      * Increments the next value for identity columns whose next value is too low
      *
-     * @param dbSupport The database support, not null
+     * @param dbSupport
+     *     The database support, not null
      */
     private void incrementIdentityColumnsWithLowValue(DbSupport dbSupport) {
         if (!dbSupport.supportsIdentityColumns()) {
@@ -117,7 +113,6 @@ public class DefaultSequenceUpdater extends BaseDatabaseAccessor implements Sequ
                 try {
                     dbSupport.incrementIdentityColumnToValue(tableName, identityColumnName, lowestAcceptableSequenceValue);
                     logger.debug("Incrementing value for identity column " + identityColumnName + " in database schema " + dbSupport.getSchemaName());
-
                 } catch (UnitilsException e) {
                     // primary key is not an identity column
                     // skip column
@@ -125,8 +120,7 @@ public class DefaultSequenceUpdater extends BaseDatabaseAccessor implements Sequ
             }
         }
     }
-    
-    
+
     /**
      * Sets all the sequences to the lowest acceptable value.
      * This can be defined with the property "sequenceUpdater.sequencevalue.lowestacceptable".
@@ -142,7 +136,4 @@ public class DefaultSequenceUpdater extends BaseDatabaseAccessor implements Sequ
             dbSupport.incrementSequenceToValue(sequenceName, lowestAcceptableSequenceValue);
         }
     }
-
-
-   
 }

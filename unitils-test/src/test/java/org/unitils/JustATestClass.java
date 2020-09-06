@@ -2,24 +2,21 @@ package org.unitils;
 
 import org.unitils.dbunit.annotation.DataSet;
 
-
 /**
  * Just A Testclass.
  * 
  * @author Jeroen Horemans
  * @author Thomas De Rycke
  * @author Willemijn Wouters
- * 
  * @since 3.4
- * 
  */
 @DataSet
 public class JustATestClass {
     private Integer i;
+
     private String j;
+
     private Double k;
-    
-    
 
     /**
      * @param i
@@ -33,30 +30,24 @@ public class JustATestClass {
         this.k = k;
     }
 
-
-
     public void method1() {
-        //do nothing
+        // do nothing
     }
-    
-    
-    
+
     /**
      * @return the i
      */
     public Integer getI() {
         return i;
     }
-    
-    
+
     /**
      * @return the j
      */
     public String getJ() {
         return j;
     }
-    
-    
+
     /**
      * @return the k
      */

@@ -1,19 +1,15 @@
 /*
  * Copyright 2002-2007 the original author or authors.
- *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
+ * http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.unitils.core.util;
 
 import java.lang.reflect.ParameterizedType;
@@ -22,7 +18,6 @@ import java.lang.reflect.WildcardType;
 
 /**
  * Class copied from spring-core.
- *
  * Utility to work with Java 5 generic type parameters.
  * Mainly for internal use within the framework.
  *
@@ -31,13 +26,14 @@ import java.lang.reflect.WildcardType;
  * @since 2.0.7
  */
 public abstract class TypeUtils {
-
     /**
      * Check if the right-hand side type may be assigned to the left-hand side
      * type following the Java generics rules.
      *
-     * @param lhsType the target type
-     * @param rhsType the value type that should be assigned to the target type
+     * @param lhsType
+     *     the target type
+     * @param rhsType
+     *     the value type that should be assigned to the target type
      * @return true if rhs is assignable to lhs
      */
     public static boolean isAssignable(Type lhsType, Type rhsType) {
@@ -68,8 +64,7 @@ public abstract class TypeUtils {
         for (int size = lhsTypeArguments.length, i = 0; i < size; ++i) {
             Type lhsArg = lhsTypeArguments[i];
             Type rhsArg = rhsTypeArguments[i];
-            if (!lhsArg.equals(rhsArg) &&
-                    !(lhsArg instanceof WildcardType && isAssignable((WildcardType) lhsArg, rhsArg))) {
+            if (!lhsArg.equals(rhsArg) && !(lhsArg instanceof WildcardType && isAssignable((WildcardType) lhsArg, rhsArg))) {
                 return false;
             }
         }
@@ -91,5 +86,4 @@ public abstract class TypeUtils {
         }
         return true;
     }
-
 }

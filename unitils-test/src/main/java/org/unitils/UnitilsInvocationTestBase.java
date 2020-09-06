@@ -1,12 +1,9 @@
 /*
- * Copyright 2008,  Unitils.org
- *
+ * Copyright 2008, Unitils.org
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -15,25 +12,40 @@
  */
 package org.unitils;
 
-import static junit.framework.Assert.*;
+import java.util.Iterator;
+import java.util.List;
+
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.unitils.TracingTestListener.Call;
 import org.unitils.TracingTestListener.Invocation;
-import static org.unitils.TracingTestListener.ListenerInvocation.*;
 import org.unitils.TracingTestListener.TestFramework;
-import static org.unitils.TracingTestListener.TestFramework.*;
-import static org.unitils.TracingTestListener.TestInvocation.*;
 import org.unitils.core.TestListener;
 import org.unitils.core.Unitils;
 import org.unitils.inject.util.InjectionUtils;
 import org.unitils.spring.SpringUnitilsJUnit38TestBase;
 import org.unitils.spring.SpringUnitilsJUnit4TestBase;
 
-import java.util.Iterator;
-import java.util.List;
+import static org.unitils.TracingTestListener.ListenerInvocation.LISTENER_AFTER_CREATE_TEST_OBJECT;
+import static org.unitils.TracingTestListener.ListenerInvocation.LISTENER_AFTER_TEST_METHOD;
+import static org.unitils.TracingTestListener.ListenerInvocation.LISTENER_AFTER_TEST_TEARDOWN;
+import static org.unitils.TracingTestListener.ListenerInvocation.LISTENER_BEFORE_CLASS;
+import static org.unitils.TracingTestListener.ListenerInvocation.LISTENER_BEFORE_TEST_METHOD;
+import static org.unitils.TracingTestListener.ListenerInvocation.LISTENER_BEFORE_TEST_SET_UP;
+import static org.unitils.TracingTestListener.TestFramework.JUNIT3;
+import static org.unitils.TracingTestListener.TestFramework.JUNIT4;
+import static org.unitils.TracingTestListener.TestFramework.TESTNG;
+import static org.unitils.TracingTestListener.TestInvocation.TEST_AFTER_CLASS;
+import static org.unitils.TracingTestListener.TestInvocation.TEST_BEFORE_CLASS;
+import static org.unitils.TracingTestListener.TestInvocation.TEST_METHOD;
+import static org.unitils.TracingTestListener.TestInvocation.TEST_SET_UP;
+import static org.unitils.TracingTestListener.TestInvocation.TEST_TEAR_DOWN;
+
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertFalse;
+import static junit.framework.Assert.fail;
 
 /**
  * Base class for the invocation listener tests.
@@ -70,14 +82,14 @@ abstract public class UnitilsInvocationTestBase {
         InjectionUtils.injectInto(originalTestListener, Unitils.getInstance(), "testListener");
     }
 
-
     /**
      * Sets up the test installing the tracing test listener that will record all method invocations during the test.
      * The current test listeners are stored so that they can be restored during the class tear down.
      * Also re-initializes the base-classes so that, for example, beforeAll() will be called another time.
      */
     @Before
-    public void init() throws Exception {
+    public void init()
+        throws Exception {
         // Create a test listener that traces the test execution, and make sure it is used by the tests to
         // record their calls
         tracingTestListener = new TracingTestListener(originalTestListener);
@@ -92,7 +104,8 @@ abstract public class UnitilsInvocationTestBase {
     }
 
     @After
-    public void cleanUp() throws Exception {
+    public void cleanUp()
+        throws Exception {
         UnitilsJUnit3TestBase.setTracingTestListener(null);
         SpringUnitilsJUnit38TestBase.setTracingTestListener(null);
 
@@ -100,8 +113,8 @@ abstract public class UnitilsInvocationTestBase {
         SpringUnitilsJUnit4TestBase.setTracingTestListener(null);
     }
 
-
-    public void assertInvocationOrder(Class<?> testClass1, Class<?> testClass2) throws Exception {
+    public void assertInvocationOrder(Class<?> testClass1, Class<?> testClass2)
+        throws Exception {
         assertInvocation(LISTENER_BEFORE_CLASS, testClass1);
         assertInvocation(LISTENER_AFTER_CREATE_TEST_OBJECT, testClass1, TESTNG);
         assertInvocation(TEST_BEFORE_CLASS, testClass1, JUNIT4, TESTNG);
@@ -153,7 +166,6 @@ abstract public class UnitilsInvocationTestBase {
         assertEquals(0, testExecutor.getFailureCount());
     }
 
-
     protected void assertInvocation(Invocation invocation, Class<?> testClass, TestFramework... testFrameworks) {
         if (isApplicableFor(testFrameworks)) {
             if (!getCallListIterator().hasNext()) {
@@ -166,7 +178,6 @@ abstract public class UnitilsInvocationTestBase {
     protected void assertNoMoreInvocations() {
         assertFalse("No more invocations expected, calllist:\n" + toString(tracingTestListener.getCallList()), getCallListIterator().hasNext());
     }
-
 
     private Iterator<Call> getCallListIterator() {
         if (callListIterator == null) {
@@ -194,5 +205,4 @@ abstract public class UnitilsInvocationTestBase {
         }
         return result.toString();
     }
-
 }

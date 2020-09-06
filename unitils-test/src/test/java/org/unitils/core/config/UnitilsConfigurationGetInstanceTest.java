@@ -1,12 +1,9 @@
 /*
  * Copyright 2011, Unitils.org
- *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -15,14 +12,18 @@
  */
 package org.unitils.core.config;
 
+import java.util.Properties;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.unitils.core.UnitilsException;
 import org.unitils.core.util.Configurable;
 
-import java.util.Properties;
-
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.fail;
 
 /**
  * @author Tim Ducheyne
@@ -33,16 +34,15 @@ public class UnitilsConfigurationGetInstanceTest {
     /* Tested object */
     private UnitilsConfiguration unitilsConfiguration;
 
-
     @Before
-    public void initialize() throws Exception {
+    public void initialize()
+        throws Exception {
         Properties properties = new Properties();
         properties.setProperty("instanceProperty", "java.lang.StringBuffer");
         properties.setProperty("propertyWithSpaces", "    java.lang.StringBuffer   ");
         properties.setProperty("invalidClassNameProperty", "xxx");
         unitilsConfiguration = new UnitilsConfiguration(properties);
     }
-
 
     @Test
     public void foundWithoutDefault() {
@@ -76,7 +76,7 @@ public class UnitilsConfigurationGetInstanceTest {
             unitilsConfiguration.getInstance("xxx");
             fail("Expected UnitilsException");
         } catch (UnitilsException e) {
-            //expected
+            // expected
         }
     }
 
@@ -99,7 +99,7 @@ public class UnitilsConfigurationGetInstanceTest {
             unitilsConfiguration.getInstance("invalidClassNameProperty");
             fail("Expected UnitilsException");
         } catch (UnitilsException e) {
-            //expected
+            // expected
         }
     }
 
@@ -109,7 +109,7 @@ public class UnitilsConfigurationGetInstanceTest {
             unitilsConfiguration.getInstance("invalidClassNameProperty", new StringBuffer());
             fail("Expected UnitilsException");
         } catch (UnitilsException e) {
-            //expected
+            // expected
         }
     }
 
@@ -122,12 +122,11 @@ public class UnitilsConfigurationGetInstanceTest {
         assertSame(properties, ((TestClass) result).configuration);
     }
 
-
     public static interface TestInterface {
     }
 
-    public static class TestClass implements TestInterface, Configurable {
-
+    public static class TestClass
+        implements TestInterface, Configurable {
         public Properties configuration;
 
         public void init(Properties configuration) {

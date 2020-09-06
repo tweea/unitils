@@ -1,12 +1,9 @@
 /*
- * Copyright 2008,  Unitils.org
- *
+ * Copyright 2008, Unitils.org
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -14,11 +11,6 @@
  * limitations under the License.
  */
 package org.unitils.core.util;
-
-import org.unitils.core.UnitilsException;
-import static org.unitils.util.AnnotationUtils.getFieldsAnnotatedWith;
-import static org.unitils.util.AnnotationUtils.getMethodsAnnotatedWith;
-import static org.unitils.util.ReflectionUtils.invokeMethod;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
@@ -29,6 +21,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import org.unitils.core.UnitilsException;
+
+import static org.unitils.util.AnnotationUtils.getFieldsAnnotatedWith;
+import static org.unitils.util.AnnotationUtils.getMethodsAnnotatedWith;
+import static org.unitils.util.ReflectionUtils.invokeMethod;
 
 /**
  * Class for managing and creating instances of a given type. A given annotation controls how a new instance will be created.
@@ -46,7 +44,9 @@ import java.util.Set;
  * methods in superclasses.
  * <p/>
  * Lets explain all this with an example:
- * <pre><code>
+ * 
+ * <pre>
+ * <code>
  * ' @MyAnnotation("supervalue")
  * ' public class SuperClass {
  * '
@@ -58,7 +58,9 @@ import java.util.Set;
  * ' public class MyClass extends SuperClass {
  * '
  * '}
- * </code></pre>
+ * </code>
+ * </pre>
+ * 
  * Following steps are performed: there is annotation with 2 values on the sub class. These values override the value of
  * the annotation in the superclass and will be used for creating a new instance. The 2 values are then passed to the
  * createMyType custom create method to create the actual instance.
@@ -76,11 +78,12 @@ import java.util.Set;
  *
  * @author Tim Ducheyne
  * @author Filip Neven
- * @param <T> Type of the object that is configured by the annotations
- * @param <A> Type of the annotation that is used for configuring the instance
+ * @param <T>
+ *     Type of the object that is configured by the annotations
+ * @param <A>
+ *     Type of the annotation that is used for configuring the instance
  */
 public abstract class AnnotatedInstanceManager<T, A extends Annotation> {
-
     /**
      * All created intances per class
      */
@@ -96,62 +99,64 @@ public abstract class AnnotatedInstanceManager<T, A extends Annotation> {
      */
     protected Class<A> annotationClass;
 
-
     /**
      * Creates a manager
      *
-     * @param instanceClass   The type of the managed instances
-     * @param annotationClass The annotation type
+     * @param instanceClass
+     *     The type of the managed instances
+     * @param annotationClass
+     *     The annotation type
      */
     protected AnnotatedInstanceManager(Class<T> instanceClass, Class<A> annotationClass) {
         this.instanceClass = instanceClass;
         this.annotationClass = annotationClass;
     }
 
-
     /**
      * Gets an instance for the given test. This will first look for values of annotations on the test class and
      * its super classes. If there is a custom create method, that method is then used to create the instance
      * (passing the values). If no create was found, {@link #createInstanceForValues} is called to create the instance.
      *
-     * @param testObject The test object, not null
+     * @param testObject
+     *     The test object, not null
      * @return The instance, null if not found
      */
     protected T getInstance(Object testObject) {
         return getInstanceImpl(testObject, testObject.getClass());
     }
 
-
     /**
      * Registers an instance for a given class. This will cause {@link #getInstance} to return the given instance
      * if the testObject is of the given test type.
      *
-     * @param testClass The test type, not null
-     * @param instance  The instance, not null
+     * @param testClass
+     *     The test type, not null
+     * @param instance
+     *     The instance, not null
      */
     protected void registerInstance(Class<?> testClass, T instance) {
         instances.put(testClass, instance);
     }
 
-
     /**
      * Checks whether {@link #getInstance} will return an instance. If false is returned, {@link #getInstance} will
      * return null.
      *
-     * @param testObject The test object, not null
+     * @param testObject
+     *     The test object, not null
      * @return True if an instance is linked to the given test object
      */
     protected boolean hasInstance(Object testObject) {
         return hasInstanceImpl(testObject, testObject.getClass());
     }
 
-
     /**
      * Forces the recreation of the instance the next time that it is requested. If classes are given as argument
      * only instances on those class levels will be reset. If no classes are given, all cached
      * instances will be reset.
      *
-     * @param classes The classes for which to reset the instances
+     * @param classes
+     *     The classes for which to reset the instances
      */
     protected void invalidateInstance(Class<?>... classes) {
         if (classes == null || classes.length == 0) {
@@ -163,12 +168,13 @@ public abstract class AnnotatedInstanceManager<T, A extends Annotation> {
         }
     }
 
-
     /**
      * Recursive implementation of {@link #hasInstance(Object)}.
      *
-     * @param testObject The test object, not null
-     * @param testClass  The level in the hierarchy
+     * @param testObject
+     *     The test object, not null
+     * @param testClass
+     *     The level in the hierarchy
      * @return True if an instance is linked to the given test object
      */
     protected boolean hasInstanceImpl(Object testObject, Class<?> testClass) {
@@ -196,12 +202,13 @@ public abstract class AnnotatedInstanceManager<T, A extends Annotation> {
         return hasInstanceImpl(testObject, testClass.getSuperclass());
     }
 
-
     /**
      * Recursive implementation of {@link #getInstance(Object)}.
      *
-     * @param testObject The test object, not null
-     * @param testClass  The level in the hierarchy
+     * @param testObject
+     *     The test object, not null
+     * @param testClass
+     *     The level in the hierarchy
      * @return The instance, null if not found
      */
     protected T getInstanceImpl(Object testObject, Class<?> testClass) {
@@ -248,17 +255,18 @@ public abstract class AnnotatedInstanceManager<T, A extends Annotation> {
         return instance;
     }
 
-
     /**
      * Hook method that can be overriden to perform extra initialization after the instance was created.
      *
-     * @param instance   The instance, not null
-     * @param testObject The test object, not null
-     * @param testClass  The level in the hierarchy
+     * @param instance
+     *     The instance, not null
+     * @param testObject
+     *     The test object, not null
+     * @param testClass
+     *     The level in the hierarchy
      */
     protected void afterInstanceCreate(T instance, Object testObject, Class<?> testClass) {
     }
-
 
     /**
      * Gets the values of the annotations on the given class.
@@ -266,7 +274,8 @@ public abstract class AnnotatedInstanceManager<T, A extends Annotation> {
      * If more than 1 such annotation is found, an exception is raised.
      * If no annotation was found, an empty list is returned.
      *
-     * @param testClass The test class, not null
+     * @param testClass
+     *     The test class, not null
      * @return The values of the annotation, empty list if none found
      */
     protected List<String> getAnnotationValues(Class<?> testClass) {
@@ -310,15 +319,16 @@ public abstract class AnnotatedInstanceManager<T, A extends Annotation> {
         return getAnnotationValues(annotation);
     }
 
-
     /**
      * Gets the custom create methods on the given class.
      * If there is more than 1 create method found, an exception is raised.
      * If no create method was found, null is returned.
      * If searchSuperClasses is true, it will also look in super classes for create methods.
      *
-     * @param testClass          The test class, not null
-     * @param searchSuperClasses True to look recursively in superclasses
+     * @param testClass
+     *     The test class, not null
+     * @param searchSuperClasses
+     *     True to look recursively in superclasses
      * @return The instance, null if no create method was found
      */
     protected Method getCustomCreateMethod(Class<?> testClass, boolean searchSuperClasses) {
@@ -341,7 +351,8 @@ public abstract class AnnotatedInstanceManager<T, A extends Annotation> {
 
         // check whether there is more than 1 custom create method
         if (customCreateMethods.size() > 1) {
-            throw new UnitilsException("There can only be 1 method per class annotated with @" + annotationClass.getSimpleName() + " for creating a session factory.");
+            throw new UnitilsException(
+                "There can only be 1 method per class annotated with @" + annotationClass.getSimpleName() + " for creating a session factory.");
         }
 
         // if nothing found, look in superclass or return null
@@ -355,11 +366,12 @@ public abstract class AnnotatedInstanceManager<T, A extends Annotation> {
         // found exactly 1 custom create method ==> check correct signature
         Method customCreateMethod = customCreateMethods.get(0);
         if (!isCustomCreateMethod(customCreateMethod)) {
-            throw new UnitilsException("Custom create method annotated with @" + annotationClass.getSimpleName() + " should have following signature: " + getCustomCreateMethodReturnType().getName() + " myMethod( List<String> locations ) or " + getCustomCreateMethodReturnType().getName() + " myMethod()");
+            throw new UnitilsException("Custom create method annotated with @" + annotationClass.getSimpleName() + " should have following signature: "
+                + getCustomCreateMethodReturnType().getName() + " myMethod( List<String> locations ) or " + getCustomCreateMethodReturnType().getName()
+                + " myMethod()");
         }
         return customCreateMethod;
     }
-
 
     /**
      * Checks whether the given method is a custom create method. A custom create method must have following signature:
@@ -368,7 +380,8 @@ public abstract class AnnotatedInstanceManager<T, A extends Annotation> {
      * <li>T createMethodName(List<String> values)</li>
      * </ul>
      *
-     * @param method The method, not null
+     * @param method
+     *     The method, not null
      * @return True if it has the correct signature
      */
     protected boolean isCustomCreateMethod(Method method) {
@@ -381,15 +394,13 @@ public abstract class AnnotatedInstanceManager<T, A extends Annotation> {
         }
         return getCustomCreateMethodReturnType().isAssignableFrom(method.getReturnType());
     }
-    
-    
+
     protected T createCustomCreatedInstance(Method customCreateMethod, Object testObject, Class<?> testClass, List<String> annotationValues) {
-    	Object customCreateMethodResult = invokeCustomCreateMethod(customCreateMethod, testObject, annotationValues);
-    	return createCustomCreatedInstanceFromCustomCreateMethodResult(testObject, testClass, customCreateMethodResult);
+        Object customCreateMethodResult = invokeCustomCreateMethod(customCreateMethod, testObject, annotationValues);
+        return createCustomCreatedInstanceFromCustomCreateMethodResult(testObject, testClass, customCreateMethodResult);
     }
 
-
-	/**
+    /**
      * Creates an instance by calling a custom create method (if there is one). Such a create method should have one of
      * following exact signatures:
      * <ul>
@@ -398,14 +409,19 @@ public abstract class AnnotatedInstanceManager<T, A extends Annotation> {
      * </ul>
      * The second version receives the given locations. They both should return an instance (not null)
      *
-     * @param customCreateMethod The create method, not null
-     * @param testObject         The test object, not null
-     * @param annotationValues   The specified locations if there are any, not null
+     * @param customCreateMethod
+     *     The create method, not null
+     * @param testObject
+     *     The test object, not null
+     * @param annotationValues
+     *     The specified locations if there are any, not null
      * @return The instance, null if no create method was found
      */
-    @SuppressWarnings({"unchecked"})
+    @SuppressWarnings({
+        "unchecked"
+    })
     protected Object invokeCustomCreateMethod(Method customCreateMethod, Object testObject, List<String> annotationValues) {
-    	Object result;
+        Object result;
         try {
             // call method
             if (customCreateMethod.getParameterTypes().length == 0) {
@@ -414,49 +430,50 @@ public abstract class AnnotatedInstanceManager<T, A extends Annotation> {
                 result = invokeMethod(testObject, customCreateMethod, annotationValues);
             }
         } catch (InvocationTargetException e) {
-            throw new UnitilsException("Method " + testObject.getClass().getSimpleName() + "." + customCreateMethod + " (annotated with " + annotationClass.getSimpleName() + ") has thrown an exception", e.getCause());
+            throw new UnitilsException("Method " + testObject.getClass().getSimpleName() + "." + customCreateMethod + " (annotated with "
+                + annotationClass.getSimpleName() + ") has thrown an exception", e.getCause());
         }
         // check whether create returned a value
         if (result == null) {
-            throw new UnitilsException("Method " + testObject.getClass().getSimpleName() + "." + customCreateMethod + " (annotated with " + annotationClass.getSimpleName() + ") has returned null.");
+            throw new UnitilsException("Method " + testObject.getClass().getSimpleName() + "." + customCreateMethod + " (annotated with "
+                + annotationClass.getSimpleName() + ") has returned null.");
         }
         return result;
     }
-    
-    
+
     @SuppressWarnings("unchecked")
-	protected T createCustomCreatedInstanceFromCustomCreateMethodResult(
-			Object testObject, Class<?> testClass, Object customCreateMethodResult) {
-		return (T) customCreateMethodResult;
-	}
-    
-    
+    protected T createCustomCreatedInstanceFromCustomCreateMethodResult(Object testObject, Class<?> testClass, Object customCreateMethodResult) {
+        return (T) customCreateMethodResult;
+    }
+
     /**
      * @return The return type of a custom create method. By default, this is the type of the managed instance.
-     * Subclasses that override this method are themselves responsible for making sure that the returned object
-     * can be used for creating an instance of the managed class.
+     *     Subclasses that override this method are themselves responsible for making sure that the returned object
+     *     can be used for creating an instance of the managed class.
      */
-	protected Class<?> getCustomCreateMethodReturnType() {
-		return instanceClass;
-	}
-
+    protected Class<?> getCustomCreateMethodReturnType() {
+        return instanceClass;
+    }
 
     /**
      * Gets the values that are specified for the given annotation. An array with 1 empty string should
      * be considered to be empty and null should be returned.
      *
-     * @param annotation The annotation, not null
+     * @param annotation
+     *     The annotation, not null
      * @return The values, null if no values were specified
      */
     abstract protected List<String> getAnnotationValues(A annotation);
 
-
     /**
      * Creates an instance for the given values.
-     * @param testObject TODO
-     * @param testClass TODO
-     * @param values The values, not null
-     *
+     * 
+     * @param testObject
+     *     TODO
+     * @param testClass
+     *     TODO
+     * @param values
+     *     The values, not null
      * @return The instance, not null
      */
     abstract protected T createInstanceForValues(Object testObject, Class<?> testClass, List<String> values);

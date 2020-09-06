@@ -1,12 +1,9 @@
 /*
- * Copyright 2008,  Unitils.org
- *
+ * Copyright 2008, Unitils.org
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -15,17 +12,19 @@
  */
 package org.unitils.reflectionassert;
 
-import static org.junit.Assert.*;
+import java.util.Date;
+
 import org.junit.Before;
 import org.junit.Test;
+import org.unitils.reflectionassert.difference.Difference;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertSame;
 import static org.unitils.reflectionassert.ReflectionComparatorFactory.createRefectionComparator;
 import static org.unitils.reflectionassert.ReflectionComparatorMode.IGNORE_DEFAULTS;
 import static org.unitils.reflectionassert.ReflectionComparatorMode.LENIENT_DATES;
-import org.unitils.reflectionassert.difference.Difference;
 import static org.unitils.reflectionassert.util.InnerDifferenceFinder.getInnerDifference;
-
-import java.util.Date;
-
 
 /**
  * Test class for {@link ReflectionComparator}.
@@ -48,21 +47,22 @@ public class ReflectionComparatorLenientTest {
     /* Same as A but with null date */
     private Element elementNoDefaultsNullDateA;
 
-    /* Same as null date  A but different instance */
+    /* Same as null date A but different instance */
     private Element elementNoDefaultsNullDateB;
 
     /* Same as A but different date */
     private Element elementNoDefaultsDifferentDate;
 
     /* Class under test */
-    private ReflectionComparator reflectionComparator, ignoreDefaultsReflectionComparator, lenientDatesReflectionComparator, ignoreDefaultsLenientDatesComparator;
-
+    private ReflectionComparator reflectionComparator, ignoreDefaultsReflectionComparator, lenientDatesReflectionComparator,
+        ignoreDefaultsLenientDatesComparator;
 
     /**
      * Initializes the test fixture.
      */
     @Before
-    public void initialize() throws Exception {
+    public void initialize()
+        throws Exception {
         Date date = new Date();
         elementNoDefaultsA = new Element(true, 'c', (byte) 1, (short) 2, 3, 4l, 5.0f, 6.0, date, "object");
         elementNoDefaultsB = new Element(true, 'c', (byte) 1, (short) 2, 3, 4l, 5.0f, 6.0, date, "object");
@@ -77,7 +77,6 @@ public class ReflectionComparatorLenientTest {
         ignoreDefaultsLenientDatesComparator = createRefectionComparator(IGNORE_DEFAULTS, LENIENT_DATES);
     }
 
-
     /**
      * Test for two equal objects without java defaults.
      */
@@ -86,7 +85,6 @@ public class ReflectionComparatorLenientTest {
         Difference result = reflectionComparator.getDifference(elementNoDefaultsA, elementNoDefaultsB);
         assertNull(result);
     }
-
 
     /**
      * Test with left object containing only java defaults.
@@ -97,7 +95,6 @@ public class ReflectionComparatorLenientTest {
         assertNull(result);
     }
 
-
     /**
      * Test with ignore defaults and left object null.
      */
@@ -106,7 +103,6 @@ public class ReflectionComparatorLenientTest {
         Difference result = ignoreDefaultsReflectionComparator.getDifference(null, elementNoDefaultsA);
         assertNull(result);
     }
-
 
     /**
      * Test with ignore defaults and right object null
@@ -118,7 +114,6 @@ public class ReflectionComparatorLenientTest {
         assertSame(elementNoDefaultsA, result.getLeftValue());
         assertNull(result.getRightValue());
     }
-
 
     /**
      * Test with ignore defaults and left value 0.
@@ -218,7 +213,6 @@ public class ReflectionComparatorLenientTest {
         assertEquals(elementNoDefaultsDifferentDate.getDateValue(), difference.getRightValue());
     }
 
-
     /**
      * Test class with failing equals.
      */
@@ -257,18 +251,29 @@ public class ReflectionComparatorLenientTest {
         /**
          * Creates and initializes the element.
          *
-         * @param booleanValue a boolean value
-         * @param charValue    a char value
-         * @param byteValue    a byte value
-         * @param shortValue   a short value
-         * @param intValue     an int value
-         * @param longValue    a long value
-         * @param floatValue   a float value
-         * @param doubleValue  a double value
-         * @param dateValue    a date value
-         * @param objectValue  an object value
+         * @param booleanValue
+         *     a boolean value
+         * @param charValue
+         *     a char value
+         * @param byteValue
+         *     a byte value
+         * @param shortValue
+         *     a short value
+         * @param intValue
+         *     an int value
+         * @param longValue
+         *     a long value
+         * @param floatValue
+         *     a float value
+         * @param doubleValue
+         *     a double value
+         * @param dateValue
+         *     a date value
+         * @param objectValue
+         *     an object value
          */
-        public Element(boolean booleanValue, char charValue, byte byteValue, short shortValue, int intValue, long longValue, float floatValue, double doubleValue, Date dateValue, Object objectValue) {
+        public Element(boolean booleanValue, char charValue, byte byteValue, short shortValue, int intValue, long longValue, float floatValue,
+            double doubleValue, Date dateValue, Object objectValue) {
             this.booleanValue = booleanValue;
             this.charValue = charValue;
             this.byteValue = byteValue;
@@ -374,12 +379,12 @@ public class ReflectionComparatorLenientTest {
         /**
          * Always returns false
          *
-         * @param o the object to compare to
+         * @param o
+         *     the object to compare to
          */
         @Override
         public boolean equals(Object o) {
             return false;
         }
     }
-
 }

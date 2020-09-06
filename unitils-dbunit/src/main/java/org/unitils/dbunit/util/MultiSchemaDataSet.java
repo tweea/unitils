@@ -1,12 +1,9 @@
 /*
- * Copyright 2008,  Unitils.org
- *
+ * Copyright 2008, Unitils.org
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -15,11 +12,11 @@
  */
 package org.unitils.dbunit.util;
 
-import org.dbunit.dataset.IDataSet;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+
+import org.dbunit.dataset.IDataSet;
 
 /**
  * Represents a DbUnit dataset that may contain data for multiple database schema's. For each schema, a DbUnit
@@ -35,11 +32,11 @@ public class MultiSchemaDataSet {
     /* Maps schemanames on dbunit datasets */
     public Map<String, IDataSet> schemaDataSetMap = new HashMap<String, IDataSet>();
 
-
     /**
      * Returns the dbunit <code>IDataSet</code> for the given schema name, if any
      *
-     * @param schemaName The schema name
+     * @param schemaName
+     *     The schema name
      * @return The dbunit dataset, or null if none registered for the given schema name
      */
     public IDataSet getDataSetForSchema(String schemaName) {
@@ -50,14 +47,15 @@ public class MultiSchemaDataSet {
      * Sets a dbunit <code>IDataSet</code> for the given schema. If a data set already existed for this schema,
      * the old one is returned.
      *
-     * @param schema  The schema name
-     * @param dataSet The dbunit dataset
+     * @param schema
+     *     The schema name
+     * @param dataSet
+     *     The dbunit dataset
      * @return The replaced data set, null if none replaced
      */
     public IDataSet setDataSetForSchema(String schema, IDataSet dataSet) {
         return schemaDataSetMap.put(schema, dataSet);
     }
-
 
     /**
      * @return The names of all schema's for which a dbunit dataset exists
@@ -65,6 +63,4 @@ public class MultiSchemaDataSet {
     public Set<String> getSchemaNames() {
         return schemaDataSetMap.keySet();
     }
-
-
 }

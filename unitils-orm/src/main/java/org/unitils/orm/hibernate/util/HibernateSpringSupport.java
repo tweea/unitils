@@ -1,12 +1,9 @@
 /*
- * Copyright 2008,  Unitils.org
- *
+ * Copyright 2008, Unitils.org
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -14,6 +11,8 @@
  * limitations under the License.
  */
 package org.unitils.orm.hibernate.util;
+
+import java.util.Collection;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
@@ -23,8 +22,6 @@ import org.unitils.orm.common.spring.OrmSpringSupport;
 import org.unitils.orm.common.util.ConfiguredOrmPersistenceUnit;
 import org.unitils.orm.hibernate.HibernateModule;
 import org.unitils.spring.SpringModule;
-
-import java.util.Collection;
 
 /**
  * A support class containing Hibernate and {@link HibernateModule} related actions for the {@link SpringModule}.
@@ -36,14 +33,13 @@ import java.util.Collection;
  * @author Tim Ducheyne
  * @author Filip Neven
  */
-public class HibernateSpringSupport implements OrmSpringSupport<SessionFactory, Configuration> {
-
+public class HibernateSpringSupport
+    implements OrmSpringSupport<SessionFactory, Configuration> {
 
     // todo javadoc
     public boolean isPersistenceUnitConfiguredInSpring(Object testObject) {
         return getSessionFactoryBean(testObject) != null;
     }
-
 
     // todo javadoc
     public ConfiguredOrmPersistenceUnit<SessionFactory, Configuration> getConfiguredPersistenceUnit(Object testObject) {
@@ -54,9 +50,9 @@ public class HibernateSpringSupport implements OrmSpringSupport<SessionFactory, 
         return new ConfiguredOrmPersistenceUnit<SessionFactory, Configuration>(entityManagerFactory, hibernateConfiguration);
     }
 
-
     /**
-     * @param testObject The test instance, not null
+     * @param testObject
+     *     The test instance, not null
      * @return Instance of {@link LocalSessionFactoryBean} that wraps the configuration of hibernate in spring
      */
     protected LocalSessionFactoryBean getSessionFactoryBean(Object testObject) {
@@ -70,12 +66,10 @@ public class HibernateSpringSupport implements OrmSpringSupport<SessionFactory, 
         return (LocalSessionFactoryBean) entityManagerFactoryBeans.iterator().next();
     }
 
-
     /**
      * @return The Spring module, not null
      */
     protected SpringModule getSpringModule() {
         return Unitils.getInstance().getModulesRepository().getModuleOfType(SpringModule.class);
     }
-
 }

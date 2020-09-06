@@ -1,12 +1,9 @@
 /*
- * Copyright 2008,  Unitils.org
- *
+ * Copyright 2008, Unitils.org
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -15,18 +12,20 @@
  */
 package org.unitils.reflectionassert;
 
-import junit.framework.TestCase;
-import static org.unitils.reflectionassert.ReflectionComparatorFactory.createRefectionComparator;
-import static org.unitils.reflectionassert.ReflectionComparatorMode.IGNORE_DEFAULTS;
-import org.unitils.reflectionassert.difference.Difference;
-import static org.unitils.reflectionassert.util.InnerDifferenceFinder.getInnerDifference;
-
-import static java.lang.Boolean.FALSE;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 import java.util.Collection;
 
+import org.unitils.reflectionassert.difference.Difference;
+
+import junit.framework.TestCase;
+
+import static java.lang.Boolean.FALSE;
+
+import static org.unitils.reflectionassert.ReflectionComparatorFactory.createRefectionComparator;
+import static org.unitils.reflectionassert.ReflectionComparatorMode.IGNORE_DEFAULTS;
+import static org.unitils.reflectionassert.util.InnerDifferenceFinder.getInnerDifference;
 
 /**
  * Test class for {@link ReflectionComparator}.
@@ -34,7 +33,8 @@ import java.util.Collection;
  * @author Tim Ducheyne
  * @author Filip Neven
  */
-public class ReflectionComparatorTest extends TestCase {
+public class ReflectionComparatorTest
+    extends TestCase {
 
     /* Test object */
     private Objects objectsA;
@@ -66,11 +66,11 @@ public class ReflectionComparatorTest extends TestCase {
     /* Class under test */
     private ReflectionComparator reflectionComparator, ignoreDefaultReflectionComparator;
 
-
     /**
      * Initializes the test fixture.
      */
-    protected void setUp() throws Exception {
+    protected void setUp()
+        throws Exception {
         super.setUp();
 
         objectsA = new Objects("test 1", "test 2", null);
@@ -93,7 +93,6 @@ public class ReflectionComparatorTest extends TestCase {
         ignoreDefaultReflectionComparator = createRefectionComparator(IGNORE_DEFAULTS);
     }
 
-
     /**
      * Test for two equal objects.
      */
@@ -101,7 +100,6 @@ public class ReflectionComparatorTest extends TestCase {
         Difference result = reflectionComparator.getDifference(objectsA, objectsB);
         assertNull(result);
     }
-
 
     /**
      * Test for two equal objects as an inner field of an object.
@@ -111,7 +109,6 @@ public class ReflectionComparatorTest extends TestCase {
         assertNull(result);
     }
 
-
     /**
      * Test case for 2 equal objects that contain a circular reference. This may not cause an infinite loop.
      */
@@ -119,7 +116,6 @@ public class ReflectionComparatorTest extends TestCase {
         Difference result = reflectionComparator.getDifference(objectsCircularDependencyA, objectsCircularDependencyB);
         assertNull(result);
     }
-
 
     /**
      * Test for two objects that contain different values.
@@ -132,7 +128,6 @@ public class ReflectionComparatorTest extends TestCase {
         assertEquals("XXXXXX", difference.getRightValue());
     }
 
-
     /**
      * Test case for 2 objects with a right value null.
      */
@@ -143,7 +138,6 @@ public class ReflectionComparatorTest extends TestCase {
         assertEquals("test 2", difference.getLeftValue());
         assertEquals(null, difference.getRightValue());
     }
-
 
     /**
      * Test case for 2 objects with a left value null.
@@ -156,7 +150,6 @@ public class ReflectionComparatorTest extends TestCase {
         assertEquals("test 2", difference.getRightValue());
     }
 
-
     /**
      * Test for objects with inner objects that contain different values.
      */
@@ -168,7 +161,6 @@ public class ReflectionComparatorTest extends TestCase {
         assertEquals("XXXXXX", difference.getRightValue());
     }
 
-
     /**
      * Test case for a null left-argument.
      */
@@ -178,7 +170,6 @@ public class ReflectionComparatorTest extends TestCase {
         assertEquals(null, result.getLeftValue());
         assertSame(objectsA, result.getRightValue());
     }
-
 
     /**
      * Test case for a null right-argument.
@@ -190,7 +181,6 @@ public class ReflectionComparatorTest extends TestCase {
         assertEquals(null, result.getRightValue());
     }
 
-
     /**
      * Test case for both null arguments.
      */
@@ -198,7 +188,6 @@ public class ReflectionComparatorTest extends TestCase {
         Difference result = reflectionComparator.getDifference(null, null);
         assertNull(result);
     }
-
 
     /**
      * Test for two equal objects.
@@ -208,15 +197,17 @@ public class ReflectionComparatorTest extends TestCase {
         assertTrue(result);
     }
 
-
     /**
      * Test for ignored default left value and to check that the right value is not being evaluated (causing a lazy
      * loading).
      */
     public void testGetAllDifferences_equalsIgnoredDefaultNoLazyLoading() {
         // create a proxy, that will fail if is accessed
-        Collection<?> collection = (Collection<?>) Proxy.newProxyInstance(getClass().getClassLoader(), new Class[]{Collection.class}, new InvocationHandler() {
-            public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+        Collection<?> collection = (Collection<?>) Proxy.newProxyInstance(getClass().getClassLoader(), new Class[] {
+            Collection.class
+        }, new InvocationHandler() {
+            public Object invoke(Object proxy, Method method, Object[] args)
+                throws Throwable {
                 if ("equals".equals(method.getName())) {
                     return FALSE;
                 }
@@ -231,7 +222,6 @@ public class ReflectionComparatorTest extends TestCase {
         Difference result = ignoreDefaultReflectionComparator.getDifference(new CollectionWrapper(null), new CollectionWrapper(collection));
         assertNull(result);
     }
-
 
     /**
      * Test for two objects that contain different values.
@@ -249,7 +239,6 @@ public class ReflectionComparatorTest extends TestCase {
         assertEquals("XXXXXX", difference2.getRightValue());
     }
 
-
     /**
      * Test class with failing equals.
      */
@@ -264,13 +253,15 @@ public class ReflectionComparatorTest extends TestCase {
         /* An inner object */
         private Objects inner;
 
-
         /**
          * Creates and initializes the objects instance.
          *
-         * @param stringValue1 the first object value
-         * @param stringValue2 the second object value
-         * @param inner        the inner collection
+         * @param stringValue1
+         *     the first object value
+         * @param stringValue2
+         *     the second object value
+         * @param inner
+         *     the inner collection
          */
         public Objects(String stringValue1, String stringValue2, Objects inner) {
             this.string1 = stringValue1;
@@ -308,7 +299,8 @@ public class ReflectionComparatorTest extends TestCase {
         /**
          * Sets the inner object
          *
-         * @param inner the object
+         * @param inner
+         *     the object
          */
         public void setInner(Objects inner) {
             this.inner = inner;
@@ -317,14 +309,14 @@ public class ReflectionComparatorTest extends TestCase {
         /**
          * Always returns false
          *
-         * @param o the object to compare to
+         * @param o
+         *     the object to compare to
          */
         @Override
         public boolean equals(Object o) {
             return false;
         }
     }
-
 
     /**
      * Test class with a Collection as field. This is declared as interface so that a proxy can be installed in the
@@ -338,12 +330,11 @@ public class ReflectionComparatorTest extends TestCase {
         /**
          * Creates a wrapper for the given collection.
          *
-         * @param innerCollection The collection
+         * @param innerCollection
+         *     The collection
          */
         public CollectionWrapper(Collection<?> innerCollection) {
             this.innerCollection = innerCollection;
         }
     }
-
-
 }

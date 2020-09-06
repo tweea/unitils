@@ -26,27 +26,29 @@ import org.unitils.dbmaintainer.util.DatabaseAccessing;
 import org.unitils.dbmaintainer.util.DatabaseModuleConfigUtils;
 import org.unitils.util.PropertyUtils;
 
-
 /**
  * DataSourceWrapper.
  * 
  * @author Jeroen Horemans
  * @author Thomas De Rycke
  * @author Willemijn Wouters
- * 
  * @since 3.4
- * 
  */
 public class DataSourceWrapper {
     private static final Log LOGGER = LogFactory.getLog(DataSourceWrapper.class);
 
     private DataSource wrappedDataSource;
+
     protected DatabaseConfiguration databaseConfiguration;
+
     private DataSourceFactory dataSourceFactory;
+
     private boolean updateDatabaseSchemaEnabled;
+
     private Properties configuration;
+
     private String databaseName;
-    
+
     protected Connection connection;
 
     private UnitilsTransactionManager transactionManager;
@@ -70,13 +72,12 @@ public class DataSourceWrapper {
     }
 
     /**
-     * 
      * @return A connection from the data source, not null
      */
     public Connection getConnection() {
         try {
             connection = DataSourceUtils.getConnection(wrappedDataSource);
-            
+
             return DatabaseUnitils.getGoodConnection(connection, wrappedDataSource);
         } catch (Exception e) {
             throw new UnitilsException("Unable to connect to database for " + databaseConfiguration + ".", e);
@@ -90,17 +91,18 @@ public class DataSourceWrapper {
      * returned will make sure that, for the duration of a transaction, the same <code>java.sql.Connection</code> is returned,
      * and that invocations of the close() method of these connections are suppressed.
      *
-     * @param testObject The test instance, not null
-     * @param wrapDataSourceInTransactionalProxy 
+     * @param testObject
+     *     The test instance, not null
+     * @param wrapDataSourceInTransactionalProxy
      * @return The <code>DataSource</code> (default database).
      */
     public DataSource getTransactionalDataSourceAndActivateTransactionIfNeeded(Object testObject) {
         if (wrapDataSourceInTransactionalProxy) {
-            //return transactionHandler.getTransactionManager().getTransactionalDataSource(getDataSourceAndActivateTransactionIfNeeded());
+            // return transactionHandler.getTransactionManager().getTransactionalDataSource(getDataSourceAndActivateTransactionIfNeeded());
             return transactionManager.getTransactionalDataSource(getDataSourceAndActivateTransactionIfNeeded());
         }
         return getDataSourceAndActivateTransactionIfNeeded();
-    } 
+    }
 
     /**
      * Creates a datasource by using the factory that is defined by the dataSourceFactory.className property
@@ -112,7 +114,6 @@ public class DataSourceWrapper {
         DataSourceFactory dataSourceFactory = ConfigUtils.getConfiguredInstanceOf(DataSourceFactory.class, configuration);
         dataSourceFactory.init(configuration, databaseName);
         DataSource dataSource = dataSourceFactory.createDataSource();
-
 
         // Call the database maintainer if enabled
         if (updateDatabaseSchemaEnabled) {
@@ -129,12 +130,12 @@ public class DataSourceWrapper {
         updateDatabase(getDefaultSqlHandler());
     }
 
-
     /**
      * Determines whether the test database is outdated and, if that is the case, updates the database with the
      * latest changes.
      *
-     * @param sqlHandler SQLHandler that needs to be used for the database updates
+     * @param sqlHandler
+     *     SQLHandler that needs to be used for the database updates
      * @see {@link DBMaintainer}
      */
     public void updateDatabase(SQLHandler sqlHandler) {
@@ -145,7 +146,7 @@ public class DataSourceWrapper {
 
     /**
      * @return The default SQLHandler, which simply executes the sql statements on the unitils-configured
-     *         test database
+     *     test database
      */
     protected SQLHandler getDefaultSqlHandler() {
         return new DefaultSQLHandler(getDataSourceAndActivateTransactionIfNeeded());
@@ -166,7 +167,7 @@ public class DataSourceWrapper {
     }
 
     public void activateTransactionIfNeeded() {
-        //UnitilsTransactionManager transactionManager = transactionHandler.getTransactionManager();
+        // UnitilsTransactionManager transactionManager = transactionHandler.getTransactionManager();
         if (transactionManager != null) {
             transactionManager.activateTransactionIfNeeded(getTestObject());
         }
@@ -190,14 +191,12 @@ public class DataSourceWrapper {
         getConfiguredDatabaseTaskInstance(DBClearer.class).clearSchemas();
     }
 
-
     /**
      * Cleans all configured schema's. I.e. removes all data from its database tables.
      */
     public void cleanSchemas() {
         getConfiguredDatabaseTaskInstance(DBCleaner.class).cleanSchemas();
     }
-
 
     /**
      * Disables all foreigh key and not-null constraints on the configured schema's.
@@ -206,7 +205,6 @@ public class DataSourceWrapper {
         getConfiguredDatabaseTaskInstance(ConstraintsDisabler.class).disableConstraints();
     }
 
-
     /**
      * Updates all sequences that have a value below a certain configurable treshold to become equal
      * to this treshold
@@ -214,6 +212,7 @@ public class DataSourceWrapper {
     public void updateSequences() {
         getConfiguredDatabaseTaskInstance(SequenceUpdater.class).updateSequences();
     }
+
     /**
      * Sets all the sequences to the lowest acceptable value.
      * This can be defined with the property "sequenceUpdater.sequencevalue.lowestacceptable".
@@ -224,11 +223,12 @@ public class DataSourceWrapper {
 
     /**
      * @return A configured instance of {@link DatabaseAccessing} of the given type
-     *
-     * @param databaseTaskType The type of database task, not null
+     * @param databaseTaskType
+     *     The type of database task, not null
      */
     protected <T extends DatabaseAccessing> T getConfiguredDatabaseTaskInstance(Class<T> databaseTaskType) {
-        return DatabaseModuleConfigUtils.getConfiguredDatabaseTaskInstance(databaseTaskType, configuration, getDefaultSqlHandler(), databaseConfiguration.getDialect(), databaseConfiguration.getSchemaNames());
+        return DatabaseModuleConfigUtils.getConfiguredDatabaseTaskInstance(databaseTaskType, configuration, getDefaultSqlHandler(),
+            databaseConfiguration.getDialect(), databaseConfiguration.getSchemaNames());
     }
 
     /**
@@ -241,7 +241,8 @@ public class DataSourceWrapper {
 
     public boolean isDataSourceLoaded() {
         return wrappedDataSource != null;
-    } 
+    }
+
     public DatabaseConfiguration getDatabaseConfiguration() {
         return databaseConfiguration;
     }
@@ -253,12 +254,11 @@ public class DataSourceWrapper {
         return databaseName;
     }
 
-
     /**
-     * @param transactionManager the transactionManager to set
+     * @param transactionManager
+     *     the transactionManager to set
      */
     public void setTransactionManager(UnitilsTransactionManager transactionManager) {
         this.transactionManager = transactionManager;
     }
-
 }

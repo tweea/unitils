@@ -1,12 +1,9 @@
 /*
- * Copyright 2008,  Unitils.org
- *
+ * Copyright 2008, Unitils.org
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -15,20 +12,21 @@
  */
 package org.unitils.dbmaintainer.clean.impl;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.unitils.core.dbsupport.DbSupport;
-import static org.unitils.core.util.StoredIdentifierCase.MIXED_CASE;
-import org.unitils.dbmaintainer.clean.DBCleaner;
-import static org.unitils.dbmaintainer.clean.impl.DefaultDBClearer.PROPKEY_PRESERVE_SCHEMAS;
-import static org.unitils.util.PropertyUtils.getStringList;
-
 import java.util.HashSet;
 import java.util.List;
 import java.util.Properties;
 import java.util.Set;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.unitils.core.dbsupport.DbSupport;
+import org.unitils.dbmaintainer.clean.DBCleaner;
 import org.unitils.dbmaintainer.util.BaseDatabaseAccessor;
+
+import static org.unitils.core.util.StoredIdentifierCase.MIXED_CASE;
+import static org.unitils.dbmaintainer.clean.impl.DefaultDBClearer.PROPKEY_PRESERVE_SCHEMAS;
+import static org.unitils.util.PropertyUtils.getStringList;
+
 /**
  * Implementation of {@link DBCleaner}. This implementation will delete all data from a database, except for the tables
  * that are configured as tables to preserve. This includes the tables that are listed in the property
@@ -38,8 +36,9 @@ import org.unitils.dbmaintainer.util.BaseDatabaseAccessor;
  * @author Tim Ducheyne
  * @author Filip Neven
  */
-public class DefaultDBCleaner extends BaseDatabaseAccessor implements DBCleaner {
-
+public class DefaultDBCleaner
+    extends BaseDatabaseAccessor
+    implements DBCleaner {
     /**
      * Property key for schemas in which none of the tables should be cleaned
      */
@@ -74,11 +73,11 @@ public class DefaultDBCleaner extends BaseDatabaseAccessor implements DBCleaner 
      */
     protected Set<String> tablesToPreserve;
 
-
     /**
      * Configures this object.
      *
-     * @param configuration The configuration, not null
+     * @param configuration
+     *     The configuration, not null
      */
     @Override
     protected void doInit(Properties configuration) {
@@ -88,7 +87,6 @@ public class DefaultDBCleaner extends BaseDatabaseAccessor implements DBCleaner 
         tablesToPreserve.addAll(getItemsToPreserve(PROPKEY_PRESERVE_TABLES, true));
         tablesToPreserve.addAll(getItemsToPreserve(PROPKEY_PRESERVE_DATA_TABLES, true));
     }
-
 
     /**
      * Deletes all data from the database, except for the tables that have been
@@ -113,27 +111,29 @@ public class DefaultDBCleaner extends BaseDatabaseAccessor implements DBCleaner 
         }
     }
 
-
     /**
      * Deletes the data in the table with the given name.
      * Note: the table name is surrounded with quotes, to make sure that
      * case-sensitive table names are also deleted correctly.
      *
-     * @param tableName The name of the table that need to be cleared, not null
-     * @param dbSupport The database support, not null
+     * @param tableName
+     *     The name of the table that need to be cleared, not null
+     * @param dbSupport
+     *     The database support, not null
      */
     protected void cleanTable(String tableName, DbSupport dbSupport) {
         logger.debug("Deleting all records from table " + tableName + " in database schema " + dbSupport.getSchemaName());
         sqlHandler.executeUpdate("delete from " + dbSupport.qualified(tableName));
     }
 
-
     /**
      * Checks whether the given item is one of the items to preserve.
      * This also handles identifiers that are stored in mixed case.
      *
-     * @param item            The item, not null
-     * @param itemsToPreserve The items to preserve, not null
+     * @param item
+     *     The item, not null
+     * @param itemsToPreserve
+     *     The items to preserve, not null
      * @return True if item to preserve
      */
     protected boolean isItemToPreserve(String item, Set<String> itemsToPreserve) {
@@ -144,14 +144,15 @@ public class DefaultDBCleaner extends BaseDatabaseAccessor implements DBCleaner 
         return itemsToPreserve.contains(item);
     }
 
-
     /**
      * Gets the list of items to preserve. The case is correct if necesary. Quoting an identifier
      * makes it case sensitive. If requested, the identifiers will be quailified with the default schema name if no
      * schema name is used as prefix.
      *
-     * @param propertyName        The name of the property that defines the items, not null
-     * @param prefixDefaultSchema True to prefix item with default schema when needed
+     * @param propertyName
+     *     The name of the property that defines the items, not null
+     * @param prefixDefaultSchema
+     *     True to prefix item with default schema when needed
      * @return The set of items, not null
      */
     protected Set<String> getItemsToPreserve(String propertyName, boolean prefixDefaultSchema) {

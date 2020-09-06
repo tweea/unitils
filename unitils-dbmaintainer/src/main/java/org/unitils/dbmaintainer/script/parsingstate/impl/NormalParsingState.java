@@ -1,12 +1,9 @@
 /*
- * Copyright 2008,  Unitils.org
- *
+ * Copyright 2008, Unitils.org
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -15,8 +12,8 @@
  */
 package org.unitils.dbmaintainer.script.parsingstate.impl;
 
-import org.unitils.dbmaintainer.script.parsingstate.ParsingState;
 import org.unitils.dbmaintainer.script.StatementBuilder;
+import org.unitils.dbmaintainer.script.parsingstate.ParsingState;
 
 /**
  * The default initial parsing state that is able to recognize the beginning of line comments, block comments,
@@ -25,8 +22,8 @@ import org.unitils.dbmaintainer.script.StatementBuilder;
  * @author Tim Ducheyne
  * @author Filip Neven
  */
-public class NormalParsingState extends BaseParsingState {
-
+public class NormalParsingState
+    extends BaseParsingState {
     /**
      * The in an in-line comment (-- comment) state.
      */
@@ -57,17 +54,22 @@ public class NormalParsingState extends BaseParsingState {
      */
     protected boolean escaping;
 
-
     /**
      * Initializes the state with the given parsing states.
      *
-     * @param inLineCommentParsingState  The inline comment state, not null
-     * @param inBlockCommentParsingState The block comment state, not null
-     * @param inSingleQuotesParsingState The single quote literal state, not null
-     * @param inDoubleQuotesParsingState The double quote literal state, not null
-     * @param backSlashEscapingEnabled   True if backslashes can be used for escaping
+     * @param inLineCommentParsingState
+     *     The inline comment state, not null
+     * @param inBlockCommentParsingState
+     *     The block comment state, not null
+     * @param inSingleQuotesParsingState
+     *     The single quote literal state, not null
+     * @param inDoubleQuotesParsingState
+     *     The double quote literal state, not null
+     * @param backSlashEscapingEnabled
+     *     True if backslashes can be used for escaping
      */
-    public void init(ParsingState inLineCommentParsingState, ParsingState inBlockCommentParsingState, ParsingState inSingleQuotesParsingState, ParsingState inDoubleQuotesParsingState, boolean backSlashEscapingEnabled) {
+    public void init(ParsingState inLineCommentParsingState, ParsingState inBlockCommentParsingState, ParsingState inSingleQuotesParsingState,
+        ParsingState inDoubleQuotesParsingState, boolean backSlashEscapingEnabled) {
         this.inLineCommentParsingState = inLineCommentParsingState;
         this.inBlockCommentParsingState = inBlockCommentParsingState;
         this.inSingleQuotesParsingState = inSingleQuotesParsingState;
@@ -75,15 +77,18 @@ public class NormalParsingState extends BaseParsingState {
         this.backSlashEscapingEnabled = backSlashEscapingEnabled;
     }
 
-
     /**
      * Determines the next state. This will look for the beginning of a line comment, a block comment, a single qoute
      * literal and a double quote literal. A semi-colon indicates the end of the statement.
      *
-     * @param previousChar The previous char, 0 if none
-     * @param currentChar  The current char
-     * @param nextChar     The next char, 0 if none
-     * @param statementBuilder The statement builder, not null
+     * @param previousChar
+     *     The previous char, 0 if none
+     * @param currentChar
+     *     The current char
+     * @param nextChar
+     *     The next char, 0 if none
+     * @param statementBuilder
+     *     The statement builder, not null
      * @return The next parsing state, null if the end of the statement is reached
      */
     @Override
@@ -126,5 +131,4 @@ public class NormalParsingState extends BaseParsingState {
         }
         return this;
     }
-
 }

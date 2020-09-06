@@ -1,21 +1,25 @@
 /*
- *
- *  * Copyright 2010,  Unitils.org
- *  *
- *  * Licensed under the Apache License, Version 2.0 (the "License");
- *  * you may not use this file except in compliance with the License.
- *  * You may obtain a copy of the License at
- *  *
- *  *     http://www.apache.org/licenses/LICENSE-2.0
- *  *
- *  * Unless required by applicable law or agreed to in writing, software
- *  * distributed under the License is distributed on an "AS IS" BASIS,
- *  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  * See the License for the specific language governing permissions and
- *  * limitations under the License.
- *
+ * * Copyright 2010, Unitils.org
+ * *
+ * * Licensed under the Apache License, Version 2.0 (the "License");
+ * * you may not use this file except in compliance with the License.
+ * * You may obtain a copy of the License at
+ * *
+ * * http://www.apache.org/licenses/LICENSE-2.0
+ * *
+ * * Unless required by applicable law or agreed to in writing, software
+ * * distributed under the License is distributed on an "AS IS" BASIS,
+ * * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * * See the License for the specific language governing permissions and
+ * * limitations under the License.
  */
 package org.unitils.mock.report.impl;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.IdentityHashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.unitils.mock.core.BehaviorDefiningInvocation;
 import org.unitils.mock.core.ObservedInvocation;
@@ -24,8 +28,6 @@ import org.unitils.mock.mockbehavior.MockBehavior;
 import org.unitils.mock.mockbehavior.impl.DefaultValueReturningMockBehavior;
 import org.unitils.mock.mockbehavior.impl.OriginalBehaviorInvokingMockBehavior;
 
-import java.util.*;
-
 /**
  * A view that displays the details of the observed invocations. The details include:
  * <ul>
@@ -33,7 +35,10 @@ import java.util.*;
  * <li>the mock behavior that was executed</li>
  * <li>the location where this mock behavior was defined</li>
  * </ul>
- * Example: <pre><code>
+ * Example:
+ * 
+ * <pre>
+ * <code>
  * 1. mock.method1() -> string1
  *
  * - string1 -> "1234567891234567890"
@@ -45,19 +50,18 @@ import java.util.*;
  *
  * - Observed at MyTest.testMethod(MyTest.java:77)
  * - No behavior defined, returned default value.
- * <code></pre>
+ * <code>
+ * </pre>
  *
  * @author Kenny Claes
  * @author Filip Neven
  * @author Tim Ducheyne
  */
-public class DetailedObservedInvocationsReport extends ObservedInvocationsReport {
-
-
+public class DetailedObservedInvocationsReport
+    extends ObservedInvocationsReport {
     public DetailedObservedInvocationsReport(Object testedObject) {
         super(testedObject);
     }
-
 
     /**
      * Creates a string representation of the given scenario as described in the class javadoc.
@@ -88,12 +92,12 @@ public class DetailedObservedInvocationsReport extends ObservedInvocationsReport
         return result.toString();
     }
 
-
     /**
      * Creates a string representation of the details of the given invocation. This will give information about
      * where the invocation occurred.
      *
-     * @param proxyInvocation The invocation to format, not null
+     * @param proxyInvocation
+     *     The invocation to format, not null
      * @return The string representation, not null
      */
     protected String formatInvokedAt(ProxyInvocation proxyInvocation) {
@@ -104,12 +108,12 @@ public class DetailedObservedInvocationsReport extends ObservedInvocationsReport
         return result.toString();
     }
 
-
     /**
      * Creates a string representation of the behavior details of the given invocation. This will give information about
      * where the mock behavior was recorded.
      *
-     * @param observedInvocation The invocation to format, not null
+     * @param observedInvocation
+     *     The invocation to format, not null
      * @return The string representation, not null
      */
     protected String formatBehaviorDetails(ObservedInvocation observedInvocation) {
@@ -137,11 +141,11 @@ public class DetailedObservedInvocationsReport extends ObservedInvocationsReport
         return result.toString();
     }
 
-
     /**
      * Format the values that were to long to be displayed inline
      *
-     * @param largeObjects The large value representations, not null
+     * @param largeObjects
+     *     The large value representations, not null
      * @return The string representation, not null
      */
     protected String formatLargeObjects(List<FormattedObject> largeObjects) {

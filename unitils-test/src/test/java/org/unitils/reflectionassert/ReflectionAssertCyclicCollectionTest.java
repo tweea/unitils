@@ -1,12 +1,9 @@
 /*
- * Copyright 2008,  Unitils.org
- *
+ * Copyright 2008, Unitils.org
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -15,12 +12,13 @@
  */
 package org.unitils.reflectionassert;
 
-import junit.framework.TestCase;
-import static org.unitils.reflectionassert.ReflectionAssert.assertLenientEquals;
-import static org.unitils.reflectionassert.ReflectionAssert.assertReflectionEquals;
-
 import java.util.HashSet;
 import java.util.Set;
+
+import junit.framework.TestCase;
+
+import static org.unitils.reflectionassert.ReflectionAssert.assertLenientEquals;
+import static org.unitils.reflectionassert.ReflectionAssert.assertReflectionEquals;
 
 /**
  * Test class for {@link ReflectionAssert} tests for cyclic dependencies between collections.
@@ -30,7 +28,8 @@ import java.util.Set;
  * @author Tim Ducheyne
  * @author Filip Neven
  */
-public class ReflectionAssertCyclicCollectionTest extends TestCase {
+public class ReflectionAssertCyclicCollectionTest
+    extends TestCase {
 
     /* Test object containing a collection that contains a loop */
     private TestObject testObjectA;
@@ -38,17 +37,16 @@ public class ReflectionAssertCyclicCollectionTest extends TestCase {
     /* Same as testObjectA but different instance */
     private TestObject testObjectB;
 
-
     /**
      * Initializes the test fixture.
      */
-    public void setUp() throws Exception {
+    public void setUp()
+        throws Exception {
         super.setUp();
 
         testObjectA = createTestObject();
         testObjectB = createTestObject();
     }
-
 
     /**
      * Tests the comparison of objects containing the cyclic dependency.
@@ -58,7 +56,6 @@ public class ReflectionAssertCyclicCollectionTest extends TestCase {
         assertReflectionEquals(testObjectA, testObjectB);
     }
 
-
     /**
      * Tests the comparison of objects containing the cyclic dependency.
      * This should pass and should not cause a StackOverflow.
@@ -67,11 +64,10 @@ public class ReflectionAssertCyclicCollectionTest extends TestCase {
         assertLenientEquals(testObjectA, testObjectB);
     }
 
-
     /**
      * Creates a test object that contains cyclic dependencies through collections.
      * <p/>
-     * root  -> collection( leaf1, leaf2 )
+     * root -> collection( leaf1, leaf2 )
      * leaf1 -> collection ( root )
      * leaf2 -> collection ( root )
      *
@@ -89,12 +85,10 @@ public class ReflectionAssertCyclicCollectionTest extends TestCase {
         return root;
     }
 
-
     /**
      * Test class with inner collection.
      */
     private static class TestObject {
-
         private Set<TestObject> testObjects;
 
         public TestObject() {

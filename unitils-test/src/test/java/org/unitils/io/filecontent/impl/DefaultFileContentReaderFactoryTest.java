@@ -1,20 +1,20 @@
 /*
- * Copyright 2011,  Unitils.org
- *
+ * Copyright 2011, Unitils.org
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.unitils.io.filecontent.impl;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -28,13 +28,11 @@ import org.unitils.io.reader.impl.DefaultFileResolvingStrategyFactory;
 import org.unitils.io.reader.impl.FileReadingStrategy;
 import org.unitils.io.reader.impl.FileReadingStrategyFactory;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Properties;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import static org.unitils.io.filecontent.impl.DefaultFileContentReaderFactory.*;
+import static org.unitils.io.filecontent.impl.DefaultFileContentReaderFactory.CUSTOM_CONVERSION_STRATEGY_KEY;
+import static org.unitils.io.filecontent.impl.DefaultFileContentReaderFactory.DEFAULT_CONVERSION_STRATEGY_KEY;
+import static org.unitils.io.filecontent.impl.DefaultFileContentReaderFactory.DEFAULT_FILE_ENCODING;
 import static org.unitils.io.reader.impl.DefaultFileResolvingStrategyFactory.PATH_PREFIX_PROPERTY;
 import static org.unitils.io.reader.impl.DefaultFileResolvingStrategyFactory.PREFIX_WITH_PACKAGE_NAME_PROPERTY;
 
@@ -50,7 +48,6 @@ public class DefaultFileContentReaderFactoryTest {
 
     private Properties properties;
 
-
     @Before
     public void initialize() {
         properties = new Properties();
@@ -61,7 +58,6 @@ public class DefaultFileContentReaderFactoryTest {
         properties.setProperty(PATH_PREFIX_PROPERTY, "");
         properties.setProperty(PREFIX_WITH_PACKAGE_NAME_PROPERTY, "true");
     }
-
 
     @Test
     public void defaultSetup() {
@@ -135,10 +131,10 @@ public class DefaultFileContentReaderFactoryTest {
         defaultFileContentReaderFactory.createFileContentReader(properties);
     }
 
-
-    public static class CustomConversionStrategy implements ConversionStrategy<String> {
-
-        public String convertContent(InputStream inputStream, String encoding) throws IOException {
+    public static class CustomConversionStrategy
+        implements ConversionStrategy<String> {
+        public String convertContent(InputStream inputStream, String encoding)
+            throws IOException {
             return null;
         }
 

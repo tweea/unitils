@@ -1,12 +1,9 @@
 /*
- * Copyright 2008,  Unitils.org
- *
+ * Copyright 2008, Unitils.org
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -15,10 +12,11 @@
  */
 package org.unitils.orm.hibernate;
 
+import java.util.List;
+import java.util.Properties;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
-import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 import org.unitils.UnitilsJUnit4;
@@ -26,8 +24,11 @@ import org.unitils.core.ConfigurationLoader;
 import org.unitils.core.UnitilsException;
 import org.unitils.orm.hibernate.annotation.HibernateSessionFactory;
 
-import java.util.List;
-import java.util.Properties;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 /**
  * Test class for the loading of the configuration in the HibernateModule
@@ -35,22 +36,22 @@ import java.util.Properties;
  * @author Tim Ducheyne
  * @author Filip Neven
  */
-public class HibernateModuleConfigurationTest extends UnitilsJUnit4 {
+public class HibernateModuleConfigurationTest
+    extends UnitilsJUnit4 {
 
     /* Tested object */
     private HibernateModule hibernateModule;
-
 
     /**
      * Initializes the test fixture.
      */
     @Before
-    public void setUp() throws Exception {
+    public void setUp()
+        throws Exception {
         Properties configuration = new ConfigurationLoader().loadConfiguration();
         hibernateModule = new HibernateModule();
         hibernateModule.init(configuration);
     }
-
 
     /**
      * Tests loading of a configuration location specified on class-level.
@@ -63,7 +64,6 @@ public class HibernateModuleConfigurationTest extends UnitilsJUnit4 {
         assertNotNull(hibernateConfiguration);
         assertEquals("org/unitils/orm/hibernate/hibernate.cfg.xml", hibernateConfiguration.getProperty("name"));
     }
-
 
     /**
      * Tests loading of a configuration annotation on class-level but no location. An exception should be raised.
@@ -79,7 +79,6 @@ public class HibernateModuleConfigurationTest extends UnitilsJUnit4 {
         }
     }
 
-
     /**
      * Tests loading of a configuration location specified on field-level.
      */
@@ -91,7 +90,6 @@ public class HibernateModuleConfigurationTest extends UnitilsJUnit4 {
         assertNotNull(hibernateConfiguration);
         assertEquals("org/unitils/orm/hibernate/hibernate.cfg.xml", hibernateConfiguration.getProperty("name"));
     }
-
 
     /**
      * Tests loading of a configuration annotation on field-level but no location. An exception should be raised.
@@ -107,7 +105,6 @@ public class HibernateModuleConfigurationTest extends UnitilsJUnit4 {
         }
     }
 
-
     /**
      * Tests loading of a configuration location specified on field-level.
      */
@@ -119,7 +116,6 @@ public class HibernateModuleConfigurationTest extends UnitilsJUnit4 {
         assertNotNull(hibernateConfiguration);
         assertEquals("org/unitils/orm/hibernate/hibernate.cfg.xml", hibernateConfiguration.getProperty("name"));
     }
-
 
     /**
      * Tests loading of a configuration annotation on field-level but no location. An exception should be raised.
@@ -135,7 +131,6 @@ public class HibernateModuleConfigurationTest extends UnitilsJUnit4 {
         }
     }
 
-
     /**
      * Tests for more than 1 annotation with values. An exception should have been raised.
      */
@@ -149,7 +144,6 @@ public class HibernateModuleConfigurationTest extends UnitilsJUnit4 {
             // expected
         }
     }
-
 
     /**
      * Tests loading of a configuration using a custom create method with a wrong signature.
@@ -165,7 +159,6 @@ public class HibernateModuleConfigurationTest extends UnitilsJUnit4 {
         }
     }
 
-
     /**
      * Tests calling a custom initialization.
      */
@@ -176,7 +169,6 @@ public class HibernateModuleConfigurationTest extends UnitilsJUnit4 {
 
         assertTrue(hibernateTestCustomInitialization.initCalled);
     }
-
 
     /**
      * Tests loading of a configuration with a wrong location.
@@ -192,7 +184,6 @@ public class HibernateModuleConfigurationTest extends UnitilsJUnit4 {
         }
     }
 
-
     /**
      * Test reusing a configuration for the same class.
      */
@@ -205,7 +196,6 @@ public class HibernateModuleConfigurationTest extends UnitilsJUnit4 {
         assertEquals("org/unitils/orm/hibernate/hibernate.cfg.xml", hibernateConfiguration1.getProperty("name"));
         assertSame(hibernateConfiguration1, hibernateConfiguration2);
     }
-
 
     /**
      * Class level configuration.
@@ -225,7 +215,6 @@ public class HibernateModuleConfigurationTest extends UnitilsJUnit4 {
      * Field level configuration.
      */
     public class HibernateTestFieldLevel {
-
         @HibernateSessionFactory("org/unitils/orm/hibernate/hibernate.cfg.xml")
         protected SessionFactory field;
     }
@@ -234,7 +223,6 @@ public class HibernateModuleConfigurationTest extends UnitilsJUnit4 {
      * Field level configuration no location specified.
      */
     public class HibernateTestFieldLevelNoLocation {
-
         @HibernateSessionFactory
         protected SessionFactory field;
     }
@@ -243,7 +231,6 @@ public class HibernateModuleConfigurationTest extends UnitilsJUnit4 {
      * Setter level configuration.
      */
     public class HibernateTestSetterLevel {
-
         @HibernateSessionFactory("org/unitils/orm/hibernate/hibernate.cfg.xml")
         public void setField(SessionFactory sessionFactory) {
         }
@@ -253,7 +240,6 @@ public class HibernateModuleConfigurationTest extends UnitilsJUnit4 {
      * Setter level configuration no location specified.
      */
     public class HibernateTestSetterLevelNoLocation {
-
         @HibernateSessionFactory
         public void setField(SessionFactory sessionFactory) {
         }
@@ -262,22 +248,25 @@ public class HibernateModuleConfigurationTest extends UnitilsJUnit4 {
     /**
      * Test SpringTest class mixing multiple annotations.
      */
-    @HibernateSessionFactory({"1"})
+    @HibernateSessionFactory({
+        "1"
+    })
     private class HibernateTestMultipleAnnotationsWithValues {
-
-        @HibernateSessionFactory({"2"})
+        @HibernateSessionFactory({
+            "2"
+        })
         protected SessionFactory field1;
 
-        @HibernateSessionFactory({"3"})
+        @HibernateSessionFactory({
+            "3"
+        })
         protected SessionFactory field2;
     }
-
 
     /**
      * Configuration with custom create with wrong signature.
      */
     public class HibernateTestCustomCreateWrongSignature {
-
         @HibernateSessionFactory
         public List<?> createMethod(String a) {
             return null;
@@ -289,7 +278,6 @@ public class HibernateModuleConfigurationTest extends UnitilsJUnit4 {
      */
     @HibernateSessionFactory("org/unitils/orm/hibernate/hibernate.cfg.xml")
     public class HibernateTestCustomInitialization {
-
         public boolean initCalled = false;
 
         @HibernateSessionFactory
@@ -298,13 +286,10 @@ public class HibernateModuleConfigurationTest extends UnitilsJUnit4 {
         }
     }
 
-
     /**
      * Class level configuration a wrong location specified.
      */
     @HibernateSessionFactory("xxxxxxx")
     public class HibernateTestWrongLocation {
     }
-
-
 }

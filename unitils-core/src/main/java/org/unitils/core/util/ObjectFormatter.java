@@ -1,19 +1,17 @@
 /*
- *
- *  * Copyright 2010,  Unitils.org
- *  *
- *  * Licensed under the Apache License, Version 2.0 (the "License");
- *  * you may not use this file except in compliance with the License.
- *  * You may obtain a copy of the License at
- *  *
- *  *     http://www.apache.org/licenses/LICENSE-2.0
- *  *
- *  * Unless required by applicable law or agreed to in writing, software
- *  * distributed under the License is distributed on an "AS IS" BASIS,
- *  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  * See the License for the specific language governing permissions and
- *  * limitations under the License.
- *
+ * * Copyright 2010, Unitils.org
+ * *
+ * * Licensed under the Apache License, Version 2.0 (the "License");
+ * * you may not use this file except in compliance with the License.
+ * * You may obtain a copy of the License at
+ * *
+ * * http://www.apache.org/licenses/LICENSE-2.0
+ * *
+ * * Unless required by applicable law or agreed to in writing, software
+ * * distributed under the License is distributed on an "AS IS" BASIS,
+ * * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * * See the License for the specific language governing permissions and
+ * * limitations under the License.
  */
 package org.unitils.core.util;
 
@@ -27,9 +25,9 @@ import java.util.Map;
 
 import static java.lang.reflect.Modifier.isStatic;
 import static java.lang.reflect.Modifier.isTransient;
+
 import static org.apache.commons.lang.ClassUtils.getShortClassName;
 import static org.unitils.reflectionassert.util.HibernateUtil.getUnproxiedValue;
-
 
 /**
  * A class for generating a string representation of any object, array or primitive value.
@@ -41,11 +39,11 @@ import static org.unitils.reflectionassert.util.HibernateUtil.getUnproxiedValue;
  * @author Filip Neven
  */
 public class ObjectFormatter {
-
     public static final String MOCK_NAME_CHAIN_SEPARATOR = "##chained##";
 
     /* The maximum recursion depth */
     protected int maxDepth;
+
     /* The maximum nr of elements for arrays and collections to display */
     protected int maxNrArrayOrCollectionElements;
 
@@ -58,14 +56,15 @@ public class ObjectFormatter {
         this(3, 15);
     }
 
-
     /**
      * Creates a formatter with the given maximum recursion depth.
      * <p/>
      * NOTE: there is no cycle detection. A large max depth value can cause lots of output in case of a cycle.
      *
-     * @param maxDepth                       The max depth > 0
-     * @param maxNrArrayOrCollectionElements The maximum nr of elements for arrays and collections to display  > 0
+     * @param maxDepth
+     *     The max depth > 0
+     * @param maxNrArrayOrCollectionElements
+     *     The maximum nr of elements for arrays and collections to display > 0
      */
     public ObjectFormatter(int maxDepth, int maxNrArrayOrCollectionElements) {
         this.maxDepth = maxDepth;
@@ -73,11 +72,11 @@ public class ObjectFormatter {
         this.arrayAndCollectionFormatter = new ArrayAndCollectionFormatter(maxNrArrayOrCollectionElements, this);
     }
 
-
     /**
      * Gets the string representation of the given object.
      *
-     * @param object The instance
+     * @param object
+     *     The instance
      * @return The string representation, not null
      */
     public String format(Object object) {
@@ -86,13 +85,15 @@ public class ObjectFormatter {
         return result.toString();
     }
 
-
     /**
      * Actual implementation of the formatting.
      *
-     * @param object       The instance
-     * @param currentDepth The current recursion depth
-     * @param result       The builder to append the result to, not null
+     * @param object
+     *     The instance
+     * @param currentDepth
+     *     The current recursion depth
+     * @param result
+     *     The builder to append the result to, not null
      */
     protected void formatImpl(Object object, int currentDepth, StringBuilder result) {
         // get the actual value if the value is wrapped by a Hibernate proxy
@@ -147,7 +148,6 @@ public class ObjectFormatter {
         formatObject(object, currentDepth, result);
     }
 
-
     protected boolean formatJavaLang(Object object, StringBuilder result, Class<?> type) {
         if (type.getName().startsWith("java.lang")) {
             result.append(String.valueOf(object));
@@ -192,13 +192,15 @@ public class ObjectFormatter {
         return false;
     }
 
-
     /**
      * Formats the given object by formatting the inner fields.
      *
-     * @param object       The object, not null
-     * @param currentDepth The current recursion depth
-     * @param result       The builder to append the result to, not null
+     * @param object
+     *     The object, not null
+     * @param currentDepth
+     *     The current recursion depth
+     * @param result
+     *     The builder to append the result to, not null
      */
     protected void formatObject(Object object, int currentDepth, StringBuilder result) {
         Class<?> type = object.getClass();
@@ -208,14 +210,17 @@ public class ObjectFormatter {
         result.append(">");
     }
 
-
     /**
      * Formats the field values of the given object.
      *
-     * @param object       The object, not null
-     * @param clazz        The class for which to format the fields, not null
-     * @param currentDepth The current recursion depth
-     * @param result       The builder to append the result to, not null
+     * @param object
+     *     The object, not null
+     * @param clazz
+     *     The class for which to format the fields, not null
+     * @param currentDepth
+     *     The current recursion depth
+     * @param result
+     *     The builder to append the result to, not null
      */
     protected void formatFields(Object object, Class<?> clazz, int currentDepth, StringBuilder result) {
         Field[] fields = clazz.getDeclaredFields();
@@ -234,7 +239,6 @@ public class ObjectFormatter {
                 result.append(field.getName());
                 result.append("=");
                 formatImpl(field.get(object), currentDepth + 1, result);
-
             } catch (IllegalAccessException e) {
                 // this can't happen. Would get a Security exception instead
                 // throw a runtime exception in case the impossible happens.
@@ -249,7 +253,6 @@ public class ObjectFormatter {
             superclazz = superclazz.getSuperclass();
         }
     }
-
 
     protected boolean formatMock(Object object, StringBuilder result) {
         try {
@@ -281,7 +284,6 @@ public class ObjectFormatter {
         return dummyObjectClass != null && dummyObjectClass.isAssignableFrom(clazz);
     }
 
-
     protected boolean formatProxy(Object object, Class<?> type, StringBuilder result) {
         if (Proxy.isProxyClass(type)) {
             result.append("Proxy<?>");
@@ -310,7 +312,7 @@ public class ObjectFormatter {
 
     /**
      * @return The interface that represents a dummy object. If the DummyObject interface is not in the
-     *         classpath, null is returned.
+     *     classpath, null is returned.
      */
     protected Class<?> getDummyObjectClass() {
         try {
@@ -319,7 +321,6 @@ public class ObjectFormatter {
             return null;
         }
     }
-
 
     /**
      * @return The proxy utils. null if not in classpath
@@ -331,5 +332,4 @@ public class ObjectFormatter {
             return null;
         }
     }
-
 }

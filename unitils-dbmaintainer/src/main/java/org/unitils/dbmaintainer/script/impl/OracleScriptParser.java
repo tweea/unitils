@@ -1,12 +1,9 @@
 /*
- * Copyright 2008,  Unitils.org
- *
+ * Copyright 2008, Unitils.org
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -25,9 +22,8 @@ import org.unitils.dbmaintainer.script.parsingstate.impl.OracleNormalParsingStat
  * @author Tim Ducheyne
  * @author Filip Neven
  */
-public class OracleScriptParser extends DefaultScriptParser {
-
-
+public class OracleScriptParser
+    extends DefaultScriptParser {
     /**
      * @return an {@link org.unitils.dbmaintainer.script.parsingstate.impl.OracleNormalParsingState} that parses PL/SQL blocks correctly.
      */
@@ -35,7 +31,6 @@ public class OracleScriptParser extends DefaultScriptParser {
     protected NormalParsingState createNormalParsingState() {
         return new OracleNormalParsingState();
     }
-
 
     /**
      * Factory method for the statement builder. Overridden to use the OracleStatementBuilder.
@@ -47,12 +42,11 @@ public class OracleScriptParser extends DefaultScriptParser {
         return new OracleStatementBuilder();
     }
 
-
     /**
      * A statement builder with special handling for Oracle
      */
-    public static class OracleStatementBuilder extends StatementBuilder {
-
+    public static class OracleStatementBuilder
+        extends StatementBuilder {
         /**
          * Overridden to add a forward slash (/) as a separator.
          *
@@ -60,9 +54,10 @@ public class OracleScriptParser extends DefaultScriptParser {
          */
         @Override
         public char[] getTrailingSeparatorCharsToRemove() {
-            return new char[]{';', '/'};
+            return new char[] {
+                ';', '/'
+            };
         }
-
 
         /**
          * Overridden to remove carriage returns from statements.

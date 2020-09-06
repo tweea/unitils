@@ -1,12 +1,9 @@
 /*
- * Copyright 2008,  Unitils.org
- *
+ * Copyright 2008, Unitils.org
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -15,24 +12,25 @@
  */
 package org.unitils.util;
 
-import static junit.framework.Assert.*;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.unitils.reflectionassert.ReflectionAssert;
 
-import static org.unitils.reflectionassert.ReflectionAssert.assertPropertyLenientEquals;
-
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
+import junit.framework.Assert;
 
 import static java.util.Arrays.asList;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import static org.unitils.reflectionassert.ReflectionAssert.assertPropertyLenientEquals;
 
-import junit.framework.Assert;
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertNull;
+import static junit.framework.Assert.assertTrue;
 
 /**
  * Test for {@link ReflectionUtils} working with field types, eg assignable from.
@@ -41,7 +39,6 @@ import junit.framework.Assert;
  * @author Tim Ducheyne
  */
 public class ReflectionUtilsTypesTest {
-    
     private TestClass1 testclass;
 
     /** */
@@ -49,7 +46,6 @@ public class ReflectionUtilsTypesTest {
     public void setUp() {
         testclass = new TestClass1();
     }
-
 
     /**
      * Test for getting all non-static fields assignable from.
@@ -60,7 +56,6 @@ public class ReflectionUtilsTypesTest {
         assertPropertyLenientEquals("name", asList("objectField", "stringField", "subClassObjectField", "subClassStringField"), fields);
     }
 
-
     /**
      * Test for getting all static fields assignable from.
      */
@@ -69,7 +64,6 @@ public class ReflectionUtilsTypesTest {
         Set<Field> fields = ReflectionUtils.getFieldsAssignableFrom(TestSubClass.class, String.class, true);
         assertPropertyLenientEquals("name", asList("staticObjectField", "staticStringField", "subClassStaticObjectField", "subClassStaticStringField"), fields);
     }
-
 
     /**
      * Test for getting all non-static fields but no assignable from found. An empty list should be returned.
@@ -81,7 +75,6 @@ public class ReflectionUtilsTypesTest {
         assertTrue(fields.isEmpty());
     }
 
-
     /**
      * Test for getting all non-static primitive fields assignable from.
      * Note: {@link Integer#TYPE} is the class type of a primitive int.
@@ -92,7 +85,6 @@ public class ReflectionUtilsTypesTest {
         assertPropertyLenientEquals("name", asList("intField", "subClassIntField"), fields);
     }
 
-
     /**
      * Test for getting the first non-static field having exact same type.
      */
@@ -101,7 +93,6 @@ public class ReflectionUtilsTypesTest {
         Set<Field> fields = ReflectionUtils.getFieldsOfType(TestSubClass.class, String.class, false);
         assertPropertyLenientEquals("name", asList("stringField", "subClassStringField"), fields);
     }
-
 
     /**
      * Test for getting the first static field having exact same type.
@@ -112,7 +103,6 @@ public class ReflectionUtilsTypesTest {
         assertPropertyLenientEquals("name", asList("staticStringField", "subClassStaticStringField"), field);
     }
 
-
     /**
      * Test for getting the first non-static field but none has exact same type.
      */
@@ -121,7 +111,6 @@ public class ReflectionUtilsTypesTest {
         Set<Field> fields = ReflectionUtils.getFieldsOfType(TestSubClass.class, List.class, false);
         assertEquals(0, fields.size());
     }
-
 
     /**
      * Test for getting the first non-static primitive field.
@@ -133,7 +122,6 @@ public class ReflectionUtilsTypesTest {
         assertPropertyLenientEquals("name", asList("intField", "subClassIntField"), fields);
     }
 
-
     /**
      * Test for getting all non-static setters for fields assignable from.
      */
@@ -143,16 +131,15 @@ public class ReflectionUtilsTypesTest {
         assertPropertyLenientEquals("name", asList("setObjectField", "setStringField", "setSubClassObjectField", "setSubClassStringField"), methods);
     }
 
-
     /**
      * Test for getting all static setters for fields assignable from.
      */
     @Test
     public void testGetSettersAssignableFrom_static() {
         Set<Method> methods = ReflectionUtils.getSettersAssignableFrom(TestSubClass.class, String.class, true);
-        assertPropertyLenientEquals("name", asList("setStaticObjectField", "setStaticStringField", "setSubClassStaticObjectField", "setSubClassStaticStringField"), methods);
+        assertPropertyLenientEquals("name",
+            asList("setStaticObjectField", "setStaticStringField", "setSubClassStaticObjectField", "setSubClassStaticStringField"), methods);
     }
-
 
     /**
      * Test for getting all non-static setters for fields but no assignable from found. An empty list should be returned.
@@ -164,7 +151,6 @@ public class ReflectionUtilsTypesTest {
         assertTrue(methods.isEmpty());
     }
 
-
     /**
      * Test for getting all non-static setters for primitive fields assignable from.
      * Note: {@link Integer#TYPE} is the class type of a primitive int.
@@ -175,7 +161,6 @@ public class ReflectionUtilsTypesTest {
         assertPropertyLenientEquals("name", asList("setIntField", "setSubClassIntField"), methods);
     }
 
-
     /**
      * Test for getting the first non-static setter for a field having exact same type.
      */
@@ -184,7 +169,6 @@ public class ReflectionUtilsTypesTest {
         Set<Method> methods = ReflectionUtils.getSettersOfType(TestSubClass.class, String.class, false);
         assertPropertyLenientEquals("name", asList("setStringField", "setSubClassStringField"), methods);
     }
-
 
     /**
      * Test for getting the first static setter for a field having exact same type.
@@ -195,7 +179,6 @@ public class ReflectionUtilsTypesTest {
         assertPropertyLenientEquals("name", asList("setStaticStringField", "setSubClassStaticStringField"), methods);
     }
 
-
     /**
      * Test for getting the first non-static primitive setter for a field but none has exact same type.
      */
@@ -204,7 +187,6 @@ public class ReflectionUtilsTypesTest {
         Set<Method> methods = ReflectionUtils.getSettersOfType(TestSubClass.class, List.class, false);
         assertEquals(0, methods.size());
     }
-
 
     /**
      * Test for getting the first non-static primitive setter for a field having exact same type.
@@ -215,7 +197,6 @@ public class ReflectionUtilsTypesTest {
         assertPropertyLenientEquals("name", asList("setIntField", "setSubClassIntField"), methods);
     }
 
-
     /**
      * Test for getting a setter of a property.
      */
@@ -225,7 +206,6 @@ public class ReflectionUtilsTypesTest {
         assertPropertyLenientEquals("name", "setStringField", method);
     }
 
-
     /**
      * Test for getting a setter of a static property.
      */
@@ -234,7 +214,6 @@ public class ReflectionUtilsTypesTest {
         Method method = ReflectionUtils.getSetter(TestSubClass.class, "staticStringField", true);
         assertPropertyLenientEquals("name", "setStaticStringField", method);
     }
-
 
     /**
      * Test for getting a setter of an unexisting property. Null should be returned.
@@ -250,29 +229,30 @@ public class ReflectionUtilsTypesTest {
      * @throws NoSuchFieldException
      */
     @Test
-    public void testString() throws SecurityException, NoSuchFieldException {
+    public void testString()
+        throws SecurityException, NoSuchFieldException {
         ReflectionUtils.setFieldValue(testclass, "stringTest", "test");
         Assert.assertEquals("test", testclass.getStringTest());
     }
 
-
     /**
      * @throws SecurityException
      * @throws NoSuchFieldException
      */
     @Test
-    public void testInt() throws SecurityException, NoSuchFieldException{
+    public void testInt()
+        throws SecurityException, NoSuchFieldException {
         ReflectionUtils.setFieldValue(testclass, "intTest", 5);
         Assert.assertEquals(5, testclass.getIntTest());
     }
 
-
     /**
      * @throws SecurityException
      * @throws NoSuchFieldException
      */
     @Test
-    public void testByte() throws SecurityException, NoSuchFieldException{
+    public void testByte()
+        throws SecurityException, NoSuchFieldException {
         ReflectionUtils.setFieldValue(testclass, "byteTest", new Byte("125"));
         ReflectionAssert.assertLenientEquals(new Byte("125"), testclass.getByteTest());
     }
@@ -282,7 +262,8 @@ public class ReflectionUtilsTypesTest {
      * @throws NoSuchFieldException
      */
     @Test
-    public void testObject() throws SecurityException, NoSuchFieldException{
+    public void testObject()
+        throws SecurityException, NoSuchFieldException {
         Person expected = new Person("testName", "testSurname");
         ReflectionUtils.setFieldValue(testclass, "personTest", expected);
         ReflectionAssert.assertLenientEquals(expected, testclass.getPersonTest());
@@ -293,8 +274,11 @@ public class ReflectionUtilsTypesTest {
      * @throws NoSuchFieldException
      */
     @Test
-    public void testArray() throws SecurityException, NoSuchFieldException{
-        String[] expected = new String[]{"test1", "test2", "test3", "test4", "test5"};
+    public void testArray()
+        throws SecurityException, NoSuchFieldException {
+        String[] expected = new String[] {
+            "test1", "test2", "test3", "test4", "test5"
+        };
         ReflectionUtils.setFieldValue(testclass, "arrTest", expected);
         ReflectionAssert.assertLenientEquals(expected, testclass.getArrTest());
     }
@@ -303,14 +287,12 @@ public class ReflectionUtilsTypesTest {
     public void testGetAllMethods() {
         Set<Method> actual = ReflectionUtils.getAllMethods(Person.class, false, String.class);
         Assert.assertEquals(2, actual.size());
-        
     }
-    
+
     @Test
     public void testGetAllMethodsStatic() {
         ReflectionUtils.getAllMethods(Person.class, true);
     }
-
 
     /**
      * Test for getting a getter of a property.
@@ -321,7 +303,6 @@ public class ReflectionUtilsTypesTest {
         assertPropertyLenientEquals("name", "getStringField", method);
     }
 
-
     /**
      * Test for getting a getter of a static property.
      */
@@ -330,7 +311,6 @@ public class ReflectionUtilsTypesTest {
         Method method = ReflectionUtils.getGetter(TestSubClass.class, "staticStringField", true);
         assertPropertyLenientEquals("name", "getStaticStringField", method);
     }
-
 
     /**
      * Test for getting a getter of an unexisting property. Null should be returned.
@@ -351,7 +331,6 @@ public class ReflectionUtilsTypesTest {
         assertPropertyLenientEquals("name", "getStringField", method);
     }
 
-
     /**
      * Test for getting a getter for a static setter method.
      */
@@ -361,7 +340,6 @@ public class ReflectionUtilsTypesTest {
         Method method = ReflectionUtils.getGetter(setter, true);
         assertPropertyLenientEquals("name", "getStaticStringField", method);
     }
-
 
     /**
      * Test for getting a unexisting getter of a setter. Null should be returned.
@@ -383,7 +361,6 @@ public class ReflectionUtilsTypesTest {
         assertPropertyLenientEquals("name", "stringField", field);
     }
 
-
     /**
      * Test for getting a static field.
      */
@@ -393,7 +370,6 @@ public class ReflectionUtilsTypesTest {
         assertPropertyLenientEquals("name", "staticStringField", field);
     }
 
-
     /**
      * Test for getting an unexisting field. Null should be returned.
      */
@@ -402,22 +378,21 @@ public class ReflectionUtilsTypesTest {
         Field field = ReflectionUtils.getFieldWithName(TestSubClass.class, "xxxx", false);
         assertNull(field);
     }
-    
+
     /**
      * @throws SecurityException
      * @throws NoSuchFieldException
      */
     @Test(expected = NoSuchFieldException.class)
-    public void testError() throws SecurityException, NoSuchFieldException {
+    public void testError()
+        throws SecurityException, NoSuchFieldException {
         ReflectionUtils.setFieldValue(testclass, "testtest", "test");
     }
-
 
     /**
      * A test object containing static and non-static fields of different types.
      */
     private static class TestClass {
-
         private static Object staticObjectField;
 
         private static String staticStringField;
@@ -432,7 +407,6 @@ public class ReflectionUtilsTypesTest {
 
         /* has no getter */
         protected Map<?, ?> setterOnlyField;
-
 
         public static Object getStaticObjectField() {
             return staticObjectField;
@@ -485,11 +459,10 @@ public class ReflectionUtilsTypesTest {
         public void setSetterOnlyField(Map<?, ?> setterOnlyField) {
             this.setterOnlyField = setterOnlyField;
         }
-
     }
 
-    public static class TestSubClass extends TestClass {
-
+    public static class TestSubClass
+        extends TestClass {
         private static Object subClassStaticObjectField;
 
         private static String subClassStaticStringField;
@@ -504,7 +477,6 @@ public class ReflectionUtilsTypesTest {
 
         /* has no getter */
         protected Map<?, ?> subClassSetterOnlyField;
-
 
         public static Object getSubClassStaticObjectField() {
             return subClassStaticObjectField;
@@ -558,23 +530,24 @@ public class ReflectionUtilsTypesTest {
             this.subClassSetterOnlyField = setterOnlyField;
         }
     }
-    
+
     /**
-     * 
      * Just a testclass.
      * 
      * @author Jeroen Horemans
      * @author Thomas De Rycke
      * @author Willemijn Wouters
-     * 
      * @since 3.4
-     *
      */
     private class TestClass1 {
         private String stringTest;
+
         private int intTest;
+
         private byte byteTest;
+
         private Person personTest;
+
         private String[] arrTest;
 
         /**
@@ -611,18 +584,18 @@ public class ReflectionUtilsTypesTest {
         public String[] getArrTest() {
             return arrTest;
         }
-
-
-
-
-
     }
+
     @SuppressWarnings("unused")
     private static class Person {
         private static int countPersons = 0;
+
         private String name;
+
         private String surname;
+
         private boolean female;
+
         /**
          * @param name
          * @param surname
@@ -632,39 +605,37 @@ public class ReflectionUtilsTypesTest {
             this.name = name;
             this.surname = surname;
         }
-        
-        
+
         /**
          * @return the name
          */
         public String getName() {
             return name;
         }
-        
-        
+
         /**
          * @return the surname
          */
         public String getSurname() {
             return surname;
         }
-        
-        
+
         /**
-         * @param name the name to set
+         * @param name
+         *     the name to set
          */
         public void setName(String name) {
             this.name = name;
         }
-        
+
         /**
-         * @param surname the surname to set
+         * @param surname
+         *     the surname to set
          */
         public void setSurname(String surname) {
             this.surname = surname;
         }
-        
-        
+
         /**
          * @return the countPersons
          */

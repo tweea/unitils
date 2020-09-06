@@ -1,12 +1,9 @@
 /*
- * Copyright 2008,  Unitils.org
- *
+ * Copyright 2008, Unitils.org
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -15,22 +12,26 @@
  */
 package org.unitils.dbunit;
 
+import java.util.Properties;
+
+import javax.sql.DataSource;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.junit.After;
-import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
 import org.unitils.UnitilsJUnit4;
 import org.unitils.core.ConfigurationLoader;
-import static org.unitils.database.SQLUnitils.*;
 import org.unitils.database.annotations.TestDataSource;
-import static org.unitils.dbmaintainer.util.DatabaseModuleConfigUtils.PROPKEY_DATABASE_DIALECT;
 import org.unitils.dbunit.annotation.DataSet;
 import org.unitils.util.PropertyUtils;
 
-import javax.sql.DataSource;
-import java.util.Properties;
+import static org.junit.Assert.assertEquals;
+import static org.unitils.database.SQLUnitils.executeUpdate;
+import static org.unitils.database.SQLUnitils.executeUpdateQuietly;
+import static org.unitils.database.SQLUnitils.getItemAsString;
+import static org.unitils.dbmaintainer.util.DatabaseModuleConfigUtils.PROPKEY_DATABASE_DIALECT;
 
 /**
  * Test class for loading of data sets in mutliple database schemas.
@@ -38,7 +39,8 @@ import java.util.Properties;
  * @author Tim Ducheyne
  * @author Filip Neven
  */
-public class DbUnitModuleDataSetMultiSchemaTest extends UnitilsJUnit4 {
+public class DbUnitModuleDataSetMultiSchemaTest
+    extends UnitilsJUnit4 {
 
     /* The logger instance for this class */
     private static Log logger = LogFactory.getLog(DbUnitModuleDataSetMultiSchemaTest.class);
@@ -53,12 +55,12 @@ public class DbUnitModuleDataSetMultiSchemaTest extends UnitilsJUnit4 {
     /* True if current test is not for the current dialect */
     private boolean disabled;
 
-
     /**
      * Initializes the test fixture.
      */
     @Before
-    public void setUp() throws Exception {
+    public void setUp()
+        throws Exception {
         Properties configuration = new ConfigurationLoader().loadConfiguration();
         this.disabled = !"hsqldb".equals(PropertyUtils.getString(PROPKEY_DATABASE_DIALECT, configuration));
         if (disabled) {
@@ -71,24 +73,24 @@ public class DbUnitModuleDataSetMultiSchemaTest extends UnitilsJUnit4 {
         createTestTables();
     }
 
-
     /**
      * Clean-up test database.
      */
     @After
-    public void tearDown() throws Exception {
+    public void tearDown()
+        throws Exception {
         if (disabled) {
             return;
         }
         dropTestTables();
     }
 
-
     /**
      * Test for a data set containing multiple namespaces.
      */
     @Test
-    public void testDataSet_multiSchema() throws Exception {
+    public void testDataSet_multiSchema()
+        throws Exception {
         if (disabled) {
             logger.warn("Test is not for current dialect. Skipping test.");
             return;
@@ -104,7 +106,8 @@ public class DbUnitModuleDataSetMultiSchemaTest extends UnitilsJUnit4 {
      * Test for a data set containing multiple namespaces.
      */
     @Test
-    public void testDataSet_multiSchemaNoDefault() throws Exception {
+    public void testDataSet_multiSchemaNoDefault()
+        throws Exception {
         if (disabled) {
             logger.warn("Test is not for current dialect. Skipping test.");
             return;
@@ -116,17 +119,16 @@ public class DbUnitModuleDataSetMultiSchemaTest extends UnitilsJUnit4 {
         assertLoadedDataSet("SCHEMA_B");
     }
 
-
     /**
      * Utility method to assert that the data set for the schema was loaded.
      *
-     * @param schemaName the name of the schema, not null
+     * @param schemaName
+     *     the name of the schema, not null
      */
     private void assertLoadedDataSet(String schemaName) {
         String dataSet = getItemAsString("select dataset from " + schemaName + ".test", dataSource);
         assertEquals(schemaName, dataSet);
     }
-
 
     /**
      * Creates the test tables.
@@ -142,7 +144,6 @@ public class DbUnitModuleDataSetMultiSchemaTest extends UnitilsJUnit4 {
         executeUpdate("create table SCHEMA_B.TEST(dataset varchar(100))", dataSource);
     }
 
-
     /**
      * Removes the test database tables
      */
@@ -154,13 +155,11 @@ public class DbUnitModuleDataSetMultiSchemaTest extends UnitilsJUnit4 {
         executeUpdateQuietly("drop schema SCHEMA_B", dataSource);
     }
 
-
     /**
      * Test class with a class level dataset
      */
     @DataSet
     public class DataSetTest {
-
         @DataSet("DbUnitModuleDataSetMultiSchemaTest$DataSetTest.multiSchema.xml")
         public void multiSchema() {
         }
@@ -169,5 +168,4 @@ public class DbUnitModuleDataSetMultiSchemaTest extends UnitilsJUnit4 {
         public void multiSchemaNoDefault() {
         }
     }
-
 }

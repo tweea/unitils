@@ -1,13 +1,11 @@
 /*
  * Licensed to the Apache Software Foundation (ASF) under one or more
- * contributor license agreements.  See the NOTICE file distributed with
+ * contributor license agreements. See the NOTICE file distributed with
  * this work for additional information regarding copyright ownership.
  * The ASF licenses this file to You under the Apache License, Version 2.0
  * (the "License"); you may not use this file except in compliance with
- * the License.  You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
+ * the License. You may obtain a copy of the License at
+ * http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -23,19 +21,20 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 /**
- * A collection of JDBC helper methods.  This class is thread safe.
- *
+ * A collection of JDBC helper methods. This class is thread safe.
  * TODO Make sure we use DataSourceUtils.getConnection and releaseConnection for getting / releasing Connections
  */
 public final class DbUtils {
-
     /**
      * Close a <code>Connection</code>, avoid closing if null.
      *
-     * @param conn Connection to close.
-     * @throws SQLException if a database access error occurs
+     * @param conn
+     *     Connection to close.
+     * @throws SQLException
+     *     if a database access error occurs
      */
-    public static void close(Connection conn) throws SQLException {
+    public static void close(Connection conn)
+        throws SQLException {
         if (conn != null) {
             conn.close();
         }
@@ -44,10 +43,13 @@ public final class DbUtils {
     /**
      * Close a <code>ResultSet</code>, avoid closing if null.
      *
-     * @param rs ResultSet to close.
-     * @throws SQLException if a database access error occurs
+     * @param rs
+     *     ResultSet to close.
+     * @throws SQLException
+     *     if a database access error occurs
      */
-    public static void close(ResultSet rs) throws SQLException {
+    public static void close(ResultSet rs)
+        throws SQLException {
         if (rs != null) {
             rs.close();
         }
@@ -56,10 +58,13 @@ public final class DbUtils {
     /**
      * Close a <code>Statement</code>, avoid closing if null.
      *
-     * @param stmt Statement to close.
-     * @throws SQLException if a database access error occurs
+     * @param stmt
+     *     Statement to close.
+     * @throws SQLException
+     *     if a database access error occurs
      */
-    public static void close(Statement stmt) throws SQLException {
+    public static void close(Statement stmt)
+        throws SQLException {
         if (stmt != null) {
             stmt.close();
         }
@@ -69,7 +74,8 @@ public final class DbUtils {
      * Close a <code>Connection</code>, avoid closing if null and hide
      * any SQLExceptions that occur.
      *
-     * @param conn Connection to close.
+     * @param conn
+     *     Connection to close.
      */
     public static void closeQuietly(Connection conn) {
         try {
@@ -81,12 +87,15 @@ public final class DbUtils {
 
     /**
      * Close a <code>Connection</code>, <code>Statement</code> and
-     * <code>ResultSet</code>.  Avoid closing if null and hide any
+     * <code>ResultSet</code>. Avoid closing if null and hide any
      * SQLExceptions that occur.
      *
-     * @param conn Connection to close.
-     * @param stmt Statement to close.
-     * @param rs   ResultSet to close.
+     * @param conn
+     *     Connection to close.
+     * @param stmt
+     *     Statement to close.
+     * @param rs
+     *     ResultSet to close.
      */
     public static void closeQuietly(Connection conn, Statement stmt, ResultSet rs) {
         try {
@@ -98,14 +107,14 @@ public final class DbUtils {
                 closeQuietly(conn);
             }
         }
-
     }
 
     /**
      * Close a <code>ResultSet</code>, avoid closing if null and hide any
      * SQLExceptions that occur.
      *
-     * @param rs ResultSet to close.
+     * @param rs
+     *     ResultSet to close.
      */
     public static void closeQuietly(ResultSet rs) {
         try {
@@ -119,7 +128,8 @@ public final class DbUtils {
      * Close a <code>Statement</code>, avoid closing if null and hide
      * any SQLExceptions that occur.
      *
-     * @param stmt Statement to close.
+     * @param stmt
+     *     Statement to close.
      */
     public static void closeQuietly(Statement stmt) {
         try {
@@ -132,10 +142,13 @@ public final class DbUtils {
     /**
      * Commits a <code>Connection</code> then closes it, avoid closing if null.
      *
-     * @param connection Connection to close.
-     * @throws SQLException if a database access error occurs
+     * @param connection
+     *     Connection to close.
+     * @throws SQLException
+     *     if a database access error occurs
      */
-    public static void commitAndClose(Connection connection) throws SQLException {
+    public static void commitAndClose(Connection connection)
+        throws SQLException {
         if (connection != null) {
             try {
                 if (!connection.getAutoCommit()) {
@@ -151,7 +164,8 @@ public final class DbUtils {
      * Commits a <code>Connection</code> then closes it, avoid closing if null
      * and hide any SQLExceptions that occur.
      *
-     * @param conn Connection to close.
+     * @param conn
+     *     Connection to close.
      */
     public static void commitAndCloseQuietly(Connection conn) {
         try {
@@ -165,24 +179,21 @@ public final class DbUtils {
      * Loads and registers a database driver class.
      * If this succeeds, it returns true, else it returns false.
      *
-     * @param driverClassName of driver to load
+     * @param driverClassName
+     *     of driver to load
      * @return boolean <code>true</code> if the driver was found, otherwise <code>false</code>
      */
     public static boolean loadDriver(String driverClassName) {
         try {
             Class.forName(driverClassName).newInstance();
             return true;
-
         } catch (ClassNotFoundException e) {
             return false;
-
         } catch (IllegalAccessException e) {
             // Constructor is private, OK for DriverManager contract
             return true;
-
         } catch (InstantiationException e) {
             return false;
-
         } catch (Throwable e) {
             return false;
         }
@@ -191,7 +202,8 @@ public final class DbUtils {
     /**
      * Print the stack trace for a SQLException to STDERR.
      *
-     * @param e SQLException to print stack trace of
+     * @param e
+     *     SQLException to print stack trace of
      */
     public static void printStackTrace(SQLException e) {
         printStackTrace(e, new PrintWriter(System.err));
@@ -201,8 +213,10 @@ public final class DbUtils {
      * Print the stack trace for a SQLException to a
      * specified PrintWriter.
      *
-     * @param e  SQLException to print stack trace of
-     * @param pw PrintWriter to print to
+     * @param e
+     *     SQLException to print stack trace of
+     * @param pw
+     *     PrintWriter to print to
      */
     public static void printStackTrace(SQLException e, PrintWriter pw) {
         SQLException next = e;
@@ -218,7 +232,8 @@ public final class DbUtils {
     /**
      * Print warnings on a Connection to STDERR.
      *
-     * @param conn Connection to print warnings from
+     * @param conn
+     *     Connection to print warnings from
      */
     public static void printWarnings(Connection conn) {
         printWarnings(conn, new PrintWriter(System.err));
@@ -227,8 +242,10 @@ public final class DbUtils {
     /**
      * Print warnings on a Connection to a specified PrintWriter.
      *
-     * @param conn Connection to print warnings from
-     * @param pw   PrintWriter to print to
+     * @param conn
+     *     Connection to print warnings from
+     * @param pw
+     *     PrintWriter to print to
      */
     public static void printWarnings(Connection conn, PrintWriter pw) {
         if (conn != null) {
@@ -243,10 +260,13 @@ public final class DbUtils {
     /**
      * Rollback any changes made on the given connection.
      *
-     * @param conn Connection to rollback.  A null value is legal.
-     * @throws SQLException if a database access error occurs
+     * @param conn
+     *     Connection to rollback. A null value is legal.
+     * @throws SQLException
+     *     if a database access error occurs
      */
-    public static void rollback(Connection conn) throws SQLException {
+    public static void rollback(Connection conn)
+        throws SQLException {
         if (conn != null) {
             conn.rollback();
         }
@@ -256,11 +276,14 @@ public final class DbUtils {
      * Performs a rollback on the <code>Connection</code> then closes it,
      * avoid closing if null.
      *
-     * @param conn Connection to rollback.  A null value is legal.
-     * @throws SQLException if a database access error occurs
+     * @param conn
+     *     Connection to rollback. A null value is legal.
+     * @throws SQLException
+     *     if a database access error occurs
      * @since DbUtils 1.1
      */
-    public static void rollbackAndClose(Connection conn) throws SQLException {
+    public static void rollbackAndClose(Connection conn)
+        throws SQLException {
         if (conn != null) {
             try {
                 conn.rollback();
@@ -274,7 +297,8 @@ public final class DbUtils {
      * Performs a rollback on the <code>Connection</code> then closes it,
      * avoid closing if null and hide any SQLExceptions that occur.
      *
-     * @param conn Connection to rollback.  A null value is legal.
+     * @param conn
+     *     Connection to rollback. A null value is legal.
      * @since DbUtils 1.1
      */
     public static void rollbackAndCloseQuietly(Connection conn) {
@@ -284,5 +308,4 @@ public final class DbUtils {
             // quiet
         }
     }
-
 }

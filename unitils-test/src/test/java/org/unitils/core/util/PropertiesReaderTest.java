@@ -1,12 +1,9 @@
 /*
- * Copyright 2008,  Unitils.org
- *
+ * Copyright 2008, Unitils.org
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -15,24 +12,29 @@
  */
 package org.unitils.core.util;
 
-import static org.junit.Assert.*;
+import java.io.File;
+import java.io.IOException;
+import java.util.Properties;
+
 import org.junit.Test;
 import org.unitils.UnitilsJUnit4;
 import org.unitils.core.UnitilsException;
 import org.unitils.inject.annotation.TestedObject;
 import org.unitils.thirdparty.org.apache.commons.io.FileUtils;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.Properties;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 /**
  * @author Fabian Krueger
- *
- *         Test for {@link PropertiesReader}
+ *     Test for {@link PropertiesReader}
  */
-public class PropertiesReaderTest extends UnitilsJUnit4 {
-
+public class PropertiesReaderTest
+    extends UnitilsJUnit4 {
     /**
      * System under Test
      */
@@ -40,7 +42,6 @@ public class PropertiesReaderTest extends UnitilsJUnit4 {
     private PropertiesReader sut = new PropertiesReader();
 
     private static final String TEST_FILE = "propertiesReaderTest.properties";
-
 
     @Test
     public void loadPropertiesFileFromUserHome_withNullArgument_shouldThrowUnitilsException() {
@@ -75,7 +76,7 @@ public class PropertiesReaderTest extends UnitilsJUnit4 {
 
     @Test
     public void loadPropertiesFileFromUserHome_withExistingFile_shouldReturnProperties()
-            throws IOException {
+        throws IOException {
         copyDummyPropertiesFileToUserHome();
         Properties returnedProperties = sut.loadPropertiesFileFromUserHome(TEST_FILE);
         assertNotNull(returnedProperties);
@@ -121,16 +122,17 @@ public class PropertiesReaderTest extends UnitilsJUnit4 {
 
     @Test
     public void loadPropertiesFileFromClasspath_withExistingFile_shouldReturnProperties()
-            throws IOException {
+        throws IOException {
         Properties returnedProperties = sut.loadPropertiesFileFromClasspath(TEST_FILE);
         assertNotNull(returnedProperties);
         assertEquals("some value", returnedProperties.getProperty("testprop"));
     }
 
-    //-----------------------------------------------------------------------------------
+    // -----------------------------------------------------------------------------------
     // Helper
-    //-----------------------------------------------------------------------------------
-    private void copyDummyPropertiesFileToUserHome() throws IOException {
+    // -----------------------------------------------------------------------------------
+    private void copyDummyPropertiesFileToUserHome()
+        throws IOException {
         String userHome = System.getProperty("user.home");
         String classPath = this.getClass().getClassLoader().getResource(".").getPath();
         File fileToCopy = new File(classPath + "/" + TEST_FILE);
@@ -145,5 +147,4 @@ public class PropertiesReaderTest extends UnitilsJUnit4 {
         targetFile.delete();
         assertFalse("File " + TEST_FILE + " should be deleted from user home.", targetFile.exists());
     }
-
 }

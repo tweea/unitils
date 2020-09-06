@@ -1,12 +1,9 @@
 /*
- * Copyright 2008,  Unitils.org
- *
+ * Copyright 2008, Unitils.org
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -16,27 +13,24 @@
 package org.unitils.dbmaintainer.script.impl;
 
 import java.util.List;
+import java.util.Properties;
+
+import javax.sql.DataSource;
+
 import org.junit.After;
-
-import static org.junit.Assert.assertTrue;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.unitils.UnitilsJUnit4;
 import org.unitils.core.ConfigurationLoader;
 import org.unitils.core.dbsupport.DefaultSQLHandler;
-
-import static org.unitils.database.SQLUnitils.executeUpdateQuietly;
-import static org.unitils.database.SQLUnitils.isEmpty;
-
 import org.unitils.database.annotations.TestDataSource;
 import org.unitils.dbmaintainer.script.Script;
 import org.unitils.dbmaintainer.script.ScriptContentHandle.UrlScriptContentHandle;
-
-import javax.sql.DataSource;
-
-import java.util.Properties;
 import org.unitils.util.PropertyUtils;
+
+import static org.junit.Assert.assertTrue;
+import static org.unitils.database.SQLUnitils.executeUpdateQuietly;
+import static org.unitils.database.SQLUnitils.isEmpty;
 
 /**
  * Test class for the DefaultScriptRunner.
@@ -44,7 +38,8 @@ import org.unitils.util.PropertyUtils;
  * @author Tim Ducheyne
  * @author Filip Neven
  */
-public class DefaultScriptRunnerTest extends UnitilsJUnit4 {
+public class DefaultScriptRunnerTest
+    extends UnitilsJUnit4 {
 
     /* The tested object */
     private DefaultScriptRunner defaultScriptRunner;
@@ -58,18 +53,18 @@ public class DefaultScriptRunnerTest extends UnitilsJUnit4 {
 
     /* A test script that will create 1 table: table3 */
     private Script script2;
-    
-    private static String dialect = "h2";
-    
-    private List<String> schemas;
 
+    private static String dialect = "h2";
+
+    private List<String> schemas;
 
     /**
      * Test fixture. Configures the ConstraintsDisabler with the implementation that matches the configured database
      * dialect
      */
     @Before
-    public void setUp() throws Exception {
+    public void setUp()
+        throws Exception {
         Properties configuration = new ConfigurationLoader().loadConfiguration();
         schemas = PropertyUtils.getStringList("database.schemaNames", configuration);
         defaultScriptRunner = new DefaultScriptRunner();
@@ -81,21 +76,21 @@ public class DefaultScriptRunnerTest extends UnitilsJUnit4 {
         cleanupTestDatabase();
     }
 
-
     /**
      * Drops the test tables, to avoid influencing other tests
      */
     @After
-    public void tearDown() throws Exception {
+    public void tearDown()
+        throws Exception {
         cleanupTestDatabase();
     }
-
 
     /**
      * Tests running some scripts.
      */
     @Test
-    public void testExecute() throws Exception {
+    public void testExecute()
+        throws Exception {
         defaultScriptRunner.execute(script1.getScriptContentHandle());
         defaultScriptRunner.execute(script2.getScriptContentHandle());
 
@@ -105,7 +100,6 @@ public class DefaultScriptRunnerTest extends UnitilsJUnit4 {
         assertTrue(isEmpty("table3", dataSource));
     }
 
-
     /**
      * Drops the test tables
      */
@@ -114,5 +108,4 @@ public class DefaultScriptRunnerTest extends UnitilsJUnit4 {
         executeUpdateQuietly("drop table table2", dataSource);
         executeUpdateQuietly("drop table table3", dataSource);
     }
-
 }

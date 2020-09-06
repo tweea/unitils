@@ -1,12 +1,9 @@
 /*
- * Copyright 2008,  Unitils.org
- *
+ * Copyright 2008, Unitils.org
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -14,10 +11,6 @@
  * limitations under the License.
  */
 package org.unitils.spring;
-
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.fail;
 
 import java.util.Properties;
 
@@ -27,6 +20,10 @@ import org.springframework.context.ApplicationContext;
 import org.unitils.core.ConfigurationLoader;
 import org.unitils.core.UnitilsException;
 import org.unitils.spring.annotation.SpringApplicationContext;
+
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.fail;
 
 /**
  * Test for the application context injection in the {@link SpringModule}.
@@ -39,17 +36,16 @@ public class SpringModuleInjectApplicationContextTest {
     /* Tested object */
     SpringModule springModule;
 
-
     /**
      * Initializes the test and test fixture.
      */
     @Before
-    public void setUp() throws Exception {
+    public void setUp()
+        throws Exception {
         Properties configuration = new ConfigurationLoader().loadConfiguration();
         springModule = new SpringModule();
         springModule.init(configuration);
     }
-
 
     /**
      * Tests assigning an application context to a field and a setter.
@@ -62,7 +58,6 @@ public class SpringModuleInjectApplicationContextTest {
         assertNotNull(springTest.field);
         assertNotNull(springTest.setter);
     }
-
 
     /**
      * Tests assigning an application context but no context was created.
@@ -78,7 +73,6 @@ public class SpringModuleInjectApplicationContextTest {
         assertNull(springTestNoContextCreated.field);
     }
 
-
     /**
      * Tests assigning an application context that was created in the super class.
      */
@@ -90,18 +84,17 @@ public class SpringModuleInjectApplicationContextTest {
         assertNotNull(springTestContextCreatedInSuperClass.field);
     }
 
-
     /**
      * Test SpringTest class.
      */
-    @SpringApplicationContext({"classpath:org/unitils/spring/services-config.xml"})
+    @SpringApplicationContext({
+        "classpath:org/unitils/spring/services-config.xml"
+    })
     private class SpringTest {
-
         @SpringApplicationContext
         private ApplicationContext field = null;
 
         private ApplicationContext setter;
-
 
         @SpringApplicationContext
         public void setField(ApplicationContext setter) {
@@ -109,27 +102,22 @@ public class SpringModuleInjectApplicationContextTest {
         }
     }
 
-
     /**
      * Test SpringTest class that does not create a context (no locations) but asks for an assignment (should
      * cause an exception).
      */
     private class SpringTestNoContextCreated {
-
         @SpringApplicationContext
         protected ApplicationContext field = null;
     }
-
 
     /**
      * Test SpringTest class that does not create a context (no locations) but asks for an assignment (should
      * cause an exception).
      */
-    private class SpringTestContextCreatedInSuperClass extends SpringTest {
-
+    private class SpringTestContextCreatedInSuperClass
+        extends SpringTest {
         @SpringApplicationContext
         protected ApplicationContext field = null;
     }
-
-
 }

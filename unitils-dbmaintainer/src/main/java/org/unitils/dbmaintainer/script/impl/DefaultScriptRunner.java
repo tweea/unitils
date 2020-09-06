@@ -1,12 +1,9 @@
 /*
- * Copyright 2008,  Unitils.org
- *
+ * Copyright 2008, Unitils.org
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -15,9 +12,6 @@
  */
 package org.unitils.dbmaintainer.script.impl;
 
-import static org.unitils.core.util.ConfigUtils.getInstanceOf;
-import static org.unitils.thirdparty.org.apache.commons.io.IOUtils.closeQuietly;
-
 import java.io.Reader;
 
 import org.unitils.dbmaintainer.script.ScriptContentHandle;
@@ -25,24 +19,28 @@ import org.unitils.dbmaintainer.script.ScriptParser;
 import org.unitils.dbmaintainer.script.ScriptRunner;
 import org.unitils.dbmaintainer.util.BaseDatabaseAccessor;
 
+import static org.unitils.core.util.ConfigUtils.getInstanceOf;
+import static org.unitils.thirdparty.org.apache.commons.io.IOUtils.closeQuietly;
+
 /**
  * Default implementation of a script runner.
  *
  * @author Filip Neven
  * @author Tim Ducheyne
  */
-public class DefaultScriptRunner extends BaseDatabaseAccessor implements ScriptRunner {
-
+public class DefaultScriptRunner
+    extends BaseDatabaseAccessor
+    implements ScriptRunner {
     /**
      * Executes the given script.
      * <p/>
      * All statements should be separated with a semicolon (;). The last statement will be
      * added even if it does not end with a semicolon.
      *
-     * @param scriptContentHandle The script as a string, not null
+     * @param scriptContentHandle
+     *     The script as a string, not null
      */
     public void execute(ScriptContentHandle scriptContentHandle) {
-
         Reader scriptContentReader = null;
         try {
             // get content stream
@@ -61,7 +59,6 @@ public class DefaultScriptRunner extends BaseDatabaseAccessor implements ScriptR
             closeQuietly(scriptContentReader);
         }
     }
-
 
     /**
      * Creates a script parser.

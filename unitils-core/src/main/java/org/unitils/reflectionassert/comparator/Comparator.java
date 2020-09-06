@@ -1,12 +1,9 @@
 /*
- * Copyright 2008,  Unitils.org
- *
+ * Copyright 2008, Unitils.org
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -29,20 +26,19 @@ import org.unitils.reflectionassert.difference.Difference;
  * @author Filip Neven
  */
 public interface Comparator {
-
-
     /**
      * Checks whether this comparator can compare the given objects.
      * <p/>
      * This method should always be called before calling the compare method. If false is returned compare
      * should not be invoked.
      *
-     * @param left  The left object
-     * @param right The right object
+     * @param left
+     *     The left object
+     * @param right
+     *     The right object
      * @return True if compare can be called, false otherwise
      */
     boolean canCompare(Object left, Object right);
-
 
     /**
      * Compares the given objects and returns the difference (if any).
@@ -51,12 +47,15 @@ public interface Comparator {
      * E.g. during the comparison of an object the given comparator can be used to compare the instance
      * fields of the object.
      *
-     * @param left                 The left object
-     * @param right                The right object
-     * @param onlyFirstDifference  True if only the first difference should be returned
-     * @param reflectionComparator The root comparator for inner comparisons, not null
+     * @param left
+     *     The left object
+     * @param right
+     *     The right object
+     * @param onlyFirstDifference
+     *     True if only the first difference should be returned
+     * @param reflectionComparator
+     *     The root comparator for inner comparisons, not null
      * @return The difference, null if a match is found
      */
     Difference compare(Object left, Object right, boolean onlyFirstDifference, ReflectionComparator reflectionComparator);
-
 }

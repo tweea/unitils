@@ -1,12 +1,9 @@
 /*
- * Copyright 2008,  Unitils.org
- *
+ * Copyright 2008, Unitils.org
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -15,13 +12,14 @@
  */
 package org.unitils.mock.mockbehavior.impl;
 
+import java.util.Arrays;
+
 import org.unitils.core.UnitilsException;
 import org.unitils.mock.Mock;
 import org.unitils.mock.core.proxy.ProxyInvocation;
-import static org.unitils.mock.core.proxy.StackTraceUtils.getInvocationStackTrace;
 import org.unitils.mock.mockbehavior.ValidatableMockBehavior;
 
-import java.util.Arrays;
+import static org.unitils.mock.core.proxy.StackTraceUtils.getInvocationStackTrace;
 
 /**
  * Mock behavior that throws a given exception.
@@ -30,29 +28,31 @@ import java.util.Arrays;
  * @author Tim Ducheyne
  * @author Kenny Claes
  */
-public class ExceptionThrowingMockBehavior implements ValidatableMockBehavior {
+public class ExceptionThrowingMockBehavior
+    implements ValidatableMockBehavior {
 
     /* The exception to throw */
     private Throwable exceptionToThrow;
 
-
     /**
      * Creates the throwing behavior for the given exception.
      *
-     * @param exceptionToThrow The exception, not null
+     * @param exceptionToThrow
+     *     The exception, not null
      */
     public ExceptionThrowingMockBehavior(Throwable exceptionToThrow) {
         this.exceptionToThrow = exceptionToThrow;
     }
 
-
     /**
      * Checks whether the mock behavior can be executed for the given invocation.
      * An exception is raised if the method is a void method or has a non-assignable return type.
      *
-     * @param proxyInvocation The proxy method invocation, not null
+     * @param proxyInvocation
+     *     The proxy method invocation, not null
      */
-    public void assertCanExecute(ProxyInvocation proxyInvocation) throws UnitilsException {
+    public void assertCanExecute(ProxyInvocation proxyInvocation)
+        throws UnitilsException {
         if (exceptionToThrow instanceof RuntimeException || exceptionToThrow instanceof Error) {
             return;
         }
@@ -62,20 +62,20 @@ public class ExceptionThrowingMockBehavior implements ValidatableMockBehavior {
                 return;
             }
         }
-        throw new UnitilsException("Trying to make a method throw an exception that it doesn't declare. Exception type: " + exceptionToThrow.getClass() +
-                (exceptionTypes.length > 0 ? ", declared exceptions: " + Arrays.toString(exceptionTypes) : ", no declared exceptions"));
+        throw new UnitilsException("Trying to make a method throw an exception that it doesn't declare. Exception type: " + exceptionToThrow.getClass()
+            + (exceptionTypes.length > 0 ? ", declared exceptions: " + Arrays.toString(exceptionTypes) : ", no declared exceptions"));
     }
-
 
     /**
      * Executes the mock behavior.
      *
-     * @param proxyInvocation The proxy method invocation, not null
+     * @param proxyInvocation
+     *     The proxy method invocation, not null
      * @return Nothing
      */
-    public Object execute(ProxyInvocation proxyInvocation) throws Throwable {
+    public Object execute(ProxyInvocation proxyInvocation)
+        throws Throwable {
         exceptionToThrow.setStackTrace(getInvocationStackTrace(Mock.class, false));
         throw exceptionToThrow;
     }
-
 }

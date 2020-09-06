@@ -22,17 +22,14 @@ import org.unitils.inject.annotation.TestedObject;
  * Will test finding data on the classpath
  *
  * @author tdr
- *
  * @since 1.0.2
- *
  */
 @RunWith(UnitilsJUnit4TestClassRunner.class)
 @SuppressWarnings("unchecked")
 public class ClassPathDataLocatorTest {
-
     @TestedObject
     ClassPathDataLocator classPathDataLocator;
-    
+
     @Mock
     private ResourcePickingStrategie resourcePickingStrategie;
 
@@ -44,17 +41,13 @@ public class ClassPathDataLocatorTest {
 
     /*** */
     @Before
-    public void setUp(){
-
+    public void setUp() {
         resourceName = "/org/unitils/testdata/exampleResourceData.xml";
-
-
 
         urlList = new ArrayList<URL>();
         URL url = getClass().getResource(resourceName);
-        Assert.assertNotNull("Resource '"+resourceName+"' not found error in testSetup", url);
+        Assert.assertNotNull("Resource '" + resourceName + "' not found error in testSetup", url);
         urlList.add(url);
-
 
         urlResultList = new ArrayList<URL>();
         urlResultList.add(url);
@@ -62,54 +55,49 @@ public class ClassPathDataLocatorTest {
 
     /*** */
     @Test
-    public void getDataResourceTestAbsolutePath(){
-
-        EasyMock.expect(resourcePickingStrategie.filter(ListUtils.EMPTY_LIST,resourceName)).andReturn(urlResultList);
+    public void getDataResourceTestAbsolutePath() {
+        EasyMock.expect(resourcePickingStrategie.filter(ListUtils.EMPTY_LIST, resourceName)).andReturn(urlResultList);
 
         EasyMockUnitils.replay();
 
-        InputStream is = classPathDataLocator.getDataResource(resourceName, resourcePickingStrategie  );
+        InputStream is = classPathDataLocator.getDataResource(resourceName, resourcePickingStrategie);
         Assert.assertNotNull(is);
     }
 
     /*** */
     @Test
-    public void getDataResourceTestRelativePath(){
-
-        EasyMock.expect(resourcePickingStrategie.filter((List<URL>) EasyMock.anyObject() ,(String)EasyMock.anyObject())).andReturn(urlResultList);
+    public void getDataResourceTestRelativePath() {
+        EasyMock.expect(resourcePickingStrategie.filter((List<URL>) EasyMock.anyObject(), (String) EasyMock.anyObject())).andReturn(urlResultList);
 
         EasyMockUnitils.replay();
 
-        InputStream is = classPathDataLocator.getDataResource(resourceName.substring(1), resourcePickingStrategie  );
+        InputStream is = classPathDataLocator.getDataResource(resourceName.substring(1), resourcePickingStrategie);
         Assert.assertNotNull(is);
     }
 
     /*** */
     @Test
-    public void getDataResourceTestNonExisting(){
-
-        EasyMock.expect(resourcePickingStrategie.filter((List<URL>) EasyMock.anyObject() ,(String)EasyMock.anyObject())).andReturn(ListUtils.EMPTY_LIST);
+    public void getDataResourceTestNonExisting() {
+        EasyMock.expect(resourcePickingStrategie.filter((List<URL>) EasyMock.anyObject(), (String) EasyMock.anyObject())).andReturn(ListUtils.EMPTY_LIST);
 
         EasyMockUnitils.replay();
 
-        InputStream is = classPathDataLocator.getDataResource(resourceName.substring(0, resourceName.length()-2).concat("bla"), resourcePickingStrategie  );
+        InputStream is = classPathDataLocator.getDataResource(resourceName.substring(0, resourceName.length() - 2).concat("bla"), resourcePickingStrategie);
         Assert.assertNull(is);
     }
 
     @Test
-    public void testGetDataSourceIOException() throws IOException {
+    public void testGetDataSourceIOException()
+        throws IOException {
         List<URL> resourcesF = new ArrayList<URL>();
         URL url = new URL("https://graph.facebook.com/me");
-        resourcesF.add(url );
-        EasyMock.expect(resourcePickingStrategie.filter((List<URL>) EasyMock.anyObject() ,(String)EasyMock.anyObject())).andReturn(resourcesF);
-        //EasyMock.expect(url.openStream()).andThrow(new IOException());
+        resourcesF.add(url);
+        EasyMock.expect(resourcePickingStrategie.filter((List<URL>) EasyMock.anyObject(), (String) EasyMock.anyObject())).andReturn(resourcesF);
+        // EasyMock.expect(url.openStream()).andThrow(new IOException());
 
         EasyMockUnitils.replay();
 
-        InputStream is = classPathDataLocator.getDataResource(resourceName.substring(0, resourceName.length()-2).concat("bla"), resourcePickingStrategie  );
+        InputStream is = classPathDataLocator.getDataResource(resourceName.substring(0, resourceName.length() - 2).concat("bla"), resourcePickingStrategie);
         Assert.assertNull(is);
-
     }
-
-
 }

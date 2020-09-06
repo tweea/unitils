@@ -1,12 +1,9 @@
 /*
- * Copyright 2008,  Unitils.org
- *
+ * Copyright 2008, Unitils.org
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -15,10 +12,10 @@
  */
 package org.unitils.mock.argumentmatcher;
 
-import org.unitils.core.UnitilsException;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import org.unitils.core.UnitilsException;
 
 /**
  * A repository for holding the current set of argument matchers.
@@ -42,14 +39,12 @@ public class ArgumentMatcherRepository {
         }
     };
 
-
     /**
      * @return The singleton instance, not null
      */
     public static ArgumentMatcherRepository getInstance() {
         return instance.get();
     }
-
 
     /* The current argument matchers */
     private List<ArgumentMatcher> argumentMatchers = new ArrayList<ArgumentMatcher>();
@@ -72,12 +67,13 @@ public class ArgumentMatcherRepository {
     /* The line nr of the previous method we handled */
     private int previousMatchingLineNr;
 
-
     /**
      * Registers an argument matcher at the given line nr.
      *
-     * @param argumentMatcher The matcher, not null
-     * @param lineNr          The line number on which the argument matcher was registered.
+     * @param argumentMatcher
+     *     The matcher, not null
+     * @param lineNr
+     *     The line number on which the argument matcher was registered.
      */
     public void registerArgumentMatcher(ArgumentMatcher argumentMatcher, int lineNr) {
         if (!acceptingArgumentMatchers) {
@@ -86,7 +82,6 @@ public class ArgumentMatcherRepository {
         matchInvocationEndLineNr = Math.max(matchInvocationEndLineNr, lineNr);
         argumentMatchers.add(argumentMatcher);
     }
-
 
     /**
      * @return The current argument matchers, not null
@@ -116,13 +111,13 @@ public class ArgumentMatcherRepository {
         return matchInvocationIndex;
     }
 
-
     /**
      * From the moment that this method is called until {@link #registerEndOfMatchingInvocation} has been called,
      * argument matchers can be registered.
      *
-     * @param lineNr The line number at which the matching invocation starts, i.e. the line number at which the performs, assertInvoked, etc.
-     *               statement occurs.
+     * @param lineNr
+     *     The line number at which the matching invocation starts, i.e. the line number at which the performs, assertInvoked, etc.
+     *     statement occurs.
      */
     public void registerStartOfMatchingInvocation(int lineNr) {
         acceptingArgumentMatchers = true;
@@ -134,8 +129,10 @@ public class ArgumentMatcherRepository {
      * Stops the registering of argument matchers.
      * The argument matchers can now be retrieved using {@link #getArgumentMatchers()}.
      *
-     * @param lineNr     The current line nr
-     * @param methodName The current method, not null
+     * @param lineNr
+     *     The current line nr
+     * @param methodName
+     *     The current method, not null
      */
     public void registerEndOfMatchingInvocation(int lineNr, String methodName) {
         matchInvocationStartLineNr = Math.min(lineNr, matchInvocationStartLineNr);
@@ -150,7 +147,6 @@ public class ArgumentMatcherRepository {
             previousMatchingLineNr = lineNr;
         }
     }
-
 
     /**
      * Clears the current argument matchers. After this method is called, {@link #registerStartOfMatchingInvocation} must

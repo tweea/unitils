@@ -13,18 +13,14 @@ import org.unitils.core.TestListener;
 import org.unitils.easymock.EasyMockUnitils;
 import org.unitils.easymock.annotation.Mock;
 
-
 /**
  * AfterTestTearDownStatementTest.
  *
  * @author wiw
- *
  * @since 3.4.1
- *
  */
 @RunWith(UnitilsJUnit4TestClassRunner.class)
 public class AfterTestTearDownStatementTest {
-
     @Mock
     private Statement statement;
 
@@ -35,14 +31,16 @@ public class AfterTestTearDownStatementTest {
      * @throws java.lang.Exception
      */
     @Before
-    public void setUp() throws Exception {
+    public void setUp()
+        throws Exception {
     }
 
     /**
      * Test method for {@link org.unitils.core.junit.AfterTestTearDownStatement#evaluate()}.
      */
     @Test(expected = NullPointerException.class)
-    public void testEvaluateStatementException() throws Throwable {
+    public void testEvaluateStatementException()
+        throws Throwable {
         TestClass2 testObject = new TestClass2();
         Method testMethod = TestClass2.class.getMethod("test1");
 
@@ -52,14 +50,14 @@ public class AfterTestTearDownStatementTest {
 
         EasyMockUnitils.replay();
         new AfterTestTearDownStatement(listener, statement, testObject, testMethod).evaluate();
-
     }
 
     /**
      * Test method for {@link org.unitils.core.junit.AfterTestTearDownStatement#evaluate()}.
      */
     @Test(expected = NullPointerException.class)
-    public void testEvaluateAfterTestTearDowntException() throws Throwable {
+    public void testEvaluateAfterTestTearDowntException()
+        throws Throwable {
         TestClass2 testObject = new TestClass2();
         Method testMethod = TestClass2.class.getMethod("test1");
 
@@ -67,14 +65,13 @@ public class AfterTestTearDownStatementTest {
         listener.afterTestTearDown(testObject, testMethod);
         EasyMock.expectLastCall().andThrow(new NullPointerException());
 
-
         EasyMockUnitils.replay();
         new AfterTestTearDownStatement(listener, statement, testObject, testMethod).evaluate();
-
     }
 
     @Test
-    public void testEvaluateOk() throws Throwable {
+    public void testEvaluateOk()
+        throws Throwable {
         TestClass2 testObject = new TestClass2();
         Method testMethod = TestClass2.class.getMethod("test1");
 
@@ -83,7 +80,6 @@ public class AfterTestTearDownStatementTest {
 
         EasyMockUnitils.replay();
         new AfterTestTearDownStatement(listener, statement, testObject, testMethod).evaluate();
-
     }
 
     private class TestClass2 {

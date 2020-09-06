@@ -1,12 +1,9 @@
 /*
- * Copyright 2008,  Unitils.org
- *
+ * Copyright 2008, Unitils.org
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -14,22 +11,6 @@
  * limitations under the License.
  */
 package org.unitils.dbmaintainer.structure.impl;
-
-import static org.unitils.thirdparty.org.apache.commons.io.IOUtils.closeQuietly;
-import static org.unitils.thirdparty.org.apache.commons.io.IOUtils.write;
-
-import org.apache.commons.lang.StringUtils;
-import org.dbunit.database.DatabaseConnection;
-import org.dbunit.database.IDatabaseConnection;
-import org.dbunit.dataset.FilteredDataSet;
-import org.dbunit.dataset.IDataSet;
-import org.dbunit.dataset.filter.IncludeTableFilter;
-import org.dbunit.dataset.xml.FlatDtdWriter;
-import org.unitils.core.UnitilsException;
-import org.unitils.dbmaintainer.structure.DataSetStructureGenerator;
-import org.unitils.dbmaintainer.util.BaseDatabaseAccessor;
-import org.unitils.thirdparty.org.apache.commons.dbutils.DbUtils;
-import org.unitils.util.PropertyUtils;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -39,6 +20,23 @@ import java.sql.Connection;
 import java.util.Properties;
 import java.util.Set;
 
+import org.apache.commons.lang.StringUtils;
+import org.dbunit.database.DatabaseConnection;
+import org.dbunit.database.IDatabaseConnection;
+import org.dbunit.dataset.FilteredDataSet;
+import org.dbunit.dataset.IDataSet;
+import org.dbunit.dataset.filter.IncludeTableFilter;
+import org.dbunit.dataset.xml.FlatDtdWriter;
+import org.dbunit.dataset.xml.FlatXmlDataSet;
+import org.unitils.core.UnitilsException;
+import org.unitils.dbmaintainer.structure.DataSetStructureGenerator;
+import org.unitils.dbmaintainer.util.BaseDatabaseAccessor;
+import org.unitils.thirdparty.org.apache.commons.dbutils.DbUtils;
+import org.unitils.util.PropertyUtils;
+
+import static org.unitils.thirdparty.org.apache.commons.io.IOUtils.closeQuietly;
+import static org.unitils.thirdparty.org.apache.commons.io.IOUtils.write;
+
 /**
  * Implementation of {@link DataSetStructureGenerator} for the DbUnit {@link FlatXmlDataSet} XML test data files format
  * <p/>
@@ -47,25 +45,26 @@ import java.util.Set;
  * @author Filip Neven
  * @author Tim Ducheyne
  */
-public class DtdDataSetStructureGenerator extends BaseDatabaseAccessor implements DataSetStructureGenerator {
+public class DtdDataSetStructureGenerator
+    extends BaseDatabaseAccessor
+    implements DataSetStructureGenerator {
 
-    /* Property key of the filename of the generated DTD  */
+    /* Property key of the filename of the generated DTD */
     public static final String PROPKEY_DTD_FILENAME = "dtdGenerator.dtd.filename";
 
     /* The DTD file name */
     private String dtdFileName;
 
-
     /**
      * Initializes the generator by retrieving the name for the DTD file.
      *
-     * @param configuration The config, not null
+     * @param configuration
+     *     The config, not null
      */
     @Override
     protected void doInit(Properties configuration) {
         dtdFileName = PropertyUtils.getString(PROPKEY_DTD_FILENAME, configuration);
     }
-
 
     /**
      * Generates the DTD, and writes it to the file specified by the property {@link #PROPKEY_DTD_FILENAME}.
@@ -91,7 +90,6 @@ public class DtdDataSetStructureGenerator extends BaseDatabaseAccessor implement
             // write the content to the file
             writer = new FileWriter(dtdFile);
             write(dtdContent, writer);
-
         } catch (UnitilsException e) {
             throw e;
         } catch (Exception e) {
@@ -100,7 +98,6 @@ public class DtdDataSetStructureGenerator extends BaseDatabaseAccessor implement
             closeQuietly(writer);
         }
     }
-
 
     /**
      * Generates the actual content of the DTD file as an in-memory string.
@@ -126,7 +123,6 @@ public class DtdDataSetStructureGenerator extends BaseDatabaseAccessor implement
 
             datasetWriter.write(filteredActualDataSet);
             return stringWriter.toString();
-
         } catch (Exception e) {
             throw new UnitilsException("Error generating content for DTD file.", e);
         } finally {

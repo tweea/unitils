@@ -1,12 +1,9 @@
 /*
- * Copyright 2008,  Unitils.org
- *
+ * Copyright 2008, Unitils.org
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -15,22 +12,35 @@
  */
 package org.unitils;
 
-import static junit.framework.Assert.assertEquals;
+import java.util.Arrays;
+import java.util.Collection;
+
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
-import static org.unitils.TracingTestListener.ListenerInvocation.*;
 import org.unitils.TracingTestListener.TestFramework;
-import static org.unitils.TracingTestListener.TestFramework.*;
-import static org.unitils.TracingTestListener.TestInvocation.*;
 import org.unitils.core.TestListener;
 import org.unitils.inject.util.InjectionUtils;
 
-import java.util.Arrays;
-import java.util.Collection;
+import static org.unitils.TracingTestListener.ListenerInvocation.LISTENER_AFTER_CREATE_TEST_OBJECT;
+import static org.unitils.TracingTestListener.ListenerInvocation.LISTENER_AFTER_TEST_METHOD;
+import static org.unitils.TracingTestListener.ListenerInvocation.LISTENER_AFTER_TEST_TEARDOWN;
+import static org.unitils.TracingTestListener.ListenerInvocation.LISTENER_BEFORE_CLASS;
+import static org.unitils.TracingTestListener.ListenerInvocation.LISTENER_BEFORE_TEST_METHOD;
+import static org.unitils.TracingTestListener.ListenerInvocation.LISTENER_BEFORE_TEST_SET_UP;
+import static org.unitils.TracingTestListener.TestFramework.JUNIT3;
+import static org.unitils.TracingTestListener.TestFramework.JUNIT4;
+import static org.unitils.TracingTestListener.TestFramework.TESTNG;
+import static org.unitils.TracingTestListener.TestInvocation.TEST_AFTER_CLASS;
+import static org.unitils.TracingTestListener.TestInvocation.TEST_BEFORE_CLASS;
+import static org.unitils.TracingTestListener.TestInvocation.TEST_METHOD;
+import static org.unitils.TracingTestListener.TestInvocation.TEST_SET_UP;
+import static org.unitils.TracingTestListener.TestInvocation.TEST_TEAR_DOWN;
+
+import static junit.framework.Assert.assertEquals;
 
 /**
  * Test for the flows in case an exception occurs in one of the listener or test methods for JUnit3 ({@link UnitilsJUnit3}),
@@ -45,8 +55,8 @@ import java.util.Collection;
  * @see UnitilsJUnit4Test_TestClass1
  */
 @RunWith(Parameterized.class)
-public class JUnitUnitilsInvocationExceptionTest extends UnitilsInvocationTestBase {
-
+public class JUnitUnitilsInvocationExceptionTest
+    extends UnitilsInvocationTestBase {
     private Class<?> testClass;
 
     public JUnitUnitilsInvocationExceptionTest(TestFramework testFramework, TestExecutor testExecutor, Class<?> testClass) {
@@ -56,11 +66,14 @@ public class JUnitUnitilsInvocationExceptionTest extends UnitilsInvocationTestBa
 
     @Parameters
     public static Collection<Object[]> testData() {
-        return Arrays.asList(new Object[][]{
-                {JUNIT3, new JUnit3TestExecutor(), UnitilsJUnit3Test_TestClass1.class},
-                {JUNIT4, new JUnit4TestExecutor(), UnitilsJUnit4Test_TestClass1.class},
-                //{JUNIT3, new JUnit3TestExecutor(), SpringUnitilsJUnit38Test_TestClass1.class},
-                //{JUNIT4, new JUnit4TestExecutor(), SpringUnitilsJUnit4Test_TestClass1.class},
+        return Arrays.asList(new Object[][] {
+            {
+                JUNIT3, new JUnit3TestExecutor(), UnitilsJUnit3Test_TestClass1.class
+            }, {
+                JUNIT4, new JUnit4TestExecutor(), UnitilsJUnit4Test_TestClass1.class
+            },
+            // {JUNIT3, new JUnit3TestExecutor(), SpringUnitilsJUnit38Test_TestClass1.class},
+            // {JUNIT4, new JUnit4TestExecutor(), SpringUnitilsJUnit4Test_TestClass1.class},
         });
     }
 
@@ -75,7 +88,8 @@ public class JUnitUnitilsInvocationExceptionTest extends UnitilsInvocationTestBa
      * @see #assertInvocationOrder_testBeforeClass
      */
     @Test
-    public void testTestBeforeClass() throws Exception {
+    public void testTestBeforeClass()
+        throws Exception {
         Assume.assumeTrue(!JUNIT3.equals(testFramework));
 
         tracingTestListener.expectExceptionInMethod(TEST_BEFORE_CLASS, false);
@@ -83,13 +97,13 @@ public class JUnitUnitilsInvocationExceptionTest extends UnitilsInvocationTestBa
 
         assertInvocationOrder_testBeforeClass();
 
-        if (JUNIT4.equals(testFramework)) assertEquals(1, testExecutor.getFailureCount());
+        if (JUNIT4.equals(testFramework))
+            assertEquals(1, testExecutor.getFailureCount());
         if (TESTNG.equals(testFramework)) {
             assertEquals(0, testExecutor.getFailureCount());
             assertEquals(2, testExecutor.getIgnoreCount());
         }
     }
-
 
     /**
      * Test the flow when a runtime exception is thrown during a {@link TestListener#beforeTestSetUp} call of a module.
@@ -97,7 +111,8 @@ public class JUnitUnitilsInvocationExceptionTest extends UnitilsInvocationTestBa
      * @see #assertInvocationOrder_beforeTestSetUp
      */
     @Test
-    public void testBeforeTestSetUp_RuntimeException() throws Exception {
+    public void testBeforeTestSetUp_RuntimeException()
+        throws Exception {
         tracingTestListener.expectExceptionInMethod(LISTENER_BEFORE_TEST_SET_UP, false);
         testExecutor.runTests(testClass);
 
@@ -110,14 +125,14 @@ public class JUnitUnitilsInvocationExceptionTest extends UnitilsInvocationTestBa
         }
     }
 
-
     /**
      * Test the flow when an assertion error is thrown during a {@link TestListener#beforeTestSetUp} call of a module.
      *
      * @see #assertInvocationOrder_beforeTestSetUp
      */
     @Test
-    public void testBeforeTestSetUp_AssertionFailedError() throws Exception {
+    public void testBeforeTestSetUp_AssertionFailedError()
+        throws Exception {
         tracingTestListener.expectExceptionInMethod(LISTENER_BEFORE_TEST_SET_UP, true);
         testExecutor.runTests(testClass);
 
@@ -130,14 +145,14 @@ public class JUnitUnitilsInvocationExceptionTest extends UnitilsInvocationTestBa
         }
     }
 
-
     /**
      * Test the flow when a runtime exception is thrown during a {@link junit.framework.TestCase#setUp} call of a test.
      *
      * @see #assertInvocationOrder_testSetUp
      */
     @Test
-    public void testTestSetUp_RuntimeException() throws Exception {
+    public void testTestSetUp_RuntimeException()
+        throws Exception {
         tracingTestListener.expectExceptionInMethod(TEST_SET_UP, false);
         testExecutor.runTests(testClass);
 
@@ -150,14 +165,14 @@ public class JUnitUnitilsInvocationExceptionTest extends UnitilsInvocationTestBa
         }
     }
 
-
     /**
      * Test the flow when an assertion error is thrown during a {@link junit.framework.TestCase#setUp} call of a test.
      *
      * @see #assertInvocationOrder_testSetUp
      */
     @Test
-    public void testTestSetUp_AssertionFailedError() throws Exception {
+    public void testTestSetUp_AssertionFailedError()
+        throws Exception {
         tracingTestListener.expectExceptionInMethod(TEST_SET_UP, true);
         testExecutor.runTests(testClass);
 
@@ -170,14 +185,14 @@ public class JUnitUnitilsInvocationExceptionTest extends UnitilsInvocationTestBa
         }
     }
 
-
     /**
      * Test the flow when a runtime exception is thrown during a {@link TestListener#beforeTestMethod} call of a module.
      *
      * @see #assertInvocationOrder_beforeTestMethod
      */
     @Test
-    public void testBeforeTestMethod_RuntimeException() throws Exception {
+    public void testBeforeTestMethod_RuntimeException()
+        throws Exception {
         tracingTestListener.expectExceptionInMethod(LISTENER_BEFORE_TEST_METHOD, false);
         testExecutor.runTests(testClass);
 
@@ -185,14 +200,14 @@ public class JUnitUnitilsInvocationExceptionTest extends UnitilsInvocationTestBa
         assertEquals(2, testExecutor.getFailureCount());
     }
 
-
     /**
      * Test the flow when an assertion error is thrown during a {@link TestListener#beforeTestMethod} call of a module.
      *
      * @see #assertInvocationOrder_beforeTestMethod
      */
     @Test
-    public void testBeforeTestMethod_AssertionFailedError() throws Exception {
+    public void testBeforeTestMethod_AssertionFailedError()
+        throws Exception {
         tracingTestListener.expectExceptionInMethod(LISTENER_BEFORE_TEST_METHOD, true);
         testExecutor.runTests(testClass);
 
@@ -200,14 +215,14 @@ public class JUnitUnitilsInvocationExceptionTest extends UnitilsInvocationTestBa
         assertEquals(2, testExecutor.getFailureCount());
     }
 
-
     /**
      * Test the flow when a runtime exception is thrown during a test.
      *
      * @see #assertInvocationOrder
      */
     @Test
-    public void testTestMethod_RuntimeException() throws Exception {
+    public void testTestMethod_RuntimeException()
+        throws Exception {
         tracingTestListener.expectExceptionInMethod(TEST_METHOD, false);
         testExecutor.runTests(testClass);
 
@@ -215,14 +230,14 @@ public class JUnitUnitilsInvocationExceptionTest extends UnitilsInvocationTestBa
         assertEquals(2, testExecutor.getFailureCount());
     }
 
-
     /**
      * Test the flow when an assertion error is thrown during a test.
      *
      * @see #assertInvocationOrder
      */
     @Test
-    public void testTestMethod_AssertionFailedError() throws Exception {
+    public void testTestMethod_AssertionFailedError()
+        throws Exception {
         tracingTestListener.expectExceptionInMethod(TEST_METHOD, true);
         testExecutor.runTests(testClass);
 
@@ -230,14 +245,14 @@ public class JUnitUnitilsInvocationExceptionTest extends UnitilsInvocationTestBa
         assertEquals(2, testExecutor.getFailureCount());
     }
 
-
     /**
      * Test the flow when a runtime exception is thrown during a {@link TestListener#afterTestMethod} call of a module.
      *
      * @see #assertInvocationOrder
      */
     @Test
-    public void testAfterTestMethod_RuntimeException() throws Exception {
+    public void testAfterTestMethod_RuntimeException()
+        throws Exception {
         tracingTestListener.expectExceptionInMethod(LISTENER_AFTER_TEST_METHOD, false);
         testExecutor.runTests(testClass);
 
@@ -245,14 +260,14 @@ public class JUnitUnitilsInvocationExceptionTest extends UnitilsInvocationTestBa
         assertEquals(2, testExecutor.getFailureCount());
     }
 
-
     /**
      * Test the flow when an assertion error is thrown during a {@link TestListener#afterTestMethod} call of a module.
      *
      * @see #assertInvocationOrder
      */
     @Test
-    public void testAfterTestMethod_AssertionFailedError() throws Exception {
+    public void testAfterTestMethod_AssertionFailedError()
+        throws Exception {
         tracingTestListener.expectExceptionInMethod(LISTENER_AFTER_TEST_METHOD, true);
         testExecutor.runTests(testClass);
 
@@ -260,14 +275,14 @@ public class JUnitUnitilsInvocationExceptionTest extends UnitilsInvocationTestBa
         assertEquals(2, testExecutor.getFailureCount());
     }
 
-
     /**
      * Test the flow when a runtime exception is thrown during a {@link junit.framework.TestCase#tearDown} call of a test.
      *
      * @see #assertInvocationOrder
      */
     @Test
-    public void testTestTearDown_RuntimeException() throws Exception {
+    public void testTestTearDown_RuntimeException()
+        throws Exception {
         tracingTestListener.expectExceptionInMethod(TEST_TEAR_DOWN, false);
         testExecutor.runTests(testClass);
 
@@ -277,14 +292,14 @@ public class JUnitUnitilsInvocationExceptionTest extends UnitilsInvocationTestBa
         }
     }
 
-
     /**
      * Test the flow when an assertion error is thrown during a {@link junit.framework.TestCase#tearDown} call of a test.
      *
      * @see #assertInvocationOrder
      */
     @Test
-    public void testTestTearDown_AssertionFailedError() throws Exception {
+    public void testTestTearDown_AssertionFailedError()
+        throws Exception {
         tracingTestListener.expectExceptionInMethod(TEST_TEAR_DOWN, true);
         testExecutor.runTests(testClass);
 
@@ -294,14 +309,14 @@ public class JUnitUnitilsInvocationExceptionTest extends UnitilsInvocationTestBa
         }
     }
 
-
     /**
      * Test the flow when a runtime exception is thrown during a {@link TestListener#afterTestTearDown} call of a module.
      *
      * @see #assertInvocationOrder_afterTestTearDown
      */
     @Test
-    public void testAfterTestTearDown_RuntimeException() throws Exception {
+    public void testAfterTestTearDown_RuntimeException()
+        throws Exception {
         tracingTestListener.expectExceptionInMethod(LISTENER_AFTER_TEST_TEARDOWN, false);
         testExecutor.runTests(testClass);
 
@@ -311,14 +326,14 @@ public class JUnitUnitilsInvocationExceptionTest extends UnitilsInvocationTestBa
         }
     }
 
-
     /**
      * Test the flow when an assertion error is thrown during a {@link TestListener#afterTestTearDown} call of a module.
      *
      * @see #assertInvocationOrder_afterTestTearDown
      */
     @Test
-    public void testAfterTestTearDown_AssertionFailedError() throws Exception {
+    public void testAfterTestTearDown_AssertionFailedError()
+        throws Exception {
         tracingTestListener.expectExceptionInMethod(LISTENER_AFTER_TEST_TEARDOWN, true);
         testExecutor.runTests(testClass);
 
@@ -334,7 +349,8 @@ public class JUnitUnitilsInvocationExceptionTest extends UnitilsInvocationTestBa
      * @see #assertInvocationOrder
      */
     @Test
-    public void testTestAfterClass() throws Exception {
+    public void testTestAfterClass()
+        throws Exception {
         Assume.assumeTrue(!testFramework.equals(JUNIT3));
 
         tracingTestListener.expectExceptionInMethod(TEST_AFTER_CLASS, false);
@@ -342,7 +358,6 @@ public class JUnitUnitilsInvocationExceptionTest extends UnitilsInvocationTestBa
 
         assertInvocationOrder();
     }
-
 
     /**
      * Asserts the flow when an exception is thrown during a before class call of a test.
@@ -361,7 +376,6 @@ public class JUnitUnitilsInvocationExceptionTest extends UnitilsInvocationTestBa
         assertNoMoreInvocations();
     }
 
-
     /**
      * Asserts the flow when an exception is thrown during a {@link TestListener#beforeTestSetUp} call of a module.
      */
@@ -378,7 +392,6 @@ public class JUnitUnitilsInvocationExceptionTest extends UnitilsInvocationTestBa
         assertInvocation(TEST_AFTER_CLASS, testClass, JUNIT4);
         assertNoMoreInvocations();
     }
-
 
     /**
      * Asserts the flow when an exception is thrown during a setUp call of a test.
@@ -398,7 +411,6 @@ public class JUnitUnitilsInvocationExceptionTest extends UnitilsInvocationTestBa
         assertInvocation(TEST_TEAR_DOWN, testClass, JUNIT4);
         assertInvocation(LISTENER_AFTER_TEST_TEARDOWN, testClass, JUNIT3, JUNIT4);
     }
-
 
     /**
      * Asserts the flow when an exception is thrown during a {@link TestListener#beforeTestMethod} call of a module.
@@ -424,7 +436,6 @@ public class JUnitUnitilsInvocationExceptionTest extends UnitilsInvocationTestBa
         assertInvocation(TEST_AFTER_CLASS, testClass, JUNIT4, TESTNG);
         assertNoMoreInvocations();
     }
-
 
     /**
      * Asserts the flow when an exception is thrown during the test.
@@ -480,7 +491,6 @@ public class JUnitUnitilsInvocationExceptionTest extends UnitilsInvocationTestBa
         assertNoMoreInvocations();
     }
 
-
     /**
      * Asserts the flow when an exception is thrown during a tear down call of a test.
      */
@@ -508,7 +518,6 @@ public class JUnitUnitilsInvocationExceptionTest extends UnitilsInvocationTestBa
         assertNoMoreInvocations();
     }
 
-
     /**
      * Asserts the flow when an exception is thrown during a {@link TestListener#afterTestTearDown} call of a module.
      */
@@ -535,5 +544,4 @@ public class JUnitUnitilsInvocationExceptionTest extends UnitilsInvocationTestBa
         assertInvocation(TEST_AFTER_CLASS, testClass, JUNIT4);
         assertNoMoreInvocations();
     }
-
 }

@@ -20,18 +20,14 @@ import org.unitils.database.DatabaseModule;
 import org.unitils.database.SQLUnitils;
 import org.unitils.database.annotations.TestDataSource;
 
-
 /**
  * test {@link DbUnitUnitils}.
  *
  * @author wiw
- *
  * @since
- *
  */
 @RunWith(UnitilsBlockJUnit4ClassRunner.class)
 public class DbUnitUnitilsTest {
-
     @TestDataSource
     private DataSource dataSource;
 
@@ -46,14 +42,16 @@ public class DbUnitUnitilsTest {
      * @throws java.lang.Exception
      */
     @Before
-    public void setUp() throws Exception {
+    public void setUp()
+        throws Exception {
     }
 
     /**
      * Test method for {@link org.unitils.dbunit.DbUnitUnitils#assertExpectedDataSet(java.io.File[])}.
      */
     @Test
-    public void testAssertExpectedDataSetFileArray() throws IOException {
+    public void testAssertExpectedDataSetFileArray()
+        throws IOException {
         SQLUnitils.executeUpdate("insert into fruit (id, name) values(1, 'orange')", dataSource);
         SQLUnitils.executeUpdate("insert into fruit (id, name) values(2, 'apple')", dataSource);
 
@@ -61,13 +59,13 @@ public class DbUnitUnitilsTest {
     }
 
     @Test(expected = AssertionError.class)
-    public void testAssertExpectedDataSetFileArray_otherValuesInDataset() throws IOException {
+    public void testAssertExpectedDataSetFileArray_otherValuesInDataset()
+        throws IOException {
         SQLUnitils.executeUpdate("insert into fruit (id, name) values(3, 'peach')", dataSource);
         SQLUnitils.executeUpdate("insert into fruit (id, name) values(4, 'banana')", dataSource);
 
         DbUnitUnitils.assertExpectedDataSet(new File("src/test/java/org/unitils/dbunit/DbUnitUnitilsTest-testAssertExpectedDataSetFileArray.xml"));
     }
-
 
     /**
      * Test method for {@link org.unitils.dbunit.DbUnitUnitils#assertExpectedDataSet(java.lang.String[])}.
@@ -81,7 +79,8 @@ public class DbUnitUnitilsTest {
     }
 
     @Test(expected = AssertionError.class)
-    public void testAssertExpectedDataSetStringArray_otherValuesInDataset() throws IOException {
+    public void testAssertExpectedDataSetStringArray_otherValuesInDataset()
+        throws IOException {
         SQLUnitils.executeUpdate("insert into fruit (id, name) values(3, 'peach')", dataSource);
         SQLUnitils.executeUpdate("insert into fruit (id, name) values(4, 'banana')", dataSource);
 
@@ -99,5 +98,4 @@ public class DbUnitUnitilsTest {
         DataSource dataSource = databasemodule.getWrapper("").getDataSource();
         SQLUnitils.executeUpdate("drop TABLE fruit", dataSource);
     }
-
 }

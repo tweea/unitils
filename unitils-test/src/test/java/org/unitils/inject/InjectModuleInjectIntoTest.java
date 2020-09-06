@@ -1,12 +1,9 @@
 /*
- * Copyright 2008,  Unitils.org
- *
+ * Copyright 2008, Unitils.org
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -14,8 +11,6 @@
  * limitations under the License.
  */
 package org.unitils.inject;
-
-import static org.junit.Assert.assertSame;
 
 import java.util.Properties;
 
@@ -25,19 +20,22 @@ import org.unitils.core.ConfigurationLoader;
 import org.unitils.inject.annotation.InjectInto;
 import org.unitils.inject.annotation.TestedObject;
 
+import static org.junit.Assert.assertSame;
+
 /**
  * @author Filip Neven
  * @author Tim Ducheyne
  */
 public class InjectModuleInjectIntoTest {
-
     InjectModule injectModule;
 
     TestInjectIntoExplicitTarget testInjectIntoExplicitTarget = new TestInjectIntoExplicitTarget();
+
     TestInjectIntoAnnotatedTarget testInjectIntoAnnotatedTarget = new TestInjectIntoAnnotatedTarget();
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp()
+        throws Exception {
         Properties configuration = new ConfigurationLoader().loadConfiguration();
 
         injectModule = new InjectModule();
@@ -58,7 +56,6 @@ public class InjectModuleInjectIntoTest {
     }
 
     public class TestInjectIntoExplicitTarget {
-
         @InjectInto(target = "injectOn", property = "toInject")
         private ToInject toInject;
 
@@ -76,11 +73,9 @@ public class InjectModuleInjectIntoTest {
         public InjectOn getInjectOn() {
             return injectOn;
         }
-
     }
 
     public class TestInjectIntoAnnotatedTarget {
-
         @InjectInto(property = "toInject")
         private ToInject toInject;
 
@@ -107,7 +102,6 @@ public class InjectModuleInjectIntoTest {
         public InjectOn getInjectOn2() {
             return injectOn2;
         }
-
     }
 
     public class ToInject {
@@ -115,7 +109,6 @@ public class InjectModuleInjectIntoTest {
     }
 
     public class InjectOn {
-
         private ToInject toInject;
 
         public void setTestObject1(ToInject toInject) {
@@ -125,7 +118,5 @@ public class InjectModuleInjectIntoTest {
         public ToInject getTestObject1() {
             return toInject;
         }
-
     }
-
 }

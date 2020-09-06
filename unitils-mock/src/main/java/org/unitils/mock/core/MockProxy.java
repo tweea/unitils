@@ -1,19 +1,17 @@
 /*
- *
- *  * Copyright 2010,  Unitils.org
- *  *
- *  * Licensed under the Apache License, Version 2.0 (the "License");
- *  * you may not use this file except in compliance with the License.
- *  * You may obtain a copy of the License at
- *  *
- *  *     http://www.apache.org/licenses/LICENSE-2.0
- *  *
- *  * Unless required by applicable law or agreed to in writing, software
- *  * distributed under the License is distributed on an "AS IS" BASIS,
- *  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  * See the License for the specific language governing permissions and
- *  * limitations under the License.
- *
+ * * Copyright 2010, Unitils.org
+ * *
+ * * Licensed under the Apache License, Version 2.0 (the "License");
+ * * you may not use this file except in compliance with the License.
+ * * You may obtain a copy of the License at
+ * *
+ * * http://www.apache.org/licenses/LICENSE-2.0
+ * *
+ * * Unless required by applicable law or agreed to in writing, software
+ * * distributed under the License is distributed on an "AS IS" BASIS,
+ * * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * * See the License for the specific language governing permissions and
+ * * limitations under the License.
  */
 package org.unitils.mock.core;
 
@@ -41,8 +39,8 @@ public class MockProxy<T> {
 
     protected MatchingInvocationBuilder matchingInvocationBuilder;
 
-
-    public MockProxy(String mockName, Class<T> mockedType, BehaviorDefiningInvocations oneTimeMatchingBehaviorDefiningInvocations, BehaviorDefiningInvocations alwaysMatchingBehaviorDefiningInvocations, Scenario scenario, MatchingInvocationBuilder matchingInvocationBuilder) {
+    public MockProxy(String mockName, Class<T> mockedType, BehaviorDefiningInvocations oneTimeMatchingBehaviorDefiningInvocations,
+        BehaviorDefiningInvocations alwaysMatchingBehaviorDefiningInvocations, Scenario scenario, MatchingInvocationBuilder matchingInvocationBuilder) {
         this.oneTimeMatchingBehaviorDefiningInvocations = oneTimeMatchingBehaviorDefiningInvocations;
         this.alwaysMatchingBehaviorDefiningInvocations = alwaysMatchingBehaviorDefiningInvocations;
         this.scenario = scenario;
@@ -50,14 +48,13 @@ public class MockProxy<T> {
         this.proxy = createProxy(mockName, new InvocationHandler(), mockedType, Cloneable.class);
     }
 
-
     @SuppressWarnings("unchecked")
     public T getProxy() {
         return proxy;
     }
 
-
-    protected Object handleMockInvocation(ProxyInvocation proxyInvocation) throws Throwable {
+    protected Object handleMockInvocation(ProxyInvocation proxyInvocation)
+        throws Throwable {
         matchingInvocationBuilder.assertNotExpectingInvocation();
 
         BehaviorDefiningInvocation behaviorDefiningInvocation = getMatchingBehaviorDefiningInvocation(proxyInvocation);
@@ -83,15 +80,15 @@ public class MockProxy<T> {
         return result;
     }
 
-
-    protected BehaviorDefiningInvocation getMatchingBehaviorDefiningInvocation(ProxyInvocation proxyInvocation) throws Throwable {
-        BehaviorDefiningInvocation behaviorDefiningInvocation = oneTimeMatchingBehaviorDefiningInvocations.getMatchingBehaviorDefiningInvocation(proxyInvocation);
+    protected BehaviorDefiningInvocation getMatchingBehaviorDefiningInvocation(ProxyInvocation proxyInvocation)
+        throws Throwable {
+        BehaviorDefiningInvocation behaviorDefiningInvocation = oneTimeMatchingBehaviorDefiningInvocations
+            .getMatchingBehaviorDefiningInvocation(proxyInvocation);
         if (behaviorDefiningInvocation == null) {
             behaviorDefiningInvocation = alwaysMatchingBehaviorDefiningInvocations.getMatchingBehaviorDefiningInvocation(proxyInvocation);
         }
         return behaviorDefiningInvocation;
     }
-
 
     protected MockBehavior getValidMockBehavior(ProxyInvocation proxyInvocation, BehaviorDefiningInvocation behaviorDefiningInvocation) {
         if (behaviorDefiningInvocation != null) {
@@ -102,13 +99,15 @@ public class MockProxy<T> {
         return getDefaultMockBehavior(proxyInvocation);
     }
 
-
     /**
      * Check whether the mock behavior can applied for this invocation
      *
-     * @param mockBehavior               The behavior to verify, not null
-     * @param proxyInvocation            The invocation, not null
-     * @param behaviorDefiningInvocation The invocation that defined the behavior, not null
+     * @param mockBehavior
+     *     The behavior to verify, not null
+     * @param proxyInvocation
+     *     The invocation, not null
+     * @param behaviorDefiningInvocation
+     *     The invocation that defined the behavior, not null
      */
     protected void assertCanExecute(MockBehavior mockBehavior, ProxyInvocation proxyInvocation, BehaviorDefiningInvocation behaviorDefiningInvocation) {
         if (!(mockBehavior instanceof ValidatableMockBehavior)) {
@@ -123,7 +122,6 @@ public class MockProxy<T> {
         }
     }
 
-
     protected MockBehavior getDefaultMockBehavior(ProxyInvocation proxyInvocation) {
         if (proxyInvocation.getMethod().getReturnType() == Void.TYPE) {
             return null;
@@ -131,12 +129,11 @@ public class MockProxy<T> {
         return new DefaultValueReturningMockBehavior();
     }
 
-
-    protected class InvocationHandler implements ProxyInvocationHandler {
-
-        public Object handleInvocation(ProxyInvocation invocation) throws Throwable {
+    protected class InvocationHandler
+        implements ProxyInvocationHandler {
+        public Object handleInvocation(ProxyInvocation invocation)
+            throws Throwable {
             return handleMockInvocation(invocation);
         }
     }
-
 }

@@ -1,12 +1,9 @@
 /*
- * Copyright 2008,  Unitils.org
- *
+ * Copyright 2008, Unitils.org
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -15,12 +12,12 @@
  */
 package org.unitils.dbmaintainer.version;
 
-import static org.apache.commons.lang.StringUtils.isEmpty;
-import static org.apache.commons.lang.StringUtils.split;
-
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+
+import static org.apache.commons.lang.StringUtils.isEmpty;
+import static org.apache.commons.lang.StringUtils.split;
 
 /**
  * Class representing the version of a database or the version of a script.
@@ -28,43 +25,44 @@ import java.util.List;
  * A version is represented by a modification timestamp and a list of version indexes.
  * The indexes should be defined as follows:
  * <p/>
- * 01_folder/01_subfolder/1_script  ==> 1,1,1<br>
- * 01_folder/02_subfolder/1_script  ==> 1,2,1<br>
- * 01_folder/02_subfolder/script    ==> 1,2,null<br>
- * folder/subfolder/2_script        ==> null,null,2<br>
- * script                           ==> null<br>
+ * 01_folder/01_subfolder/1_script ==> 1,1,1<br>
+ * 01_folder/02_subfolder/1_script ==> 1,2,1<br>
+ * 01_folder/02_subfolder/script ==> 1,2,null<br>
+ * folder/subfolder/2_script ==> null,null,2<br>
+ * script ==> null<br>
  * <p/>
  * The last index should always be the index of the script.
  *
  * @author Filip Neven
  * @author Tim Ducheyne
  */
-public class Version implements Comparable<Version> {
+public class Version
+    implements Comparable<Version> {
 
     /* The version indexes, empty if not defined */
     private List<Long> indexes = new ArrayList<Long>();
 
-
     /**
      * Creates a new version.
      *
-     * @param indexes   The script indexes, not null
-     * @param timeStamp The script timestamp
+     * @param indexes
+     *     The script indexes, not null
+     * @param timeStamp
+     *     The script timestamp
      */
     public Version(List<Long> indexes) {
         this.indexes = indexes;
     }
 
-
     /**
      * Creates a new version.
      *
-     * @param indexString The indexes as a string
+     * @param indexString
+     *     The indexes as a string
      */
     public Version(String indexString) {
         this.indexes = extractIndexes(indexString);
     }
-
 
     /**
      * An empty list if no version is defined.
@@ -74,7 +72,6 @@ public class Version implements Comparable<Version> {
     public List<Long> getIndexes() {
         return indexes;
     }
-
 
     /**
      * Gets the last index in the list.
@@ -88,16 +85,15 @@ public class Version implements Comparable<Version> {
         return indexes.get(indexes.size() - 1);
     }
 
-
     /**
      * Sets the indexes. Use an empty list if no version is defined.
      *
-     * @param indexes The script indexes, not null
+     * @param indexes
+     *     The script indexes, not null
      */
     public void setIndexes(List<Long> indexes) {
         this.indexes = indexes;
     }
-
 
     /**
      * Gets a string representation of the indexes as followes:
@@ -124,12 +120,12 @@ public class Version implements Comparable<Version> {
         return result.toString();
     }
 
-
     /**
      * Extracts the indexes out of the given string as followes:
      * 1.x.2.x => 1, null, 2, null
      *
-     * @param indexString The string
+     * @param indexString
+     *     The string
      * @return The list of longs or nulls in case of 'x'
      */
     protected List<Long> extractIndexes(String indexString) {
@@ -149,7 +145,6 @@ public class Version implements Comparable<Version> {
         return result;
     }
 
-
     /**
      * @return The string representation of the version.
      */
@@ -158,14 +153,14 @@ public class Version implements Comparable<Version> {
         return "indexes: " + getIndexesString();
     }
 
-
     /**
      * Compares the given version to this version using the index values.
      * <p/>
      * If both scripts have an index, the index is used.
      * If one of the scripts has an index, it is considerer lower than the script that does not have an index.
      *
-     * @param otherVersion The other version, not null
+     * @param otherVersion
+     *     The other version, not null
      * @return -1 when this version is smaller, 0 if equal, 1 when larger
      */
     public int compareTo(Version otherVersion) {
@@ -199,41 +194,37 @@ public class Version implements Comparable<Version> {
             }
         }
         if (!thisIterator.hasNext() && !otherIterator.hasNext()) {
-        	return 0;
+            return 0;
         }
         if (thisIterator.hasNext()) {
-        	return 1;
+            return 1;
         } else {
-        	return -1;
+            return -1;
         }
     }
 
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((indexes == null) ? 0 : indexes.hashCode());
+        return result;
+    }
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((indexes == null) ? 0 : indexes.hashCode());
-		return result;
-	}
-
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		final Version other = (Version) obj;
-		if (indexes == null) {
-			if (other.indexes != null)
-				return false;
-		} else if (!indexes.equals(other.indexes))
-			return false;
-		return true;
-	}
-    
-    
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        final Version other = (Version) obj;
+        if (indexes == null) {
+            if (other.indexes != null)
+                return false;
+        } else if (!indexes.equals(other.indexes))
+            return false;
+        return true;
+    }
 }

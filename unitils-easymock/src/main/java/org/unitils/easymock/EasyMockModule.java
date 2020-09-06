@@ -1,12 +1,9 @@
 /*
- * Copyright 2008,  Unitils.org
- *
+ * Copyright 2008, Unitils.org
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -14,18 +11,6 @@
  * limitations under the License.
  */
 package org.unitils.easymock;
-
-import static org.easymock.MockType.DEFAULT;
-import static org.easymock.MockType.NICE;
-import static org.unitils.reflectionassert.ReflectionComparatorMode.IGNORE_DEFAULTS;
-import static org.unitils.reflectionassert.ReflectionComparatorMode.LENIENT_DATES;
-import static org.unitils.reflectionassert.ReflectionComparatorMode.LENIENT_ORDER;
-import static org.unitils.util.AnnotationUtils.getFieldsAnnotatedWith;
-import static org.unitils.util.AnnotationUtils.getMethodsAnnotatedWith;
-import static org.unitils.util.ModuleUtils.getAnnotationPropertyDefaults;
-import static org.unitils.util.ModuleUtils.getEnumValueReplaceDefault;
-import static org.unitils.util.ReflectionUtils.invokeMethod;
-import static org.unitils.util.ReflectionUtils.setFieldValue;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
@@ -54,6 +39,18 @@ import org.unitils.easymock.util.Order;
 import org.unitils.reflectionassert.ReflectionComparatorMode;
 import org.unitils.util.PropertyUtils;
 
+import static org.easymock.MockType.DEFAULT;
+import static org.easymock.MockType.NICE;
+import static org.unitils.reflectionassert.ReflectionComparatorMode.IGNORE_DEFAULTS;
+import static org.unitils.reflectionassert.ReflectionComparatorMode.LENIENT_DATES;
+import static org.unitils.reflectionassert.ReflectionComparatorMode.LENIENT_ORDER;
+import static org.unitils.util.AnnotationUtils.getFieldsAnnotatedWith;
+import static org.unitils.util.AnnotationUtils.getMethodsAnnotatedWith;
+import static org.unitils.util.ModuleUtils.getAnnotationPropertyDefaults;
+import static org.unitils.util.ModuleUtils.getEnumValueReplaceDefault;
+import static org.unitils.util.ReflectionUtils.invokeMethod;
+import static org.unitils.util.ReflectionUtils.setFieldValue;
+
 /**
  * Module for testing with mock objects using EasyMock.
  * <p/>
@@ -74,7 +71,8 @@ import org.unitils.util.PropertyUtils;
  * @author Filip Neven
  * @author Tim Ducheyne
  */
-public class EasyMockModule implements Module {
+public class EasyMockModule
+    implements Module {
 
     /* Property key for configuring whether verify() is automatically called on every mock object after each test method execution */
     public static final String PROPKEY_AUTO_VERIFY_AFTER_TEST_ENABLED = "EasyMockModule.autoVerifyAfterTest.enabled";
@@ -88,7 +86,6 @@ public class EasyMockModule implements Module {
     /* Indicates whether verify() is automatically called on every mock object after each test method execution */
     private boolean autoVerifyAfterTestEnabled;
 
-
     /**
      * Initializes the module
      */
@@ -100,14 +97,12 @@ public class EasyMockModule implements Module {
         autoVerifyAfterTestEnabled = PropertyUtils.getBoolean(PROPKEY_AUTO_VERIFY_AFTER_TEST_ENABLED, configuration);
     }
 
-
     /**
      * No after initialization needed for this module
      */
     @Override
     public void afterInit() {
     }
-
 
     /**
      * Creates the listener for plugging in the behavior of this module into the test runs.
@@ -119,29 +114,30 @@ public class EasyMockModule implements Module {
         return new EasyMockTestListener();
     }
 
-
     /**
      * Creates an EasyMock mock object of the given type.
      * <p/>
      * An instance of the mock control is stored, so that it can be set to the replay/verify state when
-     * {@link #replay()} or {@link #verify()}  is called.
+     * {@link #replay()} or {@link #verify()} is called.
      *
-     * @param <T>             the type of the mock
-     * @param mockType        the class type for the mock, not null
-     * @param invocationOrder the order setting, not null
-     * @param calls           the calls setting, not null
+     * @param <T>
+     *     the type of the mock
+     * @param mockType
+     *     the class type for the mock, not null
+     * @param invocationOrder
+     *     the order setting, not null
+     * @param calls
+     *     the calls setting, not null
      * @return a mock for the given class or interface, not null
      */
     public <T> T createRegularMock(Class<T> mockType, InvocationOrder invocationOrder, Calls calls) {
         // Get anotation arguments and replace default values if needed
-        invocationOrder = getEnumValueReplaceDefault(RegularMock.class, "invocationOrder", invocationOrder,
-                defaultAnnotationPropertyValues);
+        invocationOrder = getEnumValueReplaceDefault(RegularMock.class, "invocationOrder", invocationOrder, defaultAnnotationPropertyValues);
         calls = getEnumValueReplaceDefault(RegularMock.class, "calls", calls, defaultAnnotationPropertyValues);
 
         MocksControl mocksControl;
         if (Calls.LENIENT == calls) {
             mocksControl = new MocksControl(NICE);
-
         } else {
             mocksControl = new MocksControl(DEFAULT);
         }
@@ -153,7 +149,6 @@ public class EasyMockModule implements Module {
         return mocksControl.createMock(mockType);
     }
 
-
     /**
      * todo javadoc
      * <p/>
@@ -164,13 +159,20 @@ public class EasyMockModule implements Module {
      * If arguments is lenient a lenient control is create, else an EasyMock control is created
      * If order is set to strict, invocation order checking is enabled
      *
-     * @param <T>             the type of the mock
-     * @param mockType        the type of the mock, not null
-     * @param invocationOrder the order setting, not null
-     * @param calls           the calls setting, not null
-     * @param order           todo
-     * @param dates           todo
-     * @param defaults        todo
+     * @param <T>
+     *     the type of the mock
+     * @param mockType
+     *     the type of the mock, not null
+     * @param invocationOrder
+     *     the order setting, not null
+     * @param calls
+     *     the calls setting, not null
+     * @param order
+     *     todo
+     * @param dates
+     *     todo
+     * @param defaults
+     *     todo
      * @return a mockcontrol for the given class or interface, not null
      */
     public <T> T createMock(Class<T> mockType, InvocationOrder invocationOrder, Calls calls, Order order, Dates dates, Defaults defaults) {
@@ -195,7 +197,6 @@ public class EasyMockModule implements Module {
         LenientMocksControl mocksControl;
         if (Calls.LENIENT == calls) {
             mocksControl = new LenientMocksControl(NICE, comparatorModes.toArray(new ReflectionComparatorMode[0]));
-
         } else {
             mocksControl = new LenientMocksControl(DEFAULT, comparatorModes.toArray(new ReflectionComparatorMode[0]));
         }
@@ -206,7 +207,6 @@ public class EasyMockModule implements Module {
         mocksControls.add(mocksControl);
         return mocksControl.createMock(mockType);
     }
-
 
     /**
      * Replays all mock controls.
@@ -226,7 +226,6 @@ public class EasyMockModule implements Module {
         }
     }
 
-
     /**
      * This method makes sure {@link org.easymock.internal.MocksControl#verify} method is called for every mock mock object
      * that was injected to a field annotated with {@link Mock}, or directly created by calling
@@ -245,20 +244,20 @@ public class EasyMockModule implements Module {
         }
     }
 
-
     /**
      * Creates and sets a mock for all {@link RegularMock} annotated fields.
      * <p/>
      * The
      * todo javadoc
-     * method is called for creating the mocks. Ones the mock is created, all methods annotated with {@link AfterCreateMock} will be called passing the created mock.
+     * method is called for creating the mocks. Ones the mock is created, all methods annotated with {@link AfterCreateMock} will be called passing the created
+     * mock.
      *
-     * @param testObject the test, not null
+     * @param testObject
+     *     the test, not null
      */
     protected void createAndInjectRegularMocksIntoTest(Object testObject) {
         Set<Field> mockFields = getFieldsAnnotatedWith(testObject.getClass(), RegularMock.class);
         for (Field mockField : mockFields) {
-
             Class<?> mockType = mockField.getType();
 
             RegularMock regularMockAnnotation = mockField.getAnnotation(RegularMock.class);
@@ -269,58 +268,58 @@ public class EasyMockModule implements Module {
         }
     }
 
-
-    //todo javadoc
+    // todo javadoc
     protected void createAndInjectMocksIntoTest(Object testObject) {
         Set<Field> mockFields = getFieldsAnnotatedWith(testObject.getClass(), Mock.class);
         for (Field mockField : mockFields) {
-
             Class<?> mockType = mockField.getType();
 
             Mock mockAnnotation = mockField.getAnnotation(Mock.class);
-            Object mockObject = createMock(mockType, mockAnnotation.invocationOrder(), mockAnnotation.calls(), mockAnnotation.order(), mockAnnotation.dates(), mockAnnotation.defaults());
+            Object mockObject = createMock(mockType, mockAnnotation.invocationOrder(), mockAnnotation.calls(), mockAnnotation.order(), mockAnnotation.dates(),
+                mockAnnotation.defaults());
             setFieldValue(testObject, mockField, mockObject);
 
             callAfterCreateMockMethods(testObject, mockObject, mockField.getName(), mockType);
         }
     }
 
-
     /**
      * Calls all {@link AfterCreateMock} annotated methods on the test, passing the given mock.
      * These annotated methods must have following signature <code>void myMethod(Object mock, String name, Class type)</code>.
      * If this is not the case, a runtime exception is called.
      *
-     * @param testObject the test, not null
-     * @param mockObject the mock, not null
-     * @param name       the field(=mock) name, not null
-     * @param type       the field(=mock) type
+     * @param testObject
+     *     the test, not null
+     * @param mockObject
+     *     the mock, not null
+     * @param name
+     *     the field(=mock) name, not null
+     * @param type
+     *     the field(=mock) type
      */
     protected void callAfterCreateMockMethods(Object testObject, Object mockObject, String name, Class<?> type) {
         Set<Method> methods = getMethodsAnnotatedWith(testObject.getClass(), AfterCreateMock.class);
         for (Method method : methods) {
             try {
                 invokeMethod(testObject, method, mockObject, name, type);
-
             } catch (InvocationTargetException e) {
                 throw new UnitilsException("An exception occurred while invoking an after create mock method.", e);
             } catch (Exception e) {
-                throw new UnitilsException("Unable to invoke after create mock method. Ensure that this method has following signature: " +
-                        "void myMethod(Object mock, String name, Class type)", e);
+                throw new UnitilsException("Unable to invoke after create mock method. Ensure that this method has following signature: "
+                    + "void myMethod(Object mock, String name, Class type)", e);
             }
         }
     }
-    
+
     public void addMocksControlToList(MocksControl control) {
         mocksControls.add(control);
     }
 
-
     /**
      * Test listener that handles the mock creation and injection.
      */
-    protected class EasyMockTestListener extends TestListener {
-
+    protected class EasyMockTestListener
+        extends TestListener {
         /**
          * Before the test is executed this calls {@link EasyMockModule#createAndInjectRegularMocksIntoTest(Object)} to
          * create and inject all mocks on the class.
@@ -345,6 +344,4 @@ public class EasyMockModule implements Module {
             }
         }
     }
-
 }
-

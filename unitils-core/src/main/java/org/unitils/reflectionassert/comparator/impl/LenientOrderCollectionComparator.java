@@ -1,12 +1,9 @@
 /*
- * Copyright 2008,  Unitils.org
- *
+ * Copyright 2008, Unitils.org
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -15,18 +12,18 @@
  */
 package org.unitils.reflectionassert.comparator.impl;
 
-import org.unitils.reflectionassert.ReflectionComparator;
-import org.unitils.reflectionassert.comparator.Comparator;
-import org.unitils.reflectionassert.difference.Difference;
-import org.unitils.reflectionassert.difference.UnorderedCollectionDifference;
-import org.unitils.reflectionassert.util.MatchingScoreCalculator;
-import static org.unitils.util.CollectionUtils.convertToCollection;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
 
+import org.unitils.reflectionassert.ReflectionComparator;
+import org.unitils.reflectionassert.comparator.Comparator;
+import org.unitils.reflectionassert.difference.Difference;
+import org.unitils.reflectionassert.difference.UnorderedCollectionDifference;
+import org.unitils.reflectionassert.util.MatchingScoreCalculator;
+
+import static org.unitils.util.CollectionUtils.convertToCollection;
 
 /**
  * A comparator for collections and arrays that ignores the order of both collections.
@@ -36,14 +33,15 @@ import java.util.Map;
  * @author Tim Ducheyne
  * @author Filip Neven
  */
-public class LenientOrderCollectionComparator implements Comparator {
-
-
+public class LenientOrderCollectionComparator
+    implements Comparator {
     /**
      * Returns true if both objects are not null and are both Arrays or Collections.
      *
-     * @param left  The left object
-     * @param right The right object
+     * @param left
+     *     The left object
+     * @param right
+     *     The right object
      * @return True for Arrays and Collections
      */
     public boolean canCompare(Object left, Object right) {
@@ -56,16 +54,19 @@ public class LenientOrderCollectionComparator implements Comparator {
         return false;
     }
 
-
     /**
      * Compares the given collections/arrays but ignoring the actual order of the elements.
      * This will first try to find a sequence that is an exact match. If no such sequence can be found,
      * the difference of all elements with all other elements are calculated one by one.
      *
-     * @param left                 The left array/collection, not null
-     * @param right                The right array/collection, not null
-     * @param onlyFirstDifference  True if only the first difference should be returned
-     * @param reflectionComparator The root comparator for inner comparisons, not null
+     * @param left
+     *     The left array/collection, not null
+     * @param right
+     *     The right array/collection, not null
+     * @param onlyFirstDifference
+     *     True if only the first difference should be returned
+     * @param reflectionComparator
+     *     The root comparator for inner comparisons, not null
      * @return An UnorderedCollectionDifference or null if both collections are equal
      */
     public Difference compare(Object left, Object right, boolean onlyFirstDifference, ReflectionComparator reflectionComparator) {
@@ -90,7 +91,6 @@ public class LenientOrderCollectionComparator implements Comparator {
         return difference;
     }
 
-
     /**
      * Recursively checks whether there is a sequence so that both collections have matching elements.
      * This will loop over the elements of the left list and then try to find a match for these elements in the right
@@ -100,13 +100,19 @@ public class LenientOrderCollectionComparator implements Comparator {
      * NOTE: because difference are cached in the reflection comparator, comparing two elements that were already
      * compared should be very fast.
      *
-     * @param leftList             The left list, not null
-     * @param rightList            The right list, not null
-     * @param leftIndex            The current index in the left collection
-     * @param reflectionComparator reflectionComparator The comparator for the element comparisons, not null
+     * @param leftList
+     *     The left list, not null
+     * @param rightList
+     *     The right list, not null
+     * @param leftIndex
+     *     The current index in the left collection
+     * @param reflectionComparator
+     *     reflectionComparator The comparator for the element comparisons, not null
      * @return True if a match is found
      */
-    @SuppressWarnings({"unchecked"})
+    @SuppressWarnings({
+        "unchecked"
+    })
     protected boolean isEqual(ArrayList<Object> leftList, ArrayList<Object> rightList, int leftIndex, ReflectionComparator reflectionComparator) {
         if (leftIndex >= leftList.size()) {
             // end of the recursion
@@ -136,7 +142,6 @@ public class LenientOrderCollectionComparator implements Comparator {
         return false;
     }
 
-
     /**
      * Calculates the difference of all elements in the left list with all elements of the right list. The result is
      * added to the given difference.
@@ -144,12 +149,17 @@ public class LenientOrderCollectionComparator implements Comparator {
      * NOTE: because difference are cached in the reflection comparator, comparing two elements that were already
      * compared should be very fast.
      *
-     * @param leftList             The left list, not null
-     * @param rightList            The right list, not null
-     * @param reflectionComparator The comparator for element comparisons, not null
-     * @param difference           The root difference to which all differences will be added, not null
+     * @param leftList
+     *     The left list, not null
+     * @param rightList
+     *     The right list, not null
+     * @param reflectionComparator
+     *     The comparator for element comparisons, not null
+     * @param difference
+     *     The root difference to which all differences will be added, not null
      */
-    protected void fillAllDifferences(ArrayList<Object> leftList, ArrayList<Object> rightList, ReflectionComparator reflectionComparator, UnorderedCollectionDifference difference) {
+    protected void fillAllDifferences(ArrayList<Object> leftList, ArrayList<Object> rightList, ReflectionComparator reflectionComparator,
+        UnorderedCollectionDifference difference) {
         // loops over all left and right elements to calculate the differences
         for (int leftIndex = 0; leftIndex < leftList.size(); leftIndex++) {
             Object leftValue = leftList.get(leftIndex);
@@ -168,9 +178,12 @@ public class LenientOrderCollectionComparator implements Comparator {
      * Note: The unordered collection difference should contain the differences of all left-elements with
      * all right-elements.
      *
-     * @param leftList   The left list, not null
-     * @param rightList  The right list, not null
-     * @param difference The difference to which all indexes will be added, not null
+     * @param leftList
+     *     The left list, not null
+     * @param rightList
+     *     The right list, not null
+     * @param difference
+     *     The difference to which all indexes will be added, not null
      */
     protected void fillBestMatchingIndexes(ArrayList<Object> leftList, ArrayList<Object> rightList, UnorderedCollectionDifference difference) {
         ArrayList<Integer> leftIndexes = createIndexList(leftList.size());
@@ -179,15 +192,17 @@ public class LenientOrderCollectionComparator implements Comparator {
         setBestMatchingIndexes(leftIndexes, rightIndexes, difference);
     }
 
-
     /**
      * Actual implementation of the best match finding algorithm. This will loop over the different elements in the
      * collections to the match with the lowest total matching score. These indexes are then set on the given
      * difference. The matching scores are determined by the given matchingScoreCalculator.
      *
-     * @param leftIndexes  The current remaining indexes in the left collection, not null
-     * @param rightIndexes The current remaining indexes in the right collection, not null
-     * @param difference   The difference to which all indexes will be added, not null
+     * @param leftIndexes
+     *     The current remaining indexes in the left collection, not null
+     * @param rightIndexes
+     *     The current remaining indexes in the right collection, not null
+     * @param difference
+     *     The difference to which all indexes will be added, not null
      */
     protected void setBestMatchingIndexes(ArrayList<Integer> leftIndexes, ArrayList<Integer> rightIndexes, UnorderedCollectionDifference difference) {
         MatchingScoreCalculator matchingScoreCalculator = createMatchingScoreCalculator();
@@ -210,9 +225,12 @@ public class LenientOrderCollectionComparator implements Comparator {
     /**
      * Removes all left and right indexes for which there is a match in the given difference object.
      *
-     * @param leftIndexes  The indexes, not null
-     * @param rightIndexes The indexes, not null
-     * @param difference   The collection difference, not null
+     * @param leftIndexes
+     *     The indexes, not null
+     * @param rightIndexes
+     *     The indexes, not null
+     * @param difference
+     *     The collection difference, not null
      */
     protected void removeMatchingIndexes(ArrayList<Integer> leftIndexes, ArrayList<Integer> rightIndexes, UnorderedCollectionDifference difference) {
         Map<Integer, Map<Integer, Difference>> differences = difference.getElementDifferences();
@@ -231,9 +249,9 @@ public class LenientOrderCollectionComparator implements Comparator {
         }
     }
 
-
     /**
-     * @param size The nr of elements
+     * @param size
+     *     The nr of elements
      * @return A list containing 0, 1, 2, ..., not null
      */
     protected ArrayList<Integer> createIndexList(int size) {
@@ -243,7 +261,6 @@ public class LenientOrderCollectionComparator implements Comparator {
         }
         return leftIndexes;
     }
-
 
     /**
      * Creates the calculator for determining the matching scores of the differences.

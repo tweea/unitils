@@ -1,12 +1,9 @@
 /*
- * Copyright 2008,  Unitils.org
- *
+ * Copyright 2008, Unitils.org
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -15,20 +12,28 @@
  */
 package org.unitils.core;
 
-import static org.junit.Assert.*;
+import java.util.List;
+import java.util.Properties;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.unitils.UnitilsJUnit4;
-import static org.unitils.core.ModulesLoader.*;
 
-import java.util.List;
-import java.util.Properties;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+import static org.unitils.core.ModulesLoader.PROPKEY_MODULES;
+import static org.unitils.core.ModulesLoader.PROPKEY_MODULE_PREFIX;
+import static org.unitils.core.ModulesLoader.PROPKEY_MODULE_SUFFIX_CLASS_NAME;
+import static org.unitils.core.ModulesLoader.PROPKEY_MODULE_SUFFIX_ENABLED;
+import static org.unitils.core.ModulesLoader.PROPKEY_MODULE_SUFFIX_RUN_AFTER;
 
 /**
  * Test for {@link ModulesLoader}.
  */
-public class ModulesLoaderTest extends UnitilsJUnit4 {
-
+public class ModulesLoaderTest
+    extends UnitilsJUnit4 {
 
     /* Class under test */
     private ModulesLoader modulesLoader;
@@ -36,12 +41,12 @@ public class ModulesLoaderTest extends UnitilsJUnit4 {
     /* The unitils configuration settings that control the core loading */
     private Properties configuration;
 
-
     /**
      * Creates the test instance and initializes the fixture.
      */
     @Before
-    public void setUp() throws Exception {
+    public void setUp()
+        throws Exception {
         modulesLoader = new ModulesLoader();
 
         configuration = new Properties();
@@ -54,7 +59,6 @@ public class ModulesLoaderTest extends UnitilsJUnit4 {
         configuration.setProperty(PROPKEY_MODULE_PREFIX + "c" + PROPKEY_MODULE_SUFFIX_RUN_AFTER, "a");
         configuration.setProperty(PROPKEY_MODULE_PREFIX + "d" + PROPKEY_MODULE_SUFFIX_CLASS_NAME, TestModuleD.class.getName());
     }
-
 
     /**
      * Test the loading of a normal configuration.
@@ -70,7 +74,6 @@ public class ModulesLoaderTest extends UnitilsJUnit4 {
         assertTrue(result.get(2) instanceof TestModuleA);
         assertTrue(result.get(3) instanceof TestModuleC);
     }
-
 
     /**
      * Tests the loading with 1 core name left out: c. The c core should not have been loaded.
@@ -104,7 +107,6 @@ public class ModulesLoaderTest extends UnitilsJUnit4 {
         assertTrue(result.get(2) instanceof TestModuleC);
     }
 
-
     /**
      * Tests the loading with modules (a, b) and dependencies (a -> b, d) that are declared twice. The doubles should
      * have been ignored
@@ -124,7 +126,6 @@ public class ModulesLoaderTest extends UnitilsJUnit4 {
         assertTrue(result.get(3) instanceof TestModuleC);
     }
 
-
     /**
      * Tests the loading with a totally empty configuration.
      */
@@ -138,7 +139,6 @@ public class ModulesLoaderTest extends UnitilsJUnit4 {
         assertTrue(result.isEmpty());
     }
 
-
     /**
      * Tests the loading of a core that is configured with a class name for a class that is not a UnitilsModule. A
      * warning should have been logged and the other modules should have been loaded.
@@ -149,12 +149,10 @@ public class ModulesLoaderTest extends UnitilsJUnit4 {
         try {
             modulesLoader.loadModules(configuration);
             fail();
-
         } catch (UnitilsException e) {
             // expected
         }
     }
-
 
     /**
      * Tests the loading of a core that is configured with a class name for a class that does not exist. A warning
@@ -173,13 +171,11 @@ public class ModulesLoaderTest extends UnitilsJUnit4 {
         assertTrue(result.get(2) instanceof TestModuleC);
     }
 
-
     @Test(expected = UnitilsException.class)
     public void moduleClassInClasspathButCouldNotBeLoaded() {
         configuration.setProperty(PROPKEY_MODULE_PREFIX + "a" + PROPKEY_MODULE_SUFFIX_CLASS_NAME, TestModuleWithFailingInitializer.class.getName());
         modulesLoader.loadModules(configuration);
     }
-
 
     /**
      * Tests the loading of modules that contain a circular dependency. a must run after b must run after d must run
@@ -191,12 +187,10 @@ public class ModulesLoaderTest extends UnitilsJUnit4 {
         try {
             modulesLoader.loadModules(configuration);
             fail();
-
         } catch (UnitilsException e) {
             // expected
         }
     }
-
 
     /**
      * A private constructor should not be a problem.
@@ -215,12 +209,11 @@ public class ModulesLoaderTest extends UnitilsJUnit4 {
         assertTrue(result.get(3) instanceof TestModuleC);
     }
 
-
     /**
      * A test unitils core type
      */
-    public static class TestModuleA implements Module {
-
+    public static class TestModuleA
+        implements Module {
         public void init(Properties configuration) {
         }
 
@@ -230,14 +223,13 @@ public class ModulesLoaderTest extends UnitilsJUnit4 {
         public TestListener getTestListener() {
             return null;
         }
-
     }
 
     /**
      * A test unitils core type
      */
-    public static class TestModuleB implements Module {
-
+    public static class TestModuleB
+        implements Module {
         public void init(Properties configuration) {
         }
 
@@ -247,14 +239,13 @@ public class ModulesLoaderTest extends UnitilsJUnit4 {
         public TestListener getTestListener() {
             return null;
         }
-
     }
 
     /**
      * A test unitils core type
      */
-    public static class TestModuleC implements Module {
-
+    public static class TestModuleC
+        implements Module {
         public void init(Properties configuration) {
         }
 
@@ -264,14 +255,13 @@ public class ModulesLoaderTest extends UnitilsJUnit4 {
         public TestListener getTestListener() {
             return null;
         }
-
     }
 
     /**
      * A test unitils core type
      */
-    public static class TestModuleD implements Module {
-
+    public static class TestModuleD
+        implements Module {
         public void init(Properties configuration) {
         }
 
@@ -281,15 +271,13 @@ public class ModulesLoaderTest extends UnitilsJUnit4 {
         public TestListener getTestListener() {
             return null;
         }
-
     }
-
 
     /**
      * A test unitils core type having a private constructor
      */
-    public static class TestModulePrivate implements Module {
-
+    public static class TestModulePrivate
+        implements Module {
         public void init(Properties configuration) {
         }
 
@@ -304,14 +292,14 @@ public class ModulesLoaderTest extends UnitilsJUnit4 {
         }
     }
 
-
     /**
      * A test unitils module that will fail to load
      */
-    public static class TestModuleWithFailingInitializer implements Module {
-
+    public static class TestModuleWithFailingInitializer
+        implements Module {
         static {
-            if (true) throw new RuntimeException("init error");
+            if (true)
+                throw new RuntimeException("init error");
         }
 
         public void init(Properties configuration) {

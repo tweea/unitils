@@ -1,12 +1,9 @@
 /*
- * Copyright 2008,  Unitils.org
- *
+ * Copyright 2008, Unitils.org
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -24,52 +21,53 @@ import static org.unitils.TracingTestListener.TestInvocation.TEST_TEAR_DOWN;
  * @author Filip Neven
  * @author Tim Ducheyne
  */
-abstract public class UnitilsJUnit3TestBase extends UnitilsJUnit3 {
+abstract public class UnitilsJUnit3TestBase
+    extends UnitilsJUnit3 {
 
     /* Test listener that will record all invocations */
     private static TracingTestListener tracingTestListener;
 
-
     /**
      * Sets the tracing test listener that will record all invocations.
      *
-     * @param testListener the listener
+     * @param testListener
+     *     the listener
      */
     public static void setTracingTestListener(TracingTestListener testListener) {
         tracingTestListener = testListener;
     }
 
-
     /**
      * Overidden to register the test setup invocation.
      */
     @Override
-    protected void setUp() throws Exception {
+    protected void setUp()
+        throws Exception {
         super.setUp();
         registerTestInvocation(TEST_SET_UP, null);
     }
-
 
     /**
      * Overidden to register the test teardown invocation.
      */
     @Override
-    protected void tearDown() throws Exception {
+    protected void tearDown()
+        throws Exception {
         super.tearDown();
         registerTestInvocation(TEST_TEAR_DOWN, null);
     }
 
-
     /**
      * Records an invocation.
      *
-     * @param invocation the invocation type, not null
-     * @param testMethod The called method, not null
+     * @param invocation
+     *     the invocation type, not null
+     * @param testMethod
+     *     The called method, not null
      */
     protected void registerTestInvocation(TracingTestListener.TestInvocation invocation, String testMethod) {
         if (tracingTestListener != null) {
             tracingTestListener.registerTestInvocation(invocation, getClass(), testMethod);
         }
     }
-
 }

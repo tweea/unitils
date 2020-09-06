@@ -1,12 +1,9 @@
 /*
- * Copyright 2006-2009,  Unitils.org
- *
+ * Copyright 2006-2009, Unitils.org
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -15,9 +12,10 @@
  */
 package org.unitils.mock.core.proxy;
 
+import org.junit.Test;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
-import org.junit.Test;
 import static org.unitils.mock.core.proxy.ProxyFactory.createProxy;
 import static org.unitils.mock.core.proxy.ProxyUtils.getProxiedTypeIfProxy;
 
@@ -28,8 +26,6 @@ import static org.unitils.mock.core.proxy.ProxyUtils.getProxiedTypeIfProxy;
  * @author Filip Neven
  */
 public class GetProxiedTypeIfProxyUtilTest {
-
-
     @Test
     public void proxyInterface() {
         Object proxy = createProxy("mock", new DummyProxyInvocationHandler(), TestInterface.class);
@@ -37,7 +33,6 @@ public class GetProxiedTypeIfProxyUtilTest {
 
         assertEquals(TestInterface.class, result);
     }
-
 
     @Test
     public void proxyClass() {
@@ -47,13 +42,11 @@ public class GetProxiedTypeIfProxyUtilTest {
         assertEquals(TestClass.class, result);
     }
 
-
     @Test
     public void regularObject() {
         Class<?> result = getProxiedTypeIfProxy("notproxy");
         assertNull(result);
     }
-
 
     @Test
     public void nullObject() {
@@ -61,20 +54,17 @@ public class GetProxiedTypeIfProxyUtilTest {
         assertNull(result);
     }
 
-
     protected static interface TestInterface {
     }
-
 
     protected static class TestClass {
     }
 
-
-    private static class DummyProxyInvocationHandler implements ProxyInvocationHandler {
-
-        public Object handleInvocation(ProxyInvocation invocation) throws Throwable {
+    private static class DummyProxyInvocationHandler
+        implements ProxyInvocationHandler {
+        public Object handleInvocation(ProxyInvocation invocation)
+            throws Throwable {
             return null;
         }
     }
-
 }

@@ -1,12 +1,9 @@
 /*
- * Copyright 2008,  Unitils.org
- *
+ * Copyright 2008, Unitils.org
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -15,29 +12,38 @@
  */
 package org.unitils.dbmaintainer.clean.impl;
 
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Properties;
+import java.util.Set;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.unitils.core.UnitilsException;
 import org.unitils.core.dbsupport.DbSupport;
-import static org.unitils.core.util.StoredIdentifierCase.MIXED_CASE;
 import org.unitils.dbmaintainer.clean.DBClearer;
 import org.unitils.dbmaintainer.util.BaseDatabaseAccessor;
-import static org.unitils.util.PropertyUtils.getStringList;
 
-import java.util.*;
+import static org.unitils.core.util.StoredIdentifierCase.MIXED_CASE;
+import static org.unitils.util.PropertyUtils.getStringList;
 
 /**
  * Implementation of {@link DBClearer}. This implementation individually drops every table, view, constraint, trigger
  * and sequence in the database. A list of tables, views, ... that should be preserverd can be specified using the
- * property {@link #PROPKEY_PRESERVE_TABLES}. <p/> NOTE: FK constraints give problems in MySQL and Derby The cascade in
+ * property {@link #PROPKEY_PRESERVE_TABLES}.
+ * <p/>
+ * NOTE: FK constraints give problems in MySQL and Derby The cascade in
  * drop table A cascade; does not work in MySQL-5.0 The DBMaintainer will first remove all constraints before calling
  * the db clearer
  *
  * @author Tim Ducheyne
  * @author Filip Neven
  */
-public class DefaultDBClearer extends BaseDatabaseAccessor implements DBClearer {
-
+public class DefaultDBClearer
+    extends BaseDatabaseAccessor
+    implements DBClearer {
     /**
      * The key of the property that specifies of which schemas nothing should be dropped
      */
@@ -84,7 +90,6 @@ public class DefaultDBClearer extends BaseDatabaseAccessor implements DBClearer 
      */
     public static final String PROPKEY_VERSION_TABLE_NAME = "dbMaintainer.executedScriptsTableName";
 
-
     /* The logger instance for this class */
     private static Log logger = LogFactory.getLog(DefaultDBClearer.class);
 
@@ -128,12 +133,12 @@ public class DefaultDBClearer extends BaseDatabaseAccessor implements DBClearer 
      */
     protected Map<String, Set<String>> typesToPreserve;
 
-
     /**
      * Initializes the the DBClearer. The list of database items that should be preserved is retrieved from the given
      * <code>Configuration</code> object.
      *
-     * @param configuration the config, not null
+     * @param configuration
+     *     the config, not null
      */
     @Override
     protected void doInit(Properties configuration) {
@@ -146,7 +151,6 @@ public class DefaultDBClearer extends BaseDatabaseAccessor implements DBClearer 
         triggersToPreserve = getTriggersToPreserve();
         typesToPreserve = getTypesToPreserve();
     }
-
 
     /**
      * Clears the database schemas. This means, all the tables, views, constraints, triggers and sequences are dropped,
@@ -172,11 +176,11 @@ public class DefaultDBClearer extends BaseDatabaseAccessor implements DBClearer 
         }
     }
 
-
     /**
      * Drops all tables.
      *
-     * @param dbSupport The database support, not null
+     * @param dbSupport
+     *     The database support, not null
      */
     protected void dropTables(DbSupport dbSupport) {
         Set<String> tableNames = dbSupport.getTableNames();
@@ -191,11 +195,11 @@ public class DefaultDBClearer extends BaseDatabaseAccessor implements DBClearer 
         }
     }
 
-
     /**
      * Drops all views.
      *
-     * @param dbSupport The database support, not null
+     * @param dbSupport
+     *     The database support, not null
      */
     protected void dropViews(DbSupport dbSupport) {
         Set<String> viewNames = dbSupport.getViewNames();
@@ -210,11 +214,11 @@ public class DefaultDBClearer extends BaseDatabaseAccessor implements DBClearer 
         }
     }
 
-
     /**
      * Drops all materialized views.
      *
-     * @param dbSupport The database support, not null
+     * @param dbSupport
+     *     The database support, not null
      */
     protected void dropMaterializedViews(DbSupport dbSupport) {
         if (!dbSupport.supportsMaterializedViews()) {
@@ -232,11 +236,11 @@ public class DefaultDBClearer extends BaseDatabaseAccessor implements DBClearer 
         }
     }
 
-
     /**
      * Drops all synonyms
      *
-     * @param dbSupport The database support, not null
+     * @param dbSupport
+     *     The database support, not null
      */
     protected void dropSynonyms(DbSupport dbSupport) {
         if (!dbSupport.supportsSynonyms()) {
@@ -254,11 +258,11 @@ public class DefaultDBClearer extends BaseDatabaseAccessor implements DBClearer 
         }
     }
 
-
     /**
      * Drops all sequences
      *
-     * @param dbSupport The database support, not null
+     * @param dbSupport
+     *     The database support, not null
      */
     protected void dropSequences(DbSupport dbSupport) {
         if (!dbSupport.supportsSequences()) {
@@ -276,11 +280,11 @@ public class DefaultDBClearer extends BaseDatabaseAccessor implements DBClearer 
         }
     }
 
-
     /**
      * Drops all triggers
      *
-     * @param dbSupport The database support, not null
+     * @param dbSupport
+     *     The database support, not null
      */
     protected void dropTriggers(DbSupport dbSupport) {
         if (!dbSupport.supportsTriggers()) {
@@ -298,11 +302,11 @@ public class DefaultDBClearer extends BaseDatabaseAccessor implements DBClearer 
         }
     }
 
-
     /**
      * Drops all types.
      *
-     * @param dbSupport The database support, not null
+     * @param dbSupport
+     *     The database support, not null
      */
     protected void dropTypes(DbSupport dbSupport) {
         if (!dbSupport.supportsTypes()) {
@@ -320,14 +324,14 @@ public class DefaultDBClearer extends BaseDatabaseAccessor implements DBClearer 
         }
     }
 
-
     /**
      * Gets the list of all schemas to preserve. The case is corrected if necesary. Quoting a schema name makes it case
      * sensitive.
      * <p/>
      * If a schema name is not defined in the unitils configuration, a UnitilsException is thrown.
      *
-     * @param configuration The unitils configuration, not null
+     * @param configuration
+     *     The unitils configuration, not null
      * @return The schemas to preserve, not null
      */
     protected Set<String> getSchemasToPreserve(Properties configuration) {
@@ -335,7 +339,6 @@ public class DefaultDBClearer extends BaseDatabaseAccessor implements DBClearer 
 
         List<String> schemasToPreserve = getStringList(PROPKEY_PRESERVE_SCHEMAS, configuration);
         for (String schemaToPreserve : schemasToPreserve) {
-
             boolean found = false;
             for (DbSupport dbSupport : dbSupports) {
                 // ignore case when stored in mixed casing (e.g MS-Sql), otherwise we can't compare the item names
@@ -351,12 +354,13 @@ public class DefaultDBClearer extends BaseDatabaseAccessor implements DBClearer 
                 }
             }
             if (!found) {
-                throw new UnitilsException("Schema to preserve does not exist: " + schemaToPreserve + ".\nUnitils cannot determine which schemas need to be preserved. To assure nothing is dropped by mistake, no schemas will be dropped.\nPlease fix the configuration of the " + PROPKEY_PRESERVE_SCHEMAS + " property.");
+                throw new UnitilsException("Schema to preserve does not exist: " + schemaToPreserve
+                    + ".\nUnitils cannot determine which schemas need to be preserved. To assure nothing is dropped by mistake, no schemas will be dropped.\nPlease fix the configuration of the "
+                    + PROPKEY_PRESERVE_SCHEMAS + " property.");
             }
         }
         return result;
     }
-
 
     /**
      * Gets the list of all tables to preserve per schema. The case is corrected if necesary. Quoting a table name makes
@@ -376,7 +380,9 @@ public class DefaultDBClearer extends BaseDatabaseAccessor implements DBClearer 
 
             for (String tableToPreserve : entry.getValue()) {
                 if (!itemToPreserveExists(tableToPreserve, tableNames)) {
-                    throw new UnitilsException("Table to preserve does not exist: " + tableToPreserve + " in schema: " + schemaName + ".\nUnitils cannot determine which tables need to be preserved. To assure nothing is dropped by mistake, no tables will be dropped.\nPlease fix the configuration of the " + PROPKEY_PRESERVE_TABLES + " property.");
+                    throw new UnitilsException("Table to preserve does not exist: " + tableToPreserve + " in schema: " + schemaName
+                        + ".\nUnitils cannot determine which tables need to be preserved. To assure nothing is dropped by mistake, no tables will be dropped.\nPlease fix the configuration of the "
+                        + PROPKEY_PRESERVE_TABLES + " property.");
                 }
             }
         }
@@ -397,7 +403,6 @@ public class DefaultDBClearer extends BaseDatabaseAccessor implements DBClearer 
         return tablesToPreserve;
     }
 
-
     /**
      * Gets the list of all views to preserve per schema. The case is corrected if necesary. Quoting a view name makes
      * it case sensitive. If no schema is specified, the view will be added to the default schema name set.
@@ -414,13 +419,14 @@ public class DefaultDBClearer extends BaseDatabaseAccessor implements DBClearer 
 
             for (String viewToPreserve : entry.getValue()) {
                 if (!itemToPreserveExists(viewToPreserve, viewNames)) {
-                    throw new UnitilsException("View to preserve does not exist: " + viewToPreserve + " in schema: " + schemaName + ".\nUnitils cannot determine which views need to be preserved. To assure nothing is dropped by mistake, no views will be dropped.\nPlease fix the configuration of the " + PROPKEY_PRESERVE_VIEWS + " property.");
+                    throw new UnitilsException("View to preserve does not exist: " + viewToPreserve + " in schema: " + schemaName
+                        + ".\nUnitils cannot determine which views need to be preserved. To assure nothing is dropped by mistake, no views will be dropped.\nPlease fix the configuration of the "
+                        + PROPKEY_PRESERVE_VIEWS + " property.");
                 }
             }
         }
         return viewsToPreserve;
     }
-
 
     /**
      * Gets the list of all materialized views to preserve per schema. The case is corrected if necesary. Quoting a view name makes
@@ -444,13 +450,14 @@ public class DefaultDBClearer extends BaseDatabaseAccessor implements DBClearer 
             }
             for (String materializedViewToPreserve : entry.getValue()) {
                 if (!itemToPreserveExists(materializedViewToPreserve, materializedViewNames)) {
-                    throw new UnitilsException("Materialized view to preserve does not exist: " + materializedViewToPreserve + " in schema: " + schemaName + ".\nUnitils cannot determine which materialized views need to be preserved. To assure nothing is dropped by mistake, no views will be dropped.\nPlease fix the configuration of the " + PROPKEY_PRESERVE_MATERIALIZED_VIEWS + " property.");
+                    throw new UnitilsException("Materialized view to preserve does not exist: " + materializedViewToPreserve + " in schema: " + schemaName
+                        + ".\nUnitils cannot determine which materialized views need to be preserved. To assure nothing is dropped by mistake, no views will be dropped.\nPlease fix the configuration of the "
+                        + PROPKEY_PRESERVE_MATERIALIZED_VIEWS + " property.");
                 }
             }
         }
         return materializedViewsToPreserve;
     }
-
 
     /**
      * Gets the list of all sequences to preserve per schema. The case is corrected if necesary. Quoting a sequence name
@@ -474,13 +481,14 @@ public class DefaultDBClearer extends BaseDatabaseAccessor implements DBClearer 
             }
             for (String sequenceToPreserve : entry.getValue()) {
                 if (!itemToPreserveExists(sequenceToPreserve, sequenceNames)) {
-                    throw new UnitilsException("Sequence to preserve does not exist: " + sequenceToPreserve + " in schema: " + schemaName + ".\nUnitils cannot determine which sequences need to be preserved. To assure nothing is dropped by mistake, no sequences will be dropped.\nPlease fix the configuration of the " + PROPKEY_PRESERVE_SEQUENCES + " property.");
+                    throw new UnitilsException("Sequence to preserve does not exist: " + sequenceToPreserve + " in schema: " + schemaName
+                        + ".\nUnitils cannot determine which sequences need to be preserved. To assure nothing is dropped by mistake, no sequences will be dropped.\nPlease fix the configuration of the "
+                        + PROPKEY_PRESERVE_SEQUENCES + " property.");
                 }
             }
         }
         return sequencesToPreserve;
     }
-
 
     /**
      * Gets the list of all synonym to preserve per schema. The case is corrected if necesary. Quoting a synonym name
@@ -504,13 +512,14 @@ public class DefaultDBClearer extends BaseDatabaseAccessor implements DBClearer 
             }
             for (String synonymToPreserve : entry.getValue()) {
                 if (!itemToPreserveExists(synonymToPreserve, synonymNames)) {
-                    throw new UnitilsException("Synonym to preserve does not exist: " + synonymToPreserve + " in schema: " + schemaName + ".\nUnitils cannot determine which synonyms need to be preserved. To assure nothing is dropped by mistake, no synonyms will be dropped.\nPlease fix the configuration of the " + PROPKEY_PRESERVE_SYNONYMS + " property.");
+                    throw new UnitilsException("Synonym to preserve does not exist: " + synonymToPreserve + " in schema: " + schemaName
+                        + ".\nUnitils cannot determine which synonyms need to be preserved. To assure nothing is dropped by mistake, no synonyms will be dropped.\nPlease fix the configuration of the "
+                        + PROPKEY_PRESERVE_SYNONYMS + " property.");
                 }
             }
         }
         return synonymsToPreserve;
     }
-
 
     /**
      * Gets the list of all triggers to preserve per schema. The case is corrected if necesary. Quoting a trigger name
@@ -534,13 +543,14 @@ public class DefaultDBClearer extends BaseDatabaseAccessor implements DBClearer 
             }
             for (String triggerToPreserve : entry.getValue()) {
                 if (!itemToPreserveExists(triggerToPreserve, triggerNames)) {
-                    throw new UnitilsException("Trigger to preserve does not exist: " + triggerToPreserve + " in schema: " + schemaName + ".\nUnitils cannot determine which triggers need to be preserved. To assure nothing is dropped by mistake, no triggers will be dropped.\nPlease fix the configuration of the " + PROPKEY_PRESERVE_TRIGGERS + " property.");
+                    throw new UnitilsException("Trigger to preserve does not exist: " + triggerToPreserve + " in schema: " + schemaName
+                        + ".\nUnitils cannot determine which triggers need to be preserved. To assure nothing is dropped by mistake, no triggers will be dropped.\nPlease fix the configuration of the "
+                        + PROPKEY_PRESERVE_TRIGGERS + " property.");
                 }
             }
         }
         return triggersToPreserve;
     }
-
 
     /**
      * Gets the list of all types to preserve per schema. The case is corrected if necesary. Quoting a type name
@@ -564,20 +574,23 @@ public class DefaultDBClearer extends BaseDatabaseAccessor implements DBClearer 
             }
             for (String typeToPreserve : entry.getValue()) {
                 if (!itemToPreserveExists(typeToPreserve, typeNames)) {
-                    throw new UnitilsException("Type to preserve does not exist: " + typeToPreserve + " in schema: " + schemaName + ".\nUnitils cannot determine which types need to be preserved. To assure nothing is dropped by mistake, no types will be dropped.\nPlease fix the configuration of the " + PROPKEY_PRESERVE_TYPES + " property.");
+                    throw new UnitilsException("Type to preserve does not exist: " + typeToPreserve + " in schema: " + schemaName
+                        + ".\nUnitils cannot determine which types need to be preserved. To assure nothing is dropped by mistake, no types will be dropped.\nPlease fix the configuration of the "
+                        + PROPKEY_PRESERVE_TYPES + " property.");
                 }
             }
         }
         return typesToPreserve;
     }
 
-
     /**
      * Checks whether the given item is one of the items to preserve.
      * This also handles identifiers that are stored in mixed case.
      *
-     * @param item            The item, not null
-     * @param itemsToPreserve The items to preserve
+     * @param item
+     *     The item, not null
+     * @param itemsToPreserve
+     *     The items to preserve
      * @return True if item to preserve
      */
     protected boolean isItemToPreserve(String item, Set<String> itemsToPreserve) {
@@ -591,13 +604,14 @@ public class DefaultDBClearer extends BaseDatabaseAccessor implements DBClearer 
         return itemsToPreserve.contains(item);
     }
 
-
     /**
      * Checks whether the given item to preserve is one of the items.
      * This also handles identifiers that are stored in mixed case.
      *
-     * @param itemToPreserve The item to preserve, not null
-     * @param items          The items, not null
+     * @param itemToPreserve
+     *     The item to preserve, not null
+     * @param items
+     *     The items, not null
      * @return True if on of the items
      */
     protected boolean itemToPreserveExists(String itemToPreserve, Set<String> items) {
@@ -613,13 +627,13 @@ public class DefaultDBClearer extends BaseDatabaseAccessor implements DBClearer 
         return items.contains(itemToPreserve);
     }
 
-
     /**
      * Gets the list of items to preserve per schema. The case is corrected if necesary.
      * Quoting an identifier makes it case sensitive. If no schema is specified, the identifiers will be added to the
      * default schema name set.
      *
-     * @param propertyName The name of the property that defines the items, not null
+     * @param propertyName
+     *     The name of the property that defines the items, not null
      * @return The set of items per schema name, not null
      */
     protected Map<String, Set<String>> getItemsToPreserve(String propertyName) {
@@ -627,7 +641,6 @@ public class DefaultDBClearer extends BaseDatabaseAccessor implements DBClearer 
 
         List<String> itemsToPreserve = getStringList(propertyName, configuration);
         for (String itemToPreserve : itemsToPreserve) {
-
             // parse item string
             DbSupport dbSupport;
             int index = itemToPreserve.indexOf('.');
@@ -656,5 +669,4 @@ public class DefaultDBClearer extends BaseDatabaseAccessor implements DBClearer 
         }
         return result;
     }
-
 }

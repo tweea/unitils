@@ -1,40 +1,34 @@
 /*
- * Copyright 2013,  Unitils.org
- *
+ * Copyright 2013, Unitils.org
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.unitils.database.config;
-
-import org.unitils.core.Factory;
-import org.unitils.core.config.Configuration;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.unitils.core.Factory;
+import org.unitils.core.config.Configuration;
+
 /**
  * @author Tim Ducheyne
  */
-public class DatabaseConfigurationsFactory implements Factory<DatabaseConfigurations> {
-
+public class DatabaseConfigurationsFactory
+    implements Factory<DatabaseConfigurations> {
     protected Configuration configuration;
-
 
     public DatabaseConfigurationsFactory(Configuration configuration) {
         this.configuration = configuration;
     }
-
 
     public DatabaseConfigurations create() {
         DatabaseConfiguration defaultDatabaseConfiguration = null;
@@ -56,9 +50,10 @@ public class DatabaseConfigurationsFactory implements Factory<DatabaseConfigurat
         return new DatabaseConfigurations(defaultDatabaseConfiguration, databaseConfigurations);
     }
 
-
     protected DatabaseConfiguration createDatabaseConfiguration(String databaseName, boolean defaultDatabase) {
-        String[] classifiers = databaseName == null ? new String[0] : new String[]{databaseName};
+        String[] classifiers = databaseName == null ? new String[0] : new String[] {
+            databaseName
+        };
         String driverClassName = configuration.getOptionalString("database.driverClassName", classifiers);
         String url = configuration.getOptionalString("database.url", classifiers);
         String userName = configuration.getOptionalString("database.userName", classifiers);
@@ -71,6 +66,7 @@ public class DatabaseConfigurationsFactory implements Factory<DatabaseConfigurat
         if (updateDisabled == null) {
             updateDisabled = false;
         }
-        return new DatabaseConfiguration(databaseName, dialect, driverClassName, url, userName, password, defaultSchemaName, schemaNames, updateDisabled, defaultDatabase);
+        return new DatabaseConfiguration(databaseName, dialect, driverClassName, url, userName, password, defaultSchemaName, schemaNames, updateDisabled,
+            defaultDatabase);
     }
 }

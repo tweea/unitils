@@ -1,12 +1,9 @@
 /*
- * Copyright 2008,  Unitils.org
- *
+ * Copyright 2008, Unitils.org
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -14,13 +11,6 @@
  * limitations under the License.
  */
 package org.unitils.spring;
-
-import static java.util.Arrays.asList;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
-import static org.unitils.reflectionassert.ReflectionAssert.assertLenientEquals;
 
 import java.util.List;
 import java.util.Properties;
@@ -31,6 +21,14 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.unitils.core.ConfigurationLoader;
 import org.unitils.spring.annotation.SpringApplicationContext;
+
+import static java.util.Arrays.asList;
+
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
+import static org.unitils.reflectionassert.ReflectionAssert.assertLenientEquals;
 
 /**
  * Test for ApplicationContext creation in a test class hierarchy for the {@link SpringModule}.
@@ -43,17 +41,16 @@ public class SpringModuleApplicationContextInheritanceTest {
     /* Tested object */
     SpringModule springModule;
 
-
     /**
      * Initializes the test and test fixture.
      */
     @Before
-    public void setUp() throws Exception {
+    public void setUp()
+        throws Exception {
         Properties configuration = new ConfigurationLoader().loadConfiguration();
         springModule = new SpringModule();
         springModule.init(configuration);
     }
-
 
     /**
      * Tests creating the application context.
@@ -69,7 +66,6 @@ public class SpringModuleApplicationContextInheritanceTest {
         assertTrue(springTest1.createMethod2Called);
     }
 
-
     /**
      * Tests creating the application context.
      * Both super and sub class have annotations with values and but only super class has custom create method.
@@ -82,7 +78,6 @@ public class SpringModuleApplicationContextInheritanceTest {
         assertNotNull(applicationContext);
         assertTrue(springTestNoCustomCreate.createMethod1Called);
     }
-
 
     /**
      * Test creating an application context for 2 subclasses of the same superclass. The context of the
@@ -97,7 +92,6 @@ public class SpringModuleApplicationContextInheritanceTest {
         assertSame(applicationContext1, applicationContext2);
     }
 
-
     /**
      * Tests creating the application context. No context creation is done in the sub-class, the context of the super
      * class should be used.
@@ -111,13 +105,13 @@ public class SpringModuleApplicationContextInheritanceTest {
         assertTrue(springTestNoCreation.createMethod1Called);
     }
 
-
     /**
      * Test SpringTest super-class.
      */
-    @SpringApplicationContext({"classpath:org/unitils/spring/services-config.xml"})
+    @SpringApplicationContext({
+        "classpath:org/unitils/spring/services-config.xml"
+    })
     private class SpringTestSuper {
-
         protected boolean createMethod1Called = false;
 
         @SpringApplicationContext
@@ -130,9 +124,11 @@ public class SpringModuleApplicationContextInheritanceTest {
     /**
      * Test Spring sub-class with custom create.
      */
-    @SpringApplicationContext({"classpath:org/unitils/spring/services-config.xml"})
-    private class SpringTestCustomCreate extends SpringTestSuper {
-
+    @SpringApplicationContext({
+        "classpath:org/unitils/spring/services-config.xml"
+    })
+    private class SpringTestCustomCreate
+        extends SpringTestSuper {
         protected boolean createMethod2Called = false;
 
         @SpringApplicationContext
@@ -147,22 +143,24 @@ public class SpringModuleApplicationContextInheritanceTest {
     /**
      * Test Spring sub-class without custom create.
      */
-    @SpringApplicationContext({"classpath:org/unitils/spring/services-config.xml"})
-    public class SpringTestNoCustomCreate extends SpringTestSuper {
-    }
-
-
-    /**
-     * Test SpringTest sub-class without any context declaration.
-     */
-    private class SpringTestNoCreation1 extends SpringTestSuper {
+    @SpringApplicationContext({
+        "classpath:org/unitils/spring/services-config.xml"
+    })
+    public class SpringTestNoCustomCreate
+        extends SpringTestSuper {
     }
 
     /**
      * Test SpringTest sub-class without any context declaration.
      */
-    private class SpringTestNoCreation2 extends SpringTestSuper {
+    private class SpringTestNoCreation1
+        extends SpringTestSuper {
     }
 
-
+    /**
+     * Test SpringTest sub-class without any context declaration.
+     */
+    private class SpringTestNoCreation2
+        extends SpringTestSuper {
+    }
 }

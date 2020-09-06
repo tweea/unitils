@@ -1,12 +1,9 @@
 /*
- * Copyright 2006-2007,  Unitils.org
- *
+ * Copyright 2006-2007, Unitils.org
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -15,15 +12,22 @@
  */
 package org.unitils.mock.argumentmatcher;
 
-import static junit.framework.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import org.junit.Before;
-import org.junit.Test;
-import static org.unitils.mock.ArgumentMatchers.*;
-import org.unitils.mock.core.MockObject;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import org.junit.Before;
+import org.junit.Test;
+import org.unitils.mock.core.MockObject;
+
+import static org.junit.Assert.assertTrue;
+import static org.unitils.mock.ArgumentMatchers.eq;
+import static org.unitils.mock.ArgumentMatchers.isNull;
+import static org.unitils.mock.ArgumentMatchers.lenEq;
+import static org.unitils.mock.ArgumentMatchers.notNull;
+import static org.unitils.mock.ArgumentMatchers.refEq;
+import static org.unitils.mock.ArgumentMatchers.same;
+
+import static junit.framework.Assert.assertFalse;
 
 /**
  * Tests the usage of argment matchers.
@@ -41,7 +45,6 @@ public class ArgumentMatcherTest {
         mockObject = new MockObject<TestClass>("testMock", TestClass.class, this);
     }
 
-
     /**
      * Tests the equals argument matcher, for an matching argument.
      */
@@ -53,7 +56,6 @@ public class ArgumentMatcherTest {
         assertTrue(result);
         mockObject.assertInvoked().testMethodString(eq("test"));
     }
-
 
     /**
      * Tests the equals argument matcher, for a non-matching argument.
@@ -67,7 +69,6 @@ public class ArgumentMatcherTest {
         mockObject.assertNotInvoked().testMethodString(eq("test"));
     }
 
-
     /**
      * Tests the equals argument matcher, for a matching null argument.
      */
@@ -80,7 +81,6 @@ public class ArgumentMatcherTest {
         mockObject.assertInvoked().testMethodString(eq((String) null));
     }
 
-
     /**
      * Tests the equals argument matcher, for a non-matching null argument.
      */
@@ -92,7 +92,6 @@ public class ArgumentMatcherTest {
         assertFalse(result);
         mockObject.assertNotInvoked().testMethodString(eq("test"));
     }
-
 
     /**
      * Tests the equals argument matcher in case the object changes between the behavior definition,
@@ -119,7 +118,6 @@ public class ArgumentMatcherTest {
         mockObject.assertInvoked().testMethodObject(eq(list));
     }
 
-
     /**
      * Tests the not null argument matcher, for an matching (not null) argument.
      */
@@ -130,7 +128,6 @@ public class ArgumentMatcherTest {
         boolean result = mockObject.getMock().testMethodString("test");
         assertTrue(result);
     }
-
 
     /**
      * Tests the not null argument matcher, for a non-matching (null) argument.
@@ -143,7 +140,6 @@ public class ArgumentMatcherTest {
         assertFalse(result);
     }
 
-
     /**
      * Tests the not null argument matcher, for an matching (null) argument.
      */
@@ -154,7 +150,6 @@ public class ArgumentMatcherTest {
         boolean result = mockObject.getMock().testMethodString(null);
         assertTrue(result);
     }
-
 
     /**
      * Tests the not null argument matcher, for a non-matching (not null) argument.
@@ -167,7 +162,6 @@ public class ArgumentMatcherTest {
         assertFalse(result);
     }
 
-
     /**
      * Tests the lenient equals argument matcher, for an matching argument.
      */
@@ -178,7 +172,6 @@ public class ArgumentMatcherTest {
         boolean result = mockObject.getMock().testMethodString("test");
         assertTrue(result);
     }
-
 
     /**
      * Tests the lenient equals argument matcher, for a non-matching argument.
@@ -191,7 +184,6 @@ public class ArgumentMatcherTest {
         assertFalse(result);
     }
 
-
     /**
      * Tests the lenient equals argument matcher, for a matching null argument.
      */
@@ -203,7 +195,6 @@ public class ArgumentMatcherTest {
         assertTrue(result);
     }
 
-
     /**
      * Tests the lenient equals argument matcher, for a non-matching null argument.
      */
@@ -214,7 +205,6 @@ public class ArgumentMatcherTest {
         boolean result = mockObject.getMock().testMethodString(null);
         assertFalse(result);
     }
-
 
     /**
      * The lenient argument matcher should not do lenient argument matching if
@@ -230,7 +220,6 @@ public class ArgumentMatcherTest {
         mockObject.assertNotInvoked().testMethodInteger(0);
     }
 
-
     /**
      * The lenient argument matcher should not do lenient argument matching if
      * false is directly passed instead of being somewhere in the hierarchy
@@ -244,7 +233,6 @@ public class ArgumentMatcherTest {
 
         mockObject.assertNotInvoked().testMethodBoolean(false);
     }
-
 
     /**
      * Tests the lenient equals argument matcher in case the object changes between the behavior definition,
@@ -282,7 +270,6 @@ public class ArgumentMatcherTest {
         mockObject.assertInvoked().testMethodObject(lenEq(new ArrayList<String>()));
     }
 
-
     /**
      * Tests the reflection equals argument matcher, for an matching argument.
      */
@@ -293,7 +280,6 @@ public class ArgumentMatcherTest {
         boolean result = mockObject.getMock().testMethodString("test");
         assertTrue(result);
     }
-
 
     /**
      * Tests the reflection equals argument matcher, for a non-matching argument.
@@ -306,7 +292,6 @@ public class ArgumentMatcherTest {
         assertFalse(result);
     }
 
-
     /**
      * Tests the reflection equals argument matcher, for a matching null argument.
      */
@@ -318,7 +303,6 @@ public class ArgumentMatcherTest {
         assertTrue(result);
     }
 
-
     /**
      * Tests the reflection equals argument matcher, for a non-matching null argument.
      */
@@ -329,7 +313,6 @@ public class ArgumentMatcherTest {
         boolean result = mockObject.getMock().testMethodString(null);
         assertFalse(result);
     }
-
 
     /**
      * Tests the lenient equals argument matcher in case the object changes between the behavior definition,
@@ -363,7 +346,6 @@ public class ArgumentMatcherTest {
         mockObject.assertInvoked().testMethodObject(refEq(new ArrayList<String>()));
     }
 
-
     /**
      */
     @Test
@@ -374,7 +356,6 @@ public class ArgumentMatcherTest {
         boolean result = mockObject.getMock().testMethodObject(object);
         assertTrue(result);
     }
-
 
     /**
      * Tests the same argument matcher, for a non-matching argument.
@@ -387,7 +368,6 @@ public class ArgumentMatcherTest {
         assertFalse(result);
     }
 
-
     /**
      * Tests the same argument matcher, for a matching null argument.
      */
@@ -399,7 +379,6 @@ public class ArgumentMatcherTest {
         assertTrue(result);
     }
 
-
     /**
      * Tests the same argument matcher, for a non-matching null argument.
      */
@@ -410,7 +389,6 @@ public class ArgumentMatcherTest {
         boolean result = mockObject.getMock().testMethodObject(null);
         assertFalse(result);
     }
-
 
     /**
      * Tests the same argument matcher in case the object changes between the behavior definition,
@@ -469,12 +447,10 @@ public class ArgumentMatcherTest {
         mockObject.assertInvoked().testMethodObject(list);
     }
 
-
     /**
      * Interface that is mocked during the tests
      */
     private static interface TestClass {
-
         boolean testMethodString(String arg1);
 
         boolean testMethodObject(Object arg1);
@@ -482,7 +458,5 @@ public class ArgumentMatcherTest {
         boolean testMethodInteger(int arg1);
 
         boolean testMethodBoolean(boolean arg1);
-
     }
-
 }

@@ -1,12 +1,9 @@
 /*
- * Copyright 2008,  Unitils.org
- *
+ * Copyright 2008, Unitils.org
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -15,9 +12,11 @@
  */
 package org.unitils.reflectionassert;
 
-import junit.framework.TestCase;
-import static org.unitils.reflectionassert.ReflectionComparatorFactory.createRefectionComparator;
 import org.unitils.reflectionassert.difference.Difference;
+
+import junit.framework.TestCase;
+
+import static org.unitils.reflectionassert.ReflectionComparatorFactory.createRefectionComparator;
 import static org.unitils.reflectionassert.util.InnerDifferenceFinder.getInnerDifference;
 
 /**
@@ -27,8 +26,11 @@ import static org.unitils.reflectionassert.util.InnerDifferenceFinder.getInnerDi
  * @author Tim Ducheyne
  * @author Filip Neven
  */
-@SuppressWarnings({"FieldCanBeLocal"})
-public class ReflectionComparatorEnumsTest extends TestCase {
+@SuppressWarnings({
+    "FieldCanBeLocal"
+})
+public class ReflectionComparatorEnumsTest
+    extends TestCase {
 
     /* Test object */
     private Enums enumsA;
@@ -42,11 +44,11 @@ public class ReflectionComparatorEnumsTest extends TestCase {
     /* Class under test */
     private ReflectionComparator reflectionComparator;
 
-
     /**
      * Initializes the test fixture.
      */
-    protected void setUp() throws Exception {
+    protected void setUp()
+        throws Exception {
         super.setUp();
 
         reflectionComparator = createRefectionComparator();
@@ -56,7 +58,6 @@ public class ReflectionComparatorEnumsTest extends TestCase {
         enumsDifferentValue = new Enums(Enums.TestEnum.TEST2);
     }
 
-
     /**
      * Test for two equal enum values.
      */
@@ -64,7 +65,6 @@ public class ReflectionComparatorEnumsTest extends TestCase {
         Difference result = reflectionComparator.getDifference(enumsA, enumsB);
         assertNull(result);
     }
-
 
     /**
      * Test for two different enum values
@@ -78,29 +78,28 @@ public class ReflectionComparatorEnumsTest extends TestCase {
         assertEquals(Enums.TestEnum.TEST2, difference.getRightValue());
     }
 
-
     /**
      * Test class with enum field and failing equals.
      */
     private static class Enums {
-
         public enum TestEnum {
             TEST1, TEST2
         }
 
-        @SuppressWarnings({"UnusedDeclaration"})
+        @SuppressWarnings({
+            "UnusedDeclaration"
+        })
         private TestEnum testEnumValue;
-
 
         public Enums(TestEnum testEnumValue) {
             this.testEnumValue = testEnumValue;
         }
 
-
         /**
          * Always returns false
          *
-         * @param o the object to compare to
+         * @param o
+         *     the object to compare to
          */
         @Override
         public boolean equals(Object o) {

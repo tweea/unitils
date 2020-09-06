@@ -15,22 +15,30 @@ import org.unitils.UnitilsParameterized;
  * @author Jeroen Horemans
  * @author Thomas De Rycke
  * @author Willemijn Wouters
- * 
  * @since 3.4
- * 
  */
 @RunWith(UnitilsParameterized.class)
 public class UnitilsParametersNullParametersStveParametersTest {
     private static final Logger LOGGER = Logger.getLogger(UnitilsParametersNullParametersStveParametersTest.class);
-    
+
     @Parameters
     public static Collection<Object[]> data() {
-        Object[][] data = new Object[][] { { 1 }, { 2 }, { 3 }, { null } };
+        Object[][] data = new Object[][] {
+            {
+                1
+            }, {
+                2
+            }, {
+                3
+            }, {
+                null
+            }
+        };
         return Arrays.asList(data);
     }
-    
+
     private Integer number;
-    
+
     public UnitilsParametersNullParametersStveParametersTest(Integer number) {
         this.number = number;
     }
@@ -39,5 +47,4 @@ public class UnitilsParametersNullParametersStveParametersTest {
     public void test() {
         LOGGER.debug(number);
     }
-
 }

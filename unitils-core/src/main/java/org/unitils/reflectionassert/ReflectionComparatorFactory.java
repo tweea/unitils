@@ -1,12 +1,9 @@
 /*
- * Copyright 2008,  Unitils.org
- *
+ * Copyright 2008, Unitils.org
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -15,21 +12,33 @@
  */
 package org.unitils.reflectionassert;
 
-import static org.unitils.reflectionassert.ReflectionComparatorMode.*;
-import org.unitils.reflectionassert.comparator.Comparator;
-import org.unitils.reflectionassert.comparator.impl.*;
-import static org.unitils.util.CollectionUtils.asSet;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+
+import org.unitils.reflectionassert.comparator.Comparator;
+import org.unitils.reflectionassert.comparator.impl.CollectionComparator;
+import org.unitils.reflectionassert.comparator.impl.HibernateProxyComparator;
+import org.unitils.reflectionassert.comparator.impl.IgnoreDefaultsComparator;
+import org.unitils.reflectionassert.comparator.impl.LenientDatesComparator;
+import org.unitils.reflectionassert.comparator.impl.LenientNumberComparator;
+import org.unitils.reflectionassert.comparator.impl.LenientOrderCollectionComparator;
+import org.unitils.reflectionassert.comparator.impl.MapComparator;
+import org.unitils.reflectionassert.comparator.impl.ObjectComparator;
+import org.unitils.reflectionassert.comparator.impl.SimpleCasesComparator;
+
+import static org.unitils.reflectionassert.ReflectionComparatorMode.IGNORE_DEFAULTS;
+import static org.unitils.reflectionassert.ReflectionComparatorMode.LENIENT_DATES;
+import static org.unitils.reflectionassert.ReflectionComparatorMode.LENIENT_ORDER;
+import static org.unitils.util.CollectionUtils.asSet;
 
 /**
  * A factory for creating a reflection comparator.
  * This will assemble the apropriate comparator chain and constructs a reflection comparator.
  * <p/>
  * By default, a strict comparison is performed, but if needed, some leniency can be configured by setting one or more
- * comparator modes: <ul>
+ * comparator modes:
+ * <ul>
  * <li>ignore defaults: all fields that have a default java value for the left object will be ignored. Eg if
  * the left object contains an int field with value 0 it will not be compared to the value of the right object.</li>
  * <li>lenient dates: only check whether both Date objects contain a value or not, the value itself
@@ -43,7 +52,6 @@ import java.util.Set;
  * @author Filip Neven
  */
 public class ReflectionComparatorFactory {
-
     /**
      * The LenientDatesComparator singleton insance
      */
@@ -89,12 +97,12 @@ public class ReflectionComparatorFactory {
      */
     protected static final Comparator OBJECT_COMPARATOR = new ObjectComparator();
 
-
     /**
      * Creates a reflection comparator for the given modes.
      * If no mode is given, a strict comparator will be created.
      *
-     * @param modes The modes, null for strict comparison
+     * @param modes
+     *     The modes, null for strict comparison
      * @return The reflection comparator, not null
      */
     public static ReflectionComparator createRefectionComparator(ReflectionComparatorMode... modes) {
@@ -102,12 +110,12 @@ public class ReflectionComparatorFactory {
         return new ReflectionComparator(comparators);
     }
 
-
     /**
      * Creates a comparator chain for the given modes.
      * If no mode is given, a strict comparator will be created.
      *
-     * @param modes The modes, null for strict comparison
+     * @param modes
+     *     The modes, null for strict comparison
      * @return The comparator chain, not null
      */
     protected static List<Comparator> getComparatorChain(Set<ReflectionComparatorMode> modes) {

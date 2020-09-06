@@ -7,35 +7,31 @@ import org.junit.runner.RunWith;
 import org.unitils.UnitilsBlockJUnit4ClassRunner;
 import org.unitils.inject.annotation.InjectIntoByType;
 
-
 /**
  * Check if the obj is correctly injected in the target without using {@link org.unitils.inject.annotation.TestedObject}.
  *
  * @author Willemijn Wouters
- *
  * @since 3.4.3
- *
  */
 @RunWith(UnitilsBlockJUnit4ClassRunner.class)
 public class InjectMultipleTargetsTest {
-
     private Person person = new Person(null);
 
     private Animal animal = new Animal(null);
 
     private Person person2 = new Person(null);
 
-    @InjectIntoByType(target = {"person", "animal"})
+    @InjectIntoByType(target = {
+        "person", "animal"
+    })
     private Address address = new Address("5", "Nieuwstraat");
-
-
-
 
     /**
      * @throws java.lang.Exception
      */
     @Before
-    public void setUp() throws Exception {
+    public void setUp()
+        throws Exception {
     }
 
     @Test
@@ -48,19 +44,15 @@ public class InjectMultipleTargetsTest {
         Assert.assertNull(person2.getAddress());
     }
 
-
-
     protected static class Animal {
-
         private Address address;
-
-
 
         /**
          *
          */
         public Animal() {
         }
+
         /**
          * @param name
          * @param address
@@ -76,13 +68,9 @@ public class InjectMultipleTargetsTest {
         public Address getAddress() {
             return address;
         }
-
-
     }
 
     protected static class Person {
-
-
         /**
          *
          */
@@ -100,7 +88,6 @@ public class InjectMultipleTargetsTest {
             this.address = address;
         }
 
-
         /**
          * @return the address
          */
@@ -110,9 +97,10 @@ public class InjectMultipleTargetsTest {
     }
 
     protected static class Address {
-
         private String number;
+
         private String street;
+
         /**
          * @param number
          * @param street
@@ -123,14 +111,12 @@ public class InjectMultipleTargetsTest {
             this.street = street;
         }
 
-
         /**
          * @return the number
          */
         public String getNumber() {
             return number;
         }
-
 
         /**
          * @return the street
@@ -139,5 +125,4 @@ public class InjectMultipleTargetsTest {
             return street;
         }
     }
-
 }

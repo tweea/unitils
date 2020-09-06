@@ -1,12 +1,9 @@
 /*
- * Copyright 2008,  Unitils.org
- *
+ * Copyright 2008, Unitils.org
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -15,19 +12,32 @@
  */
 package org.unitils.core;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Properties;
+import java.util.Set;
+import java.util.TreeMap;
+import java.util.TreeSet;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import static org.unitils.util.PropertyUtils.*;
-import static org.unitils.util.ReflectionUtils.createInstanceOfType;
 
-import java.util.*;
+import static org.unitils.util.PropertyUtils.getBoolean;
+import static org.unitils.util.PropertyUtils.getString;
+import static org.unitils.util.PropertyUtils.getStringList;
+import static org.unitils.util.ReflectionUtils.createInstanceOfType;
 
 /**
  * A class for loading unitils modules.
  * <p/>
  * The core names set by the {@link #PROPKEY_MODULES} property which modules will be loaded. These names can then
  * be used to construct properties that define the classnames and optionally the dependencies of these modules. E.g.
- * <pre><code>
+ * 
+ * <pre>
+ * <code>
  * unitils.modules= a, b, c, d
  * unitils.module.a.className= org.unitils.A
  * unitils.module.a.runAfter= b, c
@@ -35,7 +45,9 @@ import java.util.*;
  * unitils.module.b.runAfter= c
  * unitils.module.c.className= org.unitils.C
  * unitils.module.d.enabled= false
- * </code></pre>
+ * </code>
+ * </pre>
+ * 
  * The above configuration will load 3 core classes A, B and C and will always perform processing in
  * order C, B, A.
  * <p/>
@@ -45,7 +57,6 @@ import java.util.*;
  * @author Tim Ducheyne
  */
 public class ModulesLoader {
-
     /**
      * Property that contains the names of the modules that are to be loaded.
      */
@@ -76,11 +87,11 @@ public class ModulesLoader {
      */
     private static Log logger = LogFactory.getLog(ModulesLoader.class);
 
-
     /**
      * Loads all unitils modules as described in the class javadoc.
      *
-     * @param configuration the configuration, not null
+     * @param configuration
+     *     the configuration, not null
      * @return the modules, not null
      */
     public List<Module> loadModules(Properties configuration) {
@@ -93,7 +104,6 @@ public class ModulesLoader {
         // get all core dependencies
         Map<String, List<String>> runAfters = new HashMap<String, List<String>>();
         for (String moduleName : moduleNames) {
-
             // get dependencies for core
             List<String> runAfterModuleNames = getStringList(PROPKEY_MODULE_PREFIX + moduleName + PROPKEY_MODULE_SUFFIX_RUN_AFTER, configuration);
             runAfters.put(moduleName, runAfterModuleNames);
@@ -102,7 +112,6 @@ public class ModulesLoader {
         // Count each time a core is (indirectly) used in runAfter and order by count
         Map<Integer, List<String>> runAfterCounts = new TreeMap<Integer, List<String>>();
         for (String moduleName : moduleNames) {
-
             // calculate the nr of times a core is (indirectly) referenced
             int count = countRunAfters(moduleName, runAfters, new HashMap<String, String>());
 
@@ -124,12 +133,13 @@ public class ModulesLoader {
         return result;
     }
 
-
     /**
      * Creates the modules with the given class names and calls initializes them with the given configuration.
      *
-     * @param moduleNames   the module class names, not null
-     * @param configuration the configuration, not null
+     * @param moduleNames
+     *     the module class names, not null
+     * @param configuration
+     *     the configuration, not null
      * @return the modules, not null
      */
     protected List<Module> createAndInitializeModules(List<String> moduleNames, Properties configuration) {
@@ -142,7 +152,7 @@ public class ModulesLoader {
                 continue;
             }
             try {
-                // create module instance                
+                // create module instance
                 Object module = createInstanceOfType(className, true);
                 if (!(module instanceof Module)) {
                     throw new UnitilsException("Unable to load core. Module class is not of type UnitilsModule: " + className);
@@ -157,18 +167,21 @@ public class ModulesLoader {
         return result;
     }
 
-
     /**
      * Count each time a core is (indirectly) used in runAfter and order by count.
      * <p/>
      * This way all modules can be ordered in such a way that all core dependencies (runAfterz) are met.
      * If no such order can be found (circular dependency) a runtime exception is thrown
      *
-     * @param moduleName           the core to count, not null
-     * @param allRunAfters         all dependencies as (moduleName, run-after moduleNames) entries, not null
-     * @param traversedModuleNames all moduleNames that were already counted as (moduleName, moduleName) entries, not null
+     * @param moduleName
+     *     the core to count, not null
+     * @param allRunAfters
+     *     all dependencies as (moduleName, run-after moduleNames) entries, not null
+     * @param traversedModuleNames
+     *     all moduleNames that were already counted as (moduleName, moduleName) entries, not null
      * @return the count
-     * @throws RuntimeException if an infinite loop (circular dependency) is found
+     * @throws RuntimeException
+     *     if an infinite loop (circular dependency) is found
      */
     private int countRunAfters(String moduleName, Map<String, List<String>> allRunAfters, Map<String, String> traversedModuleNames) {
         // Check for infinite loops
@@ -190,17 +203,17 @@ public class ModulesLoader {
         return count;
     }
 
-
     /**
      * Removes all modules that have a value false for the enabled property.
      *
-     * @param moduleNames   the module names, not null
-     * @param configuration the configuration, not null
+     * @param moduleNames
+     *     the module names, not null
+     * @param configuration
+     *     the configuration, not null
      */
     protected void removeDisabledModules(Set<String> moduleNames, Properties configuration) {
         Iterator<String> moduleNameIterator = moduleNames.iterator();
         while (moduleNameIterator.hasNext()) {
-
             String moduleName = moduleNameIterator.next();
             boolean enabled = getBoolean(PROPKEY_MODULE_PREFIX + moduleName + PROPKEY_MODULE_SUFFIX_ENABLED, true, configuration);
             if (!enabled) {
@@ -209,14 +222,13 @@ public class ModulesLoader {
         }
     }
 
-
     /**
-     * @param className The name of the class to check, not null
+     * @param className
+     *     The name of the class to check, not null
      * @return True if the classfile exists in the classpath
      */
     protected boolean classFileExistsInClasspath(String className) {
         String classFileName = className.replace('.', '/') + ".class";
         return getClass().getClassLoader().getResource(classFileName) != null;
     }
-
 }

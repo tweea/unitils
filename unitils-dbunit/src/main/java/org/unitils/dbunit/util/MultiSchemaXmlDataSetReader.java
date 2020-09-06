@@ -1,12 +1,9 @@
 /*
- * Copyright 2008,  Unitils.org
- *
+ * Copyright 2008, Unitils.org
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -14,11 +11,6 @@
  * limitations under the License.
  */
 package org.unitils.dbunit.util;
-
-import static org.apache.commons.lang.StringUtils.isEmpty;
-import static org.dbunit.dataset.ITable.NO_VALUE;
-import static org.dbunit.dataset.datatype.DataType.UNKNOWN;
-import static org.unitils.thirdparty.org.apache.commons.io.IOUtils.closeQuietly;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -43,6 +35,11 @@ import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.DefaultHandler;
+
+import static org.apache.commons.lang.StringUtils.isEmpty;
+import static org.dbunit.dataset.ITable.NO_VALUE;
+import static org.dbunit.dataset.datatype.DataType.UNKNOWN;
+import static org.unitils.thirdparty.org.apache.commons.io.IOUtils.closeQuietly;
 
 /**
  * A reader for DbUnit xml datasets that creates a new ITable instance for each element (row).
@@ -87,22 +84,22 @@ public class MultiSchemaXmlDataSetReader {
     /* The schema name to use when none is specified */
     private String defaultSchemaName;
 
-
     /**
      * Creates a data set reader.
      *
-     * @param defaultSchemaName The schema name to use when none is specified, not null
+     * @param defaultSchemaName
+     *     The schema name to use when none is specified, not null
      */
     public MultiSchemaXmlDataSetReader(String defaultSchemaName) {
         this.defaultSchemaName = defaultSchemaName;
     }
 
-
     /**
      * Parses the datasets from the given files.
      * Each schema is given its own dataset and each row is given its own table.
      *
-     * @param dataSetFiles The dataset files, not null
+     * @param dataSetFiles
+     *     The dataset files, not null
      * @return The read data set, not null
      */
     public MultiSchemaDataSet readDataSetXml(File... dataSetFiles) {
@@ -122,13 +119,10 @@ public class MultiSchemaXmlDataSetReader {
                 }
             }
             return dataSetContentHandler.getMultiSchemaDataSet();
-
         } catch (Exception e) {
             throw new UnitilsException("Unable to parse data set xml.", e);
         }
-
     }
-
 
     /**
      * Factory method for creating the SAX xml reader.
@@ -143,37 +137,39 @@ public class MultiSchemaXmlDataSetReader {
             // disable validation, so dataset can still be used when a DTD or XSD is missing
             disableValidation(saxParserFactory);
             return saxParserFactory.newSAXParser().getXMLReader();
-
         } catch (Exception e) {
             throw new UnitilsException("Unable to create SAX parser to read data set xml.", e);
         }
     }
 
-
     /**
      * Disables validation on the given sax parser factory.
      *
-     * @param saxParserFactory The factory, not null
+     * @param saxParserFactory
+     *     The factory, not null
      */
     protected void disableValidation(SAXParserFactory saxParserFactory) {
         saxParserFactory.setValidating(false);
         try {
             saxParserFactory.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
         } catch (Exception e) {
-            logger.debug("Unable to set http://xml.org/sax/features/external-parameter-entities feature on SAX parser factory to false. Igoring exception: " + e.getMessage());
+            logger.debug("Unable to set http://xml.org/sax/features/external-parameter-entities feature on SAX parser factory to false. Igoring exception: "
+                + e.getMessage());
         }
         try {
             saxParserFactory.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
         } catch (Exception e) {
-            logger.debug("Unable to set http://apache.org/xml/features/nonvalidating/load-external-dtd feature on SAX parser factory to false. Igoring exception: " + e.getMessage());
+            logger.debug(
+                "Unable to set http://apache.org/xml/features/nonvalidating/load-external-dtd feature on SAX parser factory to false. Igoring exception: "
+                    + e.getMessage());
         }
     }
-
 
     /**
      * The xml content handler that is going to create the data sets.
      */
-    protected static class DataSetContentHandler extends DefaultHandler {
+    protected static class DataSetContentHandler
+        extends DefaultHandler {
 
         /* The schema name to use when none is specified */
         protected String defaultSchemaName;
@@ -181,11 +177,11 @@ public class MultiSchemaXmlDataSetReader {
         /* All created data sets per schema */
         protected Map<String, DbUnitDataSet> dbUnitDataSetsPerSchemaName = new LinkedHashMap<String, DbUnitDataSet>();
 
-
         /**
          * Creates a data set SAX content handler
          *
-         * @param defaultSchemaName The schema name to use when none is specified, not null
+         * @param defaultSchemaName
+         *     The schema name to use when none is specified, not null
          */
         public DataSetContentHandler(String defaultSchemaName) {
             this.defaultSchemaName = defaultSchemaName;
@@ -212,13 +208,18 @@ public class MultiSchemaXmlDataSetReader {
         /**
          * Processes an xml element. A new table is started for each element.
          *
-         * @param uri        the xml namespace uri (= schema name)
-         * @param localName  the local xml name
-         * @param qName      the element name (should be table name for table rows)
-         * @param attributes the attributes (should be table columns for table rows)
+         * @param uri
+         *     the xml namespace uri (= schema name)
+         * @param localName
+         *     the local xml name
+         * @param qName
+         *     the element name (should be table name for table rows)
+         * @param attributes
+         *     the attributes (should be table columns for table rows)
          */
         @Override
-        public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
+        public void startElement(String uri, String localName, String qName, Attributes attributes)
+            throws SAXException {
             // begin element of data set, if default namespace set, it will override the default schema
             if ("dataset".equals(localName)) {
                 if (!isEmpty(uri)) {
@@ -250,8 +251,10 @@ public class MultiSchemaXmlDataSetReader {
         /**
          * Gets column names and row values from the given attribute and adds a new row to the given table.
          *
-         * @param table      The table to add the row to, not null
-         * @param attributes the attributes, not null
+         * @param table
+         *     The table to add the row to, not null
+         * @param attributes
+         *     the attributes, not null
          */
         protected void addRow(Attributes attributes, DbUnitTable table) {
             if (attributes.getLength() == 0) {
@@ -275,10 +278,12 @@ public class MultiSchemaXmlDataSetReader {
         /**
          * Overridden to rethrow exception.
          *
-         * @param e The exception
+         * @param e
+         *     The exception
          */
         @Override
-        public void error(SAXParseException e) throws SAXException {
+        public void error(SAXParseException e)
+            throws SAXException {
             throw e;
         }
     }

@@ -1,31 +1,28 @@
 /*
- * Copyright 2013,  Unitils.org
- *
+ * Copyright 2013, Unitils.org
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.unitils.core.config;
-
-import org.unitils.core.Factory;
-import org.unitils.core.UnitilsException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
 
+import org.unitils.core.Factory;
+import org.unitils.core.UnitilsException;
+
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
+
 import static org.unitils.util.ReflectionUtils.createInstanceOfType;
 
 /**
@@ -39,7 +36,8 @@ import static org.unitils.util.ReflectionUtils.createInstanceOfType;
  *
  * @author Tim Ducheyne
  */
-public class Configuration extends UnitilsConfiguration {
+public class Configuration
+    extends UnitilsConfiguration {
 
     /* All configuration properties, not null */
     protected Properties properties;
@@ -49,7 +47,8 @@ public class Configuration extends UnitilsConfiguration {
     /**
      * Creates a configuration for the given properties.
      *
-     * @param properties All configuration properties, not null
+     * @param properties
+     *     All configuration properties, not null
      */
     public Configuration(Properties properties) {
         super(properties);
@@ -73,13 +72,14 @@ public class Configuration extends UnitilsConfiguration {
         return result;
     }
 
-
     /**
      * Gets the string value for the property with the given name. If no such property is found or
      * the value is empty, an exception will be raised.
      *
-     * @param propertyName The name, not null
-     * @param classifiers  An optional list of classifiers for the property name (see class javadoc for more info)
+     * @param propertyName
+     *     The name, not null
+     * @param classifiers
+     *     An optional list of classifiers for the property name (see class javadoc for more info)
      * @return The trimmed string value, not null
      */
     public String getString(String propertyName, String... classifiers) {
@@ -94,8 +94,10 @@ public class Configuration extends UnitilsConfiguration {
      * Gets the string value for the property with the given name. If no such property is found or
      * the value is empty, null is returned.
      *
-     * @param propertyName The name, not null
-     * @param classifiers  An optional list of classifiers for the property name (see class javadoc for more info)
+     * @param propertyName
+     *     The name, not null
+     * @param classifiers
+     *     An optional list of classifiers for the property name (see class javadoc for more info)
      * @return The trimmed string value, null if not found
      */
     public String getOptionalString(String propertyName, String... classifiers) {
@@ -132,8 +134,10 @@ public class Configuration extends UnitilsConfiguration {
      * Gets the list of comma separated string values for the property with the given name. If no such property is found or
      * the value is empty, an exception will be raised. Empty elements (",,") will not be added.
      *
-     * @param propertyName The name, not null
-     * @param classifiers  An optional list of classifiers for the property name (see class javadoc for more info)
+     * @param propertyName
+     *     The name, not null
+     * @param classifiers
+     *     An optional list of classifiers for the property name (see class javadoc for more info)
      * @return The trimmed string list, not null
      */
     public List<String> getStringList(String propertyName, String... classifiers) {
@@ -149,8 +153,10 @@ public class Configuration extends UnitilsConfiguration {
      * Gets the list of comma separated string values for the property with the given name. If no such property is found or
      * the value is empty, an empty list is returned. Empty elements (",,") will not be added.
      *
-     * @param propertyName The name, not null
-     * @param classifiers  An optional list of classifiers for the property name (see class javadoc for more info)
+     * @param propertyName
+     *     The name, not null
+     * @param classifiers
+     *     An optional list of classifiers for the property name (see class javadoc for more info)
      * @return The trimmed string list, empty if not found
      */
     public List<String> getOptionalStringList(String propertyName, String... classifiers) {
@@ -158,13 +164,14 @@ public class Configuration extends UnitilsConfiguration {
         return toStringList(value);
     }
 
-
     /**
      * Gets the boolean value for the property with the given name. If no such property is found,
      * the value is empty or not a boolean, an exception will be raised.
      *
-     * @param propertyName The name, not null
-     * @param classifiers  An optional list of classifiers for the property name (see class javadoc for more info)
+     * @param propertyName
+     *     The name, not null
+     * @param classifiers
+     *     An optional list of classifiers for the property name (see class javadoc for more info)
      * @return The boolean value, not null
      */
     public Boolean getBoolean(String propertyName, String... classifiers) {
@@ -177,8 +184,10 @@ public class Configuration extends UnitilsConfiguration {
      * the value is empty, null is returned. An exception will be raised if the
      * value is not a boolean.
      *
-     * @param propertyName The name, not null
-     * @param classifiers  An optional list of classifiers for the property name (see class javadoc for more info)
+     * @param propertyName
+     *     The name, not null
+     * @param classifiers
+     *     An optional list of classifiers for the property name (see class javadoc for more info)
      * @return The boolean value, null if not found
      */
     public Boolean getOptionalBoolean(String propertyName, String... classifiers) {
@@ -190,8 +199,10 @@ public class Configuration extends UnitilsConfiguration {
      * Gets the list of comma separated boolean values for the property with the given name. If no such property is found or
      * the value is empty, an exception will be raised. Empty elements (",,") will not be added.
      *
-     * @param propertyName The name, not null
-     * @param classifiers  An optional list of classifiers for the property name (see class javadoc for more info)
+     * @param propertyName
+     *     The name, not null
+     * @param classifiers
+     *     An optional list of classifiers for the property name (see class javadoc for more info)
      * @return The boolean list, not null
      */
     public List<Boolean> getBooleanList(String propertyName, String... classifiers) {
@@ -206,8 +217,10 @@ public class Configuration extends UnitilsConfiguration {
      * Gets the list of comma separated boolean values for the property with the given name. If no such property is found or
      * the value is empty, an empty list is returned. Empty elements (",,") will not be added.
      *
-     * @param propertyName The name, not null
-     * @param classifiers  An optional list of classifiers for the property name (see class javadoc for more info)
+     * @param propertyName
+     *     The name, not null
+     * @param classifiers
+     *     An optional list of classifiers for the property name (see class javadoc for more info)
      * @return The boolean list, empty if not found
      */
     public List<Boolean> getOptionalBooleanList(String propertyName, String... classifiers) {
@@ -221,13 +234,14 @@ public class Configuration extends UnitilsConfiguration {
         return result;
     }
 
-
     /**
      * Gets the int value for the property with the given name. If no such property is found, the value is empty
      * or cannot be converted to an int, an exception will be raised.
      *
-     * @param propertyName The name, not null
-     * @param classifiers  An optional list of classifiers for the property name (see class javadoc for more info)
+     * @param propertyName
+     *     The name, not null
+     * @param classifiers
+     *     An optional list of classifiers for the property name (see class javadoc for more info)
      * @return The int value
      */
     public Integer getInteger(String propertyName, String... classifiers) {
@@ -240,8 +254,10 @@ public class Configuration extends UnitilsConfiguration {
      * the value is empty, null is returned. An exception will be raised if the
      * value cannot be converted to an int.
      *
-     * @param propertyName The name, not null
-     * @param classifiers  An optional list of classifiers for the property name (see class javadoc for more info)
+     * @param propertyName
+     *     The name, not null
+     * @param classifiers
+     *     An optional list of classifiers for the property name (see class javadoc for more info)
      * @return The int value, null if not found
      */
     public Integer getOptionalInteger(String propertyName, String... classifiers) {
@@ -253,8 +269,10 @@ public class Configuration extends UnitilsConfiguration {
      * Gets the list of comma separated int values for the property with the given name. If no such property is found or
      * the value is empty, an exception will be raised. Empty elements (",,") will not be added.
      *
-     * @param propertyName The name, not null
-     * @param classifiers  An optional list of classifiers for the property name (see class javadoc for more info)
+     * @param propertyName
+     *     The name, not null
+     * @param classifiers
+     *     An optional list of classifiers for the property name (see class javadoc for more info)
      * @return The int list, not null
      */
     public List<Integer> getIntegerList(String propertyName, String... classifiers) {
@@ -269,8 +287,10 @@ public class Configuration extends UnitilsConfiguration {
      * Gets the list of comma separated int values for the property with the given name. If no such property is found or
      * the value is empty, an empty list is returned. Empty elements (",,") will not be added.
      *
-     * @param propertyName The name, not null
-     * @param classifiers  An optional list of classifiers for the property name (see class javadoc for more info)
+     * @param propertyName
+     *     The name, not null
+     * @param classifiers
+     *     An optional list of classifiers for the property name (see class javadoc for more info)
      * @return The int list, empty if not found
      */
     public List<Integer> getOptionalIntegerList(String propertyName, String... classifiers) {
@@ -284,13 +304,14 @@ public class Configuration extends UnitilsConfiguration {
         return result;
     }
 
-
     /**
      * Gets the long value for the property with the given name. If no such property is found, the value is empty
      * or cannot be converted to a long, an exception will be raised.
      *
-     * @param propertyName The name, not null
-     * @param classifiers  An optional list of classifiers for the property name (see class javadoc for more info)
+     * @param propertyName
+     *     The name, not null
+     * @param classifiers
+     *     An optional list of classifiers for the property name (see class javadoc for more info)
      * @return The long value, not null
      */
     public Long getLong(String propertyName, String... classifiers) {
@@ -303,8 +324,10 @@ public class Configuration extends UnitilsConfiguration {
      * the value is empty, null is returned. An exception will be raised if the
      * value cannot be converted to a long.
      *
-     * @param propertyName The name, not null
-     * @param classifiers  An optional list of classifiers for the property name (see class javadoc for more info)
+     * @param propertyName
+     *     The name, not null
+     * @param classifiers
+     *     An optional list of classifiers for the property name (see class javadoc for more info)
      * @return The long value, null if not found
      */
     public Long getOptionalLong(String propertyName, String... classifiers) {
@@ -316,8 +339,10 @@ public class Configuration extends UnitilsConfiguration {
      * Gets the list of comma separated long values for the property with the given name. If no such property is found or
      * the value is empty, an exception will be raised. Empty elements (",,") will not be added.
      *
-     * @param propertyName The name, not null
-     * @param classifiers  An optional list of classifiers for the property name (see class javadoc for more info)
+     * @param propertyName
+     *     The name, not null
+     * @param classifiers
+     *     An optional list of classifiers for the property name (see class javadoc for more info)
      * @return The trimmed long list, not null
      */
     public List<Long> getLongList(String propertyName, String... classifiers) {
@@ -332,8 +357,10 @@ public class Configuration extends UnitilsConfiguration {
      * Gets the list of comma separated long values for the property with the given name. If no such property is found or
      * the value is empty, an empty list is returned. Empty elements (",,") will not be added.
      *
-     * @param propertyName The name, not null
-     * @param classifiers  An optional list of classifiers for the property name (see class javadoc for more info)
+     * @param propertyName
+     *     The name, not null
+     * @param classifiers
+     *     An optional list of classifiers for the property name (see class javadoc for more info)
      * @return The long list, empty if not found
      */
     public List<Long> getOptionalLongList(String propertyName, String... classifiers) {
@@ -347,13 +374,14 @@ public class Configuration extends UnitilsConfiguration {
         return result;
     }
 
-
     /**
      * Gets the class value for the property with the given name. If no such property is found, the value is empty
      * or cannot be converted to a class, an exception will be raised.
      *
-     * @param propertyName The name, not null
-     * @param classifiers  An optional list of classifiers for the property name (see class javadoc for more info)
+     * @param propertyName
+     *     The name, not null
+     * @param classifiers
+     *     An optional list of classifiers for the property name (see class javadoc for more info)
      * @return The class value, not null
      */
     public Class<?> getClass(String propertyName, String... classifiers) {
@@ -365,8 +393,10 @@ public class Configuration extends UnitilsConfiguration {
      * Gets the class value for the property with the given name. If no such property is found or
      * the value is empty, null is returned. An exception will be raised if the value cannot be converted to a class.
      *
-     * @param propertyName The name, not null
-     * @param classifiers  An optional list of classifiers for the property name (see class javadoc for more info)
+     * @param propertyName
+     *     The name, not null
+     * @param classifiers
+     *     An optional list of classifiers for the property name (see class javadoc for more info)
      * @return The class value, null if not found
      */
     public Class<?> getOptionalClass(String propertyName, String... classifiers) {
@@ -379,8 +409,10 @@ public class Configuration extends UnitilsConfiguration {
      * the value is empty or cannot be converted to a class, an exception will be raised.
      * Empty elements (",,") will not be added.
      *
-     * @param propertyName The name, not null
-     * @param classifiers  An optional list of classifiers for the property name (see class javadoc for more info)
+     * @param propertyName
+     *     The name, not null
+     * @param classifiers
+     *     An optional list of classifiers for the property name (see class javadoc for more info)
      * @return The class list, not null
      */
     public List<Class<?>> getClassList(String propertyName, String... classifiers) {
@@ -396,8 +428,10 @@ public class Configuration extends UnitilsConfiguration {
      * the value is empty, an empty list is returned. Empty elements (",,") will not be added.
      * An exception will be raised if the value cannot be converted to a class.
      *
-     * @param propertyName The name, not null
-     * @param classifiers  An optional list of classifiers for the property name (see class javadoc for more info)
+     * @param propertyName
+     *     The name, not null
+     * @param classifiers
+     *     An optional list of classifiers for the property name (see class javadoc for more info)
      * @return The class list, empty if not found
      */
     public List<Class<?>> getOptionalClassList(String propertyName, String... classifiers) {
@@ -411,7 +445,6 @@ public class Configuration extends UnitilsConfiguration {
         return result;
     }
 
-
     /**
      * Gets an instance of the given type (typically an interface).
      * It will look for a property using the classname and classifiers and create an instance of the classname
@@ -422,8 +455,10 @@ public class Configuration extends UnitilsConfiguration {
      * <br/>
      * Calling getInstanceOf(Reader.class) will then return an instance of MyReaderImpl
      *
-     * @param type        The type of the instance
-     * @param classifiers An optional list of classifiers for the property name (see class javadoc for more info)
+     * @param type
+     *     The type of the instance
+     * @param classifiers
+     *     An optional list of classifiers for the property name (see class javadoc for more info)
      * @return The instance
      */
     public <T> T getInstanceOf(Class<T> type, String... classifiers) {
@@ -442,8 +477,10 @@ public class Configuration extends UnitilsConfiguration {
      * <br/>
      * Calling getInstanceOf(Reader.class) will then return an instance of MyReaderImpl
      *
-     * @param type        The type of the instance
-     * @param classifiers An optional list of classifiers for the property name (see class javadoc for more info)
+     * @param type
+     *     The type of the instance
+     * @param classifiers
+     *     An optional list of classifiers for the property name (see class javadoc for more info)
      * @return The instance
      */
     public <T> T getOptionalInstanceOf(Class<T> type, String... classifiers) {
@@ -464,8 +501,10 @@ public class Configuration extends UnitilsConfiguration {
      * <br/>
      * If no such property is found or the value is empty, an exception will be raised. Empty elements (",,") will not be added.
      *
-     * @param type        The type of the instance
-     * @param classifiers An optional list of classifiers for the property name (see class javadoc for more info)
+     * @param type
+     *     The type of the instance
+     * @param classifiers
+     *     An optional list of classifiers for the property name (see class javadoc for more info)
      * @return The instance list, not null
      */
     public <T> List<T> getInstanceOfList(Class<T> type, String... classifiers) {
@@ -488,8 +527,10 @@ public class Configuration extends UnitilsConfiguration {
      * <br/>
      * If no such property is found or the value is empty, an empty list is returned. Empty elements (",,") will not be added.
      *
-     * @param type        The type of the instance
-     * @param classifiers An optional list of classifiers for the property name (see class javadoc for more info)
+     * @param type
+     *     The type of the instance
+     * @param classifiers
+     *     An optional list of classifiers for the property name (see class javadoc for more info)
      * @return The trimmed string list, empty if not found
      */
     public <T> List<T> getOptionalInstanceOfList(Class<T> type, String... classifiers) {
@@ -504,14 +545,16 @@ public class Configuration extends UnitilsConfiguration {
         return result;
     }
 
-
     /**
      * Gets the enum value for the property with the given name. If no such property is found, the value is empty
      * or cannot be converted to the given enum type, an exception will be raised.
      *
-     * @param type         The enum type, not null
-     * @param propertyName The name, not null
-     * @param classifiers  An optional list of classifiers for the property name (see class javadoc for more info)
+     * @param type
+     *     The enum type, not null
+     * @param propertyName
+     *     The name, not null
+     * @param classifiers
+     *     An optional list of classifiers for the property name (see class javadoc for more info)
      * @return The enum value, not null
      */
     public <T extends Enum<T>> T getEnumValue(Class<T> type, String propertyName, String... classifiers) {
@@ -523,9 +566,12 @@ public class Configuration extends UnitilsConfiguration {
      * Gets the enum value for the property with the given name. If no such property is found or
      * the value is empty, null is returned. An exception will be raised if the value cannot be converted to a the given enum type.
      *
-     * @param type         The enum type, not null
-     * @param propertyName The name, not null
-     * @param classifiers  An optional list of classifiers for the property name (see class javadoc for more info)
+     * @param type
+     *     The enum type, not null
+     * @param propertyName
+     *     The name, not null
+     * @param classifiers
+     *     An optional list of classifiers for the property name (see class javadoc for more info)
      * @return The enum value, null if not found
      */
     public <T extends Enum<T>> T getOptionalEnumValue(Class<T> type, String propertyName, String... classifiers) {
@@ -537,9 +583,12 @@ public class Configuration extends UnitilsConfiguration {
      * Gets the list of comma separated enum values for the property with the given name. If no such property is found or
      * the value is empty, an exception will be raised. Empty elements (",,") will not be added.
      *
-     * @param type         The enum type, not null
-     * @param propertyName The name, not null
-     * @param classifiers  An optional list of classifiers for the property name (see class javadoc for more info)
+     * @param type
+     *     The enum type, not null
+     * @param propertyName
+     *     The name, not null
+     * @param classifiers
+     *     An optional list of classifiers for the property name (see class javadoc for more info)
      * @return The enum list, not null
      */
     public <T extends Enum<T>> List<T> getEnumList(Class<T> type, String propertyName, String... classifiers) {
@@ -554,9 +603,12 @@ public class Configuration extends UnitilsConfiguration {
      * Gets the list of comma separated enum values for the property with the given name. If no such property is found or
      * the value is empty, an empty list is returned. Empty elements (",,") will not be added.
      *
-     * @param type         The enum type, not null
-     * @param propertyName The name, not null
-     * @param classifiers  An optional list of classifiers for the property name (see class javadoc for more info)
+     * @param type
+     *     The enum type, not null
+     * @param propertyName
+     *     The name, not null
+     * @param classifiers
+     *     An optional list of classifiers for the property name (see class javadoc for more info)
      * @return The enum list, empty if not found
      */
     public <T extends Enum<T>> List<T> getOptionalEnumList(Class<T> type, String propertyName, String... classifiers) {
@@ -600,7 +652,6 @@ public class Configuration extends UnitilsConfiguration {
         return result;
     }
 
-
     protected String nameToString(String propertyName, String... classifiers) {
         if (classifiers == null || classifiers.length == 0) {
             return "property " + propertyName;
@@ -634,7 +685,6 @@ public class Configuration extends UnitilsConfiguration {
                 return null;
             }
             return Integer.valueOf(value);
-
         } catch (NumberFormatException e) {
             throw new UnitilsException("Value " + value + " of " + nameToString(propertyName, classifiers) + " is not an int.");
         }
@@ -646,7 +696,6 @@ public class Configuration extends UnitilsConfiguration {
                 return null;
             }
             return Long.valueOf(value);
-
         } catch (NumberFormatException e) {
             throw new UnitilsException("Value " + value + " of " + nameToString(propertyName, classifiers) + " is not a long.");
         }
@@ -675,11 +724,14 @@ public class Configuration extends UnitilsConfiguration {
             }
             return Enum.valueOf(type, value);
         } catch (Exception e) {
-            throw new UnitilsException("Value " + value + " of " + nameToString(propertyName, classifiers) + " is not a valid enum value for type " + type.getName(), e);
+            throw new UnitilsException(
+                "Value " + value + " of " + nameToString(propertyName, classifiers) + " is not a valid enum value for type " + type.getName(), e);
         }
     }
 
-    @SuppressWarnings({"unchecked"})
+    @SuppressWarnings({
+        "unchecked"
+    })
     protected <T> T toInstance(String value, String propertyName, String... classifiers) {
         if (value == null) {
             return null;
@@ -706,7 +758,9 @@ public class Configuration extends UnitilsConfiguration {
         }
     }
 
-    @SuppressWarnings({"unchecked"})
+    @SuppressWarnings({
+        "unchecked"
+    })
     protected <T> T toInstance(Class<T> type, String value, String propertyName, String... classifiers) {
         T instance = (T) toInstance(value, propertyName, classifiers);
         if (instance != null && !type.isAssignableFrom(instance.getClass())) {
@@ -715,7 +769,9 @@ public class Configuration extends UnitilsConfiguration {
         return instance;
     }
 
-    @SuppressWarnings({"unchecked"})
+    @SuppressWarnings({
+        "unchecked"
+    })
     protected <T> T toValueOfType(Class<T> type, String value, String propertyName, String... classifiers) {
         if (type.isAssignableFrom(String.class)) {
             return (T) value;

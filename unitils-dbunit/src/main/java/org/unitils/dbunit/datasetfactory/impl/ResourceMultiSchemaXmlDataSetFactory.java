@@ -12,21 +12,20 @@ import org.unitils.core.UnitilsException;
 import org.unitils.dbunit.util.MultiSchemaDataSet;
 import org.unitils.dbunit.util.MultiSchemaXmlDataSetReaderExtend;
 
-
 /**
  * ResourceMultiSchemaXmlDataSetFactory - A factory to create datasets for {@link ResourceDataSet} and {@link ExpectedResourceDataSet} .
  * 
  * @author wiw
- * 
  * @since 1.2.8
- * 
  * @see <a href="http://unitils.org/summary.html">Unitils</a>
  */
-public class ResourceMultiSchemaXmlDataSetFactory extends MultiSchemaXmlDataSetFactory {
-
+public class ResourceMultiSchemaXmlDataSetFactory
+    extends MultiSchemaXmlDataSetFactory {
     private static final Log LOGGER = LogFactory.getLog(ResourceMultiSchemaXmlDataSetFactory.class);
+
     /**
      * Creates a {@link MultiSchemaDataSet}
+     * 
      * @param inputStreams
      * @return {@link MultiSchemaDataSet}
      */
@@ -38,14 +37,16 @@ public class ResourceMultiSchemaXmlDataSetFactory extends MultiSchemaXmlDataSetF
             throw new UnitilsException((new StringBuilder()).append("Unable to create DbUnit dataset for data set resourcefiles: xxx").toString(), e);
         }
     }
+
     /**
      * The dataSetFiles are converted into inputstreams and than the {@link MultiSchemaDataSet} is created.
+     * 
      * @see org.unitils.dbunit.datasetfactory.impl.MultiSchemaXmlDataSetFactory#createDataSet(java.io.File[])
      */
     @Override
     public MultiSchemaDataSet createDataSet(File... dataSetFiles) {
         InputStream[] tempStream = new InputStream[dataSetFiles.length];
-        
+
         for (int i = 0; i < dataSetFiles.length; i++) {
             File file = dataSetFiles[i];
             try {
@@ -54,7 +55,7 @@ public class ResourceMultiSchemaXmlDataSetFactory extends MultiSchemaXmlDataSetF
                 LOGGER.error(e.getMessage(), e);
             }
         }
-        
+
         return createDataSet(tempStream);
     }
 }

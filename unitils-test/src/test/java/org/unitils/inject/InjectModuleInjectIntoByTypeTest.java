@@ -1,12 +1,9 @@
 /*
- * Copyright 2008,  Unitils.org
- *
+ * Copyright 2008, Unitils.org
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -15,7 +12,8 @@
  */
 package org.unitils.inject;
 
-import static org.junit.Assert.assertSame;
+import java.util.Properties;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.unitils.core.ConfigurationLoader;
@@ -23,7 +21,7 @@ import org.unitils.inject.annotation.InjectIntoByType;
 import org.unitils.inject.annotation.TestedObject;
 import org.unitils.inject.util.PropertyAccess;
 
-import java.util.Properties;
+import static org.junit.Assert.assertSame;
 
 /**
  * Test for the auto injection behavior of the {@link InjectModule}
@@ -38,26 +36,33 @@ public class InjectModuleInjectIntoByTypeTest {
 
     /* Objects that represent 'unit test classes', containing objects that should be injected on other objects. */
     private TestInjectIntoByTypeExplicitTarget testInjectIntoByTypeExplicitTarget = new TestInjectIntoByTypeExplicitTarget();
-    private TestInjectIntoByTypeFieldAccess testInjectIntoByTypeFieldAccess = new TestInjectIntoByTypeFieldAccess();
-    private TestInjectIntoByTypeAnnotatedTarget testInjectIntoByTypeAnnotatedTarget = new TestInjectIntoByTypeAnnotatedTarget();
-    private TestInjectIntoByType_targetPropertyIsSuperType testInjectIntoByType_targetPropertyIsSuperType = new TestInjectIntoByType_targetPropertyIsSuperType();
-    private TestInjectIntoByType_targetPropertyIsSuperType_fieldAccess testInjectIntoByType_targetPropertyIsSuperType_fieldAccess = new TestInjectIntoByType_targetPropertyIsSuperType_fieldAccess();
-    private TestInjectIntoByTypeToMostSpecificallyTypedProperty testInjectIntoByTypeToMostSpecificallyTypedProperty = new TestInjectIntoByTypeToMostSpecificallyTypedProperty();
-    private TestInjectIntoByTypeToMostSpecificallyTypedProperty_fieldAccess testInjectIntoByTypeToMostSpecificallyTypedProperty_fieldAccess = new TestInjectIntoByTypeToMostSpecificallyTypedProperty_fieldAccess();
-    private TestInjectIntoByType_targetPropertyOnSuperClass testInjectIntoByType_targetPropertyOnSuperClass = new TestInjectIntoByType_targetPropertyOnSuperClass();
-    private TestInjectIntoByType_targetPropertyOnSuperClass_fieldAccess testInjectIntoByType_targetPropertyOnSuperClass_fieldAccess = new TestInjectIntoByType_targetPropertyOnSuperClass_fieldAccess();
 
+    private TestInjectIntoByTypeFieldAccess testInjectIntoByTypeFieldAccess = new TestInjectIntoByTypeFieldAccess();
+
+    private TestInjectIntoByTypeAnnotatedTarget testInjectIntoByTypeAnnotatedTarget = new TestInjectIntoByTypeAnnotatedTarget();
+
+    private TestInjectIntoByType_targetPropertyIsSuperType testInjectIntoByType_targetPropertyIsSuperType = new TestInjectIntoByType_targetPropertyIsSuperType();
+
+    private TestInjectIntoByType_targetPropertyIsSuperType_fieldAccess testInjectIntoByType_targetPropertyIsSuperType_fieldAccess = new TestInjectIntoByType_targetPropertyIsSuperType_fieldAccess();
+
+    private TestInjectIntoByTypeToMostSpecificallyTypedProperty testInjectIntoByTypeToMostSpecificallyTypedProperty = new TestInjectIntoByTypeToMostSpecificallyTypedProperty();
+
+    private TestInjectIntoByTypeToMostSpecificallyTypedProperty_fieldAccess testInjectIntoByTypeToMostSpecificallyTypedProperty_fieldAccess = new TestInjectIntoByTypeToMostSpecificallyTypedProperty_fieldAccess();
+
+    private TestInjectIntoByType_targetPropertyOnSuperClass testInjectIntoByType_targetPropertyOnSuperClass = new TestInjectIntoByType_targetPropertyOnSuperClass();
+
+    private TestInjectIntoByType_targetPropertyOnSuperClass_fieldAccess testInjectIntoByType_targetPropertyOnSuperClass_fieldAccess = new TestInjectIntoByType_targetPropertyOnSuperClass_fieldAccess();
 
     /**
      * Initializes the test and test fixture.
      */
     @Before
-    public void setUp() throws Exception {
+    public void setUp()
+        throws Exception {
         Properties configuration = new ConfigurationLoader().loadConfiguration();
         injectModule = new InjectModule();
         injectModule.init(configuration);
     }
-
 
     /**
      * Tests auto injection in case the target is explicitly specified
@@ -68,7 +73,6 @@ public class InjectModuleInjectIntoByTypeTest {
         assertSame(testInjectIntoByTypeExplicitTarget.getToInject(), testInjectIntoByTypeExplicitTarget.getInjectOn().getToInject());
     }
 
-
     /**
      * Tests auto injection in case of field access
      */
@@ -77,7 +81,6 @@ public class InjectModuleInjectIntoByTypeTest {
         injectModule.injectObjects(testInjectIntoByTypeFieldAccess);
         assertSame(testInjectIntoByTypeFieldAccess.getToInject(), testInjectIntoByTypeFieldAccess.getInjectOnField().getToInject());
     }
-
 
     /**
      * Multiple fields are annotated with @TestedObject. Tests wether the objects are injected to all of these fields
@@ -89,7 +92,6 @@ public class InjectModuleInjectIntoByTypeTest {
         assertSame(testInjectIntoByTypeAnnotatedTarget.getToInject(), testInjectIntoByTypeAnnotatedTarget.getInjectOn2().getToInject());
     }
 
-
     /**
      * Tests the case when the target field is a supertype of the injected object, and no more specific field exists.
      */
@@ -99,7 +101,6 @@ public class InjectModuleInjectIntoByTypeTest {
         assertSame(testInjectIntoByType_targetPropertyIsSuperType.getToInject(), testInjectIntoByType_targetPropertyIsSuperType.getInjectOn().getToInject());
     }
 
-
     /**
      * Tests the case when the target field is a supertype of the injected object, and no more specific field exists,
      * using field access
@@ -107,9 +108,9 @@ public class InjectModuleInjectIntoByTypeTest {
     @Test
     public void testInjectIntoByType_targetFieldIsSuperType_fieldAccess() {
         injectModule.injectObjects(testInjectIntoByType_targetPropertyIsSuperType_fieldAccess);
-        assertSame(testInjectIntoByType_targetPropertyIsSuperType_fieldAccess.getToInject(), testInjectIntoByType_targetPropertyIsSuperType_fieldAccess.getInjectOn().getToInject());
+        assertSame(testInjectIntoByType_targetPropertyIsSuperType_fieldAccess.getToInject(),
+            testInjectIntoByType_targetPropertyIsSuperType_fieldAccess.getInjectOn().getToInject());
     }
-
 
     /**
      * Tests the case where target fields of both the object's type and a super type exists. The object should be injected
@@ -118,10 +119,11 @@ public class InjectModuleInjectIntoByTypeTest {
     @Test
     public void testInjectIntoByType_injectToMostSpecificallyTypedField() {
         injectModule.injectObjects(testInjectIntoByTypeToMostSpecificallyTypedProperty);
-        assertSame(testInjectIntoByTypeToMostSpecificallyTypedProperty.getToInjectSuper(), testInjectIntoByTypeToMostSpecificallyTypedProperty.getInjectOn().getToInjectSuper());
-        assertSame(testInjectIntoByTypeToMostSpecificallyTypedProperty.getToInjectSub(), testInjectIntoByTypeToMostSpecificallyTypedProperty.getInjectOn().getToInjectSub());
+        assertSame(testInjectIntoByTypeToMostSpecificallyTypedProperty.getToInjectSuper(),
+            testInjectIntoByTypeToMostSpecificallyTypedProperty.getInjectOn().getToInjectSuper());
+        assertSame(testInjectIntoByTypeToMostSpecificallyTypedProperty.getToInjectSub(),
+            testInjectIntoByTypeToMostSpecificallyTypedProperty.getInjectOn().getToInjectSub());
     }
-
 
     /**
      * Tests the case where target fields of both the object's type and a super type exists. The object should be injected
@@ -130,10 +132,11 @@ public class InjectModuleInjectIntoByTypeTest {
     @Test
     public void testInjectIntoByType_injectToMostSpecificallyTypedField_fieldAccess() {
         injectModule.injectObjects(testInjectIntoByTypeToMostSpecificallyTypedProperty_fieldAccess);
-        assertSame(testInjectIntoByTypeToMostSpecificallyTypedProperty_fieldAccess.getToInjectSuper(), testInjectIntoByTypeToMostSpecificallyTypedProperty_fieldAccess.getInjectOn().getToInjectSuper());
-        assertSame(testInjectIntoByTypeToMostSpecificallyTypedProperty_fieldAccess.getToInjectSub(), testInjectIntoByTypeToMostSpecificallyTypedProperty_fieldAccess.getInjectOn().getToInjectSub());
+        assertSame(testInjectIntoByTypeToMostSpecificallyTypedProperty_fieldAccess.getToInjectSuper(),
+            testInjectIntoByTypeToMostSpecificallyTypedProperty_fieldAccess.getInjectOn().getToInjectSuper());
+        assertSame(testInjectIntoByTypeToMostSpecificallyTypedProperty_fieldAccess.getToInjectSub(),
+            testInjectIntoByTypeToMostSpecificallyTypedProperty_fieldAccess.getInjectOn().getToInjectSub());
     }
-
 
     /**
      * Tests the case where the target property of the object to inject on belongs to the superclass
@@ -144,21 +147,20 @@ public class InjectModuleInjectIntoByTypeTest {
         assertSame(testInjectIntoByType_targetPropertyOnSuperClass.getToInject(), testInjectIntoByType_targetPropertyOnSuperClass.getInjectOn().getToInject());
     }
 
-
     /**
      * Tests the case where the target property of the object to inject on belongs to the superclass, using field access
      */
     @Test
     public void testInjectIntoByType_targetPropertyOnSuperClass_fieldAccess() {
         injectModule.injectObjects(testInjectIntoByType_targetPropertyOnSuperClass_fieldAccess);
-        assertSame(testInjectIntoByType_targetPropertyOnSuperClass_fieldAccess.getToInject(), testInjectIntoByType_targetPropertyOnSuperClass_fieldAccess.getInjectOn().getToInject());
+        assertSame(testInjectIntoByType_targetPropertyOnSuperClass_fieldAccess.getToInject(),
+            testInjectIntoByType_targetPropertyOnSuperClass_fieldAccess.getInjectOn().getToInject());
     }
 
-
     public class TestInjectIntoByTypeExplicitTarget {
-
         @InjectIntoByType(target = "injectOn", propertyAccess = PropertyAccess.SETTER)
         private ToInjectSuper toInject;
+
         private InjectOn injectOn;
 
         public TestInjectIntoByTypeExplicitTarget() {
@@ -175,11 +177,10 @@ public class InjectModuleInjectIntoByTypeTest {
         }
     }
 
-
     public class TestInjectIntoByTypeFieldAccess {
-
         @InjectIntoByType(propertyAccess = PropertyAccess.FIELD)
         private ToInjectSuper toInject;
+
         @TestedObject
         private InjectOnField injectOnField;
 
@@ -197,13 +198,13 @@ public class InjectModuleInjectIntoByTypeTest {
         }
     }
 
-
     public class TestInjectIntoByTypeAnnotatedTarget {
-
         @InjectIntoByType(propertyAccess = PropertyAccess.SETTER)
         private ToInjectSuper toInject;
+
         @TestedObject
         private InjectOn injectOn1;
+
         @TestedObject
         private InjectOn injectOn2;
 
@@ -226,11 +227,10 @@ public class InjectModuleInjectIntoByTypeTest {
         }
     }
 
-
     public class TestInjectIntoByType_targetPropertyIsSuperType {
-
         @InjectIntoByType(propertyAccess = PropertyAccess.SETTER)
         private ToInjectSub toInject;
+
         @TestedObject
         private InjectOn injectOn;
 
@@ -248,11 +248,10 @@ public class InjectModuleInjectIntoByTypeTest {
         }
     }
 
-
     public class TestInjectIntoByType_targetPropertyIsSuperType_fieldAccess {
-
         @InjectIntoByType(propertyAccess = PropertyAccess.FIELD)
         private ToInjectSub toInject;
+
         @TestedObject
         private InjectOnField injectOn;
 
@@ -270,13 +269,13 @@ public class InjectModuleInjectIntoByTypeTest {
         }
     }
 
-
     public class TestInjectIntoByTypeToMostSpecificallyTypedProperty {
-
         @InjectIntoByType(propertyAccess = PropertyAccess.SETTER)
         private ToInjectSuper toInjectSuper;
+
         @InjectIntoByType(propertyAccess = PropertyAccess.SETTER)
         private ToInjectSub toInjectSub;
+
         @TestedObject
         private InjectOnSuperSub injectOn;
 
@@ -299,13 +298,13 @@ public class InjectModuleInjectIntoByTypeTest {
         }
     }
 
-
     public class TestInjectIntoByTypeToMostSpecificallyTypedProperty_fieldAccess {
-
         @InjectIntoByType(propertyAccess = PropertyAccess.FIELD)
         private ToInjectSuper toInjectSuper;
+
         @InjectIntoByType(propertyAccess = PropertyAccess.FIELD)
         private ToInjectSub toInjectSub;
+
         @TestedObject
         private InjectOnSuperSubFieldAccess injectOn;
 
@@ -328,11 +327,10 @@ public class InjectModuleInjectIntoByTypeTest {
         }
     }
 
-
     public class TestInjectIntoByType_targetPropertyOnSuperClass {
-
         @InjectIntoByType(propertyAccess = PropertyAccess.SETTER)
         private ToInjectSuper toInject;
+
         @TestedObject
         private InjectOn_subClass injectOn;
 
@@ -350,11 +348,10 @@ public class InjectModuleInjectIntoByTypeTest {
         }
     }
 
-
     public class TestInjectIntoByType_targetPropertyOnSuperClass_fieldAccess {
-
         @InjectIntoByType(propertyAccess = PropertyAccess.FIELD)
         private ToInjectSuper toInject;
+
         @TestedObject
         private InjectOn_subClass injectOn;
 
@@ -372,26 +369,23 @@ public class InjectModuleInjectIntoByTypeTest {
         }
     }
 
-
     /**
      * Object to inject, superclass
      */
     public class ToInjectSuper {
     }
 
-
     /**
      * Object to inject, subclass
      */
-    public class ToInjectSub extends ToInjectSuper {
+    public class ToInjectSub
+        extends ToInjectSuper {
     }
-
 
     /**
      * Object to inject into
      */
     public class InjectOn {
-
         private ToInjectSuper toInject;
 
         public ToInjectSuper getToInject() {
@@ -403,12 +397,10 @@ public class InjectModuleInjectIntoByTypeTest {
         }
     }
 
-
     /**
      * Object to inject using field access
      */
     public class InjectOnField {
-
         private ToInjectSuper toInject;
 
         public ToInjectSuper getToInject() {
@@ -420,8 +412,8 @@ public class InjectModuleInjectIntoByTypeTest {
      * Object to inject on. Contains properties of a super- and a subtype.
      */
     public class InjectOnSuperSub {
-
         private ToInjectSuper toInjectSuper;
+
         private ToInjectSub toInjectSub;
 
         public ToInjectSuper getToInjectSuper() {
@@ -441,13 +433,12 @@ public class InjectModuleInjectIntoByTypeTest {
         }
     }
 
-
     /**
      * Object to inject on using field access. Contains properties of a super- and a subtype.
      */
     public class InjectOnSuperSubFieldAccess {
-
         private ToInjectSuper toInjectSuper;
+
         private ToInjectSub toInjectSub;
 
         public ToInjectSuper getToInjectSuper() {
@@ -459,12 +450,10 @@ public class InjectModuleInjectIntoByTypeTest {
         }
     }
 
-
     /**
      * Superclass of object to inject into
      */
     public class InjectOn_superClass {
-
         private ToInjectSuper toInject;
 
         public ToInjectSuper getToInject() {
@@ -474,14 +463,12 @@ public class InjectModuleInjectIntoByTypeTest {
         public void setToInject(ToInjectSuper toInject) {
             this.toInject = toInject;
         }
-
     }
-
 
     /**
      * Superclass of object to inject into
      */
-    public class InjectOn_subClass extends InjectOn_superClass {
+    public class InjectOn_subClass
+        extends InjectOn_superClass {
     }
-
 }

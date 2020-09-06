@@ -1,19 +1,17 @@
 /*
- *
- *  * Copyright 2010,  Unitils.org
- *  *
- *  * Licensed under the Apache License, Version 2.0 (the "License");
- *  * you may not use this file except in compliance with the License.
- *  * You may obtain a copy of the License at
- *  *
- *  *     http://www.apache.org/licenses/LICENSE-2.0
- *  *
- *  * Unless required by applicable law or agreed to in writing, software
- *  * distributed under the License is distributed on an "AS IS" BASIS,
- *  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  * See the License for the specific language governing permissions and
- *  * limitations under the License.
- *
+ * * Copyright 2010, Unitils.org
+ * *
+ * * Licensed under the Apache License, Version 2.0 (the "License");
+ * * you may not use this file except in compliance with the License.
+ * * You may obtain a copy of the License at
+ * *
+ * * http://www.apache.org/licenses/LICENSE-2.0
+ * *
+ * * Unless required by applicable law or agreed to in writing, software
+ * * distributed under the License is distributed on an "AS IS" BASIS,
+ * * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * * See the License for the specific language governing permissions and
+ * * limitations under the License.
  */
 package org.unitils.mock.argumentmatcher;
 
@@ -23,7 +21,15 @@ import org.unitils.mock.core.MockObject;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static org.unitils.mock.ArgumentMatchers.*;
+import static org.unitils.mock.ArgumentMatchers.any;
+import static org.unitils.mock.ArgumentMatchers.anyBoolean;
+import static org.unitils.mock.ArgumentMatchers.anyByte;
+import static org.unitils.mock.ArgumentMatchers.anyChar;
+import static org.unitils.mock.ArgumentMatchers.anyDouble;
+import static org.unitils.mock.ArgumentMatchers.anyFloat;
+import static org.unitils.mock.ArgumentMatchers.anyInt;
+import static org.unitils.mock.ArgumentMatchers.anyLong;
+import static org.unitils.mock.ArgumentMatchers.anyShort;
 
 /**
  * Tests the usage of anyInt, anyLong, etc argment matchers.
@@ -36,12 +42,10 @@ public class ArgumentMatcherAnyTest {
     /* Test mock object */
     private MockObject<TestClass> mockObject;
 
-
     @Before
     public void setUp() {
         mockObject = new MockObject<TestClass>("testMock", TestClass.class, this);
     }
-
 
     @Test
     public void testAny() {
@@ -61,7 +65,6 @@ public class ArgumentMatcherAnyTest {
         mockObject.assertNotInvoked().testMethodString(any(String.class));
     }
 
-
     @Test
     public void testAnyBoolean() {
         mockObject.returns(true).testMethodBoolean(anyBoolean());
@@ -70,7 +73,6 @@ public class ArgumentMatcherAnyTest {
         assertTrue(result);
         mockObject.assertInvoked().testMethodBoolean(anyBoolean());
     }
-
 
     @Test
     public void testAnyByte() {
@@ -81,7 +83,6 @@ public class ArgumentMatcherAnyTest {
         mockObject.assertInvoked().testMethodByte(anyByte());
     }
 
-
     @Test
     public void testAnyShort() {
         mockObject.returns(true).testMethodShort(anyShort());
@@ -90,7 +91,6 @@ public class ArgumentMatcherAnyTest {
         assertTrue(result);
         mockObject.assertInvoked().testMethodShort(anyShort());
     }
-
 
     @Test
     public void testAnyChar() {
@@ -101,7 +101,6 @@ public class ArgumentMatcherAnyTest {
         mockObject.assertInvoked().testMethodChar(anyChar());
     }
 
-
     @Test
     public void testAnyInt() {
         mockObject.returns(true).testMethodInteger(anyInt());
@@ -110,7 +109,6 @@ public class ArgumentMatcherAnyTest {
         assertTrue(result);
         mockObject.assertInvoked().testMethodInteger(anyInt());
     }
-
 
     @Test
     public void testAnyLong() {
@@ -121,7 +119,6 @@ public class ArgumentMatcherAnyTest {
         mockObject.assertInvoked().testMethodLong(anyLong());
     }
 
-
     @Test
     public void testAnyFloat() {
         mockObject.returns(true).testMethodFloat(anyFloat());
@@ -130,7 +127,6 @@ public class ArgumentMatcherAnyTest {
         assertTrue(result);
         mockObject.assertInvoked().testMethodFloat(anyFloat());
     }
-
 
     @Test
     public void testAnyDouble() {
@@ -141,7 +137,6 @@ public class ArgumentMatcherAnyTest {
         mockObject.assertInvoked().testMethodDouble(anyDouble());
     }
 
-
     @Test
     public void testAnyIntButDouble() {
         mockObject.returns(true).testMethodDouble(anyInt());
@@ -151,12 +146,10 @@ public class ArgumentMatcherAnyTest {
         mockObject.assertNotInvoked().testMethodDouble(anyInt());
     }
 
-
     /**
      * Interface that is mocked during the tests
      */
     private static interface TestClass {
-
         boolean testMethodString(String arg1);
 
         boolean testMethodBoolean(boolean arg1);
@@ -174,8 +167,5 @@ public class ArgumentMatcherAnyTest {
         boolean testMethodFloat(float arg1);
 
         boolean testMethodDouble(double arg1);
-
-
     }
-
 }

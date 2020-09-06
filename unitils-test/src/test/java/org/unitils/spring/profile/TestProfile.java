@@ -9,16 +9,13 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 
-
 /**
  * Test {@link Profile}.
  * 
  * @author Jeroen Horemans
  * @author Thomas De Rycke
  * @author Willemijn Wouters
- * 
  * @since 3.4
- * 
  */
 @Ignore
 @Configuration
@@ -26,10 +23,6 @@ import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 public class TestProfile {
     @Bean
     public DataSource dataSource() {
-        return new EmbeddedDatabaseBuilder()
-            .setType(EmbeddedDatabaseType.HSQL)
-            .addScript("classpath:org/unitils/database/DatabaseUnitilsTest.sql")
-            .build();
+        return new EmbeddedDatabaseBuilder().setType(EmbeddedDatabaseType.HSQL).addScript("classpath:org/unitils/database/DatabaseUnitilsTest.sql").build();
     }
-    
 }

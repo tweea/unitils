@@ -1,12 +1,9 @@
 /*
- * Copyright 2008,  Unitils.org
- *
+ * Copyright 2008, Unitils.org
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -15,9 +12,10 @@
  */
 package org.unitils.inject;
 
+import java.util.Properties;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import static org.junit.Assert.fail;
 import org.junit.Before;
 import org.junit.Test;
 import org.unitils.UnitilsJUnit4;
@@ -26,34 +24,40 @@ import org.unitils.core.UnitilsException;
 import org.unitils.inject.annotation.InjectIntoByType;
 import org.unitils.inject.util.PropertyAccess;
 
-import java.util.Properties;
+import static org.junit.Assert.fail;
 
 /**
  * @author Filip Neven
  * @author Tim Ducheyne
  */
-public class InjectModuleInjectIntoByTypeExceptionsTest extends UnitilsJUnit4 {
-
+public class InjectModuleInjectIntoByTypeExceptionsTest
+    extends UnitilsJUnit4 {
     private static final Log logger = LogFactory.getLog(InjectModuleInjectIntoByTypeExceptionsTest.class);
 
     private TestInjectIntoByType_TargetIsNull testInjectIntoByType_targetIsNull = new TestInjectIntoByType_TargetIsNull();
+
     private TestInjectIntoByType_TargetDoesntExist testInjectIntoByType_targetDoesntExist = new TestInjectIntoByType_TargetDoesntExist();
+
     private TestInjectIntoByType_NoTargetSpecified testInjectIntoByType_noTargetSpecified = new TestInjectIntoByType_NoTargetSpecified();
+
     private TestInjectIntoByType_NoPropertyOfType testInjectIntoByType_noPropertyOfType = new TestInjectIntoByType_NoPropertyOfType();
+
     private TestInjectIntoByType_MoreThanOneFieldOfType testInjectIntoByType_moreThanOneFieldOfType = new TestInjectIntoByType_MoreThanOneFieldOfType();
+
     private TestInjectIntoByType_MoreThanOneSetterOfType testInjectIntoByType_moreThanOneSetterOfType = new TestInjectIntoByType_MoreThanOneSetterOfType();
+
     private TestInjectIntoByType_MoreThanOneFieldOfSuperType testInjectIntoByType_moreThanOneFieldOfSuperType = new TestInjectIntoByType_MoreThanOneFieldOfSuperType();
+
     private TestInjectIntoByType_MoreThanOneSetterOfSuperType testInjectIntoByType_moreThanOneSetterOfSuperType = new TestInjectIntoByType_MoreThanOneSetterOfSuperType();
 
     private InjectModule injectModule = new InjectModule();
 
-
     @Before
-    public void setUp() throws Exception {
+    public void setUp()
+        throws Exception {
         Properties configuration = new ConfigurationLoader().loadConfiguration();
         injectModule.init(configuration);
     }
-
 
     @Test
     public void testInject_targetIsNull() {
@@ -66,7 +70,6 @@ public class InjectModuleInjectIntoByTypeExceptionsTest extends UnitilsJUnit4 {
         }
     }
 
-
     @Test
     public void testInjectIntoByType_targetDoesntExist() {
         try {
@@ -77,7 +80,6 @@ public class InjectModuleInjectIntoByTypeExceptionsTest extends UnitilsJUnit4 {
             logger.debug(this, e);
         }
     }
-
 
     @Test
     public void testInjectIntoByType_noTargetSpecified() {
@@ -90,7 +92,6 @@ public class InjectModuleInjectIntoByTypeExceptionsTest extends UnitilsJUnit4 {
         }
     }
 
-
     @Test
     public void testInjectIntoByType_noPropertyOfType() {
         try {
@@ -101,7 +102,6 @@ public class InjectModuleInjectIntoByTypeExceptionsTest extends UnitilsJUnit4 {
             logger.debug(this, e);
         }
     }
-
 
     @Test
     public void testInjectIntoByType_moreThanOneFieldOfType() {
@@ -114,7 +114,6 @@ public class InjectModuleInjectIntoByTypeExceptionsTest extends UnitilsJUnit4 {
         }
     }
 
-
     @Test
     public void testInjectIntoByType_moreThanOneSetterOfType() {
         try {
@@ -126,7 +125,6 @@ public class InjectModuleInjectIntoByTypeExceptionsTest extends UnitilsJUnit4 {
         }
     }
 
-
     @Test
     public void testInjectIntoByType_moreThanOneFieldOfSuperType() {
         try {
@@ -137,7 +135,6 @@ public class InjectModuleInjectIntoByTypeExceptionsTest extends UnitilsJUnit4 {
             logger.debug(this, e);
         }
     }
-
 
     @Test
     public void testInjectIntoByType_moreThanOneSetterOfSuperType() {
@@ -152,31 +149,26 @@ public class InjectModuleInjectIntoByTypeExceptionsTest extends UnitilsJUnit4 {
 
     @SuppressWarnings("unused")
     public class TestInjectIntoByType_TargetIsNull {
-
         @InjectIntoByType(target = "injectOn")
         private ToInject toInject;
 
         private InjectOn injectOn;
-
     }
 
     @SuppressWarnings("unused")
     public class TestInjectIntoByType_TargetDoesntExist {
-
         @InjectIntoByType(target = "nonExisting")
         private ToInject toInject;
     }
 
     @SuppressWarnings("unused")
     public class TestInjectIntoByType_NoTargetSpecified {
-
         @InjectIntoByType
         private ToInject toInject;
     }
 
     @SuppressWarnings("unused")
     public class TestInjectIntoByType_NoPropertyOfType {
-
         @InjectIntoByType(target = "injectOn")
         private ToInject toInject;
 
@@ -185,7 +177,6 @@ public class InjectModuleInjectIntoByTypeExceptionsTest extends UnitilsJUnit4 {
 
     @SuppressWarnings("unused")
     public class TestInjectIntoByType_MoreThanOneFieldOfType {
-
         @InjectIntoByType(target = "injectOn")
         private ToInject toInject;
 
@@ -194,7 +185,6 @@ public class InjectModuleInjectIntoByTypeExceptionsTest extends UnitilsJUnit4 {
 
     @SuppressWarnings("unused")
     public class TestInjectIntoByType_MoreThanOneSetterOfType {
-
         @InjectIntoByType(target = "injectOn", propertyAccess = PropertyAccess.SETTER)
         private ToInject toInject;
 
@@ -203,7 +193,6 @@ public class InjectModuleInjectIntoByTypeExceptionsTest extends UnitilsJUnit4 {
 
     @SuppressWarnings("unused")
     public class TestInjectIntoByType_MoreThanOneFieldOfSuperType {
-
         @InjectIntoByType(target = "injectOn")
         private ToInject toInject;
 
@@ -212,7 +201,6 @@ public class InjectModuleInjectIntoByTypeExceptionsTest extends UnitilsJUnit4 {
 
     @SuppressWarnings("unused")
     public class TestInjectIntoByType_MoreThanOneSetterOfSuperType {
-
         @InjectIntoByType(target = "injectOn", propertyAccess = PropertyAccess.SETTER)
         private ToInject toInject;
 
@@ -225,7 +213,8 @@ public class InjectModuleInjectIntoByTypeExceptionsTest extends UnitilsJUnit4 {
     /**
      * Object to inject
      */
-    public class ToInject extends ToInjectSuper {
+    public class ToInject
+        extends ToInjectSuper {
     }
 
     /**
@@ -239,39 +228,31 @@ public class InjectModuleInjectIntoByTypeExceptionsTest extends UnitilsJUnit4 {
 
     @SuppressWarnings("unused")
     public class InjectOn_MoreThanOneFieldOfType {
-
         private ToInject toInject1;
 
         private ToInject toInject2;
-
     }
 
     public class InjectOn_MoreThanOneSetterOfType {
-
         public void setToInject1(ToInject toInject1) {
         }
 
         public void setToInject2(ToInject toInject2) {
         }
-
     }
 
     @SuppressWarnings("unused")
     public class InjectOn_MoreThanOneFieldOfSuperType {
-
         private ToInjectSuper toInject1;
 
         private ToInjectSuper toInject2;
-
     }
 
     public class InjectOn_MoreThanOneSetterOfSuperType {
-
         public void setToInject1(ToInjectSuper toInject1) {
         }
 
         public void setToInject2(ToInjectSuper toInject2) {
         }
-
     }
 }

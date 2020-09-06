@@ -1,12 +1,9 @@
 /*
- * Copyright 2008,  Unitils.org
- *
+ * Copyright 2008, Unitils.org
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -15,22 +12,22 @@
  */
 package org.unitils.easymock.util;
 
-import static org.easymock.EasyMock.eq;
-import static org.easymock.EasyMock.expect;
-import static org.easymock.MockType.DEFAULT;
-import static org.easymock.classextension.EasyMock.replay;
-import static org.easymock.classextension.EasyMock.verify;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
-import static org.unitils.easymock.EasyMockUnitils.refEq;
-import static org.unitils.reflectionassert.ReflectionComparatorMode.IGNORE_DEFAULTS;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
+
+import static org.easymock.EasyMock.eq;
+import static org.easymock.EasyMock.expect;
+import static org.easymock.EasyMock.replay;
+import static org.easymock.EasyMock.verify;
+import static org.easymock.MockType.DEFAULT;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
+import static org.unitils.easymock.EasyMockUnitils.refEq;
+import static org.unitils.reflectionassert.ReflectionComparatorMode.IGNORE_DEFAULTS;
 
 /**
  * A test for {@link LenientMocksControl}.
@@ -43,22 +40,20 @@ public class LenientMocksControlTest {
     /* Class under test, with mock type LENIENT and ignore defaults */
     private LenientMocksControl lenientMocksControl;
 
-
     /**
      * Initializes the test fixture.
      */
     @Before
-    public void setUp() throws Exception {
+    public void setUp()
+        throws Exception {
         lenientMocksControl = new LenientMocksControl(DEFAULT, IGNORE_DEFAULTS);
     }
-
 
     /**
      * Test for a mocked method call that is invoked with the expected arguments.
      */
     @Test
     public void testLenientMocksControl_equals() {
-
         MockedClass mock = lenientMocksControl.createMock(MockedClass.class);
         expect(mock.someBehavior(true, 999, "Test", new ArrayList<Object>())).andReturn("Result");
         replay(mock);
@@ -69,13 +64,11 @@ public class LenientMocksControlTest {
         verify(mock);
     }
 
-
     /**
      * Test for a mocked method call that has no arguments.
      */
     @Test
     public void testLenientMocksControl_equalsNoArguments() {
-
         MockedClass mock = lenientMocksControl.createMock(MockedClass.class);
         mock.someBehavior();
         replay(mock);
@@ -85,13 +78,11 @@ public class LenientMocksControlTest {
         verify(mock);
     }
 
-
     /**
      * Test for a invoking a mocked method call more than once.
      */
     @Test
     public void testLenientMocksControl_equalsDoubleInvocation() {
-
         MockedClass mock = lenientMocksControl.createMock(MockedClass.class);
         expect(mock.someBehavior(true, 111, "Test1", Arrays.asList("1"))).andReturn("Result1");
         expect(mock.someBehavior(false, 222, "Test2", Arrays.asList("2"))).andReturn("Result2");
@@ -105,13 +96,11 @@ public class LenientMocksControlTest {
         assertEquals("Result2", result2);
     }
 
-
     /**
      * Test for ignoring a default value for an argument.
      */
     @Test
     public void testLenientMocksControl_equalsIgnoreDefaults() {
-
         MockedClass mock = lenientMocksControl.createMock(MockedClass.class);
         expect(mock.someBehavior(false, 0, null, null)).andReturn("Result");
         replay(mock);
@@ -122,13 +111,11 @@ public class LenientMocksControlTest {
         verify(mock);
     }
 
-
     /**
      * Test for a mocked method that is expected but was never called.
      */
     @Test
     public void testLenientMocksControl_notEqualsNotCalled() {
-
         MockedClass mock = lenientMocksControl.createMock(MockedClass.class);
         expect(mock.someBehavior(true, 999, "XXXX", new ArrayList<Object>())).andReturn("Result");
         replay(mock);
@@ -137,17 +124,15 @@ public class LenientMocksControlTest {
             verify(mock);
             fail();
         } catch (AssertionError e) {
-            //expected
+            // expected
         }
     }
-
 
     /**
      * Test for a mocked method call that is invoked with the different arguments.
      */
     @Test
     public void testLenientMocksControl_notEqualsDifferentArguments() {
-
         MockedClass mock = lenientMocksControl.createMock(MockedClass.class);
         expect(mock.someBehavior(true, 999, "XXXX", new ArrayList<Object>())).andReturn("Result");
         replay(mock);
@@ -156,17 +141,15 @@ public class LenientMocksControlTest {
             mock.someBehavior(true, 999, "Test", new ArrayList<Object>());
             fail();
         } catch (AssertionError e) {
-            //expected
+            // expected
         }
     }
-
 
     /**
      * Test for using argument matchers (refEq and EasyMocks eq).
      */
     @Test
     public void testLenientMocksControl_mixingArgumentMatchers() {
-
         MockedClass mock = lenientMocksControl.createMock(MockedClass.class);
         expect(mock.someBehavior(eq(true), refEq(999), eq("Test"), refEq(new ArrayList<Object>()))).andReturn("Result");
         replay(mock);
@@ -177,13 +160,11 @@ public class LenientMocksControlTest {
         verify(mock);
     }
 
-
     /**
      * Test for a invoking a mocked method call with a enum argument.
      */
     @Test
     public void testLenientMocksControl_equalsEnumArgument() {
-
         MockedClass mock = lenientMocksControl.createMock(MockedClass.class);
         expect(mock.someBehavior(MockedClass.TestEnum.TEST1)).andStubReturn("Result1");
         expect(mock.someBehavior(MockedClass.TestEnum.TEST2)).andStubReturn("Result2");
@@ -197,12 +178,10 @@ public class LenientMocksControlTest {
         assertEquals("Result2", result2);
     }
 
-
     /**
      * The test class that is going to be mocked.
      */
     private static class MockedClass {
-
         public enum TestEnum {
             TEST1, TEST2
         }
@@ -218,5 +197,4 @@ public class LenientMocksControlTest {
             return null;
         }
     }
-
 }

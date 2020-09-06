@@ -1,12 +1,9 @@
 /*
- * Copyright 2006-2009,  Unitils.org
- *
+ * Copyright 2006-2009, Unitils.org
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -15,8 +12,6 @@
  */
 package org.unitils.dbunit.dataset;
 
-import static org.dbunit.dataset.datatype.DataType.VARCHAR;
-import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 import org.unitils.UnitilsJUnit4;
@@ -24,17 +19,22 @@ import org.unitils.dbunit.dataset.comparison.ColumnDifference;
 import org.unitils.dbunit.dataset.comparison.RowDifference;
 import org.unitils.dbunit.dataset.comparison.TableDifference;
 
+import static org.dbunit.dataset.datatype.DataType.VARCHAR;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+
 /**
  * Tests the comparison behavior of a data set table.
  *
  * @author Tim Ducheyne
  * @author Filip Neven
  */
-public class TableComparisonTest extends UnitilsJUnit4 {
-
+public class TableComparisonTest
+    extends UnitilsJUnit4 {
     private Table expectedTable;
-    private Table actualTable;
 
+    private Table actualTable;
 
     @Before
     public void initialize() {
@@ -42,9 +42,9 @@ public class TableComparisonTest extends UnitilsJUnit4 {
         actualTable = new Table("test_table");
     }
 
-
     @Test
-    public void testEqualTables() throws Exception {
+    public void testEqualTables()
+        throws Exception {
         addRow(expectedTable, "value1", "value2");
         addRow(actualTable, "value1", "value2");
 
@@ -53,9 +53,9 @@ public class TableComparisonTest extends UnitilsJUnit4 {
         assertNull(result);
     }
 
-
     @Test
-    public void testEqualTablesWithPrimaryKeys() throws Exception {
+    public void testEqualTablesWithPrimaryKeys()
+        throws Exception {
         addRow(expectedTable, "pk1", "value1");
         addRowWithPrimaryKey(actualTable, "pk1", "value1");
 
@@ -64,9 +64,9 @@ public class TableComparisonTest extends UnitilsJUnit4 {
         assertNull(result);
     }
 
-
     @Test
-    public void testMissingRowForPrimaryKey() throws Exception {
+    public void testMissingRowForPrimaryKey()
+        throws Exception {
         addRow(expectedTable, "pk1", "value");
         addRowWithPrimaryKey(actualTable, "xxxx", "value");
 
@@ -75,9 +75,9 @@ public class TableComparisonTest extends UnitilsJUnit4 {
         assertMissingRow(result, "pk1");
     }
 
-
     @Test
-    public void testMissingRowWithoutPrimaryKey() throws Exception {
+    public void testMissingRowWithoutPrimaryKey()
+        throws Exception {
         addRow(expectedTable, "value1");
         addRow(expectedTable, "value2");
         addRow(actualTable, "value1");
@@ -87,9 +87,9 @@ public class TableComparisonTest extends UnitilsJUnit4 {
         assertMissingRow(result, "value2");
     }
 
-
     @Test
-    public void testDifferentValueUsingPrimaryKey() throws Exception {
+    public void testDifferentValueUsingPrimaryKey()
+        throws Exception {
         addRow(expectedTable, "pk1", "value1");
         addRow(expectedTable, "pk2", "value2");
         addRowWithPrimaryKey(actualTable, "pk1", "value2");
@@ -99,9 +99,9 @@ public class TableComparisonTest extends UnitilsJUnit4 {
         assertDifferentRows(result, "value1", "value2");
     }
 
-
     @Test
-    public void testDifferentValueWithoutPrimaryKey() throws Exception {
+    public void testDifferentValueWithoutPrimaryKey()
+        throws Exception {
         addRow(expectedTable, "value1", "value2");
         addRow(actualTable, "value1", "xxxx");
 
@@ -110,9 +110,9 @@ public class TableComparisonTest extends UnitilsJUnit4 {
         assertDifferentRows(result, "value2", "xxxx");
     }
 
-
     @Test
-    public void testBestMatchingDifferences() throws Exception {
+    public void testBestMatchingDifferences()
+        throws Exception {
         addRow(expectedTable, "xxxx", "value2a", "value3");
         addRow(expectedTable, "yyyy", "value2b", "value3");
         addRow(actualTable, "value1", "value2b", "value3");
@@ -126,9 +126,9 @@ public class TableComparisonTest extends UnitilsJUnit4 {
         assertEquals("value2b", rowDifference2.getActualRow().getColumn("column1").getValue());
     }
 
-
     @Test
-    public void testBestMatchingDifferencesWithMatchingRow() throws Exception {
+    public void testBestMatchingDifferencesWithMatchingRow()
+        throws Exception {
         addRow(expectedTable, "xxxx", "yyyy", "value3");
         addRow(expectedTable, "value1", "value2", "value3");
         addRow(actualTable, "value1", "value2", "value3");
@@ -139,9 +139,9 @@ public class TableComparisonTest extends UnitilsJUnit4 {
         assertDifferentRows(result, "xxxx", "value1");
     }
 
-
     @Test
-    public void testMissingTableDoubleMatch() throws Exception {
+    public void testMissingTableDoubleMatch()
+        throws Exception {
         addRow(expectedTable, "value1");
         addRow(expectedTable, "value1");
         addRow(actualTable, "value1");
@@ -152,12 +152,10 @@ public class TableComparisonTest extends UnitilsJUnit4 {
         assertEquals(1, result.getMissingRows().size());
     }
 
-
     private void assertDifferentRows(TableDifference tableDifference, String expectedValue, Object actualValue) {
         RowDifference rowDifference = getRowDifference(tableDifference, expectedValue, actualValue);
         assertNotNull("Row difference not found for expected value: " + expectedValue + " and actual value: " + actualValue, rowDifference);
     }
-
 
     private RowDifference getRowDifference(TableDifference tableDifference, String expectedValue, Object actualValue) {
         for (RowDifference rowDifference : tableDifference.getBestRowDifferences()) {
@@ -169,12 +167,10 @@ public class TableComparisonTest extends UnitilsJUnit4 {
         return null;
     }
 
-
     private void assertMissingRow(TableDifference tableDifference, String value) {
         Row row = tableDifference.getMissingRows().get(0);
         assertEquals(value, row.getColumn("column0").getValue());
     }
-
 
     private void addRowWithPrimaryKey(Table table, String pkValue, String... values) {
         Row row = new Row();
@@ -184,7 +180,6 @@ public class TableComparisonTest extends UnitilsJUnit4 {
         }
         table.addRow(row);
     }
-
 
     private void addRow(Table table, String... values) {
         Row row = new Row();

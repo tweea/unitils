@@ -1,12 +1,9 @@
 /*
- * Copyright 2008,  Unitils.org
- *
+ * Copyright 2008, Unitils.org
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -15,19 +12,19 @@
  */
 package org.unitils.core;
 
+import java.util.Properties;
+
 import org.apache.commons.lang.text.StrSubstitutor;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.unitils.core.util.PropertiesReader;
 import org.unitils.util.PropertyUtils;
 
-import java.util.Properties;
-
-
 /**
  * Utility that loads the configuration of unitils.
  * <p/>
- * Unitils settings can be defined in 3 files and in the system properties:<ul>
+ * Unitils settings can be defined in 3 files and in the system properties:
+ * <ul>
  * <li><b>unitils-default.properties</b> - a fixed file packaged in the unitils jar that contains all predefined defaults.
  * This file should normally not be modified.</li>
  * <li><b>unitils.properties</b> - a file somewhere in the classpath or user.home dir that contains all custom configuration
@@ -47,7 +44,7 @@ import java.util.Properties;
  * A warning is logged when the custom propreties cannot be loaded.
  * A debug message is logged when the local properties cannot be loaded.
  * <p/>
- * Ant-like property place holders, e.g. ${holder} will be expanded if needed  all property place holders to actual values.
+ * Ant-like property place holders, e.g. ${holder} will be expanded if needed all property place holders to actual values.
  * For example suppose you have a property defined as follows: root.dir=/usr/home
  * Expanding following ${root.dir}/somesubdir
  * will then give following result: /usr/home/somesubdir
@@ -57,7 +54,6 @@ import java.util.Properties;
  * @author Fabian Krueger
  */
 public class ConfigurationLoader {
-
     /**
      * Name of the fixed configuration file that contains all defaults
      */
@@ -82,7 +78,6 @@ public class ConfigurationLoader {
      */
     private PropertiesReader propertiesReader = new PropertiesReader();
 
-
     /**
      * Creates and loads all configuration settings.
      *
@@ -99,11 +94,11 @@ public class ConfigurationLoader {
         return properties;
     }
 
-
     /**
      * Load the default properties file that is distributed with unitils (unitils-default.properties)
      *
-     * @param properties The instance to add to loaded properties to, not null
+     * @param properties
+     *     The instance to add to loaded properties to, not null
      */
     protected void loadDefaultConfiguration(Properties properties) {
         Properties defaultProperties = propertiesReader.loadPropertiesFileFromClasspath(DEFAULT_PROPERTIES_FILE_NAME);
@@ -113,11 +108,11 @@ public class ConfigurationLoader {
         properties.putAll(defaultProperties);
     }
 
-
     /**
      * Load the custom project level configuration file (unitils.properties)
      *
-     * @param properties The instance to add to loaded properties to, not null
+     * @param properties
+     *     The instance to add to loaded properties to, not null
      */
     protected void loadCustomConfiguration(Properties properties) {
         String customConfigurationFileName = getConfigurationFileName(PROPKEY_CUSTOM_CONFIGURATION, properties);
@@ -129,11 +124,11 @@ public class ConfigurationLoader {
         }
     }
 
-
     /**
      * Load the local configuration file from the user home, or from the classpath
      *
-     * @param properties The instance to add to loaded properties to, not null
+     * @param properties
+     *     The instance to add to loaded properties to, not null
      */
     protected void loadLocalConfiguration(Properties properties) {
         String localConfigurationFileName = getConfigurationFileName(PROPKEY_LOCAL_CONFIGURATION, properties);
@@ -148,16 +143,15 @@ public class ConfigurationLoader {
         }
     }
 
-
     /**
      * Load the environment properties.
      *
-     * @param properties The instance to add to loaded properties to, not null
+     * @param properties
+     *     The instance to add to loaded properties to, not null
      */
     protected void loadSystemProperties(Properties properties) {
         properties.putAll(System.getProperties());
     }
-
 
     /**
      * Expands all property place holders to actual values. For example
@@ -165,7 +159,8 @@ public class ConfigurationLoader {
      * Expanding following ${root.dir}/somesubdir
      * will then give following result: /usr/home/somesubdir
      *
-     * @param properties The properties, not null
+     * @param properties
+     *     The properties, not null
      */
     protected void expandPropertyValues(Properties properties) {
         for (Object key : properties.keySet()) {
@@ -177,16 +172,16 @@ public class ConfigurationLoader {
                 throw new UnitilsException("Unable to load unitils configuration. Could not expand property value for key: " + key + ", value " + value, e);
             }
         }
-
     }
-
 
     /**
      * Gets the configuration file name from the system properties or if not defined, from the given loaded properties.
      * An exception is raised if no value is defined.
      *
-     * @param propertyName The name of the property that defines the local/custom file name, not null
-     * @param properties   The propertis that were already loaded, not null
+     * @param propertyName
+     *     The name of the property that defines the local/custom file name, not null
+     * @param properties
+     *     The propertis that were already loaded, not null
      * @return The property value, not null
      */
     protected String getConfigurationFileName(String propertyName, Properties properties) {

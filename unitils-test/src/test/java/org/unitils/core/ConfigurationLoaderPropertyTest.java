@@ -1,12 +1,9 @@
 /*
- * Copyright 2008,  Unitils.org
- *
+ * Copyright 2008, Unitils.org
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -15,18 +12,21 @@
  */
 package org.unitils.core;
 
+import java.util.Properties;
+
 import org.apache.commons.logging.Log;
-import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
 import org.unitils.UnitilsJUnit4;
-import static org.unitils.core.ConfigurationLoader.PROPKEY_CUSTOM_CONFIGURATION;
-import static org.unitils.core.ConfigurationLoader.PROPKEY_LOCAL_CONFIGURATION;
 import org.unitils.core.util.PropertiesReader;
-import org.unitils.inject.annotation.*;
+import org.unitils.inject.annotation.InjectIntoByType;
+import org.unitils.inject.annotation.InjectIntoStaticByType;
+import org.unitils.inject.annotation.TestedObject;
 import org.unitils.mock.Mock;
 
-import java.util.Properties;
+import static org.junit.Assert.assertEquals;
+import static org.unitils.core.ConfigurationLoader.PROPKEY_CUSTOM_CONFIGURATION;
+import static org.unitils.core.ConfigurationLoader.PROPKEY_LOCAL_CONFIGURATION;
 
 /**
  * Tests how the configuration loader deals with loading, overriding and expanding property values.
@@ -35,7 +35,8 @@ import java.util.Properties;
  * @author Fabian Krueger
  * @author Filip Neven
  */
-public class ConfigurationLoaderPropertyTest extends UnitilsJUnit4 {
+public class ConfigurationLoaderPropertyTest
+    extends UnitilsJUnit4 {
 
     /* System under Test */
     @TestedObject
@@ -58,7 +59,6 @@ public class ConfigurationLoaderPropertyTest extends UnitilsJUnit4 {
     /* Faked local Properties from user.home */
     private Properties localProperties;
 
-
     @Before
     public void setUp() {
         configurationLoader = new ConfigurationLoader();
@@ -77,7 +77,6 @@ public class ConfigurationLoaderPropertyTest extends UnitilsJUnit4 {
         System.clearProperty("property");
     }
 
-
     @Test
     public void onlyDefaultProperty() {
         unitilsDefaultProperties.put("xxx", "default");
@@ -88,7 +87,6 @@ public class ConfigurationLoaderPropertyTest extends UnitilsJUnit4 {
         Properties result = configurationLoader.loadConfiguration();
         assertEquals("default", result.get("xxx"));
     }
-
 
     @Test
     public void overriddenByCustom() {
@@ -101,7 +99,6 @@ public class ConfigurationLoaderPropertyTest extends UnitilsJUnit4 {
         assertEquals("custom", result.get("xxx"));
     }
 
-
     @Test
     public void overriddenByLocal() {
         unitilsDefaultProperties.put("xxx", "default");
@@ -113,7 +110,6 @@ public class ConfigurationLoaderPropertyTest extends UnitilsJUnit4 {
         assertEquals("local", result.get("xxx"));
     }
 
-
     @Test
     public void overriddenByCustomAndLocal() {
         unitilsDefaultProperties.put("xxx", "default");
@@ -124,7 +120,6 @@ public class ConfigurationLoaderPropertyTest extends UnitilsJUnit4 {
         Properties result = configurationLoader.loadConfiguration();
         assertEquals("local", result.get("xxx"));
     }
-
 
     @Test
     public void overriddenByEnvironment() {
@@ -138,7 +133,6 @@ public class ConfigurationLoaderPropertyTest extends UnitilsJUnit4 {
         assertEquals("system", result.get("xxx"));
     }
 
-
     @Test
     public void expanded() {
         customProperties.put("xxx", "${property}");
@@ -148,7 +142,6 @@ public class ConfigurationLoaderPropertyTest extends UnitilsJUnit4 {
         Properties result = configurationLoader.loadConfiguration();
         assertEquals("value", result.get("xxx"));
     }
-
 
     @Test
     public void expandedTwice() {
@@ -161,7 +154,6 @@ public class ConfigurationLoaderPropertyTest extends UnitilsJUnit4 {
         assertEquals("value", result.get("xxx"));
     }
 
-
     @Test
     public void customExpandedByLocal() {
         customProperties.put("xxx", "${property}");
@@ -171,7 +163,6 @@ public class ConfigurationLoaderPropertyTest extends UnitilsJUnit4 {
         Properties result = configurationLoader.loadConfiguration();
         assertEquals("localValue", result.get("xxx"));
     }
-
 
     @Test
     public void customExpandedBySystemOverridingLocal() {
@@ -184,7 +175,6 @@ public class ConfigurationLoaderPropertyTest extends UnitilsJUnit4 {
         assertEquals("systemValue", result.get("xxx"));
     }
 
-
     @Test(expected = UnitilsException.class)
     public void cyclicExpansion() {
         customProperties.put("xxx", "${yyy}");
@@ -193,7 +183,6 @@ public class ConfigurationLoaderPropertyTest extends UnitilsJUnit4 {
 
         configurationLoader.loadConfiguration();
     }
-
 
     private void setProperties() {
         propertiesReader.returns(customProperties).loadPropertiesFileFromClasspath("unitils.properties");

@@ -1,12 +1,9 @@
 /*
- * Copyright 2008,  Unitils.org
- *
+ * Copyright 2008, Unitils.org
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -15,9 +12,11 @@
  */
 package org.unitils.reflectionassert;
 
-import junit.framework.TestCase;
-import static org.unitils.reflectionassert.ReflectionComparatorFactory.createRefectionComparator;
 import org.unitils.reflectionassert.difference.Difference;
+
+import junit.framework.TestCase;
+
+import static org.unitils.reflectionassert.ReflectionComparatorFactory.createRefectionComparator;
 
 /**
  * Tests for cases that contain cycles and multiple references to the same instances.
@@ -25,7 +24,8 @@ import org.unitils.reflectionassert.difference.Difference;
  * @author Filip Neven
  * @author Tim Ducheyne
  */
-public class ReflectionComparatorSharedReferencesTest extends TestCase {
+public class ReflectionComparatorSharedReferencesTest
+    extends TestCase {
 
     /* Class under test */
     private ReflectionComparator reflectionComparator;
@@ -60,11 +60,11 @@ public class ReflectionComparatorSharedReferencesTest extends TestCase {
     /* Also contains a cycle but first references circularReferenced, should be equal to nestedDoubleReferenced */
     private References equalToCircularReferenced;
 
-
     /**
      * Initializes the test fixture.
      */
-    protected void setUp() throws Exception {
+    protected void setUp()
+        throws Exception {
         super.setUp();
 
         reflectionComparator = createRefectionComparator();
@@ -87,7 +87,6 @@ public class ReflectionComparatorSharedReferencesTest extends TestCase {
         equalToCircularReferenced = new References("Trunk", leaf1, new References("Trunk", leaf1Copy, circularReferenced));
     }
 
-
     /**
      * Test for two equal objects referenced more than once.
      */
@@ -95,7 +94,6 @@ public class ReflectionComparatorSharedReferencesTest extends TestCase {
         Difference result = reflectionComparator.getDifference(doubleReferenced, equalToDoubleReferenced);
         assertNull(result);
     }
-
 
     /**
      * Test for two different objects referenced more than once.
@@ -105,7 +103,6 @@ public class ReflectionComparatorSharedReferencesTest extends TestCase {
         assertNotNull(result);
     }
 
-
     /**
      * Test for two equal objects referenced more than once in a nested reference.
      */
@@ -113,7 +110,6 @@ public class ReflectionComparatorSharedReferencesTest extends TestCase {
         Difference result = reflectionComparator.getDifference(nestedDoubleReferenced, equalToNestedDoubleReferenced);
         assertNull(result);
     }
-
 
     /**
      * Test for two different objects referenced more than once in a nested reference.
@@ -123,7 +119,6 @@ public class ReflectionComparatorSharedReferencesTest extends TestCase {
         assertNotNull(result);
     }
 
-
     /**
      * Test for two equal objects that contain a cycle.
      */
@@ -131,7 +126,6 @@ public class ReflectionComparatorSharedReferencesTest extends TestCase {
         Difference result = reflectionComparator.getDifference(circularReferenced, equalToCircularReferenced);
         assertNull(result);
     }
-
 
     /**
      * Test for two different objects of which the first contains a cycle.
@@ -141,13 +135,13 @@ public class ReflectionComparatorSharedReferencesTest extends TestCase {
         assertNotNull(result);
     }
 
-
     /**
      * Test class.
      */
-    @SuppressWarnings({"unused", "UnusedDeclaration"})
+    @SuppressWarnings({
+        "unused", "UnusedDeclaration"
+    })
     private static class References {
-
         private String name;
 
         private References ref1;

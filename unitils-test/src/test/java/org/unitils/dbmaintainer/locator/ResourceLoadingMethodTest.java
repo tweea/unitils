@@ -23,17 +23,14 @@ import org.unitils.dbunit.util.FileHandler;
  */
 @RunWith(UnitilsJUnit4TestClassRunner.class)
 public class ResourceLoadingMethodTest {
-
     private static final Logger LOGGER = Logger.getLogger(ResourceLoadingMethodTest.class);
 
-    
     @BeforeClass
     public static void setUp() {
         DatabaseModule databaseModule = Unitils.getInstance().getModulesRepository().getModuleOfType(DatabaseModule.class);
         SQLUnitils.executeUpdate("CREATE TABLE dossier (id varchar(50), name varchar(50), Start_date date)", databaseModule.getWrapper("").getDataSource());
     }
-    
-    
+
     /** */
     @DataSet("/org/unitils/testdata/exampleResourceData.xml")
     @Test
@@ -48,7 +45,7 @@ public class ResourceLoadingMethodTest {
     public void testLoadingDataset() {
         Assert.assertTrue(true);
     }
-    
+
     @Test
     public void testTest() {
         String name = "../testdata/exampleResourceData.xml";
@@ -70,7 +67,6 @@ public class ResourceLoadingMethodTest {
     @DataSet
     @Test
     public void testLoadingDatasetDefault() {
-
         Assert.assertTrue(true);
     }
 
@@ -101,18 +97,17 @@ public class ResourceLoadingMethodTest {
     public void testLoadingExpectedResourceMultipleDataFiles() {
         Assert.assertTrue(true);
     }
-    
+
     /** */
     @DataSet("/org/unitils/testdata/exampleResourceData.xml/")
     @Test
     public void testLoadingResourceWithSlashAtTheEnd() {
         Assert.assertTrue(true);
     }
-    
-    
+
     @AfterClass
     public static void afterClass() {
         DatabaseModule databaseModule = Unitils.getInstance().getModulesRepository().getModuleOfType(DatabaseModule.class);
-        SQLUnitils.executeUpdate("drop table dossier",databaseModule.getWrapper("").getDataSource());
+        SQLUnitils.executeUpdate("drop table dossier", databaseModule.getWrapper("").getDataSource());
     }
 }

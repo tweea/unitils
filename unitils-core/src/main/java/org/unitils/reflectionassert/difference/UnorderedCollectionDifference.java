@@ -1,12 +1,9 @@
 /*
- * Copyright 2008,  Unitils.org
- *
+ * Copyright 2008, Unitils.org
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -15,10 +12,11 @@
  */
 package org.unitils.reflectionassert.difference;
 
-import static java.lang.Integer.MAX_VALUE;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static java.lang.Integer.MAX_VALUE;
 
 /**
  * A class for holding the difference between all elements of two collections or arrays.
@@ -26,7 +24,8 @@ import java.util.Map;
  * @author Tim Ducheyne
  * @author Filip Neven
  */
-public class UnorderedCollectionDifference extends Difference {
+public class UnorderedCollectionDifference
+    extends Difference {
 
     /* The differences per left-index and right-index */
     private Map<Integer, Map<Integer, Difference>> elementDifferences = new HashMap<Integer, Map<Integer, Difference>>();
@@ -43,15 +42,19 @@ public class UnorderedCollectionDifference extends Difference {
     /* The right object as a list */
     private List<?> rightList;
 
-
     /**
      * Creates a difference.
      *
-     * @param message    a message describing the difference
-     * @param leftValue  the left instance
-     * @param rightValue the right instance
-     * @param leftList   The left instance as a list
-     * @param rightList  The right instance as a list
+     * @param message
+     *     a message describing the difference
+     * @param leftValue
+     *     the left instance
+     * @param rightValue
+     *     the right instance
+     * @param leftList
+     *     The left instance as a list
+     * @param rightList
+     *     The right instance as a list
      */
     public UnorderedCollectionDifference(String message, Object leftValue, Object rightValue, List<?> leftList, List<?> rightList) {
         super(message, leftValue, rightValue);
@@ -59,13 +62,15 @@ public class UnorderedCollectionDifference extends Difference {
         this.rightList = rightList;
     }
 
-
     /**
      * Adds a difference or a match for the elements at the given left and right index.
      *
-     * @param leftIndex  The index of the left element
-     * @param rightIndex The index of the right element
-     * @param difference The difference, null for a match
+     * @param leftIndex
+     *     The index of the left element
+     * @param rightIndex
+     *     The index of the right element
+     * @param difference
+     *     The difference, null for a match
      */
     public void addElementDifference(int leftIndex, int rightIndex, Difference difference) {
         Map<Integer, Difference> rightDifferences = elementDifferences.get(leftIndex);
@@ -76,12 +81,13 @@ public class UnorderedCollectionDifference extends Difference {
         rightDifferences.put(rightIndex, difference);
     }
 
-
     /**
      * Gets the difference between the elements with the given indexes.
      *
-     * @param leftIndex  The left element index
-     * @param rightIndex The right element index
+     * @param leftIndex
+     *     The left element index
+     * @param rightIndex
+     *     The right element index
      * @return The difference, null if not found or if there is no difference
      */
     public Difference getElementDifference(int leftIndex, int rightIndex) {
@@ -91,7 +97,6 @@ public class UnorderedCollectionDifference extends Difference {
         }
         return rightDifferences.get(rightIndex);
     }
-
 
     /**
      * Gets all element differences per left index and right index.
@@ -103,17 +108,17 @@ public class UnorderedCollectionDifference extends Difference {
         return elementDifferences;
     }
 
-
     /**
      * Sets the given left and right index as best matching elements.
      *
-     * @param leftIndex  The left index
-     * @param rightIndex The right index
+     * @param leftIndex
+     *     The left index
+     * @param rightIndex
+     *     The right index
      */
     public void setBestMatchingIndexes(int leftIndex, int rightIndex) {
         bestMatchingIndexes.put(leftIndex, rightIndex);
     }
-
 
     /**
      * Gets the indexes of the best matching element differences.
@@ -124,7 +129,6 @@ public class UnorderedCollectionDifference extends Difference {
         return bestMatchingIndexes;
     }
 
-
     /**
      * Gets the matching score of the best matching indexes.
      *
@@ -134,16 +138,15 @@ public class UnorderedCollectionDifference extends Difference {
         return bestMatchingScore;
     }
 
-
     /**
      * Gets the matching score of the best matching indexes.
      *
-     * @param bestMatchingScore The score
+     * @param bestMatchingScore
+     *     The score
      */
     public void setBestMatchingScore(int bestMatchingScore) {
         this.bestMatchingScore = bestMatchingScore;
     }
-
 
     /**
      * @return The left instance as a list
@@ -152,7 +155,6 @@ public class UnorderedCollectionDifference extends Difference {
         return leftList;
     }
 
-
     /**
      * @return The right instance as a list
      */
@@ -160,19 +162,19 @@ public class UnorderedCollectionDifference extends Difference {
         return rightList;
     }
 
-
     /**
      * Double dispatch method. Dispatches back to the given visitor.
      * <p/>
      * All subclasses should copy this method in their own class body.
      *
-     * @param visitor  The visitor, not null
-     * @param argument An optional argument for the visitor, null if not applicable
+     * @param visitor
+     *     The visitor, not null
+     * @param argument
+     *     An optional argument for the visitor, null if not applicable
      * @return The result
      */
     @Override
     public <T, A> T accept(DifferenceVisitor<T, A> visitor, A argument) {
         return visitor.visit(this, argument);
     }
-
 }

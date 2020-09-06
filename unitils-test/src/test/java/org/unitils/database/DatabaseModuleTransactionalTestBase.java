@@ -1,12 +1,9 @@
 /*
- * Copyright 2008,  Unitils.org
- *
+ * Copyright 2008, Unitils.org
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -14,11 +11,6 @@
  * limitations under the License.
  */
 package org.unitils.database;
-
-import static org.easymock.EasyMock.expect;
-import static org.easymock.classextension.EasyMock.createMock;
-import static org.easymock.classextension.EasyMock.replay;
-import static org.easymock.classextension.EasyMock.reset;
 
 import java.sql.Connection;
 import java.util.Properties;
@@ -31,6 +23,11 @@ import org.unitils.database.config.DataSourceFactory;
 import org.unitils.database.config.DatabaseConfiguration;
 import org.unitils.spring.SpringModule;
 
+import static org.easymock.EasyMock.createMock;
+import static org.easymock.EasyMock.expect;
+import static org.easymock.EasyMock.replay;
+import static org.easymock.EasyMock.reset;
+
 /**
  * Base class for tests that verify the transactional behavior of the database module
  *
@@ -38,7 +35,6 @@ import org.unitils.spring.SpringModule;
  * @author Tim Ducheyne
  */
 abstract public class DatabaseModuleTransactionalTestBase {
-
     /**
      * Test datasource that returns connection 1 and 2
      */
@@ -59,12 +55,12 @@ abstract public class DatabaseModuleTransactionalTestBase {
      */
     protected Properties configuration;
 
-
     /**
      * Initializes the mocked datasource and connections.
      */
     @Before
-    public void initialize() throws Exception {
+    public void initialize()
+        throws Exception {
         reset(mockConnection1);
         reset(mockConnection2);
         reset(mockDataSource);
@@ -73,12 +69,11 @@ abstract public class DatabaseModuleTransactionalTestBase {
         replay(mockDataSource);
     }
 
-
     /**
      * Mock DataSourceFactory, that returns the static mockDataSource
      */
-    public static class MockDataSourceFactory implements DataSourceFactory {
-
+    public static class MockDataSourceFactory
+        implements DataSourceFactory {
         public void init(Properties configuration) {
         }
 
@@ -91,16 +86,12 @@ abstract public class DatabaseModuleTransactionalTestBase {
          */
         public void init(DatabaseConfiguration arg0) {
             // TODO Auto-generated method stub
-            
         }
 
-		public void init(Properties configuration, String databaseName) {
-			// TODO Auto-generated method stub
-			
-		}
-
+        public void init(Properties configuration, String databaseName) {
+            // TODO Auto-generated method stub
+        }
     }
-
 
     /**
      * Utility method to retrieve the database module instance.
@@ -111,7 +102,6 @@ abstract public class DatabaseModuleTransactionalTestBase {
         return Unitils.getInstance().getModulesRepository().getModuleOfType(DatabaseModule.class);
     }
 
-
     /**
      * Utility method to retrieve the spring module instance.
      *
@@ -120,5 +110,4 @@ abstract public class DatabaseModuleTransactionalTestBase {
     protected SpringModule getSpringModule() {
         return Unitils.getInstance().getModulesRepository().getModuleOfType(SpringModule.class);
     }
-
 }

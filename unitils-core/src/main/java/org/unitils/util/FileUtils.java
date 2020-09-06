@@ -1,19 +1,22 @@
 package org.unitils.util;
 
-import org.apache.commons.lang.StringUtils;
-import org.unitils.core.UnitilsException;
-import org.unitils.thirdparty.org.apache.commons.io.IOUtils;
-import static org.unitils.thirdparty.org.apache.commons.io.IOUtils.closeQuietly;
-import static org.unitils.thirdparty.org.apache.commons.io.IOUtils.write;
-
-import java.io.*;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import org.apache.commons.lang.StringUtils;
+import org.unitils.core.UnitilsException;
+import org.unitils.thirdparty.org.apache.commons.io.IOUtils;
+
+import static org.unitils.thirdparty.org.apache.commons.io.IOUtils.closeQuietly;
+import static org.unitils.thirdparty.org.apache.commons.io.IOUtils.write;
 
 // todo javadoc
 public class FileUtils {
-
     public static void copyClassPathResource(String classPathResourceName, String fileSystemDirectoryName) {
         InputStream resourceInputStream = null;
         OutputStream fileOutputStream = null;
@@ -32,11 +35,11 @@ public class FileUtils {
         }
     }
 
-
     /**
      * Creates an URL that points to the given file.
      *
-     * @param file The file, not null
+     * @param file
+     *     The file, not null
      * @return The URL to the file, not null
      */
     public static URL getUrl(File file) {
@@ -50,10 +53,13 @@ public class FileUtils {
     /**
      * Writes the given string to the given file
      *
-     * @param file   the file to write, not null
-     * @param string the string, not null
+     * @param file
+     *     the file to write, not null
+     * @param string
+     *     the string, not null
      */
-    public static void writeStringToFile(File file, String string) throws IOException {
+    public static void writeStringToFile(File file, String string)
+        throws IOException {
         OutputStream out = null;
         try {
             out = new FileOutputStream(file);

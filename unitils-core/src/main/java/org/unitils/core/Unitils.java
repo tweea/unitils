@@ -1,12 +1,9 @@
 /*
- * Copyright 2008,  Unitils.org
- *
+ * Copyright 2008, Unitils.org
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -37,10 +34,8 @@ import java.util.Properties;
  */
 public class Unitils {
 
-
     /* The singleton instance */
     private static Unitils unitils;
-
 
     /**
      * Returns the singleton instance
@@ -54,16 +49,15 @@ public class Unitils {
         return unitils;
     }
 
-
     /**
      * Sets the singleton instance to the given object
      *
-     * @param unitils the singleton instance
+     * @param unitils
+     *     the singleton instance
      */
     public static void setInstance(Unitils unitils) {
         Unitils.unitils = unitils;
     }
-
 
     /**
      * Initializes the singleton instance to the default value, loading the configuration using the {@link
@@ -73,7 +67,6 @@ public class Unitils {
         unitils = new Unitils();
         unitils.init();
     }
-
 
     /* Listener that observes the execution of tests */
     private TestListener testListener;
@@ -87,14 +80,12 @@ public class Unitils {
     /* Object keeping track of the unit test that is currently running */
     private TestContext testContext;
 
-
     /**
      * Creates a new instance.
      */
     public Unitils() {
         testContext = new TestContext();
     }
-
 
     /**
      * Initializes unitils with the configuration files.
@@ -105,21 +96,20 @@ public class Unitils {
         init(properties);
     }
 
-
     /**
      * Initializes Unitils with the given configuration. All the modules that are configured in the given configuration
      * are also created and initialized with this configuration.
      *
-     * @param configuration The config, not null
+     * @param configuration
+     *     The config, not null
      */
     public void init(Properties configuration) {
-        //verifyPackaging(configuration);
+        // verifyPackaging(configuration);
         this.configuration = configuration;
         modulesRepository = createModulesRepository(configuration);
         testListener = new UnitilsTestListener();
         afterInitModules();
     }
-
 
     /**
      * Gives all modules the opportunity to performs initialization that
@@ -131,31 +121,31 @@ public class Unitils {
         }
     }
 
-
     /**
      * Verifies that we're not working with a distribution that includes the necessary classes from spring,
      * while spring is in the classpath anyway.
      *
-     * @param configuration The configuration
+     * @param configuration
+     *     The configuration
      */
     protected void verifyPackaging(Properties configuration) {
         String springCoreClassName = configuration.getProperty("spring.core.someClass.name");
         String unitilsPackagedWithSpring = "org.unitils.includeddeps." + springCoreClassName;
 
         if (isClassAvailable(springCoreClassName) && isClassAvailable(unitilsPackagedWithSpring)) {
-            throw new IllegalStateException("It appears that you're using the unitils distribution that is packaged with " +
-                    "its dependency to spring, while spring is also in your classpath. This is not supported. The spring-packaged " +
-                    "distribution can only be used when you're not using spring at all. Please replace unitils-spring-included-version.jar " +
-                    "with unitils-version.jar");
+            throw new IllegalStateException("It appears that you're using the unitils distribution that is packaged with "
+                + "its dependency to spring, while spring is also in your classpath. This is not supported. The spring-packaged "
+                + "distribution can only be used when you're not using spring at all. Please replace unitils-spring-included-version.jar "
+                + "with unitils-version.jar");
         }
     }
-
 
     /**
      * Utility method that verifies whether the class with the given fully qualified classname is available
      * in the classpath.
      *
-     * @param className The name of the class
+     * @param className
+     *     The name of the class
      * @return True if the class with the given name is available
      */
     protected boolean isClassAvailable(String className) {
@@ -167,7 +157,6 @@ public class Unitils {
         }
     }
 
-
     /**
      * Returns the single instance of {@link TestListener}. This instance provides hook callback methods that enable intervening
      * during the execution of unit tests.
@@ -178,7 +167,6 @@ public class Unitils {
         return testListener;
     }
 
-
     /**
      * Returns the {@link ModulesRepository} that provides access to the modules that are configured in unitils.
      *
@@ -187,7 +175,6 @@ public class Unitils {
     public ModulesRepository getModulesRepository() {
         return modulesRepository;
     }
-
 
     /**
      * Returns the {@link TestContext} that, during the execution of the test suite, keeps track of the current test
@@ -199,7 +186,6 @@ public class Unitils {
         return testContext;
     }
 
-
     /**
      * Returns all properties that are used to configure unitils and the different modules.
      *
@@ -209,12 +195,12 @@ public class Unitils {
         return configuration;
     }
 
-
     /**
      * Configures all unitils modules using the given <code>Properties</code> object, and stores them in a {@link
      * ModulesRepository}. The configuration of the modules is delegated to a {@link ModulesLoader} instance.
      *
-     * @param configuration The config, not null
+     * @param configuration
+     *     The config, not null
      * @return a new {@link ModulesRepository}
      */
     protected ModulesRepository createModulesRepository(Properties configuration) {
@@ -223,16 +209,14 @@ public class Unitils {
         return new ModulesRepository(modules);
     }
 
-
     /**
      * Implementation of {@link TestListener} that ensures that at every point during the run of a test, every {@link
      * Module} gets the chance of performing some behavior, by calling the {@link TestListener} of each module in turn.
      * Also makes sure that the state of the instance of {@link TestContext} returned by {@link Unitils#getTestContext()}
      * is correctly set to the current test class, test object and test method.
      */
-    private class UnitilsTestListener extends TestListener {
-
-
+    private class UnitilsTestListener
+        extends TestListener {
         @Override
         public void beforeTestClass(Class<?> testClass) {
             TestContext testContext = getTestContext();
@@ -245,7 +229,6 @@ public class Unitils {
                 modulesRepository.getTestListener(module).beforeTestClass(testClass);
             }
         }
-
 
         @Override
         public void afterCreateTestObject(Object testObject) {
@@ -260,7 +243,6 @@ public class Unitils {
             }
         }
 
-
         @Override
         public void beforeTestSetUp(Object testObject, Method testMethod) {
             TestContext testContext = getTestContext();
@@ -273,7 +255,6 @@ public class Unitils {
                 modulesRepository.getTestListener(module).beforeTestSetUp(testObject, testMethod);
             }
         }
-
 
         @Override
         public void beforeTestMethod(Object testObject, Method testMethod) {
@@ -288,7 +269,6 @@ public class Unitils {
             }
         }
 
-
         @Override
         public void afterTestMethod(Object testObject, Method testMethod, Throwable throwable) {
             TestContext testContext = getTestContext();
@@ -301,7 +281,6 @@ public class Unitils {
                 modulesRepository.getTestListener(module).afterTestMethod(testObject, testMethod, throwable);
             }
         }
-
 
         @Override
         public void afterTestTearDown(Object testObject, Method testMethod) {
@@ -320,15 +299,11 @@ public class Unitils {
         public boolean shouldInvokeTestMethod(Object testObject, Method testMethod) {
             List<Module> modules = modulesRepository.getModules();
             for (Module module : modules) {
-                if(!modulesRepository.getTestListener(module).shouldInvokeTestMethod(testObject, testMethod)) {
+                if (!modulesRepository.getTestListener(module).shouldInvokeTestMethod(testObject, testMethod)) {
                     return false; // there is a module that wants us to prevent execution of the method.
                 }
             }
             return true;
         }
-        
-        
-
     }
-
 }

@@ -13,78 +13,79 @@ import org.unitils.UnitilsParameterized.TestClassRunnerForParameters;
 import org.unitils.parameterized.UnitilsParametersNullParametersTest;
 
 public class UnitilsParameterizedGetParametersMethod {
+    private UnitilsParameterized unitilsParameterized;
 
-	private UnitilsParameterized unitilsParameterized;
+    private TestClassRunnerForParameters sut;
 
-	private TestClassRunnerForParameters sut;
-	private List<Object[]> parameters;
+    private List<Object[]> parameters;
 
-	@Before
-	public void init() throws Throwable {
-		parameters = new ArrayList<Object[]>();
-		//unitilsParameterized = new UnitilsParameterized(ParameterizedIntegrationTest.class);
-	}
+    @Before
+    public void init()
+        throws Throwable {
+        parameters = new ArrayList<Object[]>();
+        // unitilsParameterized = new UnitilsParameterized(ParameterizedIntegrationTest.class);
+    }
 
-	@Test(expected = Exception.class)
-	public void testNoParameters() throws Throwable {
-		unitilsParameterized = new UnitilsParameterized(TestclassNoParameters.class);
-		unitilsParameterized.getParametersMethod(new TestClass(TestclassNoParameters.class));
-	}
-	@Test(expected = Exception.class)
-	public void testNoStaticNotPublic() throws Throwable {
-		unitilsParameterized = new UnitilsParameterized(TestclassNotStaticNotPublic.class);
-		unitilsParameterized.getParametersMethod(new TestClass(TestclassNotStaticNotPublic.class));
-	}
-	
-	@Test(expected = Exception.class)
-	public void testNotPublic() throws Throwable {
-		unitilsParameterized = new UnitilsParameterized(TestclassNotPublic.class);
-		unitilsParameterized.getParametersMethod(new TestClass(TestclassNotPublic.class));
-	}
-	
-	@Test(expected = Exception.class)
-	public void testNotStatic() throws Throwable {
-		unitilsParameterized = new UnitilsParameterized(TestclassNotStatic.class);
-		unitilsParameterized.getParametersMethod(new TestClass(TestclassNotStatic.class));
-	}
-	
-	@Test
-	public void testOk() throws Throwable {
-		unitilsParameterized = new UnitilsParameterized(UnitilsParametersNullParametersTest.class);
-		FrameworkMethod method = unitilsParameterized.getParametersMethod(new TestClass(UnitilsParametersNullParametersTest.class));
-		Assert.assertNotNull(method);
-	}
-	
-	
+    @Test(expected = Exception.class)
+    public void testNoParameters()
+        throws Throwable {
+        unitilsParameterized = new UnitilsParameterized(TestclassNoParameters.class);
+        unitilsParameterized.getParametersMethod(new TestClass(TestclassNoParameters.class));
+    }
 
-	private static class TestclassNoParameters {
+    @Test(expected = Exception.class)
+    public void testNoStaticNotPublic()
+        throws Throwable {
+        unitilsParameterized = new UnitilsParameterized(TestclassNotStaticNotPublic.class);
+        unitilsParameterized.getParametersMethod(new TestClass(TestclassNotStaticNotPublic.class));
+    }
 
-		private void method1(){
-			//do nothing
-		}
-	}
+    @Test(expected = Exception.class)
+    public void testNotPublic()
+        throws Throwable {
+        unitilsParameterized = new UnitilsParameterized(TestclassNotPublic.class);
+        unitilsParameterized.getParametersMethod(new TestClass(TestclassNotPublic.class));
+    }
 
-	private static class TestclassNotStaticNotPublic {
+    @Test(expected = Exception.class)
+    public void testNotStatic()
+        throws Throwable {
+        unitilsParameterized = new UnitilsParameterized(TestclassNotStatic.class);
+        unitilsParameterized.getParametersMethod(new TestClass(TestclassNotStatic.class));
+    }
 
-		@Parameters
-		private void method1(){
-			//do nothing
-		}
-	}
-	
-	private static class TestclassNotPublic {
+    @Test
+    public void testOk()
+        throws Throwable {
+        unitilsParameterized = new UnitilsParameterized(UnitilsParametersNullParametersTest.class);
+        FrameworkMethod method = unitilsParameterized.getParametersMethod(new TestClass(UnitilsParametersNullParametersTest.class));
+        Assert.assertNotNull(method);
+    }
 
-		@Parameters
-		private static void method1(){
-			//do nothing
-		}
-	}
-	
-	private static class TestclassNotStatic {
+    private static class TestclassNoParameters {
+        private void method1() {
+            // do nothing
+        }
+    }
 
-		@Parameters
-		public void method1(){
-			//do nothing
-		}
-	}
+    private static class TestclassNotStaticNotPublic {
+        @Parameters
+        private void method1() {
+            // do nothing
+        }
+    }
+
+    private static class TestclassNotPublic {
+        @Parameters
+        private static void method1() {
+            // do nothing
+        }
+    }
+
+    private static class TestclassNotStatic {
+        @Parameters
+        public void method1() {
+            // do nothing
+        }
+    }
 }

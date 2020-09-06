@@ -1,12 +1,9 @@
 /*
- * Copyright 2008,  Unitils.org
- *
+ * Copyright 2008, Unitils.org
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -15,18 +12,18 @@
  */
 package org.unitils.inject;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-import static org.unitils.inject.util.Restore.NO_RESTORE;
-import static org.unitils.inject.util.Restore.NULL_OR_0_VALUE;
-import static org.unitils.inject.util.Restore.OLD_VALUE;
-
 import java.util.Properties;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.unitils.core.ConfigurationLoader;
 import org.unitils.inject.annotation.InjectIntoStatic;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+import static org.unitils.inject.util.Restore.NO_RESTORE;
+import static org.unitils.inject.util.Restore.NULL_OR_0_VALUE;
+import static org.unitils.inject.util.Restore.OLD_VALUE;
 
 /**
  * Test for restoring values that where replaced during the static injection of the {@link InjectModule} after
@@ -40,12 +37,12 @@ public class InjectModuleRestoreTest {
     /* Tested object */
     private InjectModule injectModule;
 
-
     /**
      * Initializes the test and test fixture.
      */
     @Before
-    public void setUp() throws Exception {
+    public void setUp()
+        throws Exception {
         Properties configuration = new ConfigurationLoader().loadConfiguration();
         injectModule = new InjectModule();
         injectModule.init(configuration);
@@ -55,7 +52,6 @@ public class InjectModuleRestoreTest {
         SetterInjectionTarget.primitiveProperty = 111;
         FieldInjectionTarget.primitiveProperty = 111;
     }
-
 
     /**
      * Tests the default restore (=old value).
@@ -68,7 +64,6 @@ public class InjectModuleRestoreTest {
         assertEquals("original value", FieldInjectionTarget.stringProperty);
     }
 
-
     /**
      * Tests the no restore.
      */
@@ -79,7 +74,6 @@ public class InjectModuleRestoreTest {
         assertEquals("injected value", SetterInjectionTarget.stringProperty);
         assertEquals("injected value", FieldInjectionTarget.stringProperty);
     }
-
 
     /**
      * Tests restoring the old value.
@@ -103,7 +97,6 @@ public class InjectModuleRestoreTest {
         assertNull(FieldInjectionTarget.stringProperty);
     }
 
-
     /**
      * Tests restoring a 0 primitive value.
      */
@@ -115,13 +108,11 @@ public class InjectModuleRestoreTest {
         assertEquals(0, FieldInjectionTarget.primitiveProperty);
     }
 
-
     /**
      * Test class containing a static setter and field injection and default restore (= old value).
      */
     @SuppressWarnings("unused")
     private class TestStaticSetterDefaultRestore {
-
         @InjectIntoStatic(target = SetterInjectionTarget.class, property = "stringProperty")
         private String setterInject = "injected value";
 
@@ -134,7 +125,6 @@ public class InjectModuleRestoreTest {
      */
     @SuppressWarnings("unused")
     private class TestStaticSetterRestoreNothing {
-
         @InjectIntoStatic(target = SetterInjectionTarget.class, property = "stringProperty", restore = NO_RESTORE)
         private String setterInject = "injected value";
 
@@ -147,7 +137,6 @@ public class InjectModuleRestoreTest {
      */
     @SuppressWarnings("unused")
     private class TestStaticSetterRestoreOldValue {
-
         @InjectIntoStatic(target = SetterInjectionTarget.class, property = "stringProperty", restore = OLD_VALUE)
         private String setterInject = "injected value";
 
@@ -160,7 +149,6 @@ public class InjectModuleRestoreTest {
      */
     @SuppressWarnings("unused")
     private class TestStaticSetterRestoreNull {
-
         @InjectIntoStatic(target = SetterInjectionTarget.class, property = "stringProperty", restore = NULL_OR_0_VALUE)
         private String setterInject = "injected value";
 
@@ -168,13 +156,11 @@ public class InjectModuleRestoreTest {
         private String fieldInject = "injected value";
     }
 
-
     /**
      * Test class containing a static setter and field injection and primitive 0 value restore.
      */
     @SuppressWarnings("unused")
     private class TestStaticSetterRestore0 {
-
         @InjectIntoStatic(target = SetterInjectionTarget.class, property = "primitiveProperty", restore = NULL_OR_0_VALUE)
         private int setterInject = 111;
 
@@ -182,16 +168,13 @@ public class InjectModuleRestoreTest {
         private int fieldInject = 111;
     }
 
-
     /**
      * Target for setter injection in the tests.
      */
     private static class SetterInjectionTarget {
-
         private static String stringProperty;
 
         private static int primitiveProperty;
-
 
         public static String getStringProperty() {
             return stringProperty;
@@ -214,10 +197,8 @@ public class InjectModuleRestoreTest {
      * Target for field injection in the tests.
      */
     private static class FieldInjectionTarget {
-
         private static String stringProperty;
 
         private static int primitiveProperty;
-
     }
 }

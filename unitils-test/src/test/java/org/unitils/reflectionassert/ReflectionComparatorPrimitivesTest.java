@@ -1,28 +1,26 @@
 /*
- *
- *  * Copyright 2010,  Unitils.org
- *  *
- *  * Licensed under the Apache License, Version 2.0 (the "License");
- *  * you may not use this file except in compliance with the License.
- *  * You may obtain a copy of the License at
- *  *
- *  *     http://www.apache.org/licenses/LICENSE-2.0
- *  *
- *  * Unless required by applicable law or agreed to in writing, software
- *  * distributed under the License is distributed on an "AS IS" BASIS,
- *  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  * See the License for the specific language governing permissions and
- *  * limitations under the License.
- *
+ * * Copyright 2010, Unitils.org
+ * *
+ * * Licensed under the Apache License, Version 2.0 (the "License");
+ * * you may not use this file except in compliance with the License.
+ * * You may obtain a copy of the License at
+ * *
+ * * http://www.apache.org/licenses/LICENSE-2.0
+ * *
+ * * Unless required by applicable law or agreed to in writing, software
+ * * distributed under the License is distributed on an "AS IS" BASIS,
+ * * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * * See the License for the specific language governing permissions and
+ * * limitations under the License.
  */
 package org.unitils.reflectionassert;
 
-import junit.framework.TestCase;
 import org.unitils.reflectionassert.difference.Difference;
+
+import junit.framework.TestCase;
 
 import static org.unitils.reflectionassert.ReflectionComparatorFactory.createRefectionComparator;
 import static org.unitils.reflectionassert.util.InnerDifferenceFinder.getInnerDifference;
-
 
 /**
  * Test class for {@link ReflectionComparator}. Contains tests with primitive types.
@@ -30,7 +28,8 @@ import static org.unitils.reflectionassert.util.InnerDifferenceFinder.getInnerDi
  * @author Tim Ducheyne
  * @author Filip Neven
  */
-public class ReflectionComparatorPrimitivesTest extends TestCase {
+public class ReflectionComparatorPrimitivesTest
+    extends TestCase {
 
     /* Test object */
     private Primitives primitivesA;
@@ -56,11 +55,11 @@ public class ReflectionComparatorPrimitivesTest extends TestCase {
     /* Class under test */
     private ReflectionComparator reflectionComparator;
 
-
     /**
      * Initializes the test fixture.
      */
-    protected void setUp() throws Exception {
+    protected void setUp()
+        throws Exception {
         super.setUp();
 
         primitivesA = new Primitives(1, 2, null);
@@ -94,7 +93,9 @@ public class ReflectionComparatorPrimitivesTest extends TestCase {
     /**
      * Test for two equal autoboxing. An autoboxed primitive should be considered equals to the object version.
      */
-    @SuppressWarnings({"UnnecessaryBoxing"})
+    @SuppressWarnings({
+        "UnnecessaryBoxing"
+    })
     public void testGetDifference_equalsAutoboxing() {
         Difference result = reflectionComparator.getDifference(5L, new Long(5));
         assertNull(result);
@@ -194,11 +195,12 @@ public class ReflectionComparatorPrimitivesTest extends TestCase {
         assertEquals(Double.POSITIVE_INFINITY, result.getRightValue());
     }
 
-
     /**
      * Test class with failing equals.
      */
-    @SuppressWarnings({"unused", "UnusedDeclaration", "FieldCanBeLocal"})
+    @SuppressWarnings({
+        "unused", "UnusedDeclaration", "FieldCanBeLocal"
+    })
     private static class Primitives {
 
         /* A fist int value */
@@ -210,13 +212,15 @@ public class ReflectionComparatorPrimitivesTest extends TestCase {
         /* An inner object */
         private Primitives inner;
 
-
         /**
          * Creates and initializes the element.
          *
-         * @param intValue1 the first int value
-         * @param intValue2 the second int value
-         * @param inner     the inner collection
+         * @param intValue1
+         *     the first int value
+         * @param intValue2
+         *     the second int value
+         * @param inner
+         *     the inner collection
          */
         public Primitives(int intValue1, int intValue2, Primitives inner) {
             this.intValue1 = intValue1;
@@ -227,12 +231,12 @@ public class ReflectionComparatorPrimitivesTest extends TestCase {
         /**
          * Always returns false
          *
-         * @param o the object to compare to
+         * @param o
+         *     the object to compare to
          */
         @Override
         public boolean equals(Object o) {
             return false;
         }
     }
-
 }

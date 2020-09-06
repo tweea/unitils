@@ -1,31 +1,26 @@
 /*
- * Copyright 2011,  Unitils.org
- *
+ * Copyright 2011, Unitils.org
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.unitils.io.temp.impl;
-
-
-import org.junit.Before;
-import org.junit.Test;
-import org.unitils.core.UnitilsException;
 
 import java.io.File;
 import java.io.FileOutputStream;
 
-import static junit.framework.Assert.assertFalse;
+import org.junit.Before;
 import org.junit.Ignore;
+import org.junit.Test;
+import org.unitils.core.UnitilsException;
+
+import static junit.framework.Assert.assertFalse;
 
 /**
  * @author Jeroen Horemans
@@ -40,9 +35,9 @@ public class DefaultTempServiceDeleteTempFileOrDirTest {
 
     private File rootTempDir;
 
-
     @Before
-    public void initialize() throws Exception {
+    public void initialize()
+        throws Exception {
         rootTempDir = new File("target/" + DefaultTempServiceDeleteTempFileOrDirTest.class.getSimpleName());
 
         defaultTempService = new DefaultTempService(rootTempDir);
@@ -50,9 +45,9 @@ public class DefaultTempServiceDeleteTempFileOrDirTest {
         rootTempDir.mkdirs();
     }
 
-
     @Test
-    public void deleteTempFile() throws Exception {
+    public void deleteTempFile()
+        throws Exception {
         File tempFile = defaultTempService.createTempFile("tempFile.txt");
 
         defaultTempService.deleteTempFileOrDir(tempFile);
@@ -60,7 +55,8 @@ public class DefaultTempServiceDeleteTempFileOrDirTest {
     }
 
     @Test
-    public void deleteTempDir() throws Exception {
+    public void deleteTempDir()
+        throws Exception {
         File tempDir = defaultTempService.createTempDir("tempDir");
 
         defaultTempService.deleteTempFileOrDir(tempDir);
@@ -68,7 +64,8 @@ public class DefaultTempServiceDeleteTempFileOrDirTest {
     }
 
     @Test
-    public void fileDoesNotExist() throws Exception {
+    public void fileDoesNotExist()
+        throws Exception {
         File nonExistingFile = new File(rootTempDir, "xxxx");
 
         defaultTempService.deleteTempFileOrDir(nonExistingFile);
@@ -76,20 +73,24 @@ public class DefaultTempServiceDeleteTempFileOrDirTest {
     }
 
     @Test
-    public void nullIsIgnored() throws Exception {
+    public void nullIsIgnored()
+        throws Exception {
         defaultTempService.deleteTempFileOrDir(null);
     }
 
     @Test
-    public void dirDoesNotExist() throws Exception {
+    public void dirDoesNotExist()
+        throws Exception {
         File nonExistingDir = new File(rootTempDir, "xxxx");
 
         defaultTempService.deleteTempFileOrDir(nonExistingDir);
         assertFalse(nonExistingDir.exists());
     }
-@Ignore//(works on mac)
+
+    @Ignore // (works on mac)
     @Test(expected = UnitilsException.class)
-    public void fileInUse() throws Exception {
+    public void fileInUse()
+        throws Exception {
         File tempFile = defaultTempService.createTempFile("tempFile.tmp");
         FileOutputStream out = new FileOutputStream(tempFile);
         try {
@@ -98,9 +99,11 @@ public class DefaultTempServiceDeleteTempFileOrDirTest {
             out.close();
         }
     }
-    @Ignore//works on mac
+
+    @Ignore // works on mac
     @Test(expected = UnitilsException.class)
-    public void dirInUse() throws Exception {
+    public void dirInUse()
+        throws Exception {
         File tempDir = defaultTempService.createTempDir("tempDir");
         File inUseFile = new File(tempDir, "file.tmp");
         FileOutputStream out = new FileOutputStream(inUseFile);

@@ -1,12 +1,9 @@
 /*
- * Copyright 2006-2009,  Unitils.org
- *
+ * Copyright 2006-2009, Unitils.org
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -15,13 +12,16 @@
  */
 package org.unitils.dbunit.dataset;
 
-import static org.dbunit.dataset.datatype.DataType.VARCHAR;
-import static org.junit.Assert.*;
 import org.junit.Test;
 import org.unitils.UnitilsJUnit4;
 import org.unitils.core.UnitilsException;
 import org.unitils.dbunit.dataset.comparison.ColumnDifference;
 import org.unitils.dbunit.dataset.comparison.RowDifference;
+
+import static org.dbunit.dataset.datatype.DataType.VARCHAR;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
 /**
  * Tests the comparison behavior of a data set row.
@@ -29,14 +29,15 @@ import org.unitils.dbunit.dataset.comparison.RowDifference;
  * @author Tim Ducheyne
  * @author Filip Neven
  */
-public class RowComparisonTest extends UnitilsJUnit4 {
-
+public class RowComparisonTest
+    extends UnitilsJUnit4 {
     private Row expectedRow = new Row();
+
     private Row actualRow = new Row();
 
-
     @Test
-    public void testEqualRows() throws Exception {
+    public void testEqualRows()
+        throws Exception {
         addColumn(expectedRow, "column1", "value1");
         addColumn(expectedRow, "column2", "value2");
         addColumn(actualRow, "column1", "value1");
@@ -47,9 +48,9 @@ public class RowComparisonTest extends UnitilsJUnit4 {
         assertNull(result);
     }
 
-
     @Test
-    public void testEqualRowsDifferentCase() throws Exception {
+    public void testEqualRowsDifferentCase()
+        throws Exception {
         addColumn(expectedRow, "COLUMN1", "value1");
         addColumn(expectedRow, "COLUMN2", "value2");
         addColumn(actualRow, "column1", "value1");
@@ -60,9 +61,9 @@ public class RowComparisonTest extends UnitilsJUnit4 {
         assertNull(result);
     }
 
-
     @Test
-    public void testDifferentValues() throws Exception {
+    public void testDifferentValues()
+        throws Exception {
         addColumn(expectedRow, "column1", "value1");
         addColumn(expectedRow, "column2", "value2");
         addColumn(actualRow, "column1", "xxxx");
@@ -76,9 +77,9 @@ public class RowComparisonTest extends UnitilsJUnit4 {
         assertColumnDifference(columnDifference2, "value2", "yyyy");
     }
 
-
     @Test
-    public void testEqualsWithMoreColumnsInActualRow() throws Exception {
+    public void testEqualsWithMoreColumnsInActualRow()
+        throws Exception {
         addColumn(expectedRow, "column1", "value1");
         addColumn(actualRow, "column1", "value1");
         addColumn(actualRow, "column2", "yyyy");
@@ -88,9 +89,9 @@ public class RowComparisonTest extends UnitilsJUnit4 {
         assertNull(result);
     }
 
-
     @Test
-    public void testMissingColumnInActualRow() throws Exception {
+    public void testMissingColumnInActualRow()
+        throws Exception {
         addColumn(expectedRow, "column1", "value1");
         addColumn(expectedRow, "column2", "value2");
         addColumn(actualRow, "column1", "value1");
@@ -100,16 +101,16 @@ public class RowComparisonTest extends UnitilsJUnit4 {
         assertMissingColumn(result);
     }
 
-
     @Test(expected = UnitilsException.class)
-    public void testAddingTwoColumnsForSameName() throws Exception {
+    public void testAddingTwoColumnsForSameName()
+        throws Exception {
         addColumn(expectedRow, "column", "value");
         addColumn(expectedRow, "column", "value");
     }
 
-
     @Test
-    public void testGetColumnDifferenceForUnknownColumn() throws Exception {
+    public void testGetColumnDifferenceForUnknownColumn()
+        throws Exception {
         RowDifference rowDifference = new RowDifference(new Row(), new Row());
 
         ColumnDifference result = rowDifference.getColumnDifference("xxxxx");
@@ -117,21 +118,17 @@ public class RowComparisonTest extends UnitilsJUnit4 {
         assertNull(result);
     }
 
-
     private void assertColumnDifference(ColumnDifference columnDifference, String expectedValue, String actualValue) {
         assertEquals(expectedValue, columnDifference.getColumn().getValue());
         assertEquals(actualValue, columnDifference.getActualColumn().getValue());
     }
-
 
     private void assertMissingColumn(RowDifference rowDifference) {
         Column column = rowDifference.getMissingColumns().get(0);
         assertNotNull(column);
     }
 
-
     private void addColumn(Row row, String columnName, String value) {
         row.addColumn(new Column(columnName, VARCHAR, value));
     }
-
 }

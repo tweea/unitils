@@ -10,6 +10,7 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.annotation.Profile;
 import org.springframework.context.support.GenericApplicationContext;
 import org.springframework.context.support.GenericXmlApplicationContext;
 import org.springframework.core.env.ConfigurableEnvironment;
@@ -18,27 +19,24 @@ import org.unitils.core.TestListener;
 import org.unitils.core.UnitilsException;
 import org.unitils.spring.annotation.ConfigureProfile;
 import org.unitils.spring.annotation.SpringApplicationContext;
-
-
+import org.unitils.spring.annotation.SpringBeanByName;
+import org.unitils.spring.annotation.SpringBeanByType;
 
 /**
  * ProfileModule - Since Spring 3 their is the ability to use a profile.
  * But without Unitils you still need to do some configuration.
- * 
  * This module configures the Spring profile and reload the {@link SpringApplicationContext}.
  * 
  * @author Jeroen Horemans
  * @author Thomas De Rycke
  * @author Willemijn Wouters
- * 
  * @since 3.4
- * 
  */
-public class ProfileModule implements Module {
-
+public class ProfileModule
+    implements Module {
     private static final Log LOGGER = LogFactory.getLog(ProfileModule.class);
 
-    private GenericApplicationContext ctx; 
+    private GenericApplicationContext ctx;
 
     /**
      * @see org.unitils.core.Module#init(java.util.Properties)
@@ -52,13 +50,12 @@ public class ProfileModule implements Module {
      */
 
     public void afterInit() {
-        //do nothing
+        // do nothing
     }
 
     /**
-     * First it will look if the {@link ConfigureProfile} is present. This 
-     * annotation contains the profilename. 
-     * 
+     * First it will look if the {@link ConfigureProfile} is present. This
+     * annotation contains the profilename.
      * The {@link Profile} is set active and all the beans will be loaded.
      * 
      * @param testClass
@@ -80,6 +77,7 @@ public class ProfileModule implements Module {
 
     /**
      * How to do the configuration when you use {@link Configuration}
+     * 
      * @param ctx
      * @param profile
      */
@@ -90,23 +88,24 @@ public class ProfileModule implements Module {
     }
 
     protected void setConfigurationAsTypeSpringApplicationContext(GenericXmlApplicationContext ctx, ConfigureProfile profile, String[] placeContext) {
-        ConfigurableEnvironment env = ctx.getEnvironment(); 
-        env.setActiveProfiles(profile.value()); 
-        ctx.load(placeContext); 
-        ctx.refresh(); 
+        ConfigurableEnvironment env = ctx.getEnvironment();
+        env.setActiveProfiles(profile.value());
+        ctx.load(placeContext);
+        ctx.refresh();
     }
 
     /**
      * The injection of beans doesn't happen automatically anymore when you use {@link SpringBeanByName} or {@link SpringBeanByType}
+     * 
      * @param testObject
      */
     public boolean injectBeans(Object testObject) {
-        //inject beans
+        // inject beans
         boolean everythingOk = true;
         for (Field field : testObject.getClass().getDeclaredFields()) {
             if (field.isAnnotationPresent(Autowired.class)) {
                 if (!field.isAccessible()) {
-                    //set accessible
+                    // set accessible
                     field.setAccessible(true);
                 }
                 try {
@@ -145,13 +144,13 @@ public class ProfileModule implements Module {
             throw new UnitilsException("The name of the profile should be filled in.");
         }
 
-        //type of configuration is ApplicationContext
+        // type of configuration is ApplicationContext
         if (configProfile.configuration().equals(TypeConfiguration.APPLICATIONCONTEXT)) {
             if (!testClass.isAnnotationPresent(SpringApplicationContext.class)) {
                 throw new UnitilsException("The annotation 'SpringApplicationContext' is not present.");
             }
         } else {
-            //type of the configuration is the annotation Configuration.
+            // type of the configuration is the annotation Configuration.
             if (StringUtils.isEmpty(configProfile.packageProfile())) {
                 throw new UnitilsException("You should fill in the name of the package of the profile.");
             }
@@ -160,10 +159,9 @@ public class ProfileModule implements Module {
         return true;
     }
 
-
-
     /**
-     * @param ctx the ctx to set
+     * @param ctx
+     *     the ctx to set
      */
     protected void setCtx(GenericApplicationContext ctx) {
         this.ctx = ctx;
@@ -175,6 +173,7 @@ public class ProfileModule implements Module {
     protected GenericApplicationContext getCtx() {
         return ctx;
     }
+
     /**
      * The context will be closed.
      */
@@ -184,14 +183,11 @@ public class ProfileModule implements Module {
         }
     }
 
-
-
     /**
      * @see org.unitils.core.Module#getTestListener()
      */
     public TestListener getTestListener() {
         return new TestListener() {
-
             /**
              * @see org.unitils.core.TestListener#beforeTestClass(java.lang.Class)
              */
@@ -215,10 +211,6 @@ public class ProfileModule implements Module {
             public void afterTestTearDown(Object testObject, Method testMethod) {
                 closeContext();
             }
-
         };
     }
-
-
-
 }

@@ -1,12 +1,9 @@
 /*
- * Copyright 2006-2009,  Unitils.org
- *
+ * Copyright 2006-2009, Unitils.org
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -15,13 +12,17 @@
  */
 package org.unitils.dbunit.dataset;
 
-import org.dbunit.dataset.*;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.dbunit.dataset.DataSetException;
+import org.dbunit.dataset.FilteredDataSet;
+import org.dbunit.dataset.IDataSet;
+import org.dbunit.dataset.ITable;
+import org.dbunit.dataset.ITableIterator;
 import org.dbunit.dataset.datatype.DataType;
 import org.dbunit.dataset.filter.IncludeTableFilter;
 import org.unitils.core.UnitilsException;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * A builder for creating data set schemas.
@@ -30,13 +31,13 @@ import java.util.List;
  * @author Filip Neven
  */
 public class SchemaFactory {
-
-
     /**
      * Creates a data set schema for the given DbUnit dataset.
      *
-     * @param schemaName    The schema name that this data set is for, not null
-     * @param dbUnitDataSet The DbUnit data set, not null
+     * @param schemaName
+     *     The schema name that this data set is for, not null
+     * @param dbUnitDataSet
+     *     The DbUnit data set, not null
      * @return The data set schema, not null
      */
     public Schema createSchemaForDbUnitDataSet(String schemaName, IDataSet dbUnitDataSet) {
@@ -44,20 +45,20 @@ public class SchemaFactory {
         try {
             addTables(dbUnitDataSet, result);
             return result;
-
         } catch (DataSetException e) {
             throw new UnitilsException("Unable to create data set for db unit data set. Schema name: " + schemaName, e);
         }
-
     }
-
 
     /**
      * Creates a data set schema for the given DbUnit dataset.
      *
-     * @param schemaName      The schema name that this data set is for, not null
-     * @param dbUnitDataSet   The DbUnit data set, not null
-     * @param tablesToInclude Only tables with these names will be returned the rest will be ignored, null for all tables
+     * @param schemaName
+     *     The schema name that this data set is for, not null
+     * @param dbUnitDataSet
+     *     The DbUnit data set, not null
+     * @param tablesToInclude
+     *     Only tables with these names will be returned the rest will be ignored, null for all tables
      * @return The data set schema, not null
      */
     public Schema createSchemaForDbUnitDataSet(String schemaName, IDataSet dbUnitDataSet, List<String> tablesToInclude) {
@@ -65,14 +66,16 @@ public class SchemaFactory {
         return createSchemaForDbUnitDataSet(schemaName, filteredDataSet);
     }
 
-
     /**
      * Adds the tables of the DbUnit dataset to the given schema.
      *
-     * @param dbUnitDataSet The DbUnit dataset containing the tables, not null
-     * @param schema        The schema to add the tables to, not null
+     * @param dbUnitDataSet
+     *     The DbUnit dataset containing the tables, not null
+     * @param schema
+     *     The schema to add the tables to, not null
      */
-    protected void addTables(IDataSet dbUnitDataSet, Schema schema) throws DataSetException {
+    protected void addTables(IDataSet dbUnitDataSet, Schema schema)
+        throws DataSetException {
         ITableIterator dbUnitTableIterator = dbUnitDataSet.iterator();
         while (dbUnitTableIterator.next()) {
             ITable dbUnitTable = dbUnitTableIterator.getTable();
@@ -89,10 +92,11 @@ public class SchemaFactory {
         }
     }
 
-
     /**
-     * @param tableName       The table name to check, not null
-     * @param tablesToInclude Names of tables to include, null for all tables
+     * @param tableName
+     *     The table name to check, not null
+     * @param tablesToInclude
+     *     Names of tables to include, null for all tables
      * @return True if the table name should be included
      */
     protected boolean shouldIgnoreTable(String tableName, List<String> tablesToInclude) {
@@ -107,15 +111,18 @@ public class SchemaFactory {
         return true;
     }
 
-
     /**
      * Adds the rows of the DbUnit table to the given table.
      *
-     * @param dbUnitTable           The DbUnit table containing the rows, not null
-     * @param table                 The table to add the rows to, not null
-     * @param primaryKeyColumnNames The names of the pk columns, empty if there are none
+     * @param dbUnitTable
+     *     The DbUnit table containing the rows, not null
+     * @param table
+     *     The table to add the rows to, not null
+     * @param primaryKeyColumnNames
+     *     The names of the pk columns, empty if there are none
      */
-    protected void addRows(ITable dbUnitTable, Table table, List<String> primaryKeyColumnNames) throws DataSetException {
+    protected void addRows(ITable dbUnitTable, Table table, List<String> primaryKeyColumnNames)
+        throws DataSetException {
         org.dbunit.dataset.Column[] columns = dbUnitTable.getTableMetaData().getColumns();
         int rowCount = dbUnitTable.getRowCount();
         for (int rowIndex = 0; rowIndex < rowCount; rowIndex++) {
@@ -137,19 +144,19 @@ public class SchemaFactory {
         }
     }
 
-
     /**
      * Gets the primary key column names for the given DbUnit table.
      *
-     * @param dbUnitTable The DbUnit table, not null
+     * @param dbUnitTable
+     *     The DbUnit table, not null
      * @return The pk column names, empty if none found
      */
-    protected List<String> getPrimaryKeyColumnNames(ITable dbUnitTable) throws DataSetException {
+    protected List<String> getPrimaryKeyColumnNames(ITable dbUnitTable)
+        throws DataSetException {
         List<String> result = new ArrayList<String>();
         for (org.dbunit.dataset.Column column : dbUnitTable.getTableMetaData().getPrimaryKeys()) {
             result.add(column.getColumnName());
         }
         return result;
     }
-
 }

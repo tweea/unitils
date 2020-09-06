@@ -1,12 +1,9 @@
 /*
- * Copyright 2008,  Unitils.org
- *
+ * Copyright 2008, Unitils.org
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -14,10 +11,6 @@
  * limitations under the License.
  */
 package org.unitils.spring;
-
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.fail;
 
 import java.util.List;
 import java.util.Map;
@@ -33,6 +26,10 @@ import org.unitils.spring.annotation.SpringBean;
 import org.unitils.spring.annotation.SpringBeanByName;
 import org.unitils.spring.annotation.SpringBeanByType;
 
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.fail;
+
 /**
  * Test for the {@link SpringModule}.
  *
@@ -44,17 +41,16 @@ public class SpringModuleSpringBeansTest {
     /* Tested object */
     private SpringModule springModule;
 
-
     /**
      * Initializes the test and test fixture.
      */
     @Before
-    public void setUp() throws Exception {
+    public void setUp()
+        throws Exception {
         Properties configuration = new ConfigurationLoader().loadConfiguration();
         springModule = new SpringModule();
         springModule.init(configuration);
     }
-
 
     /**
      * Tests assigning a spring bean using its name.
@@ -68,7 +64,6 @@ public class SpringModuleSpringBeansTest {
         assertNotNull(springTest.testBeanSetter);
     }
 
-
     /**
      * Tests assigning a spring bean by declared type of field and setter.
      */
@@ -81,7 +76,6 @@ public class SpringModuleSpringBeansTest {
         assertNotNull(springTestByType.testBeanSetter);
     }
 
-
     /**
      * Tests assigning a spring bean by name of field.
      */
@@ -93,7 +87,6 @@ public class SpringModuleSpringBeansTest {
         assertNotNull(springTestByName.testBeanByName);
     }
 
-
     /**
      * Tests assigning a spring bean by name of setter.
      */
@@ -104,7 +97,6 @@ public class SpringModuleSpringBeansTest {
 
         assertNotNull(springTestByNameSetter.testBeanByName);
     }
-
 
     /**
      * Tests assigning a spring bean using an unexisting name.
@@ -121,7 +113,6 @@ public class SpringModuleSpringBeansTest {
         assertNull(springTestNotFound.testBean);
     }
 
-
     /**
      * Tests assigning a spring bean using an unexisting type.
      */
@@ -136,7 +127,6 @@ public class SpringModuleSpringBeansTest {
         }
         assertNull(springTestByTypeNotFound.testBean);
     }
-
 
     /**
      * Tests assigning a spring bean using an ambiguous type (TreeSet, HashSet).
@@ -153,7 +143,6 @@ public class SpringModuleSpringBeansTest {
         assertNull(springTestByTypeAmbiguous.testBean);
     }
 
-
     /**
      * Tests assigning a spring bean using an unexisting field name.
      */
@@ -169,13 +158,13 @@ public class SpringModuleSpringBeansTest {
         assertNull(springTestByNameNotFound.xxxx);
     }
 
-
     /**
      * Test SpringTest class.
      */
-    @SpringApplicationContext({"classpath:org/unitils/spring/services-config.xml"})
+    @SpringApplicationContext({
+        "classpath:org/unitils/spring/services-config.xml"
+    })
     private class SpringTest {
-
         @SpringBean("aBeanName")
         private String testBean = null;
 
@@ -190,9 +179,10 @@ public class SpringModuleSpringBeansTest {
     /**
      * Test SpringTest class by type.
      */
-    @SpringApplicationContext({"classpath:org/unitils/spring/services-config.xml"})
+    @SpringApplicationContext({
+        "classpath:org/unitils/spring/services-config.xml"
+    })
     private class SpringTestByType {
-
         @SpringBeanByType
         private List<?> testBean = null;
 
@@ -207,9 +197,10 @@ public class SpringModuleSpringBeansTest {
     /**
      * Test SpringTest class by type but type is ambiguous (TreeSet and HashSet).
      */
-    @SpringApplicationContext({"classpath:org/unitils/spring/services-config.xml"})
+    @SpringApplicationContext({
+        "classpath:org/unitils/spring/services-config.xml"
+    })
     private class SpringTestByTypeAmbiguous {
-
         @SpringBeanByType
         private Set<?> testBean = null;
     }
@@ -217,9 +208,10 @@ public class SpringModuleSpringBeansTest {
     /**
      * Test SpringTest class by name.
      */
-    @SpringApplicationContext({"classpath:org/unitils/spring/services-config.xml"})
+    @SpringApplicationContext({
+        "classpath:org/unitils/spring/services-config.xml"
+    })
     private class SpringTestByName {
-
         @SpringBeanByName
         private String testBeanByName = null;
     }
@@ -227,9 +219,10 @@ public class SpringModuleSpringBeansTest {
     /**
      * Test SpringTest class by name.
      */
-    @SpringApplicationContext({"classpath:org/unitils/spring/services-config.xml"})
+    @SpringApplicationContext({
+        "classpath:org/unitils/spring/services-config.xml"
+    })
     private class SpringTestByNameSetter {
-
         private String testBeanByName = null;
 
         @SpringBeanByName
@@ -241,9 +234,10 @@ public class SpringModuleSpringBeansTest {
     /**
      * Test SpringTest class with unexisting bean.
      */
-    @SpringApplicationContext({"classpath:org/unitils/spring/services-config.xml"})
+    @SpringApplicationContext({
+        "classpath:org/unitils/spring/services-config.xml"
+    })
     private class SpringTestNotFound {
-
         @SpringBean("xxxxx")
         private String testBean = null;
     }
@@ -251,21 +245,22 @@ public class SpringModuleSpringBeansTest {
     /**
      * Test SpringTest class by type (Map) that is not in context.
      */
-    @SpringApplicationContext({"classpath:org/unitils/spring/services-config.xml"})
+    @SpringApplicationContext({
+        "classpath:org/unitils/spring/services-config.xml"
+    })
     private class SpringTestByTypeNotFound {
-
         @SpringBeanByType
-        private Map<?,?> testBean = null;
+        private Map<?, ?> testBean = null;
     }
 
     /**
      * Test SpringTest class by name that is not in context.
      */
-    @SpringApplicationContext({"classpath:org/unitils/spring/services-config.xml"})
+    @SpringApplicationContext({
+        "classpath:org/unitils/spring/services-config.xml"
+    })
     private class SpringTestByNameNotFound {
-
         @SpringBeanByName
         private String xxxx = null;
     }
-
 }

@@ -17,7 +17,6 @@ public class StatementBuilder {
     /* True if the the statement is executable */
     private boolean executable;
 
-
     /**
      * @return True if the the statement is executable
      */
@@ -25,26 +24,25 @@ public class StatementBuilder {
         return executable;
     }
 
-
     /**
      * Change the statement executable flag.
      *
-     * @param executable True if the statement is executable
+     * @param executable
+     *     True if the statement is executable
      */
     public void setExecutable(boolean executable) {
         this.executable = executable;
     }
 
-
     /**
      * Append a character to the statement.
      *
-     * @param c The character
+     * @param c
+     *     The character
      */
     public void append(char c) {
         statement.append(c);
     }
-
 
     /**
      * Returns the length (character count) of the statement.
@@ -55,14 +53,12 @@ public class StatementBuilder {
         return statement.length();
     }
 
-
     /**
      * Clear the statement.
      */
     public void clear() {
         statement.setLength(0);
     }
-
 
     /**
      * Returns the characters that should be removed from the statements. Semi-colons are not part of a statement and
@@ -71,9 +67,10 @@ public class StatementBuilder {
      * @return The separator characters to remove, not null
      */
     public char[] getTrailingSeparatorCharsToRemove() {
-        return new char[]{';'};
+        return new char[] {
+            ';'
+        };
     }
-
 
     /**
      * Creates the resulting statement out of the given characters.
@@ -107,6 +104,4 @@ public class StatementBuilder {
         }
         return trimmedStatement;
     }
-
-
 }

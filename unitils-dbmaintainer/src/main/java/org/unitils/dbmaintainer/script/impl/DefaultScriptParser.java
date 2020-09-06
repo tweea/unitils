@@ -1,12 +1,9 @@
 /*
- * Copyright 2008,  Unitils.org
- *
+ * Copyright 2008, Unitils.org
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -15,18 +12,22 @@
  */
 package org.unitils.dbmaintainer.script.impl;
 
-import org.unitils.core.UnitilsException;
-import org.unitils.dbmaintainer.script.ScriptParser;
-import org.unitils.dbmaintainer.script.StatementBuilder;
-import org.unitils.dbmaintainer.script.parsingstate.ParsingState;
-import org.unitils.dbmaintainer.script.parsingstate.impl.*;
-import org.unitils.util.PropertyUtils;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Reader;
 import java.util.Arrays;
 import java.util.Properties;
+
+import org.unitils.core.UnitilsException;
+import org.unitils.dbmaintainer.script.ScriptParser;
+import org.unitils.dbmaintainer.script.StatementBuilder;
+import org.unitils.dbmaintainer.script.parsingstate.ParsingState;
+import org.unitils.dbmaintainer.script.parsingstate.impl.InBlockCommentParsingState;
+import org.unitils.dbmaintainer.script.parsingstate.impl.InDoubleQuotesParsingState;
+import org.unitils.dbmaintainer.script.parsingstate.impl.InLineCommentParsingState;
+import org.unitils.dbmaintainer.script.parsingstate.impl.InSingleQuotesParsingState;
+import org.unitils.dbmaintainer.script.parsingstate.impl.NormalParsingState;
+import org.unitils.util.PropertyUtils;
 
 /**
  * A class for parsing statements out of sql scripts.
@@ -41,8 +42,8 @@ import java.util.Properties;
  * @author Filip Neven
  * @author Stefan Bangels
  */
-public class DefaultScriptParser implements ScriptParser {
-
+public class DefaultScriptParser
+    implements ScriptParser {
     /**
      * Property indicating if the characters can be escaped by using backslashes. For example '\'' instead of the standard SQL way ''''.
      */
@@ -68,12 +69,13 @@ public class DefaultScriptParser implements ScriptParser {
      */
     protected Reader scriptReader;
 
-
     /**
      * Initializes the parser with the given configuration settings.
      *
-     * @param configuration The config, not null
-     * @param scriptReader  the script stream, not null
+     * @param configuration
+     *     The config, not null
+     * @param scriptReader
+     *     the script stream, not null
      */
     public void init(Properties configuration, Reader scriptReader) {
         boolean backSlashEscapingEnabled = PropertyUtils.getBoolean(PROPKEY_BACKSLASH_ESCAPING_ENABLED, configuration);
@@ -81,7 +83,6 @@ public class DefaultScriptParser implements ScriptParser {
         this.currentParsingState = initialParsingState;
         this.scriptReader = new BufferedReader(scriptReader);
     }
-
 
     /**
      * Parses the next statement out of the given script stream.
@@ -96,13 +97,13 @@ public class DefaultScriptParser implements ScriptParser {
         }
     }
 
-
     /**
      * Actual implementation of getNextStatement.
      *
      * @return the statements, null if no more statements
      */
-    protected String getNextStatementImpl() throws IOException {
+    protected String getNextStatementImpl()
+        throws IOException {
         currentChar = scriptReader.read();
         if (currentChar == -1) {
             // nothing more to read
@@ -157,19 +158,20 @@ public class DefaultScriptParser implements ScriptParser {
         if (statementBuilder.isExecutable()) {
             String finalStatement = statementBuilder.createStatement();
             if (finalStatement != null) {
-                throw new UnitilsException("Last statement in script was not ended correctly. Each statement should end with one of " + Arrays.toString(statementBuilder.getTrailingSeparatorCharsToRemove()));
+                throw new UnitilsException("Last statement in script was not ended correctly. Each statement should end with one of "
+                    + Arrays.toString(statementBuilder.getTrailingSeparatorCharsToRemove()));
             }
         }
         return null;
     }
-
 
     /**
      * Builds the initial parsing state.
      * This will create a normal, in-line-comment, in-block-comment, in-double-quotes and in-single-quotes state
      * and link them together.
      *
-     * @param backSlashEscapingEnabled True if a backslash can be used for escaping characters
+     * @param backSlashEscapingEnabled
+     *     True if a backslash can be used for escaping characters
      * @return The initial parsing state, not null
      */
     protected ParsingState createInitialParsingState(boolean backSlashEscapingEnabled) {
@@ -185,12 +187,12 @@ public class DefaultScriptParser implements ScriptParser {
         inBlockCommentParsingState.init(normalParsingState);
         inSingleQuotesParsingState.init(normalParsingState, backSlashEscapingEnabled);
         inDoubleQuotesParsingState.init(normalParsingState, backSlashEscapingEnabled);
-        normalParsingState.init(inLineCommentParsingState, inBlockCommentParsingState, inSingleQuotesParsingState, inDoubleQuotesParsingState, backSlashEscapingEnabled);
+        normalParsingState.init(inLineCommentParsingState, inBlockCommentParsingState, inSingleQuotesParsingState, inDoubleQuotesParsingState,
+            backSlashEscapingEnabled);
 
         // the normal state is the begin-state
         return normalParsingState;
     }
-
 
     /**
      * Factory method for the statement builder.
@@ -201,7 +203,6 @@ public class DefaultScriptParser implements ScriptParser {
         return new StatementBuilder();
     }
 
-
     /**
      * Factory method for the normal parsing state.
      *
@@ -210,7 +211,6 @@ public class DefaultScriptParser implements ScriptParser {
     protected NormalParsingState createNormalParsingState() {
         return new NormalParsingState();
     }
-
 
     /**
      * Factory method for the in-line comment (-- comment) parsing state.
@@ -221,7 +221,6 @@ public class DefaultScriptParser implements ScriptParser {
         return new InLineCommentParsingState();
     }
 
-
     /**
      * Factory method for the in-block comment (/ * comment * /) parsing state.
      *
@@ -230,7 +229,6 @@ public class DefaultScriptParser implements ScriptParser {
     protected InBlockCommentParsingState createInBlockCommentParsingState() {
         return new InBlockCommentParsingState();
     }
-
 
     /**
      * Factory method for the single quotes ('text') parsing state.
@@ -241,7 +239,6 @@ public class DefaultScriptParser implements ScriptParser {
         return new InSingleQuotesParsingState();
     }
 
-
     /**
      * Factory method for the double quotes ("text") literal parsing state.
      *
@@ -250,5 +247,4 @@ public class DefaultScriptParser implements ScriptParser {
     protected InDoubleQuotesParsingState createInDoubleQuotesParsingState() {
         return new InDoubleQuotesParsingState();
     }
-
 }

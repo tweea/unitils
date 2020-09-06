@@ -1,19 +1,15 @@
 /*
- * Copyright 2011,  Unitils.org
- *
+ * Copyright 2011, Unitils.org
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.unitils.io.annotation;
 
 import java.lang.annotation.Retention;
@@ -50,11 +46,14 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
  * <p/>
  * Examples:
  * <p/>
- * path prefix /c:/testfiles  --> looks for c:/testfiles/MyFile.xml on the file system
- * path prefix testfiles      --> looks for testfiles/MyFile.xml on the classpath
- * <p/><p/>
+ * path prefix /c:/testfiles --> looks for c:/testfiles/MyFile.xml on the file system
+ * path prefix testfiles --> looks for testfiles/MyFile.xml on the classpath
+ * <p/>
+ * <p/>
  * Example usage:
- * <pre><code>
+ * 
+ * <pre>
+ * <code>
  * public class MyTestClass extends UnitilsJUnit4 {
  *
  * '    @FileContent
@@ -63,7 +62,9 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
  *      private Properties field2;
  *      ...
  * }
- * </code></pre>
+ * </code>
+ * </pre>
+ * 
  * In this example the content of 'org/mypackage/MyTestClass.txt" will be injected into field1 and the properties loaded from
  * 'someFile.properties' will be injected into field2.
  * <p/>
@@ -79,7 +80,6 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Target(FIELD)
 @Retention(RUNTIME)
 public @interface FileContent {
-
     /**
      * @return File location of a file, this can be relative to the workspace, or an absolute path.
      */
@@ -91,6 +91,7 @@ public @interface FileContent {
      * <p/>
      * Possible values:
      * <p/>
+     * 
      * <pre>
      *     Charset
      *      Description
@@ -105,5 +106,4 @@ public @interface FileContent {
      * @return encoding
      */
     String encoding() default "";
-
 }

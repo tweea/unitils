@@ -1,12 +1,9 @@
 /*
- * Copyright 2008,  Unitils.org
- *
+ * Copyright 2008, Unitils.org
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -15,18 +12,20 @@
  */
 package org.unitils.mock.core.proxy;
 
-import static org.junit.Assert.assertNotSame;
-import static org.junit.Assert.assertSame;
-import org.junit.Before;
-import org.junit.Test;
-import static org.unitils.mock.core.proxy.CloneUtil.createDeepClone;
-import static org.unitils.reflectionassert.ReflectionAssert.assertReflectionEquals;
-
 import java.util.Arrays;
-import static java.util.Arrays.asList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import org.junit.Before;
+import org.junit.Test;
+
+import static java.util.Arrays.asList;
+
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertSame;
+import static org.unitils.mock.core.proxy.CloneUtil.createDeepClone;
+import static org.unitils.reflectionassert.ReflectionAssert.assertReflectionEquals;
 
 /**
  * todo javadoc
@@ -36,7 +35,6 @@ import java.util.Map;
  * @author Kenny Claes
  */
 public class CloneUtilTest {
-
     private SimpleValues simpleValues1;
 
     private SimpleValues simpleValues2;
@@ -47,7 +45,9 @@ public class CloneUtilTest {
 
     @Before
     public void setup() {
-        simpleValues1 = new SimpleValues("testString", 1L, 2, new char[]{'a', 'b', 'c'});
+        simpleValues1 = new SimpleValues("testString", 1L, 2, new char[] {
+            'a', 'b', 'c'
+        });
         simpleValues2 = new SimpleValues(null, 0L, 0, null);
 
         List<SimpleValues> listValue = asList(simpleValues1, simpleValues2);
@@ -58,7 +58,6 @@ public class CloneUtilTest {
         references = new References(new References(null));
         references.references = references;
     }
-
 
     @Test
     public void testCreateDeepClone() {
@@ -71,7 +70,6 @@ public class CloneUtilTest {
         assertNotSame(simpleValues1.arrayValue, result.arrayValue);
     }
 
-
     @Test
     public void testCreateDeepClone_clonedTwice() {
         SimpleValues result = createDeepClone(createDeepClone(simpleValues1));
@@ -79,10 +77,11 @@ public class CloneUtilTest {
         assertNotSame(simpleValues1, result);
     }
 
-
     @Test
     public void testCreateDeepClone_topLevelCollection() {
-        List<?> aList = Arrays.asList(1, new int[]{1, 2});
+        List<?> aList = Arrays.asList(1, new int[] {
+            1, 2
+        });
         List<?> result = createDeepClone(aList);
 
         assertReflectionEquals(aList, result);
@@ -90,7 +89,6 @@ public class CloneUtilTest {
         assertSame(aList.get(0), result.get(0));
         assertNotSame(aList.get(1), result.get(1));
     }
-
 
     @Test
     public void testCreateDeepClone_collections() {
@@ -101,9 +99,9 @@ public class CloneUtilTest {
         assertNotSame(collections.mapValue, result.mapValue);
     }
 
-
     @Test
-    public void testCreateDeepClone_InnerClass() throws IllegalArgumentException, IllegalAccessException {
+    public void testCreateDeepClone_InnerClass()
+        throws IllegalArgumentException, IllegalAccessException {
         ClassWithInnerClass classWithInnerClass = new ClassWithInnerClass();
         ClassWithInnerClass result = createDeepClone(classWithInnerClass);
         assertReflectionEquals(classWithInnerClass, result);
@@ -111,7 +109,8 @@ public class CloneUtilTest {
     }
 
     @Test
-    public void testCreateDeepClone_AnonymousClass() throws IllegalArgumentException, IllegalAccessException {
+    public void testCreateDeepClone_AnonymousClass()
+        throws IllegalArgumentException, IllegalAccessException {
         Comparable<String> anonymousClass = new Comparable<String>() {
             public int compareTo(String o) {
                 return 0;
@@ -120,7 +119,6 @@ public class CloneUtilTest {
         Comparable<String> result = createDeepClone(anonymousClass);
         assertReflectionEquals(anonymousClass, result);
     }
-
 
     @Test
     public void testCreateDeepClone_loop() {
@@ -140,12 +138,13 @@ public class CloneUtilTest {
         assertSame(clone, clone[1]);
     }
 
-
     protected static class SimpleValues {
-
         private String stringValue;
+
         private Long longValue;
+
         private int intValue;
+
         private char[] arrayValue;
 
         public SimpleValues(String stringValue, Long longValue, int intValue, char[] arrayValue) {
@@ -156,10 +155,9 @@ public class CloneUtilTest {
         }
     }
 
-
     protected static class Collections {
-
         private List<SimpleValues> listValue;
+
         private Map<SimpleValues, SimpleValues> mapValue;
 
         public Collections(List<SimpleValues> listValue, Map<SimpleValues, SimpleValues> mapValue) {
@@ -168,9 +166,7 @@ public class CloneUtilTest {
         }
     }
 
-
     protected static class References {
-
         private References references;
 
         public References(References references) {
@@ -179,8 +175,8 @@ public class CloneUtilTest {
     }
 
     protected static class ClassWithInnerClass {
-
         String str;
+
         Inner inner = new Inner();
 
         class Inner {
@@ -188,8 +184,5 @@ public class CloneUtilTest {
                 str = "value";
             }
         }
-
     }
-
-
 }

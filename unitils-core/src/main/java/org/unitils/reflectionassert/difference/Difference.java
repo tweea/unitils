@@ -1,12 +1,9 @@
 /*
- * Copyright 2008,  Unitils.org
- *
+ * Copyright 2008, Unitils.org
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -32,20 +29,21 @@ public class Difference {
     /* A message describing the difference */
     private String message;
 
-
     /**
      * Creates a difference.
      *
-     * @param message    a message describing the difference
-     * @param leftValue  the left instance
-     * @param rightValue the right instance
+     * @param message
+     *     a message describing the difference
+     * @param leftValue
+     *     the left instance
+     * @param rightValue
+     *     the right instance
      */
     public Difference(String message, Object leftValue, Object rightValue) {
         this.message = message;
         this.leftValue = leftValue;
         this.rightValue = rightValue;
     }
-
 
     /**
      * Gets the left value.
@@ -56,7 +54,6 @@ public class Difference {
         return leftValue;
     }
 
-
     /**
      * Gets the right value.
      *
@@ -65,7 +62,6 @@ public class Difference {
     public Object getRightValue() {
         return rightValue;
     }
-
 
     /**
      * Gets the message indicating the kind of difference.
@@ -76,19 +72,18 @@ public class Difference {
         return message;
     }
 
-
     /**
      * Double dispatch method. Dispatches back to the given visitor.
      * <p/>
      * All subclasses should copy this method in their own class body.
      *
-     * @param visitor  The visitor, not null
-     * @param argument An optional argument for the visitor, null if not applicable
+     * @param visitor
+     *     The visitor, not null
+     * @param argument
+     *     An optional argument for the visitor, null if not applicable
      * @return The result
      */
     public <T, A> T accept(DifferenceVisitor<T, A> visitor, A argument) {
         return visitor.visit(this, argument);
     }
-
-
 }

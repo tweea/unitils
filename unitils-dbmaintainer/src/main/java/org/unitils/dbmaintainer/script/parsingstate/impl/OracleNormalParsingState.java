@@ -1,12 +1,9 @@
 /*
- * Copyright 2008,  Unitils.org
- *
+ * Copyright 2008, Unitils.org
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -15,8 +12,8 @@
  */
 package org.unitils.dbmaintainer.script.parsingstate.impl;
 
-import org.unitils.dbmaintainer.script.parsingstate.ParsingState;
 import org.unitils.dbmaintainer.script.StatementBuilder;
+import org.unitils.dbmaintainer.script.parsingstate.ParsingState;
 
 /**
  * The initial state for Oracle. This parser adds PL/SQL statement recognition to the parser. In order for the
@@ -26,8 +23,8 @@ import org.unitils.dbmaintainer.script.StatementBuilder;
  * @author Tim Ducheyne
  * @author Filip Neven
  */
-public class OracleNormalParsingState extends NormalParsingState {
-
+public class OracleNormalParsingState
+    extends NormalParsingState {
     /**
      * True if a code block is being parsed
      */
@@ -43,14 +40,17 @@ public class OracleNormalParsingState extends NormalParsingState {
      */
     protected StringBuilder statementBuffer = new StringBuilder();
 
-
     /**
      * Overridden to also correctly identify the starting of PL/SQL code blocks and to handle slashes / to end a statement.
      *
-     * @param previousChar The previous char, 0 if none
-     * @param currentChar  The current char
-     * @param nextChar     The next char, 0 if none
-     * @param statementBuilder The statement builder, not null
+     * @param previousChar
+     *     The previous char, 0 if none
+     * @param currentChar
+     *     The current char
+     * @param nextChar
+     *     The next char, 0 if none
+     * @param statementBuilder
+     *     The statement builder, not null
      * @return The next parsing state, null if the end of the statement is reached
      */
     protected ParsingState getNextParsingState(char previousChar, char currentChar, char nextChar, StatementBuilder statementBuilder) {
@@ -105,30 +105,29 @@ public class OracleNormalParsingState extends NormalParsingState {
         return nextParsingState;
     }
 
-
     /**
      * Checks whether the statment contains the starting letters of a code statement (eg CREATE PACKAGE).
      * The statementBuffer should contain all letters (no signs) and every double space or newline converted to a single space.
      *
-     * @param statement The buffer, not null
+     * @param statement
+     *     The buffer, not null
      * @return True if a code statment is recognized
      */
     protected boolean isStartOfCodeStatement(StringBuilder statement) {
-        return matches("CREATE PACKAGE", statement) || matches("CREATE OR REPLACE PACKAGE", statement) ||
-                matches("CREATE LIBRARY", statement) || matches("CREATE OR REPLACE LIBRARY", statement) ||
-                matches("CREATE FUNCTION", statement) || matches("CREATE OR REPLACE FUNCTION", statement) ||
-                matches("CREATE PROCEDURE", statement) || matches("CREATE OR REPLACE PROCEDURE", statement) ||
-                matches("CREATE TRIGGER", statement) || matches("CREATE OR REPLACE TRIGGER", statement) ||
-                matches("CREATE TYPE", statement) || matches("CREATE OR REPLACE TYPE", statement) ||
-                matches("DECLARE", statement) || matches("BEGIN", statement);
+        return matches("CREATE PACKAGE", statement) || matches("CREATE OR REPLACE PACKAGE", statement) || matches("CREATE LIBRARY", statement)
+            || matches("CREATE OR REPLACE LIBRARY", statement) || matches("CREATE FUNCTION", statement) || matches("CREATE OR REPLACE FUNCTION", statement)
+            || matches("CREATE PROCEDURE", statement) || matches("CREATE OR REPLACE PROCEDURE", statement) || matches("CREATE TRIGGER", statement)
+            || matches("CREATE OR REPLACE TRIGGER", statement) || matches("CREATE TYPE", statement) || matches("CREATE OR REPLACE TYPE", statement)
+            || matches("DECLARE", statement) || matches("BEGIN", statement);
     }
-
 
     /**
      * Utility method to check whether the given statement starts with the letters of the given text.
      *
-     * @param text      The starting letters, not null
-     * @param statement The statement to check
+     * @param text
+     *     The starting letters, not null
+     * @param statement
+     *     The statement to check
      * @return True if the statement starts with the text
      */
     protected boolean matches(String text, StringBuilder statement) {

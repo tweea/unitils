@@ -1,12 +1,9 @@
 /*
- * Copyright 2008,  Unitils.org
- *
+ * Copyright 2008, Unitils.org
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -15,7 +12,11 @@
  */
 package org.unitils.dbmaintainer;
 
-import static org.junit.Assert.fail;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.unitils.UnitilsJUnit4;
@@ -35,12 +36,9 @@ import org.unitils.inject.annotation.TestedObject;
 import org.unitils.mock.ArgumentMatchers;
 import org.unitils.mock.Mock;
 import org.unitils.mock.MockUnitils;
-import static org.unitils.mock.MockUnitils.assertNoMoreInvocations;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
+import static org.junit.Assert.fail;
+import static org.unitils.mock.MockUnitils.assertNoMoreInvocations;
 
 /**
  * Tests the main algorithm of the DBMaintainer, using mocks for all implementation classes.
@@ -48,8 +46,8 @@ import java.util.List;
  * @author Filip Neven
  * @author Tim Ducheyne
  */
-public class DBMaintainerTest extends UnitilsJUnit4 {
-
+public class DBMaintainerTest
+    extends UnitilsJUnit4 {
     @InjectIntoByType
     private Mock<ExecutedScriptInfoSource> mockExecutedScriptInfoSource;
 
@@ -76,9 +74,13 @@ public class DBMaintainerTest extends UnitilsJUnit4 {
 
     /* Test database update scripts */
     private List<Script> scripts, postProcessingScripts;
+
     private List<ExecutedScript> alreadyExecutedScripts;
+
     private ScriptContentHandle sciptContentHandle1, sciptContentHandle2, postProcessingSciptContentHandle1, postProcessingSciptContentHandle2;
+
     private String dialect;
+
     private String schema;
 
     /**
@@ -87,7 +89,8 @@ public class DBMaintainerTest extends UnitilsJUnit4 {
      * @throws Exception
      */
     @Before
-    public void setUp() throws Exception {
+    public void setUp()
+        throws Exception {
         dialect = "hsqldb";
         schema = "public";
         dbMaintainer = new DBMaintainer();
@@ -95,7 +98,7 @@ public class DBMaintainerTest extends UnitilsJUnit4 {
         dbMaintainer.fromScratchEnabled = true;
         dbMaintainer.keepRetryingAfterError = true;
         dbMaintainer.disableConstraintsEnabled = true;
-           
+
         scripts = new ArrayList<Script>();
         sciptContentHandle1 = MockUnitils.createDummy(ScriptContentHandle.class);
         Script script1 = new Script("01_script1.sql", 0L, sciptContentHandle1);
@@ -118,7 +121,6 @@ public class DBMaintainerTest extends UnitilsJUnit4 {
         mockExecutedScriptInfoSource.returns(hashSet).getExecutedScripts();
     }
 
-
     @Test
     public void testNoUpdateNeeded() {
         // Set database version and available script expectations
@@ -130,14 +132,14 @@ public class DBMaintainerTest extends UnitilsJUnit4 {
         assertNoMoreInvocations();
     }
 
-
     /**
      * Tests incremental update of a database: No existing scripts are modified, but new ones are added. The database
      * is not cleared but the new scripts are executed on by one, incrementing the database version each time.
      */
     @Test
     @SuppressWarnings("unchecked")
-    public void testUpdateDatabase_Incremental() throws Exception {
+    public void testUpdateDatabase_Incremental()
+        throws Exception {
         expectNewScriptsAdded();
         expectPostProcessingScripts(postProcessingScripts);
 
@@ -146,14 +148,14 @@ public class DBMaintainerTest extends UnitilsJUnit4 {
         assertScriptsExecutedAndDbVersionSet();
     }
 
-
     /**
      * Tests updating the database from scratch: Existing scripts have been modified. The database is cleared first
      * and all scripts are executed.
      */
     @Test
     @SuppressWarnings("unchecked")
-    public void testUpdateDatabase_FromScratch() throws Exception {
+    public void testUpdateDatabase_FromScratch()
+        throws Exception {
         expectExistingScriptModified();
         expectPostProcessingScripts(postProcessingScripts);
 
@@ -163,7 +165,6 @@ public class DBMaintainerTest extends UnitilsJUnit4 {
         mockExecutedScriptInfoSource.assertInvoked().clearAllExecutedScripts();
         assertScriptsExecutedAndDbVersionSet();
     }
-
 
     @Test
     public void testUpdateDatabase_LastUpdateFailed() {
@@ -177,13 +178,13 @@ public class DBMaintainerTest extends UnitilsJUnit4 {
         assertScriptsExecutedAndDbVersionSet();
     }
 
-
     /**
      * Tests the behavior in case there is an error in a script supplied by the ScriptSource. In this case, the
      * database version must not org incremented and a StatementHandlerException must be thrown.
      */
     @Test
-    public void testUpdateDatabase_ErrorInScript() throws Exception {
+    public void testUpdateDatabase_ErrorInScript()
+        throws Exception {
         // Set database version and available script expectations
         expectNewScriptsAdded();
         expectNoPostProcessingCodeScripts();
@@ -197,7 +198,6 @@ public class DBMaintainerTest extends UnitilsJUnit4 {
         }
         mockExecutedScriptInfoSource.assertInvoked().registerExecutedScript(new ExecutedScript(scripts.get(0), null, false));
     }
-
 
     @Test
     public void testUpdateDatabase_ErrorInPostProcessingCodeScripts() {
@@ -215,7 +215,6 @@ public class DBMaintainerTest extends UnitilsJUnit4 {
         assertScriptsExecutedAndDbVersionSet();
     }
 
-
     @Test
     public void testUpdateDatabase_isInitialFromScratchUpdate() {
         expectFromScratchUpdateRecommended();
@@ -228,15 +227,15 @@ public class DBMaintainerTest extends UnitilsJUnit4 {
         assertScriptsExecutedAndDbVersionSet();
     }
 
-
     private void expectFromScratchUpdateRecommended() {
         mockExecutedScriptInfoSource.returns(true).isFromScratchUpdateRecommended();
         expectModifiedScripts(false);
         expectAllScripts(scripts);
     }
 
-
-    @SuppressWarnings({"unchecked"})
+    @SuppressWarnings({
+        "unchecked"
+    })
     private void expectNoScriptModifications() {
         expectModifiedScripts(false);
         expectNewScripts(Collections.EMPTY_LIST);
@@ -253,17 +252,17 @@ public class DBMaintainerTest extends UnitilsJUnit4 {
         expectAllScripts(scripts);
     }
 
-    @SuppressWarnings({"unchecked"})
+    @SuppressWarnings({
+        "unchecked"
+    })
     private void expectNoPostProcessingCodeScripts() {
         expectPostProcessingScripts(Collections.EMPTY_LIST);
     }
-
 
     private void expectExistingScriptModified() {
         expectModifiedScripts(true);
         expectAllScripts(scripts);
     }
-
 
     private void assertScriptsExecutedAndDbVersionSet() {
         mockExecutedScriptInfoSource.assertInvokedInSequence().registerExecutedScript(new ExecutedScript(scripts.get(0), null, null));
@@ -276,29 +275,23 @@ public class DBMaintainerTest extends UnitilsJUnit4 {
         mockScriptRunner.assertInvokedInSequence().execute(postProcessingScripts.get(1).getScriptContentHandle());
     }
 
-
     private void expectNewScripts(List<Script> scripts) {
         mockScriptSource.returns(scripts).getNewScripts(null, null, dialect, schema, true);
     }
-
 
     private void expectErrorInExistingIndexedScript() {
         alreadyExecutedScripts.get(0).setSuccessful(false);
     }
 
-
     private void expectModifiedScripts(boolean modifiedScripts) {
         mockScriptSource.returns(modifiedScripts).isExistingIndexedScriptModified(null, null, dialect, schema, true);
     }
-
 
     private void expectPostProcessingScripts(List<Script> postProcessingCodeScripts) {
         mockScriptSource.returns(postProcessingCodeScripts).getPostProcessingScripts(dialect, schema, true);
     }
 
-
     private void expectAllScripts(List<Script> scripts) {
         mockScriptSource.returns(scripts).getAllUpdateScripts(dialect, schema, true);
     }
-
 }

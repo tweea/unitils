@@ -1,12 +1,9 @@
 /*
- * Copyright 2008,  Unitils.org
- *
+ * Copyright 2008, Unitils.org
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -15,11 +12,16 @@
  */
 package org.unitils.core.dbsupport;
 
-import org.unitils.core.UnitilsException;
-import static org.unitils.thirdparty.org.apache.commons.dbutils.DbUtils.closeQuietly;
-
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DatabaseMetaData;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Set;
+
+import org.unitils.core.UnitilsException;
+
+import static org.unitils.thirdparty.org.apache.commons.dbutils.DbUtils.closeQuietly;
 
 /**
  * Implementation of {@link DbSupport} for an Oracle database.
@@ -27,11 +29,11 @@ import java.util.Set;
  * @author Filip Neven
  * @author Tim Ducheyne
  */
-public class OracleDbSupport extends DbSupport {
+public class OracleDbSupport
+    extends DbSupport {
 
     /* The major version number of the Oracle database */
     private Integer oracleMajorVersionNumber;
-
 
     /**
      * Creates support for Oracle databases.
@@ -39,7 +41,6 @@ public class OracleDbSupport extends DbSupport {
     public OracleDbSupport() {
         super("oracle");
     }
-
 
     /**
      * Returns the names of all tables in the database.
@@ -50,21 +51,22 @@ public class OracleDbSupport extends DbSupport {
     public Set<String> getTableNames() {
         // all_tables also contains the materialized views: don't return these
         // to be sure no recycled items are handled, all items with a name that starts with BIN$ will be filtered out.
-        return getSQLHandler().getItemsAsStringSet("select TABLE_NAME from ALL_TABLES where OWNER = '" + getSchemaName() + "' and TABLE_NAME not like 'BIN$%' minus select MVIEW_NAME from ALL_MVIEWS where OWNER = '" + getSchemaName() + "'");
+        return getSQLHandler().getItemsAsStringSet("select TABLE_NAME from ALL_TABLES where OWNER = '" + getSchemaName()
+            + "' and TABLE_NAME not like 'BIN$%' minus select MVIEW_NAME from ALL_MVIEWS where OWNER = '" + getSchemaName() + "'");
     }
-
 
     /**
      * Gets the names of all columns of the given table.
      *
-     * @param tableName The table, not null
+     * @param tableName
+     *     The table, not null
      * @return The names of the columns of the table with the given name
      */
     @Override
     public Set<String> getColumnNames(String tableName) {
-        return getSQLHandler().getItemsAsStringSet("select COLUMN_NAME from ALL_TAB_COLUMNS where TABLE_NAME = '" + tableName + "' and OWNER = '" + getSchemaName() + "'");
+        return getSQLHandler()
+            .getItemsAsStringSet("select COLUMN_NAME from ALL_TAB_COLUMNS where TABLE_NAME = '" + tableName + "' and OWNER = '" + getSchemaName() + "'");
     }
-
 
     /**
      * Retrieves the names of all views in the database schema.
@@ -76,7 +78,6 @@ public class OracleDbSupport extends DbSupport {
         return getSQLHandler().getItemsAsStringSet("select VIEW_NAME from ALL_VIEWS where OWNER = '" + getSchemaName() + "'");
     }
 
-
     /**
      * Retrieves the names of all materialized views in the database schema.
      *
@@ -86,7 +87,6 @@ public class OracleDbSupport extends DbSupport {
     public Set<String> getMaterializedViewNames() {
         return getSQLHandler().getItemsAsStringSet("select MVIEW_NAME from ALL_MVIEWS where OWNER = '" + getSchemaName() + "'");
     }
-
 
     /**
      * Retrieves the names of all synonyms in the database schema.
@@ -98,7 +98,6 @@ public class OracleDbSupport extends DbSupport {
         return getSQLHandler().getItemsAsStringSet("select SYNONYM_NAME from ALL_SYNONYMS where OWNER = '" + getSchemaName() + "'");
     }
 
-
     /**
      * Retrieves the names of all sequences in the database schema.
      *
@@ -109,7 +108,6 @@ public class OracleDbSupport extends DbSupport {
         return getSQLHandler().getItemsAsStringSet("select SEQUENCE_NAME from ALL_SEQUENCES where SEQUENCE_OWNER = '" + getSchemaName() + "'");
     }
 
-
     /**
      * Retrieves the names of all triggers in the database schema.
      *
@@ -118,9 +116,9 @@ public class OracleDbSupport extends DbSupport {
     @Override
     public Set<String> getTriggerNames() {
         // to be sure no recycled items are handled, all items with a name that starts with BIN$ will be filtered out.
-        return getSQLHandler().getItemsAsStringSet("select TRIGGER_NAME from ALL_TRIGGERS where OWNER = '" + getSchemaName() + "' and TRIGGER_NAME not like 'BIN$%'");
+        return getSQLHandler()
+            .getItemsAsStringSet("select TRIGGER_NAME from ALL_TRIGGERS where OWNER = '" + getSchemaName() + "' and TRIGGER_NAME not like 'BIN$%'");
     }
-
 
     /**
      * Retrieves the names of all the types in the database schema.
@@ -132,42 +130,41 @@ public class OracleDbSupport extends DbSupport {
         return getSQLHandler().getItemsAsStringSet("select TYPE_NAME from ALL_TYPES where OWNER = '" + getSchemaName() + "'");
     }
 
-
     /**
      * Removes the table with the given name from the database.
      * Note: the table name is surrounded with quotes, making it case-sensitive.
      *
-     * @param tableName The table to drop (case-sensitive), not null
+     * @param tableName
+     *     The table to drop (case-sensitive), not null
      */
     @Override
     public void dropTable(String tableName) {
         getSQLHandler().executeUpdate("drop table " + qualified(tableName) + " cascade constraints" + (supportsPurge() ? " purge" : ""));
     }
 
-
     /**
      * Removes the view with the given name from the database
      * Note: the view name is surrounded with quotes, making it case-sensitive.
      *
-     * @param viewName The view to drop (case-sensitive), not null
+     * @param viewName
+     *     The view to drop (case-sensitive), not null
      */
     @Override
     public void dropView(String viewName) {
         getSQLHandler().executeUpdate("drop view " + qualified(viewName) + " cascade constraints");
     }
 
-
     /**
      * Removes the materialized view with the given name from the database
      * Note: the view name is surrounded with quotes, making it case-sensitive.
      *
-     * @param materializedViewName The view to drop (case-sensitive), not null
+     * @param materializedViewName
+     *     The view to drop (case-sensitive), not null
      */
     @Override
     public void dropMaterializedView(String materializedViewName) {
         getSQLHandler().executeUpdate("drop materialized view " + qualified(materializedViewName));
     }
-
 
     /**
      * Drops the type with the given name from the database
@@ -175,13 +172,13 @@ public class OracleDbSupport extends DbSupport {
      * <p/>
      * Overriden to add the force option. This will make sure that super-types can also be dropped.
      *
-     * @param typeName The type to drop (case-sensitive), not null
+     * @param typeName
+     *     The type to drop (case-sensitive), not null
      */
     @Override
     public void dropType(String typeName) {
         getSQLHandler().executeUpdate("drop type " + qualified(typeName) + " force");
     }
-
 
     /**
      * Disables all referential constraints (e.g. foreign keys) on all table in the schema
@@ -198,7 +195,8 @@ public class OracleDbSupport extends DbSupport {
             alterStatement = connection.createStatement();
 
             // to be sure no recycled items are handled, all items with a name that starts with BIN$ will be filtered out.
-            resultSet = queryStatement.executeQuery("select TABLE_NAME, CONSTRAINT_NAME from ALL_CONSTRAINTS where CONSTRAINT_TYPE = 'R' and OWNER = '" + getSchemaName() + "' and CONSTRAINT_NAME not like 'BIN$%' and STATUS <> 'DISABLED'");
+            resultSet = queryStatement.executeQuery("select TABLE_NAME, CONSTRAINT_NAME from ALL_CONSTRAINTS where CONSTRAINT_TYPE = 'R' and OWNER = '"
+                + getSchemaName() + "' and CONSTRAINT_NAME not like 'BIN$%' and STATUS <> 'DISABLED'");
             while (resultSet.next()) {
                 String tableName = resultSet.getString("TABLE_NAME");
                 String constraintName = resultSet.getString("CONSTRAINT_NAME");
@@ -211,7 +209,6 @@ public class OracleDbSupport extends DbSupport {
             closeQuietly(connection, alterStatement, resultSet);
         }
     }
-
 
     /**
      * Disables all value constraints (e.g. not null) on all tables in the schema
@@ -230,7 +227,9 @@ public class OracleDbSupport extends DbSupport {
             // to be sure no recycled items are handled, all items with a name that starts with BIN$ will be filtered out.
             // The 'O' type of constraints are ignored. These constraints are generated when a view is created with
             // the with read-only option and can't be disabled with an alter table
-            resultSet = queryStatement.executeQuery("select TABLE_NAME, CONSTRAINT_NAME from ALL_CONSTRAINTS where CONSTRAINT_TYPE in ('U', 'C', 'V') and OWNER = '" + getSchemaName() + "' and CONSTRAINT_NAME not like 'BIN$%' and STATUS <> 'DISABLED'");
+            resultSet = queryStatement
+                .executeQuery("select TABLE_NAME, CONSTRAINT_NAME from ALL_CONSTRAINTS where CONSTRAINT_TYPE in ('U', 'C', 'V') and OWNER = '" + getSchemaName()
+                    + "' and CONSTRAINT_NAME not like 'BIN$%' and STATUS <> 'DISABLED'");
             while (resultSet.next()) {
                 String tableName = resultSet.getString("TABLE_NAME");
                 String constraintName = resultSet.getString("CONSTRAINT_NAME");
@@ -244,26 +243,28 @@ public class OracleDbSupport extends DbSupport {
         }
     }
 
-
     /**
      * Returns the value of the sequence with the given name.
      * <p/>
      * Note: this can have the side-effect of increasing the sequence value.
      *
-     * @param sequenceName The sequence, not null
+     * @param sequenceName
+     *     The sequence, not null
      * @return The value of the sequence with the given name
      */
     @Override
     public long getSequenceValue(String sequenceName) {
-        return getSQLHandler().getItemAsLong("select LAST_NUMBER from ALL_SEQUENCES where SEQUENCE_NAME = '" + sequenceName + "' and SEQUENCE_OWNER = '" + getSchemaName() + "'");
+        return getSQLHandler()
+            .getItemAsLong("select LAST_NUMBER from ALL_SEQUENCES where SEQUENCE_NAME = '" + sequenceName + "' and SEQUENCE_OWNER = '" + getSchemaName() + "'");
     }
-
 
     /**
      * Sets the next value of the sequence with the given sequence name to the given sequence value.
      *
-     * @param sequenceName     The sequence, not null
-     * @param newSequenceValue The value to set
+     * @param sequenceName
+     *     The sequence, not null
+     * @param newSequenceValue
+     *     The value to set
      */
     @Override
     public void incrementSequenceToValue(String sequenceName, long newSequenceValue) {
@@ -273,7 +274,8 @@ public class OracleDbSupport extends DbSupport {
         try {
             connection = getSQLHandler().getDataSource().getConnection();
             statement = connection.createStatement();
-            resultSet = statement.executeQuery("select LAST_NUMBER, INCREMENT_BY from ALL_SEQUENCES where SEQUENCE_NAME = '" + sequenceName + "' and SEQUENCE_OWNER = '" + getSchemaName() + "'");
+            resultSet = statement.executeQuery("select LAST_NUMBER, INCREMENT_BY from ALL_SEQUENCES where SEQUENCE_NAME = '" + sequenceName
+                + "' and SEQUENCE_OWNER = '" + getSchemaName() + "'");
             while (resultSet.next()) {
                 long lastNumber = resultSet.getLong("LAST_NUMBER");
                 long incrementBy = resultSet.getLong("INCREMENT_BY");
@@ -291,7 +293,6 @@ public class OracleDbSupport extends DbSupport {
         }
     }
 
-
     /**
      * Gets the column type suitable to store values of the Java <code>java.lang.Long</code> type.
      *
@@ -302,18 +303,17 @@ public class OracleDbSupport extends DbSupport {
         return "INTEGER";
     }
 
-
     /**
      * Gets the column type suitable to store text values.
      *
-     * @param length The nr of characters.
+     * @param length
+     *     The nr of characters.
      * @return The column type, not null
      */
     @Override
     public String getTextDataType(int length) {
         return "VARCHAR2(" + length + ")";
     }
-
 
     /**
      * Synonyms are supported
@@ -325,7 +325,6 @@ public class OracleDbSupport extends DbSupport {
         return true;
     }
 
-
     /**
      * Sequences are supported.
      *
@@ -335,7 +334,6 @@ public class OracleDbSupport extends DbSupport {
     public boolean supportsSequences() {
         return true;
     }
-
 
     /**
      * Triggers are supported.
@@ -347,7 +345,6 @@ public class OracleDbSupport extends DbSupport {
         return true;
     }
 
-
     /**
      * Types are supported
      *
@@ -357,7 +354,6 @@ public class OracleDbSupport extends DbSupport {
     public boolean supportsTypes() {
         return true;
     }
-
 
     /**
      * Materialized views are supported
@@ -369,7 +365,6 @@ public class OracleDbSupport extends DbSupport {
         return true;
     }
 
-
     /**
      * Cascade are supported.
      *
@@ -380,15 +375,13 @@ public class OracleDbSupport extends DbSupport {
         return true;
     }
 
-
     /**
      * @return Whether or not this version of the Oracle database that is used supports the purge keyword. This is,
-     *         whether or not an Oracle database of version 10 or higher is used.
+     *     whether or not an Oracle database of version 10 or higher is used.
      */
     protected boolean supportsPurge() {
         return getOracleMajorVersionNumber() >= 10;
     }
-
 
     /**
      * @return The major version number of the Oracle database server that is used (e.g. for Oracle version 9.2.0.1, 9 is returned

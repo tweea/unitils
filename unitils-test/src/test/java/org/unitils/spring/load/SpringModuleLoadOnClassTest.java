@@ -17,20 +17,16 @@ import org.unitils.spring.annotation.LoadOn;
 import org.unitils.spring.annotation.SpringApplicationContext;
 import org.unitils.spring.enums.LoadTime;
 
-
 /**
  * Test if the {@link SpringModule} loads the context correctly.
  *
  * @author Willemijn Wouters
- *
  * @since 3.4.3
- *
  */
 @LoadOn(load = LoadTime.CLASS)
 @SpringApplicationContext(value = "classpath:org/unitils/spring/profile/applicationContext-dao-test.xml")
 @RunWith(UnitilsBlockJUnit4ClassRunner.class)
 public class SpringModuleLoadOnClassTest {
-
     @BeforeClass
     public static void setUpClass() {
         Properties config = Unitils.getInstance().getConfiguration();
@@ -38,24 +34,22 @@ public class SpringModuleLoadOnClassTest {
         config.put("unitils.modules", "spring");
         Unitils.getInstance().init(config);
 
-        //SpringModuleLoad module = Unitils.getInstance().getModulesRepository().getModuleOfType(SpringModuleLoad.class);
-
+        // SpringModuleLoad module = Unitils.getInstance().getModulesRepository().getModuleOfType(SpringModuleLoad.class);
     }
-
 
     @Test
     public void test1() {
-        //just a test
+        // just a test
     }
 
     @Test
-    public void test2() throws Exception {
-
+    public void test2()
+        throws Exception {
     }
 
     @Test
-    public void test3() throws Exception {
-
+    public void test3()
+        throws Exception {
     }
 
     @AfterClass
@@ -64,5 +58,4 @@ public class SpringModuleLoadOnClassTest {
         Assert.assertEquals(1, module.getIndexInitialize());
         Assert.assertEquals(0, module.getIndexClose());
     }
-
 }

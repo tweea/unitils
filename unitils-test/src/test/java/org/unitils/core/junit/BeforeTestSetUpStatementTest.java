@@ -13,18 +13,14 @@ import org.unitils.core.TestListener;
 import org.unitils.easymock.EasyMockUnitils;
 import org.unitils.easymock.annotation.Mock;
 
-
 /**
  * test {@link BeforeTestSetUpStatement}.
  * 
  * @author Willemijn Wouters
- * 
  * @since 3.4.1
- * 
  */
 @RunWith(UnitilsJUnit4TestClassRunner.class)
 public class BeforeTestSetUpStatementTest {
-
     @Mock
     private TestListener listener;
 
@@ -35,49 +31,49 @@ public class BeforeTestSetUpStatementTest {
      * @throws java.lang.Exception
      */
     @Before
-    public void setUp() throws Exception {
+    public void setUp()
+        throws Exception {
     }
 
     @Test(expected = NullPointerException.class)
-    public void testEvaluateExceptionOnListener() throws Throwable {
+    public void testEvaluateExceptionOnListener()
+        throws Throwable {
         TestClass2 testObject = new TestClass2();
         Method testMethod = TestClass2.class.getMethod("test1");
 
         listener.beforeTestSetUp(testObject, testMethod);
         EasyMock.expectLastCall().andThrow(new NullPointerException());
-        
+
         EasyMockUnitils.replay();
         new BeforeTestSetUpStatement(testObject, testMethod, listener, statement).evaluate();
-        
     }
-    
+
     @Test(expected = NullPointerException.class)
-    public void testEvaluateExceptionOnStatement() throws Throwable {
+    public void testEvaluateExceptionOnStatement()
+        throws Throwable {
         TestClass2 testObject = new TestClass2();
         Method testMethod = TestClass2.class.getMethod("test1");
 
         listener.beforeTestSetUp(testObject, testMethod);
         statement.evaluate();
         EasyMock.expectLastCall().andThrow(new NullPointerException());
-        
+
         EasyMockUnitils.replay();
         new BeforeTestSetUpStatement(testObject, testMethod, listener, statement).evaluate();
-        
     }
-    
+
     @Test
-    public void testEvaluateOk() throws Throwable {
+    public void testEvaluateOk()
+        throws Throwable {
         TestClass2 testObject = new TestClass2();
         Method testMethod = TestClass2.class.getMethod("test1");
 
         listener.beforeTestSetUp(testObject, testMethod);
         statement.evaluate();
- 
+
         EasyMockUnitils.replay();
         new BeforeTestSetUpStatement(testObject, testMethod, listener, statement).evaluate();
-        
     }
-    
 
     private class TestClass2 {
         @Test

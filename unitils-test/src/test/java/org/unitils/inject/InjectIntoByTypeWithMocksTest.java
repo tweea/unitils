@@ -1,12 +1,9 @@
 /*
- * Copyright 2008,  Unitils.org
- *
+ * Copyright 2008, Unitils.org
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -15,7 +12,10 @@
  */
 package org.unitils.inject;
 
-import static org.junit.Assert.*;
+import java.util.List;
+import java.util.Map;
+import java.util.Properties;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.unitils.core.ConfigurationLoader;
@@ -26,9 +26,9 @@ import org.unitils.inject.annotation.TestedObject;
 import org.unitils.mock.Mock;
 import org.unitils.mock.core.MockObject;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 /**
  * Test for the auto injection behavior when using Mock instances
@@ -41,14 +41,13 @@ public class InjectIntoByTypeWithMocksTest {
     /* Tested object */
     private InjectModule injectModule;
 
-
     @Before
-    public void setUp() throws Exception {
+    public void setUp()
+        throws Exception {
         Properties configuration = new ConfigurationLoader().loadConfiguration();
         injectModule = new InjectModule();
         injectModule.init(configuration);
     }
-
 
     @Test
     public void injectIntoByTypeWithMock() {
@@ -58,7 +57,6 @@ public class InjectIntoByTypeWithMocksTest {
         assertSame(injectIntoByTypeWithMock.mockedProperties.getMock(), injectIntoByTypeWithMock.injectTarget.properties);
     }
 
-
     @Test
     public void injectIntoByTypeWithGenericTypeMock() {
         InjectIntoByTypeWithGenericTypeMock injectIntoByTypeWithGenericTypeMock = new InjectIntoByTypeWithGenericTypeMock();
@@ -66,7 +64,6 @@ public class InjectIntoByTypeWithMocksTest {
 
         assertSame(injectIntoByTypeWithGenericTypeMock.mockedList.getMock(), injectIntoByTypeWithGenericTypeMock.injectTarget.genericType);
     }
-
 
     @Test
     public void injectIntoStaticByTypeWithMock() {
@@ -76,22 +73,18 @@ public class InjectIntoByTypeWithMocksTest {
         assertSame(injectIntoStaticByTypeWithMock.mockedProperties.getMock(), InjectStaticTarget.properties);
     }
 
-
     @Test
     public void noFieldOfMockedTypeFound() {
         try {
             NoFieldOfMockedTypeFound noFieldOfMockedTypeFound = new NoFieldOfMockedTypeFound();
             injectModule.injectObjects(noFieldOfMockedTypeFound);
             fail("Expected UnitilsException");
-
         } catch (UnitilsException e) {
             assertTrue(e.getMessage().contains("No static field with (super)type interface java.util.Map found in InjectStaticTarget"));
         }
     }
 
-
     public static class InjectIntoByTypeWithMock {
-
         @TestedObject
         public InjectTarget injectTarget = new InjectTarget();
 
@@ -99,9 +92,7 @@ public class InjectIntoByTypeWithMocksTest {
         public Mock<Properties> mockedProperties = new MockObject<Properties>("test", Properties.class, this);
     }
 
-
     public static class InjectIntoByTypeWithGenericTypeMock {
-
         @TestedObject
         public InjectTarget injectTarget = new InjectTarget();
 
@@ -109,36 +100,25 @@ public class InjectIntoByTypeWithMocksTest {
         public Mock<Map<String, List<String>>> mockedList = new MockObject<Map<String, List<String>>>("test", Map.class, this);
     }
 
-
     public static class InjectIntoStaticByTypeWithMock {
-
         @InjectIntoStaticByType(target = InjectStaticTarget.class)
         public Mock<Properties> mockedProperties = new MockObject<Properties>("test", Properties.class, this);
     }
 
-
     public static class NoFieldOfMockedTypeFound {
-
         @InjectIntoStaticByType(target = InjectStaticTarget.class)
         public Mock<Map> mockedProperties = new MockObject<Map>("test", Map.class, this);
     }
 
-
     public static class InjectTarget {
-
         public Properties properties;
 
         public Map<String, List<String>> genericType;
 
         public Map<String, String> genericTypeWithSameRawType;
-
     }
-
 
     public static class InjectStaticTarget {
-
         public static Properties properties;
     }
-
-
 }

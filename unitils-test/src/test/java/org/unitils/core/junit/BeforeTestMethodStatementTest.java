@@ -13,18 +13,14 @@ import org.unitils.core.TestListener;
 import org.unitils.easymock.EasyMockUnitils;
 import org.unitils.easymock.annotation.Mock;
 
-
 /**
  * test {@link BeforeTestMethodStatement}.
  * 
  * @author Willemijn Wouters
- * 
  * @since 3.4.1
- * 
  */
 @RunWith(UnitilsJUnit4TestClassRunner.class)
 public class BeforeTestMethodStatementTest {
-
     @Mock
     private TestListener listener;
 
@@ -35,14 +31,16 @@ public class BeforeTestMethodStatementTest {
      * @throws java.lang.Exception
      */
     @Before
-    public void setUp() throws Exception {
+    public void setUp()
+        throws Exception {
     }
 
     /**
      * Test method for {@link org.unitils.core.junit.BeforeTestMethodStatement#evaluate()}.
      */
     @Test(expected = NullPointerException.class)
-    public void testEvaluateExceptionOnListener() throws Throwable {
+    public void testEvaluateExceptionOnListener()
+        throws Throwable {
         TestClass2 testObject = new TestClass2();
         Method testMethod = TestClass2.class.getMethod("test1");
         listener.beforeTestMethod(testObject, testMethod);
@@ -50,11 +48,11 @@ public class BeforeTestMethodStatementTest {
 
         EasyMockUnitils.replay();
         new BeforeTestMethodStatement(listener, statement, testMethod, testObject).evaluate();
-
     }
 
     @Test(expected = NullPointerException.class)
-    public void testEvaluateExceptionOnStatement() throws Throwable {
+    public void testEvaluateExceptionOnStatement()
+        throws Throwable {
         TestClass2 testObject = new TestClass2();
         Method testMethod = TestClass2.class.getMethod("test1");
         listener.beforeTestMethod(testObject, testMethod);
@@ -63,11 +61,11 @@ public class BeforeTestMethodStatementTest {
 
         EasyMockUnitils.replay();
         new BeforeTestMethodStatement(listener, statement, testMethod, testObject).evaluate();
-
     }
 
     @Test
-    public void testEvaluateOk() throws Throwable {
+    public void testEvaluateOk()
+        throws Throwable {
         TestClass2 testObject = new TestClass2();
         Method testMethod = TestClass2.class.getMethod("test1");
         listener.beforeTestMethod(testObject, testMethod);
@@ -75,9 +73,7 @@ public class BeforeTestMethodStatementTest {
 
         EasyMockUnitils.replay();
         new BeforeTestMethodStatement(listener, statement, testMethod, testObject).evaluate();
-
     }
-
 
     private class TestClass2 {
         @Test
@@ -85,5 +81,4 @@ public class BeforeTestMethodStatementTest {
             Assert.assertTrue(true);
         }
     }
-
 }

@@ -1,12 +1,9 @@
 /*
- * Copyright 2008,  Unitils.org
- *
+ * Copyright 2008, Unitils.org
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -27,22 +24,19 @@ import java.util.Properties;
  * @author Filip Neven
  */
 public interface Module {
-
-
     /**
      * Initializes the module with the given configuration settings.
      *
-     * @param configuration The config, not null
+     * @param configuration
+     *     The config, not null
      */
     void init(Properties configuration);
-    
-    
+
     /**
      * Gives the module the opportunity to performs initialization that
-     * can only work after all other modules have been initialized  
+     * can only work after all other modules have been initialized
      */
     void afterInit();
-
 
     /**
      * Creates the test listener for this module.
@@ -50,5 +44,4 @@ public interface Module {
      * @return The test listener, not null
      */
     TestListener getTestListener();
-
 }

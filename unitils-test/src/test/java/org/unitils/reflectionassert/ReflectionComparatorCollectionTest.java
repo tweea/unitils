@@ -1,12 +1,9 @@
 /*
- * Copyright 2008,  Unitils.org
- *
+ * Copyright 2008, Unitils.org
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -15,18 +12,19 @@
  */
 package org.unitils.reflectionassert;
 
-import junit.framework.TestCase;
-import static org.unitils.reflectionassert.ReflectionAssert.assertReflectionEquals;
-import static org.unitils.reflectionassert.ReflectionComparatorFactory.createRefectionComparator;
-import org.unitils.reflectionassert.difference.CollectionDifference;
-import org.unitils.reflectionassert.difference.Difference;
-import static org.unitils.reflectionassert.util.InnerDifferenceFinder.getInnerDifference;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedList;
 
+import org.unitils.reflectionassert.difference.CollectionDifference;
+import org.unitils.reflectionassert.difference.Difference;
+
+import junit.framework.TestCase;
+
+import static org.unitils.reflectionassert.ReflectionAssert.assertReflectionEquals;
+import static org.unitils.reflectionassert.ReflectionComparatorFactory.createRefectionComparator;
+import static org.unitils.reflectionassert.util.InnerDifferenceFinder.getInnerDifference;
 
 /**
  * Test class for {@link ReflectionComparator}.
@@ -35,7 +33,8 @@ import java.util.LinkedList;
  * @author Tim Ducheyne
  * @author Filip Neven
  */
-public class ReflectionComparatorCollectionTest extends TestCase {
+public class ReflectionComparatorCollectionTest
+    extends TestCase {
 
     /* Test collection */
     private Collection<Element> collectionA;
@@ -52,7 +51,7 @@ public class ReflectionComparatorCollectionTest extends TestCase {
     /* Test collection with inner collection for element 2 */
     private Collection<Element> collectionInnerA;
 
-    /* Same as innerA but different instance  */
+    /* Same as innerA but different instance */
     private Collection<Element> collectionInnerB;
 
     /* Same as innerA and innerB but different string value for inner element 2 */
@@ -61,11 +60,11 @@ public class ReflectionComparatorCollectionTest extends TestCase {
     /* Class under test */
     private ReflectionComparator reflectionComparator;
 
-
     /**
      * Initializes the test fixture.
      */
-    protected void setUp() throws Exception {
+    protected void setUp()
+        throws Exception {
         super.setUp();
 
         collectionA = createCollection("test 2", null);
@@ -80,7 +79,6 @@ public class ReflectionComparatorCollectionTest extends TestCase {
         reflectionComparator = createRefectionComparator();
     }
 
-
     /**
      * Test for two equal collections.
      */
@@ -88,7 +86,6 @@ public class ReflectionComparatorCollectionTest extends TestCase {
         Difference result = reflectionComparator.getDifference(collectionA, collectionB);
         assertNull(result);
     }
-
 
     /**
      * Test for two equal collections that are of a different type.
@@ -98,7 +95,6 @@ public class ReflectionComparatorCollectionTest extends TestCase {
         assertNull(result);
     }
 
-
     /**
      * Test for two equal collections as an inner field of an object.
      */
@@ -106,7 +102,6 @@ public class ReflectionComparatorCollectionTest extends TestCase {
         Difference result = reflectionComparator.getDifference(collectionInnerA, collectionInnerB);
         assertNull(result);
     }
-
 
     /**
      * Test for two collections that contain different values.
@@ -118,7 +113,6 @@ public class ReflectionComparatorCollectionTest extends TestCase {
         assertEquals("test 2", difference.getLeftValue());
         assertEquals("XXXXXX", difference.getRightValue());
     }
-
 
     /**
      * Test for two collections that have a different size. The first element was removed from the right list.
@@ -141,7 +135,6 @@ public class ReflectionComparatorCollectionTest extends TestCase {
         assertReflectionEquals(2, ((CollectionDifference) result).getLeftMissingIndexes().get(0));
     }
 
-
     /**
      * Test for two collections that have a different size. The first element was removed from the left list.
      */
@@ -163,7 +156,6 @@ public class ReflectionComparatorCollectionTest extends TestCase {
         assertReflectionEquals(2, ((CollectionDifference) result).getRightMissingIndexes().get(0));
     }
 
-
     /**
      * Test for objects with inner collections that contain different values.
      */
@@ -175,7 +167,6 @@ public class ReflectionComparatorCollectionTest extends TestCase {
         assertEquals("test 2", innerDifference.getLeftValue());
         assertEquals("XXXXXX", innerDifference.getRightValue());
     }
-
 
     /**
      * Tests for objects with inner collections that have a different size.
@@ -192,7 +183,6 @@ public class ReflectionComparatorCollectionTest extends TestCase {
         assertSame(collectionB, difference.getRightValue());
     }
 
-
     /**
      * Tests for collections but right value is not a collection.
      */
@@ -202,7 +192,6 @@ public class ReflectionComparatorCollectionTest extends TestCase {
         assertSame(collectionA, result.getLeftValue());
         assertEquals("Test string", result.getRightValue());
     }
-
 
     /**
      * Test for two collections that contain different values.
@@ -220,12 +209,13 @@ public class ReflectionComparatorCollectionTest extends TestCase {
         assertEquals("XXXXXX", difference2.getRightValue());
     }
 
-
     /**
      * Creates a collection.
      *
-     * @param stringValueElement2 the value for the 2nd element in the collection
-     * @param innerElement2       the value for the inner array of the 2nd element in the collection
+     * @param stringValueElement2
+     *     the value for the 2nd element in the collection
+     * @param innerElement2
+     *     the value for the inner array of the 2nd element in the collection
      * @return the test collection
      */
     private Collection<Element> createCollection(String stringValueElement2, Collection<Element> innerElement2) {
@@ -235,7 +225,6 @@ public class ReflectionComparatorCollectionTest extends TestCase {
         collection.add(new Element("test 3", null));
         return collection;
     }
-
 
     /**
      * Test class with failing equals.
@@ -251,8 +240,10 @@ public class ReflectionComparatorCollectionTest extends TestCase {
         /**
          * Creates and initializes the element.
          *
-         * @param string the string value
-         * @param inner  the inner collection
+         * @param string
+         *     the string value
+         * @param inner
+         *     the inner collection
          */
         public Element(String string, Collection<?> inner) {
             this.string = string;
@@ -280,13 +271,12 @@ public class ReflectionComparatorCollectionTest extends TestCase {
         /**
          * Always returns false
          *
-         * @param o the object to compare to
+         * @param o
+         *     the object to compare to
          */
         @Override
         public boolean equals(Object o) {
             return false;
         }
     }
-
-
 }

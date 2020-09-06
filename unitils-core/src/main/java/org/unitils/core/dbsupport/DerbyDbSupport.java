@@ -1,12 +1,9 @@
 /*
- * Copyright 2008,  Unitils.org
- *
+ * Copyright 2008, Unitils.org
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -15,9 +12,6 @@
  */
 package org.unitils.core.dbsupport;
 
-import org.unitils.core.UnitilsException;
-import static org.unitils.thirdparty.org.apache.commons.dbutils.DbUtils.closeQuietly;
-
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
@@ -25,6 +19,9 @@ import java.sql.SQLException;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.unitils.core.UnitilsException;
+
+import static org.unitils.thirdparty.org.apache.commons.dbutils.DbUtils.closeQuietly;
 
 /**
  * Implementation of {@link DbSupport} for a Derby database.
@@ -35,16 +32,14 @@ import java.util.Set;
  * @author Tim Ducheyne
  * @author Filip Neven
  */
-public class DerbyDbSupport extends DbSupport {
-
-
+public class DerbyDbSupport
+    extends DbSupport {
     /**
      * Creates support for Derby databases.
      */
     public DerbyDbSupport() {
         super("derby");
     }
-
 
     /**
      * Returns the names of all tables in the database.
@@ -53,21 +48,24 @@ public class DerbyDbSupport extends DbSupport {
      */
     @Override
     public Set<String> getTableNames() {
-        return getSQLHandler().getItemsAsStringSet("select t.TABLENAME from SYS.SYSTABLES t, SYS.SYSSCHEMAS  s where t.TABLETYPE = 'T' AND t.SCHEMAID = s.SCHEMAID AND s.SCHEMANAME = '" + getSchemaName() + "'");
+        return getSQLHandler().getItemsAsStringSet(
+            "select t.TABLENAME from SYS.SYSTABLES t, SYS.SYSSCHEMAS  s where t.TABLETYPE = 'T' AND t.SCHEMAID = s.SCHEMAID AND s.SCHEMANAME = '"
+                + getSchemaName() + "'");
     }
-
 
     /**
      * Gets the names of all columns of the given table.
      *
-     * @param tableName The table, not null
+     * @param tableName
+     *     The table, not null
      * @return The names of the columns of the table with the given name
      */
     @Override
     public Set<String> getColumnNames(String tableName) {
-        return getSQLHandler().getItemsAsStringSet("select c.COLUMNNAME from SYS.SYSCOLUMNS c, SYS.SYSTABLES t, SYS.SYSSCHEMAS s where c.REFERENCEID = t.TABLEID and t.TABLENAME = '" + tableName + "' AND t.SCHEMAID = s.SCHEMAID AND s.SCHEMANAME = '" + getSchemaName() + "'");
+        return getSQLHandler().getItemsAsStringSet(
+            "select c.COLUMNNAME from SYS.SYSCOLUMNS c, SYS.SYSTABLES t, SYS.SYSSCHEMAS s where c.REFERENCEID = t.TABLEID and t.TABLENAME = '" + tableName
+                + "' AND t.SCHEMAID = s.SCHEMAID AND s.SCHEMANAME = '" + getSchemaName() + "'");
     }
-
 
     /**
      * Retrieves the names of all the views in the database schema.
@@ -76,9 +74,10 @@ public class DerbyDbSupport extends DbSupport {
      */
     @Override
     public Set<String> getViewNames() {
-        return getSQLHandler().getItemsAsStringSet("select t.TABLENAME from SYS.SYSTABLES t, SYS.SYSSCHEMAS s where t.TABLETYPE = 'V' AND t.SCHEMAID = s.SCHEMAID AND s.SCHEMANAME = '" + getSchemaName() + "'");
+        return getSQLHandler().getItemsAsStringSet(
+            "select t.TABLENAME from SYS.SYSTABLES t, SYS.SYSSCHEMAS s where t.TABLETYPE = 'V' AND t.SCHEMAID = s.SCHEMAID AND s.SCHEMANAME = '"
+                + getSchemaName() + "'");
     }
-
 
     /**
      * Retrieves the names of all the synonyms in the database schema.
@@ -86,9 +85,10 @@ public class DerbyDbSupport extends DbSupport {
      * @return The names of all synonyms in the database
      */
     public Set<String> getSynonymNames() {
-        return getSQLHandler().getItemsAsStringSet("select t.TABLENAME from SYS.SYSTABLES t, SYS.SYSSCHEMAS s where t.TABLETYPE = 'A' AND t.SCHEMAID = s.SCHEMAID AND s.SCHEMANAME = '" + getSchemaName() + "'");
+        return getSQLHandler().getItemsAsStringSet(
+            "select t.TABLENAME from SYS.SYSTABLES t, SYS.SYSSCHEMAS s where t.TABLETYPE = 'A' AND t.SCHEMAID = s.SCHEMAID AND s.SCHEMANAME = '"
+                + getSchemaName() + "'");
     }
-
 
     /**
      * Retrieves the names of all the triggers in the database schema.
@@ -97,16 +97,17 @@ public class DerbyDbSupport extends DbSupport {
      */
     @Override
     public Set<String> getTriggerNames() {
-        return getSQLHandler().getItemsAsStringSet("select t.TRIGGERNAME from SYS.SYSTRIGGERS t, SYS.SYSSCHEMAS s where t.SCHEMAID = s.SCHEMAID AND s.SCHEMANAME = '" + getSchemaName() + "'");
+        return getSQLHandler().getItemsAsStringSet(
+            "select t.TRIGGERNAME from SYS.SYSTRIGGERS t, SYS.SYSSCHEMAS s where t.SCHEMAID = s.SCHEMAID AND s.SCHEMANAME = '" + getSchemaName() + "'");
     }
-
 
     /**
      * Gets the names of all identity columns of the given table.
      * <p/>
      * todo check, at this moment the PK columns are returned
      *
-     * @param tableName The table, not null
+     * @param tableName
+     *     The table, not null
      * @return The names of the identity columns of the table with the given name
      */
     @Override
@@ -114,19 +115,20 @@ public class DerbyDbSupport extends DbSupport {
         return getPrimaryKeyColumnNames(tableName);
     }
 
-
     /**
      * Increments the identity value for the specified identity column on the specified table to the given value.
      *
-     * @param tableName          The table with the identity column, not null
-     * @param identityColumnName The column, not null
-     * @param identityValue      The new value
+     * @param tableName
+     *     The table with the identity column, not null
+     * @param identityColumnName
+     *     The column, not null
+     * @param identityValue
+     *     The new value
      */
     @Override
     public void incrementIdentityColumnToValue(String tableName, String identityColumnName, long identityValue) {
         getSQLHandler().executeUpdate("alter table " + qualified(tableName) + " alter column " + quoted(identityColumnName) + " RESTART WITH " + identityValue);
     }
-
 
     /**
      * Disables all referential constraints (e.g. foreign keys) on all table in the schema
@@ -139,16 +141,16 @@ public class DerbyDbSupport extends DbSupport {
         }
     }
 
-
     // todo refactor (see oracle)
     protected void disableReferentialConstraints(String tableName) {
         SQLHandler sqlHandler = getSQLHandler();
-        Set<String> constraintNames = sqlHandler.getItemsAsStringSet("select c.CONSTRAINTNAME from SYS.SYSCONSTRAINTS c, SYS.SYSTABLES t, SYS.SYSSCHEMAS s where c.TYPE = 'F' AND c.TABLEID = t.TABLEID  AND t.TABLENAME = '" + tableName + "' AND t.SCHEMAID = s.SCHEMAID AND s.SCHEMANAME = '" + getSchemaName() + "'");
+        Set<String> constraintNames = sqlHandler.getItemsAsStringSet(
+            "select c.CONSTRAINTNAME from SYS.SYSCONSTRAINTS c, SYS.SYSTABLES t, SYS.SYSSCHEMAS s where c.TYPE = 'F' AND c.TABLEID = t.TABLEID  AND t.TABLENAME = '"
+                + tableName + "' AND t.SCHEMAID = s.SCHEMAID AND s.SCHEMANAME = '" + getSchemaName() + "'");
         for (String constraintName : constraintNames) {
             sqlHandler.executeUpdate("alter table " + qualified(tableName) + " drop constraint " + quoted(constraintName));
         }
     }
-
 
     /**
      * Disables all value constraints (e.g. not null) on all tables in the schema
@@ -161,13 +163,14 @@ public class DerbyDbSupport extends DbSupport {
         }
     }
 
-
     // todo refactor (see oracle)
     protected void disableValueConstraints(String tableName) {
         SQLHandler sqlHandler = getSQLHandler();
 
         // disable all check and unique constraints
-        Set<String> constraintNames = sqlHandler.getItemsAsStringSet("select c.CONSTRAINTNAME from SYS.SYSCONSTRAINTS c, SYS.SYSTABLES t, SYS.SYSSCHEMAS s where c.TYPE in ('U', 'C') AND c.TABLEID = t.TABLEID  AND t.TABLENAME = '" + tableName + "' AND t.SCHEMAID = s.SCHEMAID AND s.SCHEMANAME = '" + getSchemaName() + "'");
+        Set<String> constraintNames = sqlHandler.getItemsAsStringSet(
+            "select c.CONSTRAINTNAME from SYS.SYSCONSTRAINTS c, SYS.SYSTABLES t, SYS.SYSSCHEMAS s where c.TYPE in ('U', 'C') AND c.TABLEID = t.TABLEID  AND t.TABLENAME = '"
+                + tableName + "' AND t.SCHEMAID = s.SCHEMAID AND s.SCHEMANAME = '" + getSchemaName() + "'");
         for (String constraintName : constraintNames) {
             sqlHandler.executeUpdate("alter table " + qualified(tableName) + " drop constraint " + quoted(constraintName));
         }
@@ -186,7 +189,6 @@ public class DerbyDbSupport extends DbSupport {
         }
     }
 
-
     /**
      * Synonyms are supported.
      *
@@ -196,7 +198,6 @@ public class DerbyDbSupport extends DbSupport {
     public boolean supportsSynonyms() {
         return true;
     }
-
 
     /**
      * Triggers are supported.
@@ -208,7 +209,6 @@ public class DerbyDbSupport extends DbSupport {
         return true;
     }
 
-
     /**
      * Identity columns are supported.
      *
@@ -219,13 +219,13 @@ public class DerbyDbSupport extends DbSupport {
         return true;
     }
 
-
     /**
      * Gets the names of all primary columns of the given table.
      * <p/>
      * This info is not available in the Derby sys tables. The database meta data is used instead to retrieve it.
      *
-     * @param tableName The table, not null
+     * @param tableName
+     *     The table, not null
      * @return The names of the primary key columns of the table with the given name
      */
     protected Set<String> getPrimaryKeyColumnNames(String tableName) {
@@ -247,13 +247,13 @@ public class DerbyDbSupport extends DbSupport {
         }
     }
 
-
     /**
      * Returns the names of all columns that have a 'not-null' constraint on them.
      * <p/>
      * This info is not available in the Derby sys tables. The database meta data is used instead to retrieve it.
      *
-     * @param tableName The table, not null
+     * @param tableName
+     *     The table, not null
      * @return The set of column names, not null
      */
     protected Set<String> getNotNullColummnNames(String tableName) {
@@ -266,7 +266,7 @@ public class DerbyDbSupport extends DbSupport {
             Set<String> result = new HashSet<String>();
             while (resultSet.next()) {
                 if (resultSet.getInt(11) == DatabaseMetaData.columnNoNulls) { // NULLABLE
-                    result.add(resultSet.getString(4)); //COLUMN_NAME
+                    result.add(resultSet.getString(4)); // COLUMN_NAME
                 }
             }
             return result;
@@ -276,6 +276,4 @@ public class DerbyDbSupport extends DbSupport {
             closeQuietly(connection, null, resultSet);
         }
     }
-
-
 }

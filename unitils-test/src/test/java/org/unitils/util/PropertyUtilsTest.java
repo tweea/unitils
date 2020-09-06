@@ -1,12 +1,9 @@
 /*
- * Copyright 2008,  Unitils.org
- *
+ * Copyright 2008, Unitils.org
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -15,15 +12,22 @@
  */
 package org.unitils.util;
 
-import junit.framework.TestCase;
-import org.unitils.core.UnitilsException;
-import static org.unitils.reflectionassert.ReflectionAssert.assertLenientEquals;
-import static org.unitils.util.PropertyUtils.*;
-
 import java.util.ArrayList;
-import static java.util.Arrays.asList;
 import java.util.List;
 import java.util.Properties;
+
+import org.unitils.core.UnitilsException;
+
+import junit.framework.TestCase;
+
+import static java.util.Arrays.asList;
+
+import static org.unitils.reflectionassert.ReflectionAssert.assertLenientEquals;
+import static org.unitils.util.PropertyUtils.getBoolean;
+import static org.unitils.util.PropertyUtils.getInstance;
+import static org.unitils.util.PropertyUtils.getLong;
+import static org.unitils.util.PropertyUtils.getString;
+import static org.unitils.util.PropertyUtils.getStringList;
 
 /**
  * Test for {@link PropertyUtils}.
@@ -31,17 +35,17 @@ import java.util.Properties;
  * @author Filip Neven
  * @author Tim Ducheyne
  */
-public class PropertyUtilsTest extends TestCase {
-
+public class PropertyUtilsTest
+    extends TestCase {
 
     /* A test properties instance */
     private Properties testProperties;
 
-
     /**
      * Sets up the test fixture.
      */
-    protected void setUp() throws Exception {
+    protected void setUp()
+        throws Exception {
         super.setUp();
 
         testProperties = new Properties();
@@ -54,7 +58,6 @@ public class PropertyUtilsTest extends TestCase {
         testProperties.setProperty("expandSystemProperty", "${user.home}");
     }
 
-
     /**
      * Test for getting a string property
      */
@@ -62,7 +65,6 @@ public class PropertyUtilsTest extends TestCase {
         String result = getString("stringProperty", testProperties);
         assertEquals("test", result);
     }
-
 
     /**
      * Test for getting an unknown string property
@@ -72,10 +74,9 @@ public class PropertyUtilsTest extends TestCase {
             getString("xxxx", testProperties);
             fail("Expected UnitilsException");
         } catch (UnitilsException e) {
-            //expected
+            // expected
         }
     }
-
 
     /**
      * Test for getting a string property passing a default
@@ -85,7 +86,6 @@ public class PropertyUtilsTest extends TestCase {
         assertEquals("test", result);
     }
 
-
     /**
      * Test for getting an unknown string property passing a default
      */
@@ -93,7 +93,6 @@ public class PropertyUtilsTest extends TestCase {
         String result = getString("xxxx", "default", testProperties);
         assertEquals("default", result);
     }
-
 
     /**
      * Test for getting a string list property
@@ -103,7 +102,6 @@ public class PropertyUtilsTest extends TestCase {
         assertLenientEquals(asList("test1", "test2", "test3", ""), result);
     }
 
-
     /**
      * Test for getting an unknown string list property
      */
@@ -111,7 +109,6 @@ public class PropertyUtilsTest extends TestCase {
         List<String> result = getStringList("xxxx", testProperties);
         assertTrue(result.isEmpty());
     }
-
 
     /**
      * Test for getting an unknown string list property
@@ -121,10 +118,9 @@ public class PropertyUtilsTest extends TestCase {
             getStringList("xxxx", testProperties, true);
             fail("Expected UnitilsException");
         } catch (UnitilsException e) {
-            //expected
+            // expected
         }
     }
-
 
     /**
      * Test for getting a boolean property
@@ -134,7 +130,6 @@ public class PropertyUtilsTest extends TestCase {
         assertTrue(result);
     }
 
-
     /**
      * Test for getting an unknown boolean property
      */
@@ -143,10 +138,9 @@ public class PropertyUtilsTest extends TestCase {
             getBoolean("xxxx", testProperties);
             fail("Expected UnitilsException");
         } catch (UnitilsException e) {
-            //expected
+            // expected
         }
     }
-
 
     /**
      * Test for getting a boolean property passing a default
@@ -156,7 +150,6 @@ public class PropertyUtilsTest extends TestCase {
         assertTrue(result);
     }
 
-
     /**
      * Test for getting an unknown boolean property passing a default
      */
@@ -164,7 +157,6 @@ public class PropertyUtilsTest extends TestCase {
         boolean result = getBoolean("xxxx", false, testProperties);
         assertFalse(result);
     }
-
 
     /**
      * Test for getting a long property
@@ -174,7 +166,6 @@ public class PropertyUtilsTest extends TestCase {
         assertEquals(5, result);
     }
 
-
     /**
      * Test for getting a long property that is not a number
      */
@@ -183,10 +174,9 @@ public class PropertyUtilsTest extends TestCase {
             getLong("stringProperty", testProperties);
             fail("Expected UnitilsException");
         } catch (UnitilsException e) {
-            //expected
+            // expected
         }
     }
-
 
     /**
      * Test for getting an unknown long property
@@ -196,10 +186,9 @@ public class PropertyUtilsTest extends TestCase {
             getLong("xxxx", testProperties);
             fail("Expected UnitilsException");
         } catch (UnitilsException e) {
-            //expected
+            // expected
         }
     }
-
 
     /**
      * Test for getting a long property passing a default
@@ -209,7 +198,6 @@ public class PropertyUtilsTest extends TestCase {
         assertEquals(5, result);
     }
 
-
     /**
      * Test for getting a long property that is not a number passing a default
      */
@@ -218,10 +206,9 @@ public class PropertyUtilsTest extends TestCase {
             getLong("stringProperty", 10, testProperties);
             fail("Expected UnitilsException");
         } catch (UnitilsException e) {
-            //expected
+            // expected
         }
     }
-
 
     /**
      * Test for getting an unknown long property passing a default
@@ -231,7 +218,6 @@ public class PropertyUtilsTest extends TestCase {
         assertEquals(10, result);
     }
 
-
     /**
      * Test for getting an object instance.
      */
@@ -239,7 +225,6 @@ public class PropertyUtilsTest extends TestCase {
         Object result = getInstance("instanceProperty", testProperties);
         assertTrue(result instanceof StringBuffer);
     }
-
 
     /**
      * Test for getting an unknown object instance property
@@ -249,10 +234,9 @@ public class PropertyUtilsTest extends TestCase {
             getInstance("xxxx", testProperties);
             fail("Expected UnitilsException");
         } catch (UnitilsException e) {
-            //expected
+            // expected
         }
     }
-
 
     /**
      * Test for getting a object instance property that does not contain a class name
@@ -262,10 +246,9 @@ public class PropertyUtilsTest extends TestCase {
             getInstance("stringProperty", testProperties);
             fail("Expected UnitilsException");
         } catch (UnitilsException e) {
-            //expected
+            // expected
         }
     }
-
 
     /**
      * Test for getting a object instance property passing a default
@@ -275,7 +258,6 @@ public class PropertyUtilsTest extends TestCase {
         assertTrue(result instanceof StringBuffer);
     }
 
-
     /**
      * Test for getting an unknown object instance property passing a default
      */
@@ -283,7 +265,6 @@ public class PropertyUtilsTest extends TestCase {
         Object result = getInstance("xxxx", new ArrayList<Object>(), testProperties);
         assertTrue(result instanceof ArrayList);
     }
-
 
     /**
      * Test for getting a object instance property that does not contain a class name passing a default
@@ -293,8 +274,7 @@ public class PropertyUtilsTest extends TestCase {
             getInstance("stringProperty", new ArrayList<Object>(), testProperties);
             fail("Expected UnitilsException");
         } catch (UnitilsException e) {
-            //expected
+            // expected
         }
     }
-
 }

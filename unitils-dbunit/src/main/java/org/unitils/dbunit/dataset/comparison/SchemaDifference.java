@@ -1,12 +1,9 @@
 /*
- * Copyright 2006-2009,  Unitils.org
- *
+ * Copyright 2006-2009, Unitils.org
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -15,11 +12,11 @@
  */
 package org.unitils.dbunit.dataset.comparison;
 
-import org.unitils.dbunit.dataset.Schema;
-import org.unitils.dbunit.dataset.Table;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import org.unitils.dbunit.dataset.Schema;
+import org.unitils.dbunit.dataset.Table;
 
 /**
  * The differences between 2 data set schemas.
@@ -41,18 +38,18 @@ public class SchemaDifference {
     /* The differences between the tables of the schemas, empty if none found */
     private List<TableDifference> tableDifferences = new ArrayList<TableDifference>();
 
-
     /**
      * Create a schema difference.
      *
-     * @param schema       The expected schema, not null
-     * @param actualSchema The actual schema, not null
+     * @param schema
+     *     The expected schema, not null
+     * @param actualSchema
+     *     The actual schema, not null
      */
     public SchemaDifference(Schema schema, Schema actualSchema) {
         this.schema = schema;
         this.actualSchema = actualSchema;
     }
-
 
     /**
      * @return The expected schema, not null
@@ -61,14 +58,12 @@ public class SchemaDifference {
         return schema;
     }
 
-
     /**
      * @return The actual schema, not null
      */
     public Schema getActualSchema() {
         return actualSchema;
     }
-
 
     /**
      * @return The differences between the tables of the schema, empty if none found
@@ -77,7 +72,6 @@ public class SchemaDifference {
         return tableDifferences;
     }
 
-
     /**
      * @return The tables that were not found in the actual schema, empty if none found
      */
@@ -85,26 +79,25 @@ public class SchemaDifference {
         return missingTables;
     }
 
-
     /**
      * Adds a result of a table comparison
      *
-     * @param tableDifference The table comparison, not null
+     * @param tableDifference
+     *     The table comparison, not null
      */
     public void addTableDifference(TableDifference tableDifference) {
         this.tableDifferences.add(tableDifference);
     }
 
-
     /**
      * Adds a table that was not found in the actual schema
      *
-     * @param table The missing table, not null
+     * @param table
+     *     The missing table, not null
      */
     public void addMissingTable(Table table) {
         missingTables.add(table);
     }
-
 
     /**
      * @return True if both schemas are a match
@@ -112,5 +105,4 @@ public class SchemaDifference {
     public boolean isMatch() {
         return missingTables.isEmpty() && tableDifferences.isEmpty();
     }
-
 }

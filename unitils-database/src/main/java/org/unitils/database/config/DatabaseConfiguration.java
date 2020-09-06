@@ -1,19 +1,15 @@
 /*
- * Copyright 2012,  Unitils.org
- *
+ * Copyright 2012, Unitils.org
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.unitils.database.config;
 
 import java.util.List;
@@ -24,20 +20,28 @@ import org.apache.commons.lang.StringUtils;
  * @author Tim Ducheyne
  */
 public class DatabaseConfiguration {
-
     protected String databaseName;
+
     protected String dialect;
+
     protected String driverClassName;
+
     protected String url;
+
     protected String userName;
+
     protected String password;
+
     protected String defaultSchemaName;
+
     protected List<String> schemaNames;
+
     protected boolean updateDisabled;
+
     protected boolean defaultDatabase;
 
-
-    public DatabaseConfiguration(String databaseName, String dialect, String driverClassName, String url, String userName, String password, String defaultSchemaName, List<String> schemaNames, boolean updateDisabled, boolean defaultDatabase) {
+    public DatabaseConfiguration(String databaseName, String dialect, String driverClassName, String url, String userName, String password,
+        String defaultSchemaName, List<String> schemaNames, boolean updateDisabled, boolean defaultDatabase) {
         this.databaseName = StringUtils.isEmpty(databaseName) ? "" : databaseName;
         this.dialect = dialect;
         this.driverClassName = driverClassName;
@@ -49,7 +53,6 @@ public class DatabaseConfiguration {
         this.updateDisabled = updateDisabled;
         this.defaultDatabase = defaultDatabase;
     }
-
 
     public String getDatabaseName() {
         return databaseName;

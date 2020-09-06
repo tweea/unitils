@@ -1,12 +1,9 @@
 /*
- * Copyright 2006-2009,  Unitils.org
- *
+ * Copyright 2006-2009, Unitils.org
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -15,12 +12,12 @@
  */
 package org.unitils.dbunit.dataset;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.unitils.core.UnitilsException;
 import org.unitils.dbunit.dataset.comparison.SchemaDifference;
 import org.unitils.dbunit.dataset.comparison.TableDifference;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * A data set schema
@@ -36,16 +33,15 @@ public class Schema {
     /* The tables in the schema, not null */
     private List<Table> tables = new ArrayList<Table>();
 
-
     /**
      * Creates a data set schema.
      *
-     * @param name The name of the schema, not null
+     * @param name
+     *     The name of the schema, not null
      */
     public Schema(String name) {
         this.name = name;
     }
-
 
     /**
      * @return The name of the data set schema, not null
@@ -54,14 +50,12 @@ public class Schema {
         return name;
     }
 
-
     /**
      * @return The tables of the schema, not null
      */
     public List<Table> getTables() {
         return tables;
     }
-
 
     /**
      * @return The names of the tables of the schema, not null
@@ -74,11 +68,11 @@ public class Schema {
         return tableNames;
     }
 
-
     /**
      * Gets the table for the given name. The name is case insensitive.
      *
-     * @param tableName The table name to look for, not null
+     * @param tableName
+     *     The table name to look for, not null
      * @return The table, null if not found
      */
     public Table getTable(String tableName) {
@@ -90,12 +84,13 @@ public class Schema {
         return null;
     }
 
-
     /**
      * Adds a table to the schema. Only one table with a same name can be added.
      *
-     * @param table The table to add, not null
-     * @throws UnitilsException When a table with the same name was already added
+     * @param table
+     *     The table to add, not null
+     * @throws UnitilsException
+     *     When a table with the same name was already added
      */
     public void addTable(Table table) {
         Table existingTable = getTable(table.getName());
@@ -105,11 +100,11 @@ public class Schema {
         tables.add(table);
     }
 
-
     /**
      * Compares the schema with the given actual schema.
      *
-     * @param actualSchema The schema to compare with, not null
+     * @param actualSchema
+     *     The schema to compare with, not null
      * @return The difference, null if none found
      */
     public SchemaDifference compare(Schema actualSchema) {
@@ -131,5 +126,4 @@ public class Schema {
         }
         return schemaDifference;
     }
-
 }

@@ -1,12 +1,9 @@
 /*
- * Copyright 2008,  Unitils.org
- *
+ * Copyright 2008, Unitils.org
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -15,6 +12,9 @@
  */
 package org.unitils;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -22,14 +22,12 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 import org.unitils.TracingTestListener.TestFramework;
-import static org.unitils.TracingTestListener.TestFramework.JUNIT3;
-import static org.unitils.TracingTestListener.TestFramework.JUNIT4;
 import org.unitils.core.TestListener;
 import org.unitils.core.Unitils;
 import org.unitils.inject.util.InjectionUtils;
 
-import java.util.Arrays;
-import java.util.Collection;
+import static org.unitils.TracingTestListener.TestFramework.JUNIT3;
+import static org.unitils.TracingTestListener.TestFramework.JUNIT4;
 
 /**
  * Test for the main flow of the unitils test listeners for JUnit3 ({@link UnitilsJUnit3}),
@@ -50,8 +48,8 @@ import java.util.Collection;
  * @see UnitilsJUnit4Test_TestClass2
  */
 @RunWith(Parameterized.class)
-public class JUnitUnitilsInvocationTest extends UnitilsInvocationTestBase {
-
+public class JUnitUnitilsInvocationTest
+    extends UnitilsInvocationTestBase {
     private Class<?> testClass1, testClass2;
 
     public JUnitUnitilsInvocationTest(TestFramework testFramework, TestExecutor testExecutor, Class<?> testClass1, Class<?> testClass2) {
@@ -62,14 +60,16 @@ public class JUnitUnitilsInvocationTest extends UnitilsInvocationTestBase {
 
     @Parameters
     public static Collection<Object[]> testData() {
-        return Arrays.asList(new Object[][]{
-                {JUNIT3, new JUnit3TestExecutor(), UnitilsJUnit3Test_TestClass1.class, UnitilsJUnit3Test_TestClass2.class},
-                {JUNIT4, new JUnit4TestExecutor(), UnitilsJUnit4Test_TestClass1.class, UnitilsJUnit4Test_TestClass2.class},
-                //{JUNIT3, new JUnit3TestExecutor(), SpringUnitilsJUnit38Test_TestClass1.class, SpringUnitilsJUnit38Test_TestClass2.class},
-                //{JUNIT4, new JUnit4TestExecutor(), SpringUnitilsJUnit4Test_TestClass1.class, SpringUnitilsJUnit4Test_TestClass2.class},
+        return Arrays.asList(new Object[][] {
+            {
+                JUNIT3, new JUnit3TestExecutor(), UnitilsJUnit3Test_TestClass1.class, UnitilsJUnit3Test_TestClass2.class
+            }, {
+                JUNIT4, new JUnit4TestExecutor(), UnitilsJUnit4Test_TestClass1.class, UnitilsJUnit4Test_TestClass2.class
+            },
+            // {JUNIT3, new JUnit3TestExecutor(), SpringUnitilsJUnit38Test_TestClass1.class, SpringUnitilsJUnit38Test_TestClass2.class},
+            // {JUNIT4, new JUnit4TestExecutor(), SpringUnitilsJUnit4Test_TestClass1.class, SpringUnitilsJUnit4Test_TestClass2.class},
         });
     }
-
 
     @Before
     public void resetJunit3() {
@@ -82,31 +82,28 @@ public class JUnitUnitilsInvocationTest extends UnitilsInvocationTestBase {
         UnitilsJUnit3Test_EmptyTestClass.setTracingTestListener(null);
     }
 
-
     @Test
-    public void testSuccessfulRun() throws Exception {
+    public void testSuccessfulRun()
+        throws Exception {
         testExecutor.runTests(testClass1, testClass2);
         assertInvocationOrder(testClass1, testClass2);
     }
 
-
     /**
      * JUnit 3 test class without any tests. Inner class to avoid a failing test.
      */
-    protected static class UnitilsJUnit3Test_EmptyTestClass extends UnitilsJUnit3 {
-
+    protected static class UnitilsJUnit3Test_EmptyTestClass
+        extends UnitilsJUnit3 {
         private static TracingTestListener tracingTestListener;
 
         public static void setTracingTestListener(TracingTestListener testListener) {
             tracingTestListener = testListener;
         }
 
-
         @Override
         protected Unitils getUnitils() {
             if (tracingTestListener != null) {
                 return new Unitils() {
-
                     @Override
                     public TestListener getTestListener() {
                         return tracingTestListener;
@@ -116,5 +113,4 @@ public class JUnitUnitilsInvocationTest extends UnitilsInvocationTestBase {
             return super.getUnitils();
         }
     }
-
 }

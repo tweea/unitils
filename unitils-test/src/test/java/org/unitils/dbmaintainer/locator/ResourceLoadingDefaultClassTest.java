@@ -1,6 +1,5 @@
 package org.unitils.dbmaintainer.locator;
 
-
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -22,7 +21,6 @@ import org.unitils.dbunit.datasetfactory.impl.ResourceMultiSchemaXmlDataSetFacto
 @RunWith(UnitilsJUnit4TestClassRunner.class)
 @DataSet(factory = ResourceMultiSchemaXmlDataSetFactory.class)
 public class ResourceLoadingDefaultClassTest {
-    
     @BeforeClass
     public static void setUp() {
         DatabaseModule databaseModule = Unitils.getInstance().getModulesRepository().getModuleOfType(DatabaseModule.class);
@@ -31,7 +29,7 @@ public class ResourceLoadingDefaultClassTest {
 
     /** */
     @Test
-    @ExpectedDataSet(value = "/org/unitils/testdata/exampleResourceLoadingData.xml",factory = ResourceMultiSchemaXmlDataSetFactory.class)
+    @ExpectedDataSet(value = "/org/unitils/testdata/exampleResourceLoadingData.xml", factory = ResourceMultiSchemaXmlDataSetFactory.class)
     public void testLoadingResource() {
         Assert.assertTrue(true);
     }
@@ -39,6 +37,6 @@ public class ResourceLoadingDefaultClassTest {
     @AfterClass
     public static void afterClass() {
         DatabaseModule databaseModule = Unitils.getInstance().getModulesRepository().getModuleOfType(DatabaseModule.class);
-        SQLUnitils.executeUpdate("drop table dossier",databaseModule.getWrapper("").getDataSource());
+        SQLUnitils.executeUpdate("drop table dossier", databaseModule.getWrapper("").getDataSource());
     }
 }

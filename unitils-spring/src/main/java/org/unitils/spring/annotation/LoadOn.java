@@ -12,11 +12,11 @@ import org.unitils.spring.enums.LoadTime;
 
 /**
  * @author wiw
- *
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ElementType.TYPE})
+@Target({
+    ElementType.TYPE
+})
 public @interface LoadOn {
     LoadTime load() default LoadTime.METHOD;
-
 }

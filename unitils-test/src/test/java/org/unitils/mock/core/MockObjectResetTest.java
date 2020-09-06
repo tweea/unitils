@@ -1,12 +1,9 @@
 /*
- * Copyright 2006-2007,  Unitils.org
- *
+ * Copyright 2006-2007, Unitils.org
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -15,9 +12,10 @@
  */
 package org.unitils.mock.core;
 
-import static org.junit.Assert.assertNull;
 import org.junit.Before;
 import org.junit.Test;
+
+import static org.junit.Assert.assertNull;
 
 /**
  * Tests the reset behavior of the mock object.
@@ -35,7 +33,6 @@ public class MockObjectResetTest {
         mockObject = new MockObject<TestClass>("testMock", TestClass.class, this);
     }
 
-
     @Test
     public void resetBehavior() {
         mockObject.onceReturns("aValue").testMethod();
@@ -47,14 +44,10 @@ public class MockObjectResetTest {
         assertNull(result);
     }
 
-
     /**
      * Interface that is mocked during the tests
      */
     private static interface TestClass {
-
         public String testMethod();
-
     }
-
 }

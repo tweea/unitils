@@ -1,12 +1,9 @@
 /*
- * Copyright 2008,  Unitils.org
- *
+ * Copyright 2008, Unitils.org
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -15,10 +12,16 @@
  */
 package org.unitils.reflectionassert.util;
 
-import org.unitils.reflectionassert.difference.*;
-
 import java.util.IdentityHashMap;
 import java.util.Map;
+
+import org.unitils.reflectionassert.difference.ClassDifference;
+import org.unitils.reflectionassert.difference.CollectionDifference;
+import org.unitils.reflectionassert.difference.Difference;
+import org.unitils.reflectionassert.difference.DifferenceVisitor;
+import org.unitils.reflectionassert.difference.MapDifference;
+import org.unitils.reflectionassert.difference.ObjectDifference;
+import org.unitils.reflectionassert.difference.UnorderedCollectionDifference;
 
 /**
  * A utility class to be able to calculate a score of how well 2 elements match. This enables us to find
@@ -28,7 +31,6 @@ import java.util.Map;
  * @author Filip Neven
  */
 public class MatchingScoreCalculator {
-
     /**
      * The visitor for visiting the difference tree
      */
@@ -39,11 +41,11 @@ public class MatchingScoreCalculator {
      */
     protected Map<Difference, Integer> cachedMatchingScores = new IdentityHashMap<Difference, Integer>();
 
-
     /**
      * Gets the matching score for the given difference.
      *
-     * @param difference The difference
+     * @param difference
+     *     The difference
      * @return The score
      */
     public int calculateMatchingScore(Difference difference) {
@@ -58,13 +60,13 @@ public class MatchingScoreCalculator {
         return matchingScore;
     }
 
-
     /**
      * Gets the matching score for a simple difference.
      * This will return 0 in case both objects are of the same type.
      * If both objects are of a different type, they are less likely to be a best match, so 5 is returned.
      *
-     * @param difference The difference, not null
+     * @param difference
+     *     The difference, not null
      * @return The score
      */
     protected int getMatchingScore(Difference difference) {
@@ -76,60 +78,59 @@ public class MatchingScoreCalculator {
         return 1;
     }
 
-
     /**
      * Gets the matching score for an object difference.
      * Returns the nr of field differences.
      *
-     * @param objectDifference The difference, not null
+     * @param objectDifference
+     *     The difference, not null
      * @return The score
      */
     protected int getMatchingScore(ObjectDifference objectDifference) {
         return objectDifference.getFieldDifferences().size();
     }
 
-
     /**
      * Gets the matching score for a map difference.
      * Returns the nr of value differences.
      *
-     * @param mapDifference The difference, not null
+     * @param mapDifference
+     *     The difference, not null
      * @return The score
      */
     protected int getMatchingScore(MapDifference mapDifference) {
         return mapDifference.getValueDifferences().size();
     }
 
-
     /**
      * Gets the matching score for a collection difference.
      * Returns the nr of element differences.
      *
-     * @param collectionDifference The difference, not null
+     * @param collectionDifference
+     *     The difference, not null
      * @return The score
      */
     protected int getMatchingScore(CollectionDifference collectionDifference) {
         return collectionDifference.getElementDifferences().size();
     }
 
-
     /**
      * Gets the matching score for an unordered collection difference.
      * Returns the sum of the matching scores of the best matches.
      *
-     * @param unorderedCollectionDifference The difference, not null
+     * @param unorderedCollectionDifference
+     *     The difference, not null
      * @return The score
      */
     protected int getMatchingScore(UnorderedCollectionDifference unorderedCollectionDifference) {
         return unorderedCollectionDifference.getBestMatchingScore();
     }
 
-
     /**
      * The visitor for visiting the difference tree.
      */
-    protected class MatchingScoreVisitor implements DifferenceVisitor<Integer, Integer> {
-
+    protected class MatchingScoreVisitor
+        implements DifferenceVisitor<Integer, Integer> {
         public Integer visit(Difference difference, Integer argument) {
             return getMatchingScore(difference);
         }

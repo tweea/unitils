@@ -12,16 +12,14 @@ import org.unitils.dbmaintainer.locator.resourcepickingstrategie.ResourcePicking
 import org.unitils.dbmaintainer.script.Script;
 import org.unitils.dbmaintainer.script.impl.DefaultScriptSource;
 
-
 /**
  * Locate db scripts.
  * 
  * @author tdr
- * 
  * @since 1.0.2
- * 
  */
-public class ClassPathScriptLocator extends ClassPathResourceLocator {
+public class ClassPathScriptLocator
+    extends ClassPathResourceLocator {
 
     /* The logger instance for this class */
     private static Log logger = LogFactory.getLog(ClassPathScriptLocator.class);
@@ -31,7 +29,7 @@ public class ClassPathScriptLocator extends ClassPathResourceLocator {
     protected String path;
 
     protected List<String> scriptExtensions;
-    
+
     protected String schema;
 
     /**
@@ -40,7 +38,8 @@ public class ClassPathScriptLocator extends ClassPathResourceLocator {
      * @param resourcePickingStrategie
      * @param scriptExtensions1
      */
-    public void loadScripts(List<Script> scriptList1, String path1, ResourcePickingStrategie resourcePickingStrategie, List<String> scriptExtensions1, String schema, boolean defaultDatabase, Properties configuration) {
+    public void loadScripts(List<Script> scriptList1, String path1, ResourcePickingStrategie resourcePickingStrategie, List<String> scriptExtensions1,
+        String schema, boolean defaultDatabase, Properties configuration) {
         this.path = path1;
         this.scriptList = scriptList1;
         this.scriptExtensions = scriptExtensions1;
@@ -55,24 +54,24 @@ public class ClassPathScriptLocator extends ClassPathResourceLocator {
         }
     }
 
-    protected void addToScriptList(List<URL> resourcesF, boolean defaultDatabase, Properties configuration) throws IOException {
-
+    protected void addToScriptList(List<URL> resourcesF, boolean defaultDatabase, Properties configuration)
+        throws IOException {
         for (URL url : resourcesF) {
             if (isScriptFile(url.toString())) {
                 String scriptName = url.toString().substring(url.toString().lastIndexOf(path) + path.length());
                 DefaultScriptSource defaultScriptSource = new DefaultScriptSource();
                 defaultScriptSource.init(configuration);
-                if (defaultScriptSource.checkIfScriptContainsCorrectDatabaseName(scriptName, schema, defaultDatabase) && defaultScriptSource.containsOneOfQualifiers(scriptName)) {
-                    Script script = new Script(scriptName, Long.valueOf(url.openConnection().getLastModified()), new org.unitils.dbmaintainer.script.ScriptContentHandle.UrlScriptContentHandle(url));
+                if (defaultScriptSource.checkIfScriptContainsCorrectDatabaseName(scriptName, schema, defaultDatabase)
+                    && defaultScriptSource.containsOneOfQualifiers(scriptName)) {
+                    Script script = new Script(scriptName, Long.valueOf(url.openConnection().getLastModified()),
+                        new org.unitils.dbmaintainer.script.ScriptContentHandle.UrlScriptContentHandle(url));
 
                     logger.debug(" + script added (" + url.toString() + "))");
 
                     scriptList.add(script);
                 }
-                
             }
         }
-
     }
 
     /**

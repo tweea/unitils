@@ -1,12 +1,9 @@
 /*
- * Copyright 2008,  Unitils.org
- *
+ * Copyright 2008, Unitils.org
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -14,6 +11,11 @@
  * limitations under the License.
  */
 package org.unitils.dbmaintainer;
+
+import java.util.Date;
+import java.util.List;
+import java.util.Properties;
+import java.util.Set;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -29,30 +31,29 @@ import org.unitils.dbmaintainer.script.ScriptSource;
 import org.unitils.dbmaintainer.structure.ConstraintsDisabler;
 import org.unitils.dbmaintainer.structure.DataSetStructureGenerator;
 import org.unitils.dbmaintainer.structure.SequenceUpdater;
-
-import static org.unitils.dbmaintainer.util.DatabaseModuleConfigUtils.getConfiguredDatabaseTaskInstance;
-
 import org.unitils.dbmaintainer.version.ExecutedScriptInfoSource;
 import org.unitils.dbmaintainer.version.Version;
 import org.unitils.util.PropertyUtils;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Properties;
-import java.util.Set;
+import static org.unitils.dbmaintainer.util.DatabaseModuleConfigUtils.getConfiguredDatabaseTaskInstance;
 
 /**
  * A class for performing automatic maintenance of a database.<br>
  * This class must be configured with implementations of a {@link ExecutedScriptInfoSource},
  * {@link ScriptSource}, a {@link ScriptRunner}, {@link DBClearer}, {@link DBCleaner},
  * {@link ConstraintsDisabler}, {@link SequenceUpdater} and a {@link DataSetStructureGenerator}
- * <p/> The {@link #updateDatabase()} method check what is the current version of the database, and
+ * <p/>
+ * The {@link #updateDatabase()} method check what is the current version of the database, and
  * see if existing scripts have been modified. If yes, the database is cleared and all available
  * database scripts, are executed on the database. If no existing scripts have been modified, but
  * new scripts were added, only the new scripts are executed. Before executing an update, data from
- * the database is removed, to avoid problems when e.g. adding a not null column. <p/> If a database
+ * the database is removed, to avoid problems when e.g. adding a not null column.
+ * <p/>
+ * If a database
  * update causes an error, a {@link UnitilsException} is thrown. After a failing update, the
- * database is always completely recreated from scratch. <p/> After updating the database, following
+ * database is always completely recreated from scratch.
+ * <p/>
+ * After updating the database, following
  * steps are optionally executed on the database (depending on the configuration):
  * <ul>
  * <li>Foreign key and not null constraints are disabled.</li>
@@ -61,7 +62,8 @@ import java.util.Set;
  * <li>A DTD is generated that describes the database's table structure, to use in test data XML
  * files</li>
  * </ul>
- * <p/> To obtain a properly configured <code>DBMaintainer</code>, invoke the constructor
+ * <p/>
+ * To obtain a properly configured <code>DBMaintainer</code>, invoke the constructor
  * {@link #DBMaintainer(Properties,SQLHandler)} with a <code>TestDataSource</code> providing
  * access to the database and a <code>Configuration</code> object containing all necessary
  * properties.
@@ -177,13 +179,14 @@ public class DBMaintainer {
     protected DBMaintainer() {
     }
 
-
     /**
      * Create a new instance of <code>DBMaintainer</code>, The concrete implementations of all
      * helper classes are derived from the given <code>Configuration</code> object.
      *
-     * @param configuration the configuration, not null
-     * @param sqlHandler    the data source, not null
+     * @param configuration
+     *     the configuration, not null
+     * @param sqlHandler
+     *     the data source, not null
      */
     public DBMaintainer(Properties configuration, SQLHandler sqlHandler, String dialect, List<String> schemaNames) {
         try {
@@ -221,7 +224,6 @@ public class DBMaintainer {
         this.dialect = dialect;
     }
 
-
     /**
      * Checks if the new scripts are available to update the version of the database. If yes, these
      * scripts are executed and the version number is increased. If an existing script has been
@@ -251,9 +253,9 @@ public class DBMaintainer {
         }
 
         // perform an incremental update
-        updateDatabase(scriptSource.getNewScripts(highestExecutedScriptVersion, alreadyExecutedScripts, dialect, databaseName, defaultDatabase), databaseName, defaultDatabase);
+        updateDatabase(scriptSource.getNewScripts(highestExecutedScriptVersion, alreadyExecutedScripts, dialect, databaseName, defaultDatabase), databaseName,
+            defaultDatabase);
     }
-
 
     protected Version getHighestExecutedScriptVersion(Set<ExecutedScript> executedScripts) {
         Version highest = new Version("0");
@@ -266,7 +268,6 @@ public class DBMaintainer {
         }
         return highest;
     }
-
 
     /**
      * Updates the database version to the current version of the update scripts, without changing
@@ -283,11 +284,11 @@ public class DBMaintainer {
         }
     }
 
-
     /**
      * Updates the state of the database using the given scripts.
      *
-     * @param scripts The scripts, not null
+     * @param scripts
+     *     The scripts, not null
      */
     protected void updateDatabase(List<Script> scripts, String schema, boolean defaultDatabase) {
         if (scripts.isEmpty()) {
@@ -323,7 +324,6 @@ public class DBMaintainer {
         }
     }
 
-
     /**
      * Executes the given scripts and updates the database version and state appropriatly. After
      * each successful script execution, the new version is stored in the database and marked as
@@ -332,7 +332,8 @@ public class DBMaintainer {
      * succesful version is stored in the database that way, the next time an update is tried, the
      * execution restarts from the last unsuccessful script.
      *
-     * @param scripts The scripts to execute, not null
+     * @param scripts
+     *     The scripts to execute, not null
      */
     protected void executeScripts(List<Script> scripts) {
         for (Script script : scripts) {
@@ -347,7 +348,6 @@ public class DBMaintainer {
                 // We now register the previously registered script execution as being successful
                 executedScript.setSuccessful(true);
                 versionSource.updateExecutedScript(executedScript);
-
             } catch (UnitilsException e) {
                 logger.error("Error while executing script " + script.getFileName(), e);
                 throw e;
@@ -355,26 +355,24 @@ public class DBMaintainer {
         }
     }
 
-
     /**
      * Executes the given post processing scripts on the database. If not successful, the scripts update
      * is registered as not successful, so that an update from scratch will be triggered the next time.
      *
-     * @param postProcessingScripts The scripts to execute, not null
+     * @param postProcessingScripts
+     *     The scripts to execute, not null
      */
     protected void executePostProcessingScripts(List<Script> postProcessingScripts) {
         for (Script script : postProcessingScripts) {
             try {
                 logger.info("Executing post processing script " + script.getFileName());
                 scriptRunner.execute(script.getScriptContentHandle());
-
             } catch (UnitilsException e) {
                 logger.error("Error while executing post processing script " + script.getFileName(), e);
                 throw e;
             }
         }
     }
-
 
     /**
      * Checks whether the database should be updated from scratch or just incrementally. The
@@ -388,16 +386,19 @@ public class DBMaintainer {
      * database will only be rebuilt again after an unsuccessful build when changes were made to the
      * script files.
      *
-     * @param currentVersion The current database version, not null
+     * @param currentVersion
+     *     The current database version, not null
      * @return True if a from scratch rebuild is needed, false otherwise
      */
-    protected boolean shouldUpdateDatabaseFromScratch(Version currentVersion, Set<ExecutedScript> alreadyExecutedScripts, String databaseName, boolean defaultDatabase) {
+    protected boolean shouldUpdateDatabaseFromScratch(Version currentVersion, Set<ExecutedScript> alreadyExecutedScripts, String databaseName,
+        boolean defaultDatabase) {
         // check whether an existing script was updated
         if (scriptSource.isExistingIndexedScriptModified(currentVersion, alreadyExecutedScripts, dialect, databaseName, defaultDatabase)) {
             if (!fromScratchEnabled) {
-                throw new UnitilsException("One or more existing incremental database update scripts have been modified, but updating from scratch is disabled. " +
-                        "You should either revert to the original version of the modified script and add an new incremental script that performs the desired " +
-                        "update, or perform the update manually on the database and then reset the database state by invoking resetDatabaseState()");
+                throw new UnitilsException(
+                    "One or more existing incremental database update scripts have been modified, but updating from scratch is disabled. "
+                        + "You should either revert to the original version of the modified script and add an new incremental script that performs the desired "
+                        + "update, or perform the update manually on the database and then reset the database state by invoking resetDatabaseState()");
             }
             logger.info("One or more existing database update scripts have been modified. Database will be cleared and rebuilt from scratch.");
             return true;
@@ -407,17 +408,17 @@ public class DBMaintainer {
         if (errorInIndexedScriptDuringLastUpdate(alreadyExecutedScripts)) {
             if (fromScratchEnabled) {
                 if (!keepRetryingAfterError) {
-                    throw new UnitilsException("During a previous database update, the execution of an incremental script failed! Since " +
-                            PROPKEY_KEEP_RETRYING_AFTER_ERROR_ENABLED + " is set to false, the database will not be rebuilt " +
-                            "from scratch, unless the failed (or another) incremental script is modified.");
+                    throw new UnitilsException("During a previous database update, the execution of an incremental script failed! Since "
+                        + PROPKEY_KEEP_RETRYING_AFTER_ERROR_ENABLED + " is set to false, the database will not be rebuilt "
+                        + "from scratch, unless the failed (or another) incremental script is modified.");
                 }
-                logger.info("During a previous database update, the execution of a incremental script failed! " +
-                        "Database will be cleared and rebuilt from scratch.");
+                logger.info(
+                    "During a previous database update, the execution of a incremental script failed! " + "Database will be cleared and rebuilt from scratch.");
                 return true;
             } else {
-                logger.warn("During a previous database update, the execution of an incremental script failed! " +
-                        "Since from scratch updates are disabled, you should fix the erroneous script, solve the problem " +
-                        "manually on the database, and then reset the database state by invoking resetDatabaseState()");
+                logger.warn("During a previous database update, the execution of an incremental script failed! "
+                    + "Since from scratch updates are disabled, you should fix the erroneous script, solve the problem "
+                    + "manually on the database, and then reset the database state by invoking resetDatabaseState()");
                 return false;
             }
         }
@@ -425,7 +426,6 @@ public class DBMaintainer {
         // from scratch is not needed
         return false;
     }
-
 
     protected boolean errorInIndexedScriptDuringLastUpdate(Set<ExecutedScript> alreadyExecutedScripts) {
         for (ExecutedScript script : alreadyExecutedScripts) {
@@ -439,6 +439,4 @@ public class DBMaintainer {
     protected void setDialect(String dialect) {
         this.dialect = dialect;
     }
-
-    
 }

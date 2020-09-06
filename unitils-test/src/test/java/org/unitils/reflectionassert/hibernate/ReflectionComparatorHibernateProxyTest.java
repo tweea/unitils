@@ -1,12 +1,9 @@
 /*
- * Copyright 2008,  Unitils.org
- *
+ * Copyright 2008, Unitils.org
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -15,44 +12,36 @@
  */
 package org.unitils.reflectionassert.hibernate;
 
+import java.util.Properties;
+
+import javax.sql.DataSource;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.SessionFactory;
 import org.junit.After;
-
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.unitils.UnitilsJUnit4;
 import org.unitils.core.ConfigurationLoader;
 import org.unitils.core.Unitils;
-
-import static org.unitils.database.SQLUnitils.executeUpdate;
-import static org.unitils.database.SQLUnitils.executeUpdateQuietly;
-
 import org.unitils.database.DatabaseModule;
 import org.unitils.database.annotations.Transactional;
-
-import static org.unitils.database.util.TransactionMode.COMMIT;
-import static org.unitils.dbmaintainer.util.DatabaseModuleConfigUtils.PROPKEY_DATABASE_DIALECT;
-
 import org.unitils.orm.hibernate.annotation.HibernateSessionFactory;
 import org.unitils.reflectionassert.ReflectionAssert;
 import org.unitils.reflectionassert.ReflectionComparator;
-
-import static org.unitils.reflectionassert.ReflectionComparatorFactory.createRefectionComparator;
-
 import org.unitils.reflectionassert.difference.Difference;
 import org.unitils.util.PropertyUtils;
 
-import javax.sql.DataSource;
-
 import static java.util.Arrays.asList;
 
-import java.util.Properties;
-
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.unitils.database.SQLUnitils.executeUpdate;
+import static org.unitils.database.SQLUnitils.executeUpdateQuietly;
+import static org.unitils.database.util.TransactionMode.COMMIT;
+import static org.unitils.dbmaintainer.util.DatabaseModuleConfigUtils.PROPKEY_DATABASE_DIALECT;
+import static org.unitils.reflectionassert.ReflectionComparatorFactory.createRefectionComparator;
 
 /**
  * Test class for Hibernate proxy related tests of the {@link ReflectionComparator} .
@@ -63,7 +52,8 @@ import java.util.Properties;
  * @author Filip Neven
  */
 @Transactional(COMMIT)
-public class ReflectionComparatorHibernateProxyTest extends UnitilsJUnit4 {
+public class ReflectionComparatorHibernateProxyTest
+    extends UnitilsJUnit4 {
 
     /* The logger instance for this class */
     private static Log logger = LogFactory.getLog(ReflectionComparatorHibernateProxyTest.class);
@@ -82,18 +72,17 @@ public class ReflectionComparatorHibernateProxyTest extends UnitilsJUnit4 {
     /* True if current test is not for the current dialect */
     private boolean disabled;
 
-
     /**
      * Initializes the test fixture.
      */
     @Before
-    public void setUp() throws Exception {
+    public void setUp()
+        throws Exception {
         Properties configuration = initDatabaseModule();
         this.disabled = !"hsqldb".equals(PropertyUtils.getString(PROPKEY_DATABASE_DIALECT, configuration));
         if (disabled) {
             return;
         }
-        
 
         testChild = new Child(1L, new Parent(1L));
         testChild.getParent().setChildren(asList(testChild));
@@ -103,18 +92,17 @@ public class ReflectionComparatorHibernateProxyTest extends UnitilsJUnit4 {
         createTestTables();
     }
 
-
     /**
      * Removes the test database tables from the test database, to avoid inference with other tests
      */
     @After
-    public void tearDown() throws Exception {
+    public void tearDown()
+        throws Exception {
         if (disabled) {
             return;
         }
         dropTestTables();
     }
-
 
     /**
      * Test comparing 2 values with the right one containing a Hibernate proxy.
@@ -129,7 +117,6 @@ public class ReflectionComparatorHibernateProxyTest extends UnitilsJUnit4 {
         Difference result = reflectionComparator.getDifference(testChild, childWithParentProxy);
         assertNull(result);
     }
-
 
     /**
      * Test comparing 2 values with the left one containing a Hibernate proxy.
@@ -146,7 +133,6 @@ public class ReflectionComparatorHibernateProxyTest extends UnitilsJUnit4 {
         ReflectionAssert.assertLenientEquals(childWithParentProxy, testChild);
         assertNull(result);
     }
-
 
     /**
      * Test comparing 2 values with both containing a Hibernate proxy. The identifiers should have been used
@@ -165,7 +151,6 @@ public class ReflectionComparatorHibernateProxyTest extends UnitilsJUnit4 {
         assertNull(result);
     }
 
-
     /**
      * Test comparing 2 values with both containing a different hibnerate proxy. The identifiers should have been used
      * to compare the proxy values.
@@ -183,7 +168,6 @@ public class ReflectionComparatorHibernateProxyTest extends UnitilsJUnit4 {
         assertNotNull(result);
     }
 
-
     /**
      * Creates the test tables.
      */
@@ -197,7 +181,6 @@ public class ReflectionComparatorHibernateProxyTest extends UnitilsJUnit4 {
         executeUpdate("insert into CHILD (id, parent_id) values (2, 2)", dataSource);
     }
 
-
     /**
      * Removes the test tables
      */
@@ -205,7 +188,7 @@ public class ReflectionComparatorHibernateProxyTest extends UnitilsJUnit4 {
         executeUpdateQuietly("drop table CHILD", dataSource);
         executeUpdateQuietly("drop table PARENT", dataSource);
     }
-    
+
     private Properties initDatabaseModule() {
         Properties configuration = (Properties) new ConfigurationLoader().loadConfiguration().clone();
         configuration.setProperty("dbMaintainer.autoCreateExecutedScriptsTable", "false");
@@ -220,7 +203,7 @@ public class ReflectionComparatorHibernateProxyTest extends UnitilsJUnit4 {
         DatabaseModule databaseModule = Unitils.getInstance().getModulesRepository().getModuleOfType(DatabaseModule.class);
         databaseModule.init(configuration);
         databaseModule.afterInit();
-        
+
         dataSource = databaseModule.getWrapper("").getTransactionalDataSourceAndActivateTransactionIfNeeded(this);
         return configuration;
     }

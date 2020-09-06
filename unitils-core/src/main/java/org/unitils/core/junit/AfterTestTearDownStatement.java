@@ -1,12 +1,9 @@
 /*
- * Copyright 2013,  Unitils.org
- *
+ * Copyright 2013, Unitils.org
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -23,14 +20,15 @@ import org.unitils.core.TestListener;
 /**
  * @author Tim Ducheyne
  */
-public class AfterTestTearDownStatement extends Statement {
-
+public class AfterTestTearDownStatement
+    extends Statement {
     protected TestListener unitilsTestListener;
+
     protected Statement nextStatement;
+
     private Object testObject;
+
     private Method testMethod;
-
-
 
     public AfterTestTearDownStatement(TestListener unitilsTestListener, Statement nextStatement, Object testObject, Method testMethod) {
         this.unitilsTestListener = unitilsTestListener;
@@ -39,14 +37,13 @@ public class AfterTestTearDownStatement extends Statement {
         this.testMethod = testMethod;
     }
 
-
     @Override
-    public void evaluate() throws Throwable {
+    public void evaluate()
+        throws Throwable {
         try {
-        nextStatement.evaluate();
+            nextStatement.evaluate();
         } finally {
             unitilsTestListener.afterTestTearDown(testObject, testMethod);
         }
-
     }
 }

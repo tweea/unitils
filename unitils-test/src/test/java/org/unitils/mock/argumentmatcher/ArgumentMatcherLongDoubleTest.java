@@ -1,12 +1,9 @@
 /*
- * Copyright 2006-2007,  Unitils.org
- *
+ * Copyright 2006-2007, Unitils.org
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -15,10 +12,11 @@
  */
 package org.unitils.mock.argumentmatcher;
 
-import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 import org.unitils.UnitilsJUnit4;
 import org.unitils.mock.Mock;
+
+import static org.junit.Assert.assertEquals;
 
 /**
  * Tests the behavior of the argment matchers with long and double objects.
@@ -29,11 +27,12 @@ import org.unitils.mock.Mock;
  * @author Tim Ducheyne
  * @author Filip Neven
  */
-@SuppressWarnings({"UnnecessaryBoxing"})
-public class ArgumentMatcherLongDoubleTest extends UnitilsJUnit4 {
-
+@SuppressWarnings({
+    "UnnecessaryBoxing"
+})
+public class ArgumentMatcherLongDoubleTest
+    extends UnitilsJUnit4 {
     private Mock<TestInterface> testInterface;
-
 
     @Test
     public void testLong() {
@@ -41,13 +40,11 @@ public class ArgumentMatcherLongDoubleTest extends UnitilsJUnit4 {
         assertEquals(1, testInterface.getMock().getLong(null));
     }
 
-
     @Test
     public void testLongObject() {
         testInterface.onceReturns(new Long(1l)).getLongObject(null);
         assertEquals(new Long(1l), testInterface.getMock().getLongObject(null));
     }
-
 
     @Test
     public void testInt() {
@@ -55,13 +52,11 @@ public class ArgumentMatcherLongDoubleTest extends UnitilsJUnit4 {
         assertEquals(1, testInterface.getMock().getInt(null));
     }
 
-
     @Test
     public void testIntObject() {
         testInterface.onceReturns(new Integer(1)).getIntObject(null);
         assertEquals(new Integer(1), testInterface.getMock().getIntObject(null));
     }
-
 
     @Test
     public void testDouble() {
@@ -75,13 +70,11 @@ public class ArgumentMatcherLongDoubleTest extends UnitilsJUnit4 {
         assertEquals(new Double(2.0), testInterface.getMock().getDoubleObject(null));
     }
 
-
     @Test
     public void testFloat() {
         testInterface.onceReturns(2.0f).getFloat(null);
         assertEquals(2.0f, testInterface.getMock().getFloat(null), 0);
     }
-
 
     @Test
     public void testFloatObject() {
@@ -89,9 +82,7 @@ public class ArgumentMatcherLongDoubleTest extends UnitilsJUnit4 {
         assertEquals(new Float(2.0f), testInterface.getMock().getFloatObject(null));
     }
 
-
     protected static interface TestInterface {
-
         public int getInt(String argument);
 
         public Integer getIntObject(String argument);
@@ -108,5 +99,4 @@ public class ArgumentMatcherLongDoubleTest extends UnitilsJUnit4 {
 
         public Double getDoubleObject(String argument);
     }
-
 }

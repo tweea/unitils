@@ -1,12 +1,9 @@
 /*
- * Copyright 2008,  Unitils.org
- *
+ * Copyright 2008, Unitils.org
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -14,6 +11,16 @@
  * limitations under the License.
  */
 package org.unitils.database.transaction.impl;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import javax.sql.DataSource;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -24,9 +31,6 @@ import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
 import org.unitils.core.UnitilsException;
 import org.unitils.database.transaction.UnitilsTransactionManager;
-
-import javax.sql.DataSource;
-import java.util.*;
 
 /**
  * Implements transactions for unit tests, by delegating to a spring
@@ -44,8 +48,8 @@ import java.util.*;
  * @author Filip Neven
  * @author Tim Ducheyne
  */
-public class DefaultUnitilsTransactionManager implements UnitilsTransactionManager {
-
+public class DefaultUnitilsTransactionManager
+    implements UnitilsTransactionManager {
     /**
      * The logger instance for this class
      */
@@ -65,7 +69,6 @@ public class DefaultUnitilsTransactionManager implements UnitilsTransactionManag
      */
     protected Map<Object, PlatformTransactionManager> testObjectPlatformTransactionManagerMap = new HashMap<Object, PlatformTransactionManager>();
 
-
     /**
      * Set of possible providers of a spring
      * <code>PlatformTransactionManager</code>, not null
@@ -76,7 +79,6 @@ public class DefaultUnitilsTransactionManager implements UnitilsTransactionManag
         setTransactionManagementConfigurations(transactionManagementConfigurations);
     }
 
-
     /**
      * Returns the given datasource, wrapped in a spring
      * <code>TransactionAwareDataSourceProxy</code>
@@ -85,12 +87,12 @@ public class DefaultUnitilsTransactionManager implements UnitilsTransactionManag
         return new TransactionAwareDataSourceProxy(dataSource);
     }
 
-
     /**
      * Starts the transaction. Starts a transaction on the
      * PlatformTransactionManager that is configured for the given testObject.
      *
-     * @param testObject The test object, not null
+     * @param testObject
+     *     The test object, not null
      */
     public void startTransaction(Object testObject) {
         UnitilsTransactionManagementConfiguration transactionManagementConfiguration = getTransactionManagementConfiguration(testObject);
@@ -102,7 +104,6 @@ public class DefaultUnitilsTransactionManager implements UnitilsTransactionManag
         }
     }
 
-
     public void activateTransactionIfNeeded(Object testObject) {
         if (testObjectTransactionActiveMap.containsKey(testObject) && !testObjectTransactionActiveMap.get(testObject)) {
             testObjectTransactionActiveMap.put(testObject, Boolean.TRUE);
@@ -110,7 +111,6 @@ public class DefaultUnitilsTransactionManager implements UnitilsTransactionManag
             doStartTransaction(testObject, transactionManagementConfiguration);
         }
     }
-
 
     protected void doStartTransaction(Object testObject, UnitilsTransactionManagementConfiguration transactionManagementConfiguration) {
         logger.debug("Starting transaction");
@@ -120,12 +120,12 @@ public class DefaultUnitilsTransactionManager implements UnitilsTransactionManag
         testObjectTransactionStatusMap.put(testObject, transactionStatus);
     }
 
-
     /**
      * Commits the transaction. Uses the PlatformTransactionManager and transaction
      * that is associated with the given test object.
      *
-     * @param testObject The test object, not null
+     * @param testObject
+     *     The test object, not null
      */
     public void commit(Object testObject) {
         if (!testObjectTransactionActiveMap.containsKey(testObject)) {
@@ -145,7 +145,8 @@ public class DefaultUnitilsTransactionManager implements UnitilsTransactionManag
      * Rolls back the transaction. Uses the PlatformTransactionManager and transaction
      * that is associated with the given test object.
      *
-     * @param testObject The test object, not null
+     * @param testObject
+     *     The test object, not null
      */
     public void rollback(Object testObject) {
         if (!testObjectTransactionActiveMap.containsKey(testObject)) {
@@ -167,13 +168,13 @@ public class DefaultUnitilsTransactionManager implements UnitilsTransactionManag
      * <code>DefaultTransactionDefinition</code> object with the 'propagation
      * required' attribute
      *
-     * @param testObject The test object, not null
+     * @param testObject
+     *     The test object, not null
      * @return The default TransactionDefinition
      */
     protected TransactionDefinition createTransactionDefinition(Object testObject) {
         return new DefaultTransactionDefinition(TransactionDefinition.PROPAGATION_REQUIRED);
     }
-
 
     protected UnitilsTransactionManagementConfiguration getTransactionManagementConfiguration(Object testObject) {
         for (UnitilsTransactionManagementConfiguration transactionManagementConfiguration : transactionManagementConfigurations) {
@@ -184,19 +185,14 @@ public class DefaultUnitilsTransactionManager implements UnitilsTransactionManag
         throw new UnitilsException("No applicable transaction management configuration found for test " + testObject.getClass());
     }
 
-
     protected void setTransactionManagementConfigurations(Set<UnitilsTransactionManagementConfiguration> transactionManagementConfigurationsSet) {
         List<UnitilsTransactionManagementConfiguration> configurations = new ArrayList<UnitilsTransactionManagementConfiguration>();
         configurations.addAll(transactionManagementConfigurationsSet);
         Collections.sort(configurations, new Comparator<UnitilsTransactionManagementConfiguration>() {
-
             public int compare(UnitilsTransactionManagementConfiguration o1, UnitilsTransactionManagementConfiguration o2) {
                 return o2.getPreference().compareTo(o1.getPreference());
             }
-
         });
         this.transactionManagementConfigurations = configurations;
     }
-
-
 }

@@ -1,12 +1,9 @@
 /*
- * Copyright 2008,  Unitils.org
- *
+ * Copyright 2008, Unitils.org
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -15,16 +12,16 @@
  */
 package org.unitils.dbmaintainer.util;
 
-import static org.unitils.core.dbsupport.DbSupportFactory.getDbSupports;
-import static org.unitils.core.dbsupport.DbSupportFactory.getDefaultDbSupport;
-
 import java.util.List;
 import java.util.Properties;
-import org.apache.commons.collections.CollectionUtils;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.unitils.core.dbsupport.DbSupport;
 import org.unitils.core.dbsupport.DbSupportFactory;
 import org.unitils.core.dbsupport.SQLHandler;
+
+import static org.unitils.core.dbsupport.DbSupportFactory.getDbSupports;
+import static org.unitils.core.dbsupport.DbSupportFactory.getDefaultDbSupport;
 
 /**
  * Base class for implementations that access the test database
@@ -32,8 +29,8 @@ import org.unitils.core.dbsupport.SQLHandler;
  * @author Filip Neven
  * @author Tim Ducheyne
  */
-abstract public class BaseDatabaseAccessor implements DatabaseAccessing {
-
+abstract public class BaseDatabaseAccessor
+    implements DatabaseAccessing {
     /**
      * The unitils configuration
      */
@@ -53,15 +50,16 @@ abstract public class BaseDatabaseAccessor implements DatabaseAccessing {
      * DbSupport for all schemas
      */
     protected List<DbSupport> dbSupports;
-    
-    protected String dialect;
 
+    protected String dialect;
 
     /**
      * Initializes the database operation class with the given {@link Properties}, {@link DataSource}.
      *
-     * @param configuration The configuration, not null
-     * @param sqlHandler    The sql handler, not null
+     * @param configuration
+     *     The configuration, not null
+     * @param sqlHandler
+     *     The sql handler, not null
      */
     public void init(Properties configuration, SQLHandler sqlHandler, String dialect, List<String> schemaNames) {
         this.configuration = configuration;
@@ -72,25 +70,24 @@ abstract public class BaseDatabaseAccessor implements DatabaseAccessing {
         doInit(configuration);
     }
 
-
     /**
      * Allows subclasses to perform some extra configuration using the given configuration.
      *
-     * @param configuration The configuration, not null
+     * @param configuration
+     *     The configuration, not null
      */
     protected void doInit(Properties configuration) {
         // do nothing
     }
 
-
     /**
      * Gets the db support for the given schema.
      *
-     * @param schemaName The schema, not null
+     * @param schemaName
+     *     The schema, not null
      * @return The db support, not null
      */
     public DbSupport getDbSupport(String schemaName) {
         return DbSupportFactory.getDbSupport(configuration, sqlHandler, schemaName, dialect);
     }
-
 }

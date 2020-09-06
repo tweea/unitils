@@ -1,19 +1,17 @@
 /*
- *
- *  * Copyright 2010,  Unitils.org
- *  *
- *  * Licensed under the Apache License, Version 2.0 (the "License");
- *  * you may not use this file except in compliance with the License.
- *  * You may obtain a copy of the License at
- *  *
- *  *     http://www.apache.org/licenses/LICENSE-2.0
- *  *
- *  * Unless required by applicable law or agreed to in writing, software
- *  * distributed under the License is distributed on an "AS IS" BASIS,
- *  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  * See the License for the specific language governing permissions and
- *  * limitations under the License.
- *
+ * * Copyright 2010, Unitils.org
+ * *
+ * * Licensed under the Apache License, Version 2.0 (the "License");
+ * * you may not use this file except in compliance with the License.
+ * * You may obtain a copy of the License at
+ * *
+ * * http://www.apache.org/licenses/LICENSE-2.0
+ * *
+ * * Unless required by applicable law or agreed to in writing, software
+ * * distributed under the License is distributed on an "AS IS" BASIS,
+ * * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * * See the License for the specific language governing permissions and
+ * * limitations under the License.
  */
 package org.unitils.core.util;
 
@@ -30,28 +28,32 @@ public class ArrayAndCollectionFormatter {
 
     /* The maximum nr of elements for arrays and collections to display */
     protected int maxNrOfElements;
+
     /* The object formatter that uses this array/collection formatter */
     protected ObjectFormatter objectFormatter;
-
 
     /**
      * Creates a formatter with the given maximum nr of elements.
      *
-     * @param maxNrOfElements The maximum nr of elements for arrays and collections to display  > 0
-     * @param objectFormatter The object formatter that uses this array/collection formatter, not null
+     * @param maxNrOfElements
+     *     The maximum nr of elements for arrays and collections to display > 0
+     * @param objectFormatter
+     *     The object formatter that uses this array/collection formatter, not null
      */
     public ArrayAndCollectionFormatter(int maxNrOfElements, ObjectFormatter objectFormatter) {
         this.maxNrOfElements = maxNrOfElements;
         this.objectFormatter = objectFormatter;
     }
 
-
     /**
      * Formats the given array.
      *
-     * @param array        The array, not null
-     * @param currentDepth The current recursion depth
-     * @param result       The builder to append the result to, not null
+     * @param array
+     *     The array, not null
+     * @param currentDepth
+     *     The current recursion depth
+     * @param result
+     *     The builder to append the result to, not null
      */
     public void formatArray(Object array, int currentDepth, StringBuilder result) {
         if (array instanceof byte[]) {
@@ -92,9 +94,12 @@ public class ArrayAndCollectionFormatter {
     /**
      * Formats the given collection.
      *
-     * @param collection   The collection, not null
-     * @param currentDepth The current recursion depth
-     * @param result       The builder to append the result to, not null
+     * @param collection
+     *     The collection, not null
+     * @param currentDepth
+     *     The current recursion depth
+     * @param result
+     *     The builder to append the result to, not null
      */
     public void formatCollection(Collection<?> collection, int currentDepth, StringBuilder result) {
         result.append("[");
@@ -116,9 +121,12 @@ public class ArrayAndCollectionFormatter {
     /**
      * Formats the given map.
      *
-     * @param map          The map, not null
-     * @param currentDepth The current recursion depth
-     * @param result       The builder to append the result to, not null
+     * @param map
+     *     The map, not null
+     * @param currentDepth
+     *     The current recursion depth
+     * @param result
+     *     The builder to append the result to, not null
      */
     public void formatMap(Map<?, ?> map, int currentDepth, StringBuilder result) {
         result.append("{");
@@ -138,7 +146,6 @@ public class ArrayAndCollectionFormatter {
         }
         result.append("}");
     }
-
 
     protected void formatObjectArray(Object[] array, int currentDepth, StringBuilder result) {
         result.append("[");
@@ -276,5 +283,4 @@ public class ArrayAndCollectionFormatter {
         }
         result.append("]");
     }
-
 }
