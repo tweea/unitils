@@ -27,8 +27,6 @@ import org.unitils.dbmaintainer.version.Version;
 public interface ScriptSource
     extends Configurable {
     /**
-     * @param dialect
-     * @param databaseName
      * @return a list of all available update scripts, in the order in which they must be executed on the database.
      *     These scripts can be used to completely recreate the database from scratch. Not null
      */
@@ -47,8 +45,6 @@ public interface ScriptSource
      *     The highest version of the versioned scripts that were already applied to the database
      * @param alreadyExecutedScripts
      *     The scripts which were already executed on the database
-     * @param dialect
-     * @param databaseName
      * @return The new scripts.
      */
     List<Script> getNewScripts(Version highestExecutedScriptVersion, Set<ExecutedScript> alreadyExecutedScripts, String dialect, String databaseName,
@@ -61,9 +57,6 @@ public interface ScriptSource
      *
      * @param currentVersion
      *     The current database version, not null
-     * @param alreadyExecutedScripts
-     * @param dialect
-     * @param databaseName
      * @return True if an existing script has been modified, false otherwise
      */
     boolean isExistingIndexedScriptModified(Version currentVersion, Set<ExecutedScript> alreadyExecutedScripts, String dialect, String databaseName,
@@ -74,8 +67,6 @@ public interface ScriptSource
      * <p/>
      * The scripts are returned in the order in which they should be executed.
      *
-     * @param dialect
-     * @param databaseName
      * @return All the postprocessing code scripts, not null
      */
     List<Script> getPostProcessingScripts(String dialect, String databaseName, boolean defaultDatabase);

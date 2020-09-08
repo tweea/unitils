@@ -15,6 +15,8 @@ package org.unitils.dbmaintainer.util;
 import java.util.List;
 import java.util.Properties;
 
+import javax.sql.DataSource;
+
 import org.apache.commons.collections.CollectionUtils;
 import org.unitils.core.dbsupport.DbSupport;
 import org.unitils.core.dbsupport.DbSupportFactory;
@@ -61,6 +63,7 @@ abstract public class BaseDatabaseAccessor
      * @param sqlHandler
      *     The sql handler, not null
      */
+    @Override
     public void init(Properties configuration, SQLHandler sqlHandler, String dialect, List<String> schemaNames) {
         this.configuration = configuration;
         this.sqlHandler = sqlHandler;

@@ -67,6 +67,7 @@ public class XsdDataSetStructureGenerator
     /**
      * Generates the XSDs, and writes them to the target directory specified by the property {@link #PROPKEY_XSD_DIR_NAME}.
      */
+    @Override
     public void generateDataSetStructure() {
         File xsdDirectory = new File(xsdDirectoryName);
         xsdDirectory.mkdirs();

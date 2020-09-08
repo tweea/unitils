@@ -36,6 +36,7 @@ public abstract class BaseParsingState
      *     The statement builder, not null
      * @return The next parsing state, null if the end of the statement is reached
      */
+    @Override
     public ParsingState handleNextChar(char previousChar, char currentChar, char nextChar, StatementBuilder statementBuilder) {
         statementBuilder.append(currentChar);
         return getNextParsingState(previousChar, currentChar, nextChar, statementBuilder);

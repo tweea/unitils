@@ -37,6 +37,7 @@ public class DefaultConstraintsDisabler
     /**
      * Disable every foreign key or not-null constraint
      */
+    @Override
     public void disableConstraints() {
         for (DbSupport dbSupport : dbSupports) {
             logger.info("Disabling constraints in database schema " + dbSupport.getSchemaName());

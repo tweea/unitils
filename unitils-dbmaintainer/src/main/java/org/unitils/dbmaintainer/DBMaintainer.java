@@ -43,7 +43,7 @@ import static org.unitils.dbmaintainer.util.DatabaseModuleConfigUtils.getConfigu
  * {@link ScriptSource}, a {@link ScriptRunner}, {@link DBClearer}, {@link DBCleaner},
  * {@link ConstraintsDisabler}, {@link SequenceUpdater} and a {@link DataSetStructureGenerator}
  * <p/>
- * The {@link #updateDatabase()} method check what is the current version of the database, and
+ * The {@link #updateDatabase(String, boolean)} method check what is the current version of the database, and
  * see if existing scripts have been modified. If yes, the database is cleared and all available
  * database scripts, are executed on the database. If no existing scripts have been modified, but
  * new scripts were added, only the new scripts are executed. Before executing an update, data from
@@ -64,7 +64,7 @@ import static org.unitils.dbmaintainer.util.DatabaseModuleConfigUtils.getConfigu
  * </ul>
  * <p/>
  * To obtain a properly configured <code>DBMaintainer</code>, invoke the constructor
- * {@link #DBMaintainer(Properties,SQLHandler)} with a <code>TestDataSource</code> providing
+ * {@link #DBMaintainer(Properties, SQLHandler, String, List)} with a <code>TestDataSource</code> providing
  * access to the database and a <code>Configuration</code> object containing all necessary
  * properties.
  *

@@ -157,6 +157,7 @@ public class DefaultDBClearer
      * so that the database schema is empty. The database items that are configured as items to preserve, are left
      * untouched.
      */
+    @Override
     public void clearSchemas() {
         for (DbSupport dbSupport : dbSupports) {
             // check whether schema needs to be preserved
@@ -335,7 +336,7 @@ public class DefaultDBClearer
      * @return The schemas to preserve, not null
      */
     protected Set<String> getSchemasToPreserve(Properties configuration) {
-        Set<String> result = new HashSet<String>();
+        Set<String> result = new HashSet<>();
 
         List<String> schemasToPreserve = getStringList(PROPKEY_PRESERVE_SCHEMAS, configuration);
         for (String schemaToPreserve : schemasToPreserve) {
@@ -444,7 +445,7 @@ public class DefaultDBClearer
             DbSupport dbSupport = getDbSupport(schemaName);
             Set<String> materializedViewNames;
             if (!dbSupport.supportsMaterializedViews()) {
-                materializedViewNames = new HashSet<String>();
+                materializedViewNames = new HashSet<>();
             } else {
                 materializedViewNames = dbSupport.getMaterializedViewNames();
             }
@@ -475,7 +476,7 @@ public class DefaultDBClearer
             DbSupport dbSupport = getDbSupport(schemaName);
             Set<String> sequenceNames;
             if (!dbSupport.supportsSequences()) {
-                sequenceNames = new HashSet<String>();
+                sequenceNames = new HashSet<>();
             } else {
                 sequenceNames = dbSupport.getSequenceNames();
             }
@@ -506,7 +507,7 @@ public class DefaultDBClearer
             DbSupport dbSupport = getDbSupport(schemaName);
             Set<String> synonymNames;
             if (!dbSupport.supportsSynonyms()) {
-                synonymNames = new HashSet<String>();
+                synonymNames = new HashSet<>();
             } else {
                 synonymNames = dbSupport.getSynonymNames();
             }
@@ -537,7 +538,7 @@ public class DefaultDBClearer
             DbSupport dbSupport = getDbSupport(schemaName);
             Set<String> triggerNames;
             if (!dbSupport.supportsTriggers()) {
-                triggerNames = new HashSet<String>();
+                triggerNames = new HashSet<>();
             } else {
                 triggerNames = dbSupport.getTriggerNames();
             }
@@ -568,7 +569,7 @@ public class DefaultDBClearer
             DbSupport dbSupport = getDbSupport(schemaName);
             Set<String> typeNames;
             if (!dbSupport.supportsTypes()) {
-                typeNames = new HashSet<String>();
+                typeNames = new HashSet<>();
             } else {
                 typeNames = dbSupport.getTypeNames();
             }
@@ -637,7 +638,7 @@ public class DefaultDBClearer
      * @return The set of items per schema name, not null
      */
     protected Map<String, Set<String>> getItemsToPreserve(String propertyName) {
-        Map<String, Set<String>> result = new HashMap<String, Set<String>>();
+        Map<String, Set<String>> result = new HashMap<>();
 
         List<String> itemsToPreserve = getStringList(propertyName, configuration);
         for (String itemToPreserve : itemsToPreserve) {
@@ -662,7 +663,7 @@ public class DefaultDBClearer
             // store item per schema
             Set<String> schemaItems = result.get(dbSupport.getSchemaName());
             if (schemaItems == null) {
-                schemaItems = new HashSet<String>();
+                schemaItems = new HashSet<>();
                 result.put(dbSupport.getSchemaName(), schemaItems);
             }
             schemaItems.add(correctCaseItemToPreserve);

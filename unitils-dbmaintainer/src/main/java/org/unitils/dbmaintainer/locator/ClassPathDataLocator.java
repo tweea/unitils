@@ -30,8 +30,6 @@ public class ClassPathDataLocator
      * <li>There aren't any resources left: null will be returned.</li>
      * </ul>
      * 
-     * @param resourceName
-     * @param resourcePickingStrategie
      * @return {@link InputStream}
      */
     public InputStream getDataResource(String resourceName, ResourcePickingStrategie resourcePickingStrategie) {

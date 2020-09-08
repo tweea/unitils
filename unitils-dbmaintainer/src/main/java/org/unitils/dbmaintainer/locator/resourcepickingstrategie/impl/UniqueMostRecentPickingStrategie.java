@@ -23,10 +23,11 @@ public class UniqueMostRecentPickingStrategie
     private static Log logger = LogFactory.getLog(UniqueMostRecentPickingStrategie.class);
 
     /**
-     * @see org.unitils.dbmaintainer.locator.resourcepickingstrategie.ResourcePickingStrategie#filter(java.util.List)
+     * @see org.unitils.dbmaintainer.locator.resourcepickingstrategie.ResourcePickingStrategie#filter(List, String)
      */
+    @Override
     public List<URL> filter(List<URL> resources, String resourceSearchName) {
-        List<URL> filteredResources = new ArrayList<URL>();
+        List<URL> filteredResources = new ArrayList<>();
 
         for (URL url : resources) {
             try {
@@ -41,11 +42,6 @@ public class UniqueMostRecentPickingStrategie
     /**
      * Will look to add the urlNew in the filteredResource. if duplicate exists (based on resourceSearchName) it will look at
      * last modification date and take the most recent one.
-     * 
-     * @param filteredResources
-     * @param urlNew
-     * @param resourceSearchName
-     * @throws IOException
      */
     public void addMostRecent(List<URL> filteredResources, URL urlNew, String resourceSearchName)
         throws IOException {

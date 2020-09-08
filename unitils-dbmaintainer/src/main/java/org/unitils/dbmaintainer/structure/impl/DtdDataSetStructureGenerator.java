@@ -71,6 +71,7 @@ public class DtdDataSetStructureGenerator
      * The DTD will contain the structure of the database. All tables will be written as optional elements and
      * all columns will be optional attributes.
      */
+    @Override
     public void generateDataSetStructure() {
         Writer writer = null;
         try {

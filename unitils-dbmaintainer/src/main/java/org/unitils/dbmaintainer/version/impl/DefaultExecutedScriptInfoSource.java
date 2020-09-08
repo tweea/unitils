@@ -176,6 +176,7 @@ public class DefaultExecutedScriptInfoSource
      * 
      * @return True if a from-scratch update is recommended
      */
+    @Override
     public boolean isFromScratchUpdateRecommended() {
         return !isExecutedScriptsTableValid() && autoCreateExecutedScriptsTable;
     }
@@ -183,6 +184,7 @@ public class DefaultExecutedScriptInfoSource
     /**
      * @return All scripts that were registered as executed on the database
      */
+    @Override
     public Set<ExecutedScript> getExecutedScripts() {
         try {
             return doGetExecutedScripts();
@@ -210,7 +212,7 @@ public class DefaultExecutedScriptInfoSource
                 st = conn.createStatement();
                 rs = st.executeQuery("select " + fileNameColumnName + ", " + versionColumnName + ", " + fileLastModifiedAtColumnName + ", " + checksumColumnName
                     + ", " + executedAtColumnName + ", " + succeededColumnName + " from " + defaultDbSupport.qualified(executedScriptsTableName));
-                executedScripts = new HashSet<ExecutedScript>();
+                executedScripts = new HashSet<>();
                 while (rs.next()) {
                     String fileName = rs.getString(fileNameColumnName);
                     String checkSum = rs.getString(checksumColumnName);
@@ -240,6 +242,7 @@ public class DefaultExecutedScriptInfoSource
      * @param executedScript
      *     The script that was executed on the database
      */
+    @Override
     public void registerExecutedScript(ExecutedScript executedScript) {
         try {
             doRegisterExecutedScript(executedScript);
@@ -273,6 +276,7 @@ public class DefaultExecutedScriptInfoSource
      * @param executedScript
      *     The script, not null
      */
+    @Override
     public void updateExecutedScript(ExecutedScript executedScript) {
         try {
             doUpdateExecutedScript(executedScript);
@@ -326,6 +330,7 @@ public class DefaultExecutedScriptInfoSource
      * Clears all script executions that have been registered. After having invoked this method,
      * {@link #getExecutedScripts()} will return an empty set.
      */
+    @Override
     public void clearAllExecutedScripts() {
         try {
             doClearAllExecutedScripts();
@@ -339,7 +344,7 @@ public class DefaultExecutedScriptInfoSource
     }
 
     protected void doClearAllExecutedScripts() {
-        executedScripts = new HashSet<ExecutedScript>();
+        executedScripts = new HashSet<>();
 
         String deleteSql = "delete from " + defaultDbSupport.qualified(executedScriptsTableName);
         sqlHandler.executeUpdateAndCommit(deleteSql);
@@ -403,6 +408,7 @@ public class DefaultExecutedScriptInfoSource
         try {
             defaultDbSupport.dropTable(executedScriptsTableName);
         } catch (UnitilsException e) {
+            logger.trace("", e);
             // ignored
         }
 

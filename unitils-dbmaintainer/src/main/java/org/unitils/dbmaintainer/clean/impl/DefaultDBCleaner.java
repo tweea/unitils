@@ -92,6 +92,7 @@ public class DefaultDBCleaner
      * Deletes all data from the database, except for the tables that have been
      * configured as <i>tablesToPreserve</i> , and the table in which the database version is stored
      */
+    @Override
     public void cleanSchemas() {
         for (DbSupport dbSupport : dbSupports) {
             // check whether schema needs to be preserved
@@ -156,7 +157,7 @@ public class DefaultDBCleaner
      * @return The set of items, not null
      */
     protected Set<String> getItemsToPreserve(String propertyName, boolean prefixDefaultSchema) {
-        Set<String> result = new HashSet<String>();
+        Set<String> result = new HashSet<>();
         List<String> itemsToPreserve = getStringList(propertyName, configuration);
         for (String itemToPreserve : itemsToPreserve) {
             // ignore case when stored in mixed casing (e.g MS-Sql), otherwise we can't compare the item names

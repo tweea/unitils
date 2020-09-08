@@ -40,6 +40,7 @@ public class DefaultScriptRunner
      * @param scriptContentHandle
      *     The script as a string, not null
      */
+    @Override
     public void execute(ScriptContentHandle scriptContentHandle) {
         Reader scriptContentReader = null;
         try {

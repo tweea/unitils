@@ -17,6 +17,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.unitils.core.UnitilsException;
 import org.unitils.dbmaintainer.version.Version;
 
@@ -28,6 +30,7 @@ import org.unitils.dbmaintainer.version.Version;
  */
 public class Script
     implements Comparable<Script> {
+    private static final Log LOG = LogFactory.getLog(Script.class);
 
     /* The name of the script */
     private String fileName;
@@ -49,7 +52,6 @@ public class Script
      *
      * @param fileName
      *     The name of the script file, not null
-     * @param fileLastModifiedAt
      * @param scriptContentHandle
      *     Handle providing access to the contents of the script, not null
      */
@@ -69,7 +71,6 @@ public class Script
      * 
      * @param fileName
      *     The name of the script file, not null
-     * @param fileLastModifiedAt
      * @param checkSum
      *     Checksum calculated for the content of the script
      */
@@ -170,6 +171,7 @@ public class Script
      *     The other script, not null
      * @return -1 when this script has a smaller version, 0 if equal, 1 when larger
      */
+    @Override
     public int compareTo(Script script) {
         return version.compareTo(script.getVersion());
     }
@@ -185,7 +187,7 @@ public class Script
      * @return The version of the script file, not null
      */
     protected Version createVersion(List<Long> parentIndexes, File scriptFile) {
-        List<Long> indexes = new ArrayList<Long>();
+        List<Long> indexes = new ArrayList<>();
         indexes.addAll(parentIndexes);
         indexes.add(extractIndex(scriptFile.getName()));
         return new Version(indexes);
@@ -193,7 +195,7 @@ public class Script
 
     protected Version getVersionFromPath(String relativePath) {
         String[] pathParts = StringUtils.split(relativePath, '/');
-        List<Long> versionIndexes = new ArrayList<Long>();
+        List<Long> versionIndexes = new ArrayList<>();
         for (String pathPart : pathParts) {
             versionIndexes.add(extractIndex(pathPart));
         }
@@ -212,6 +214,7 @@ public class Script
             try {
                 return Long.parseLong(StringUtils.substringBefore(pathPart, "_"));
             } catch (NumberFormatException e) {
+                LOG.trace("", e);
                 // ignore
             }
         }

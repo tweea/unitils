@@ -32,12 +32,6 @@ public class ClassPathScriptLocator
 
     protected String schema;
 
-    /**
-     * @param scriptList1
-     * @param path1
-     * @param resourcePickingStrategie
-     * @param scriptExtensions1
-     */
     public void loadScripts(List<Script> scriptList1, String path1, ResourcePickingStrategie resourcePickingStrategie, List<String> scriptExtensions1,
         String schema, boolean defaultDatabase, Properties configuration) {
         this.path = path1;
@@ -76,9 +70,6 @@ public class ClassPathScriptLocator
 
     /**
      * Vefiry's of the <code>location</code> ends with a valid file-extension.
-     * 
-     * @param location
-     * @return
      */
     protected boolean isScriptFile(String location) {
         String name = location;

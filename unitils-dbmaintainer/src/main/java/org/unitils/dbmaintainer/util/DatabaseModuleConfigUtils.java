@@ -20,7 +20,7 @@ import org.unitils.core.dbsupport.SQLHandler;
 import static org.unitils.core.util.ConfigUtils.getInstanceOf;
 
 /**
- * Class containing configuration utility methods specifically for the {@link org.unitils.database.DatabaseModule} and
+ * Class containing configuration utility methods specifically for the org.unitils.database.DatabaseModule and
  * related modules
  *
  * @author Filip Neven
@@ -46,9 +46,6 @@ public class DatabaseModuleConfigUtils {
      *     The sql handler, not null
      * @return The configured instance
      */
-    @SuppressWarnings({
-        "unchecked"
-    })
     public static <T extends DatabaseAccessing> T getConfiguredDatabaseTaskInstance(Class<T> databaseTaskType, Properties configuration, SQLHandler sqlHandler,
         String dialect, List<String> schemaNames) {
         // String databaseDialect = PropertyUtils.getString(PROPKEY_DATABASE_DIALECT, configuration);

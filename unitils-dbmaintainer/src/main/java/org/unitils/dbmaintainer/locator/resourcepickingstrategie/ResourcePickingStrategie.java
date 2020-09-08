@@ -13,8 +13,6 @@ import java.util.List;
  */
 public interface ResourcePickingStrategie {
     /**
-     * @param list
-     * @param searchedPath
      * @return List<URL>
      */
     List<URL> filter(List<URL> list, String searchedPath);

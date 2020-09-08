@@ -40,15 +40,13 @@ public class Version
     implements Comparable<Version> {
 
     /* The version indexes, empty if not defined */
-    private List<Long> indexes = new ArrayList<Long>();
+    private List<Long> indexes = new ArrayList<>();
 
     /**
      * Creates a new version.
      *
      * @param indexes
      *     The script indexes, not null
-     * @param timeStamp
-     *     The script timestamp
      */
     public Version(List<Long> indexes) {
         this.indexes = indexes;
@@ -129,7 +127,7 @@ public class Version
      * @return The list of longs or nulls in case of 'x'
      */
     protected List<Long> extractIndexes(String indexString) {
-        List<Long> result = new ArrayList<Long>();
+        List<Long> result = new ArrayList<>();
         if (isEmpty(indexString)) {
             return result;
         }
@@ -163,6 +161,7 @@ public class Version
      *     The other version, not null
      * @return -1 when this version is smaller, 0 if equal, 1 when larger
      */
+    @Override
     public int compareTo(Version otherVersion) {
         List<Long> otherIndexes = otherVersion.getIndexes();
         if (indexes.isEmpty()) {

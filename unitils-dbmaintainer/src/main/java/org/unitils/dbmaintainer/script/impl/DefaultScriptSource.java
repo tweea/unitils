@@ -98,7 +98,7 @@ public class DefaultScriptSource
      */
     protected List<Script> getIncrementalScripts(String dialect, String databaseName, boolean defaultDatabase) {
         List<Script> scripts = getAllUpdateScripts(dialect, databaseName, defaultDatabase);
-        List<Script> indexedScripts = new ArrayList<Script>();
+        List<Script> indexedScripts = new ArrayList<>();
         for (Script script : scripts) {
             if (script.isIncremental()) {
                 indexedScripts.add(script);
@@ -138,7 +138,7 @@ public class DefaultScriptSource
         boolean defaultDatabase) {
         Map<String, Script> alreadyExecutedScriptMap = convertToScriptNameScriptMap(alreadyExecutedScripts);
 
-        List<Script> result = new ArrayList<Script>();
+        List<Script> result = new ArrayList<>();
 
         List<Script> allScripts = getAllUpdateScripts(dialect, databaseName, defaultDatabase);
         for (Script script : allScripts) {
@@ -229,8 +229,8 @@ public class DefaultScriptSource
      */
     protected void loadAndOrganizeAllScripts(String dialect, String databaseName, boolean defaultDatabase) {
         List<Script> allScripts = loadAllScripts(dialect, databaseName, defaultDatabase);
-        allUpdateScripts = new ArrayList<Script>();
-        allPostProcessingScripts = new ArrayList<Script>();
+        allUpdateScripts = new ArrayList<>();
+        allPostProcessingScripts = new ArrayList<>();
         for (Script script : allScripts) {
             if (isPostProcessingScript(script)) {
                 allPostProcessingScripts.add(script);
@@ -249,7 +249,7 @@ public class DefaultScriptSource
      */
     protected List<Script> loadAllScripts(String dialect, String databaseName, boolean defaultDatabase) {
         List<String> scriptLocations = PropertyUtils.getStringList(PROPKEY_SCRIPT_LOCATIONS, configuration);
-        List<Script> scripts = new ArrayList<Script>();
+        List<Script> scripts = new ArrayList<>();
         for (String scriptLocation : scriptLocations) {
             if (!new File(scriptLocation).exists()) {
                 throw new UnitilsException("File location " + scriptLocation + " defined in property " + PROPKEY_SCRIPT_LOCATIONS + " doesn't exist");
@@ -263,11 +263,11 @@ public class DefaultScriptSource
      * Adds all scripts available in the given directory or one of its subdirectories to the
      * given List of files
      *
-     * @param scriptLocation
+     * @param scriptRoot
      *     The current script location, not null
-     * @param currentParentIndexes
+     * @param relativeLocation
      *     The indexes of the current parent folders, not null
-     * @param scriptFiles
+     * @param scripts
      *     The list to which the available script have to be added
      */
     protected void getScriptsAt(List<Script> scripts, String scriptRoot, String relativeLocation, String databaseName, boolean defaultDatabase) {
@@ -293,8 +293,6 @@ public class DefaultScriptSource
     /**
      * This method checks if a scriptfile is a file that should be used by every schema or if the scriptfile is a file for a specific schema.
      * 
-     * @param nameFile
-     * @param databaseName
      * @return {@link Boolean}
      * @see <a href="http://www.dbmaintain.org/tutorial.html#Multi-database__user_support">more info</a>
      */
@@ -310,7 +308,6 @@ public class DefaultScriptSource
     /**
      * Checks if the name of the script contains one of the qualifiers.
      * 
-     * @param fileName
      * @return {@link Boolean}
      */
     public boolean containsOneOfQualifiers(String fileName) {
@@ -410,7 +407,7 @@ public class DefaultScriptSource
     }
 
     protected Map<String, Script> convertToScriptNameScriptMap(Set<ExecutedScript> executedScripts) {
-        Map<String, Script> scriptMap = new HashMap<String, Script>();
+        Map<String, Script> scriptMap = new HashMap<>();
         for (ExecutedScript executedScript : executedScripts) {
             scriptMap.put(executedScript.getScript().getFileName(), executedScript.getScript());
         }

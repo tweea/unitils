@@ -34,12 +34,11 @@ public class ResourceScriptSource
     extends DefaultScriptSource {
     private static final Log LOGGER = LogFactory.getLog(ResourceScriptSource.class);
 
-    /** */
     public ResourceScriptSource() {
     }
 
     /**
-     * @see org.unitils.dbmaintainer.script.impl.DefaultScriptSource#loadAllScripts()
+     * @see org.unitils.dbmaintainer.script.impl.DefaultScriptSource#loadAllScripts(String, String, boolean)
      */
     @Override
     protected List<Script> loadAllScripts(String dialect, String databaseName, boolean defaultDatabase) {
@@ -51,7 +50,7 @@ public class ResourceScriptSource
         }
         List<String> scriptIgnoredLocations = PropertyUtils.getStringList("dbMaintainer.script.locations.ignore", configuration);
 
-        List<String> ignoredSubLocations = new ArrayList<String>();
+        List<String> ignoredSubLocations = new ArrayList<>();
         for (String locationIgnorded : scriptIgnoredLocations) {
             for (String scriptLocation : scriptLocations) {
                 if (locationIgnorded.startsWith(scriptLocation)) {
@@ -66,13 +65,13 @@ public class ResourceScriptSource
 
         LOGGER.debug("Ignorded sublocations for script search: " + ArrayUtils.toString(ignoredSubLocations.toArray()));
 
-        List<Script> scripts = new ArrayList<Script>();
+        List<Script> scripts = new ArrayList<>();
         String scriptLocation;
         for (Iterator<String> i = scriptLocations.iterator(); i.hasNext(); getScriptsAt(scripts, scriptLocation, "", databaseName, defaultDatabase)) {
             scriptLocation = i.next();
         }
 
-        List<Script> scriptsToRemove = new ArrayList<Script>();
+        List<Script> scriptsToRemove = new ArrayList<>();
         for (Script script : scripts) {
             for (String ignoredSublocation : ignoredSubLocations) {
                 if (script.getFileName().startsWith(ignoredSublocation)) {
@@ -88,7 +87,7 @@ public class ResourceScriptSource
     }
 
     /**
-     * @see org.unitils.dbmaintainer.script.impl.DefaultScriptSource#getScriptsAt(java.util.List, java.lang.String, java.lang.String)
+     * @see org.unitils.dbmaintainer.script.impl.DefaultScriptSource#getScriptsAt(List, String, String, String, boolean)
      */
     @Override
     protected void getScriptsAt(List<Script> scripts, String scriptRoot, String relativeLocation, String databaseName, boolean defaultDatabase) {
@@ -104,7 +103,7 @@ public class ResourceScriptSource
         classPathScriptLocator.loadScripts(scripts, scriptRoot, getResourcePickingStrategie(), getScriptExtensions(), databaseName, defaultDatabase,
             configuration);
 
-        List<Script> tempScripts = new ArrayList<Script>();
+        List<Script> tempScripts = new ArrayList<>();
         for (Script script : scripts) {
             if (checkIfScriptContainsCorrectDatabaseName(script.getFileName(), databaseName, defaultDatabase)
                 && containsOneOfQualifiers(script.getFileName())) {
@@ -117,8 +116,6 @@ public class ResourceScriptSource
 
     /**
      * use unitil propertie instead of hardcoding
-     * 
-     * @return
      */
     protected ResourcePickingStrategie getResourcePickingStrategie() {
         return new UniqueMostRecentPickingStrategie();

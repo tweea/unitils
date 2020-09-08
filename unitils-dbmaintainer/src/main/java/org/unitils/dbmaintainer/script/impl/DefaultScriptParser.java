@@ -77,6 +77,7 @@ public class DefaultScriptParser
      * @param scriptReader
      *     the script stream, not null
      */
+    @Override
     public void init(Properties configuration, Reader scriptReader) {
         boolean backSlashEscapingEnabled = PropertyUtils.getBoolean(PROPKEY_BACKSLASH_ESCAPING_ENABLED, configuration);
         this.initialParsingState = createInitialParsingState(backSlashEscapingEnabled);
@@ -89,6 +90,7 @@ public class DefaultScriptParser
      *
      * @return the statements, null if no more statements
      */
+    @Override
     public String getNextStatement() {
         try {
             return getNextStatementImpl();

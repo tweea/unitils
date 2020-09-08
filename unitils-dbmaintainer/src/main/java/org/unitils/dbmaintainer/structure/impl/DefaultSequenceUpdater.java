@@ -58,6 +58,7 @@ public class DefaultSequenceUpdater
      * Updates all database sequences and identity columns to a sufficiently high value, so that test data be inserted
      * easily.
      */
+    @Override
     public void updateSequences() {
         for (DbSupport dbSupport : dbSupports) {
             logger.info("Updating sequences and identity columns in database schema " + dbSupport.getSchemaName());
@@ -114,6 +115,7 @@ public class DefaultSequenceUpdater
                     dbSupport.incrementIdentityColumnToValue(tableName, identityColumnName, lowestAcceptableSequenceValue);
                     logger.debug("Incrementing value for identity column " + identityColumnName + " in database schema " + dbSupport.getSchemaName());
                 } catch (UnitilsException e) {
+                    logger.trace("", e);
                     // primary key is not an identity column
                     // skip column
                 }
@@ -124,8 +126,6 @@ public class DefaultSequenceUpdater
     /**
      * Sets all the sequences to the lowest acceptable value.
      * This can be defined with the property "sequenceUpdater.sequencevalue.lowestacceptable".
-     * 
-     * @param dbSupport
      */
     public void restartWithLowValue(DbSupport dbSupport) {
         if (!dbSupport.supportsSequences()) {

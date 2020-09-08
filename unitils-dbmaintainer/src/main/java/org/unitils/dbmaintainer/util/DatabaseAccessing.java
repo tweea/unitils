@@ -31,8 +31,6 @@ public interface DatabaseAccessing {
      *     The configuration, not null
      * @param sqlHandler
      *     The sql handler, not null
-     * @param dialect
-     * @param schemaNames
      */
     public void init(Properties configuration, SQLHandler sqlHandler, String dialect, List<String> schemaNames);
 }

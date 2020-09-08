@@ -52,6 +52,7 @@ public class InBlockCommentParsingState
      *     The statement builder, not null
      * @return The next parsing state, null if the end of the statement is reached
      */
+    @Override
     protected ParsingState getNextParsingState(char previousChar, char currentChar, char nextChar, StatementBuilder statementBuilder) {
         // check for ending chars
         if (previousChar == '*' && currentChar == '/') {

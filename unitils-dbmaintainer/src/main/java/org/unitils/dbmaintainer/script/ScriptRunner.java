@@ -25,7 +25,7 @@ public interface ScriptRunner
     /**
      * Executes the given script
      *
-     * @param script
+     * @param scriptContentHandle
      *     A handle that provides access to the content of the script, not null
      */
     void execute(ScriptContentHandle scriptContentHandle);

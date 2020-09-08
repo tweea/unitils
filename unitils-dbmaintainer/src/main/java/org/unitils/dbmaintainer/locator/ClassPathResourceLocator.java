@@ -34,12 +34,10 @@ public abstract class ClassPathResourceLocator {
      * we search for a concrete resource.
      * then no deeper directory are attempted to search.
      *
-     * @param path
-     * @param isConcreteResource
      * @return List<URL>
      */
     public List<URL> loadResources(String path, Boolean isConcreteResource) {
-        resourceList = new ArrayList<URL>();
+        resourceList = new ArrayList<>();
 
         try {
             // will also check in external referenced jars.
@@ -66,15 +64,13 @@ public abstract class ClassPathResourceLocator {
     /**
      * Will use the Spring {@link PathMatchingResourcePatternResolver} to find a resource that corresponds to the <code>url</code>.
      *
-     * @param url
      * @return List<URL>
-     * @throws IOException
      */
     protected List<URL> searchResources(URL url)
         throws IOException {
         PathMatchingResourcePatternResolver p = new PathMatchingResourcePatternResolver();
         Resource[] scriptResources = p.getResources(url.toString() + "**");
-        List<URL> listScriptResources = new ArrayList<URL>();
+        List<URL> listScriptResources = new ArrayList<>();
 
         for (int i = 0; i < scriptResources.length; i++) {
             URL urlResource = fixJarUrl(scriptResources[i].getURL());
@@ -84,7 +80,7 @@ public abstract class ClassPathResourceLocator {
             try {
                 urlResource.openStream();
             } catch (Exception e) {
-                logger.error(" Resource '" + urlResource.toString() + "' is not found.");
+                logger.error(" Resource '" + urlResource.toString() + "' is not found.", e);
             }
         }
 

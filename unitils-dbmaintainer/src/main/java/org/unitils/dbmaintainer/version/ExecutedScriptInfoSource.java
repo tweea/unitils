@@ -47,8 +47,6 @@ public interface ExecutedScriptInfoSource
 
     /**
      * Updates the given registered script
-     * 
-     * @param executedScript
      */
     void updateExecutedScript(ExecutedScript executedScript);
 
