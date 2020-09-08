@@ -119,7 +119,7 @@ public class ReflectionComparatorFactory {
      * @return The comparator chain, not null
      */
     protected static List<Comparator> getComparatorChain(Set<ReflectionComparatorMode> modes) {
-        List<Comparator> comparatorChain = new ArrayList<Comparator>();
+        List<Comparator> comparatorChain = new ArrayList<>();
         if (modes.contains(LENIENT_DATES)) {
             comparatorChain.add(LENIENT_DATES_COMPARATOR);
         }

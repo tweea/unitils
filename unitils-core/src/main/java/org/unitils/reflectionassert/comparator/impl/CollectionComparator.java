@@ -43,6 +43,7 @@ public class CollectionComparator
      *     The right object
      * @return True in case of arrays/collections
      */
+    @Override
     public boolean canCompare(Object left, Object right) {
         if (left == null || right == null) {
             return false;
@@ -66,10 +67,11 @@ public class CollectionComparator
      *     The root comparator for inner comparisons, not null
      * @return A CollectionDifference or null if both collections are equal
      */
+    @Override
     public Difference compare(Object left, Object right, boolean onlyFirstDifference, ReflectionComparator reflectionComparator) {
         // Convert to list and compare as collection
-        List<Object> leftList = new ArrayList<Object>(convertToCollection(left));
-        List<Object> rightList = new ArrayList<Object>(convertToCollection(right));
+        List<Object> leftList = new ArrayList<>(convertToCollection(left));
+        List<Object> rightList = new ArrayList<>(convertToCollection(right));
 
         int elementIndex = -1;
         CollectionDifference difference = new CollectionDifference("Different elements", left, right, leftList, rightList);

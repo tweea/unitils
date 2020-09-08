@@ -48,7 +48,6 @@ public class UnitilsJUnit4TestClassRunner
      *
      * @param testClass
      *     the class, not null
-     * @throws InitializationError
      */
     public UnitilsJUnit4TestClassRunner(Class<?> testClass)
         throws InitializationError {
@@ -58,6 +57,7 @@ public class UnitilsJUnit4TestClassRunner
     @Override
     public void run(final RunNotifier notifier) {
         ClassRoadie classRoadie = new ClassRoadie(notifier, getTestClass(), getDescription(), new Runnable() {
+            @Override
             public void run() {
                 runMethods(notifier);
             }
@@ -76,6 +76,7 @@ public class UnitilsJUnit4TestClassRunner
      * Overridden JUnit4 method to be able to create a CustomMethodRoadie that will invoke the
      * unitils test listener methods at the appropriate moments.
      */
+    @Override
     protected void invokeTestMethod(Method method, RunNotifier notifier) {
         Description description = methodDescription(method);
         Object testObject;
@@ -126,10 +127,8 @@ public class UnitilsJUnit4TestClassRunner
      * This method allows access to the test invocation, from within the modules (who get a reference to the runner
      * via the context). We do not check for listeners veto's (typically, these modules will veto the execution of
      * the test in normal execution mode, and call this method later on to do their logic).
-     * 
-     * @param testObject
-     * @param method
      */
+    @Override
     public void executeTestMethod(Object testObject, Method method) {
         TestMethod testMethod = wrapMethod(method);
         RunNotifier notifier = new RunNotifier();

@@ -25,6 +25,9 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 /**
  * General file manipulation utilities.
  * <p>
@@ -59,8 +62,9 @@ import java.util.List;
  * @author Sandy McArthur
  * @version $Id: FileUtils.java 384037 2006-03-07 22:26:37Z scolebourne $
  */
-@SuppressWarnings("all")
 public class FileUtils {
+    private static final Log LOG = LogFactory.getLog(FileUtils.class);
+
     /**
      * Instances should NOT be constructed in standard programming.
      */
@@ -754,8 +758,9 @@ public class FileUtils {
             try {
                 Thread.sleep(100);
             } catch (InterruptedException ignore) {
-                ;
+                LOG.trace("", ignore);
             } catch (Exception ex) {
+                LOG.trace("", ex);
                 break;
             }
         }

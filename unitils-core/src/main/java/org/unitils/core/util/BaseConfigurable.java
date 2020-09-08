@@ -27,6 +27,7 @@ public class BaseConfigurable
     /*
      * @see org.unitils.core.util.Configurable#init(java.util.Properties)
      */
+    @Override
     public void init(Properties configuration) {
         this.configuration = configuration;
     }

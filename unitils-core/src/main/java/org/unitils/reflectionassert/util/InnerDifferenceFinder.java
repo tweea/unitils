@@ -65,6 +65,7 @@ public class InnerDifferenceFinder {
          *     The key
          * @return null
          */
+        @Override
         public Difference visit(Difference difference, String key) {
             return null;
         }
@@ -78,10 +79,12 @@ public class InnerDifferenceFinder {
          *     The field name, not null
          * @return The difference, null if there is no difference
          */
+        @Override
         public Difference visit(ObjectDifference objectDifference, String fieldName) {
             return objectDifference.getFieldDifferences().get(fieldName);
         }
 
+        @Override
         public Difference visit(ClassDifference classDifference, String argument) {
             return null;
         }
@@ -96,6 +99,7 @@ public class InnerDifferenceFinder {
          *     The key as a string, not null
          * @return The difference, null if there is no difference
          */
+        @Override
         public Difference visit(MapDifference mapDifference, String keyString) {
             for (Map.Entry<Object, Difference> entry : mapDifference.getValueDifferences().entrySet()) {
                 if (objectFormatter.format(entry.getKey()).equals(keyString)) {
@@ -114,6 +118,7 @@ public class InnerDifferenceFinder {
          *     The index number as a string, not null
          * @return The difference, null if there is no difference
          */
+        @Override
         public Difference visit(CollectionDifference collectionDifference, String indexString) {
             return collectionDifference.getElementDifferences().get(new Integer(indexString));
         }
@@ -127,6 +132,7 @@ public class InnerDifferenceFinder {
          *     The index number as a string, not null
          * @return The difference, null if there is no difference
          */
+        @Override
         public Difference visit(UnorderedCollectionDifference unorderedCollectionDifference, String indexString) {
             int leftIndex = new Integer(indexString);
             int rightIndex = unorderedCollectionDifference.getBestMatchingIndexes().get(leftIndex);

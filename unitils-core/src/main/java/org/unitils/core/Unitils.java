@@ -16,6 +16,9 @@ import java.lang.reflect.Method;
 import java.util.List;
 import java.util.Properties;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 /**
  * Core class of the Unitils library, and the main entry point that gives access to the {@link TestContext} and the
  * different {@link Module}s.
@@ -33,6 +36,7 @@ import java.util.Properties;
  * is defined by the added behaviour of all modules.
  */
 public class Unitils {
+    private static final Log LOG = LogFactory.getLog(Unitils.class);
 
     /* The singleton instance */
     private static Unitils unitils;
@@ -153,6 +157,7 @@ public class Unitils {
             Thread.currentThread().getContextClassLoader().loadClass(className);
             return true;
         } catch (ClassNotFoundException e) {
+            LOG.trace("", e);
             return false;
         }
     }

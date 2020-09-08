@@ -27,13 +27,13 @@ public class CollectionDifference
     extends Difference {
 
     /* The differences per index */
-    private Map<Integer, Difference> elementDifferences = new HashMap<Integer, Difference>();
+    private Map<Integer, Difference> elementDifferences = new HashMap<>();
 
     /* The indexes of the left elements that were missing in the right collection */
-    private List<Integer> leftMissingIndexes = new ArrayList<Integer>();
+    private List<Integer> leftMissingIndexes = new ArrayList<>();
 
     /* The indexes of the right elements that were missing in the left collection */
-    private List<Integer> rightMissingIndexes = new ArrayList<Integer>();
+    private List<Integer> rightMissingIndexes = new ArrayList<>();
 
     /* The left object as a list */
     private List<?> leftList;

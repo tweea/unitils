@@ -11,9 +11,6 @@ import java.lang.reflect.Method;
 public interface TestRunnerAccessor {
     /**
      * Execute a test method on a given tested object.
-     * 
-     * @param testedObject
-     * @param testMethod
      */
     void executeTestMethod(Object testedObject, Method testMethod);
 }

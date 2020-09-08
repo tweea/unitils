@@ -99,10 +99,10 @@ public class PropertyUtils {
             if (required) {
                 throw new UnitilsException("No value found for property " + propertyName);
             }
-            return new ArrayList<String>(0);
+            return new ArrayList<>(0);
         }
         String[] splitValues = values.split(",");
-        List<String> result = new ArrayList<String>(splitValues.length);
+        List<String> result = new ArrayList<>(splitValues.length);
         for (String value : splitValues) {
             result.add(value.trim());
         }
@@ -180,7 +180,7 @@ public class PropertyUtils {
         try {
             return Long.valueOf(value.trim());
         } catch (NumberFormatException e) {
-            throw new UnitilsException("Value " + value + " for property " + propertyName + " is not a number.");
+            throw new UnitilsException("Value " + value + " for property " + propertyName + " is not a number.", e);
         }
     }
 
@@ -205,7 +205,7 @@ public class PropertyUtils {
         try {
             return Long.valueOf(value.trim());
         } catch (NumberFormatException e) {
-            throw new UnitilsException("Value " + value + " for property " + propertyName + " is not a number.");
+            throw new UnitilsException("Value " + value + " for property " + propertyName + " is not a number.", e);
         }
     }
 
@@ -227,7 +227,7 @@ public class PropertyUtils {
         try {
             return Integer.valueOf(value.trim());
         } catch (NumberFormatException e) {
-            throw new UnitilsException("Value " + value + " for property " + propertyName + " is not a number.");
+            throw new UnitilsException("Value " + value + " for property " + propertyName + " is not a number.", e);
         }
     }
 
@@ -252,7 +252,7 @@ public class PropertyUtils {
         try {
             return Integer.valueOf(value.trim());
         } catch (NumberFormatException e) {
-            throw new UnitilsException("Value " + value + " for property " + propertyName + " is not a number.");
+            throw new UnitilsException("Value " + value + " for property " + propertyName + " is not a number.", e);
         }
     }
 
@@ -279,9 +279,6 @@ public class PropertyUtils {
      *     The properties, not null
      * @return The instance value, not null
      */
-    @SuppressWarnings({
-        "unchecked"
-    })
     public static <T> T getInstance(String propertyName, Properties properties) {
         String className = getString(propertyName, properties);
         return (T) createInstanceOfType(className, false);
@@ -299,9 +296,6 @@ public class PropertyUtils {
      *     The properties, not null
      * @return The instance value, not null
      */
-    @SuppressWarnings({
-        "unchecked"
-    })
     public static <T> T getInstance(String propertyName, T defaultValue, Properties properties) {
         String className = getString(propertyName, null, properties);
         if (className == null) {

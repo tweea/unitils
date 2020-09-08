@@ -11,16 +11,11 @@ import java.util.ResourceBundle;
  * @author Willemijn Wouters
  * @since 3.4
  */
-
 public class ResourcebundleCheck {
     /**
      * The ResoucebundleCheck checks if the bundle exists for all the locale's and if keys exists for every bundle.
      * It checks all the keys and it throws an {@link Exception} when one of the exceptions isn't found. An {@link MissingResourceException} is thrown when
      * a bundle can't be found (this happens only when their is no default resourcebundle).
-     * 
-     * @param bundleName
-     * @param locales
-     * @throws Exception
      */
     public static void testAllTheKeys(String bundleName, Locale... locales)
         throws Exception {

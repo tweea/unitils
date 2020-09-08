@@ -443,9 +443,6 @@ public class ReflectionAssert {
     /**
      * All fields that have a getter with the same name will be checked by an assertNotNull.
      * Other fields will be ignored
-     * 
-     * @param message
-     * @param object
      */
     public static void assertAccessablePropertiesNotNull(String message, Object object) {
         Set<Field> fields = ReflectionUtils.getAllFields(object.getClass());
@@ -492,6 +489,7 @@ public class ReflectionAssert {
          *     The object
          * @return The value, null if object was null
          */
+        @Override
         public Object transform(Object object) {
             if (object == null) {
                 return null;

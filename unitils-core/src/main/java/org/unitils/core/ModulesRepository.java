@@ -17,6 +17,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import static org.unitils.util.ReflectionUtils.getClassWithName;
 
 /**
@@ -26,6 +29,7 @@ import static org.unitils.util.ReflectionUtils.getClassWithName;
  * @author Filip Neven
  */
 public class ModulesRepository {
+    private static final Log LOG = LogFactory.getLog(ModulesRepository.class);
 
     /* All modules */
     private List<Module> modules;
@@ -96,7 +100,7 @@ public class ModulesRepository {
         "unchecked"
     })
     public <T> List<T> getModulesOfType(Class<T> type) {
-        List<T> result = new ArrayList<T>();
+        List<T> result = new ArrayList<>();
         for (Module module : modules) {
             if (type.isAssignableFrom(module.getClass())) {
                 result.add((T) module);
@@ -118,6 +122,7 @@ public class ModulesRepository {
         try {
             moduleClass = getClassWithName(fullyQualifiedClassName);
         } catch (UnitilsException e) {
+            LOG.trace("", e);
             // class could not be loaded
             return false;
         }
@@ -158,7 +163,7 @@ public class ModulesRepository {
      * @return the listeners for each module, not null
      */
     private Map<Module, TestListener> createTestListeners(List<Module> moduleList) {
-        Map<Module, TestListener> result = new HashMap<Module, TestListener>(moduleList.size());
+        Map<Module, TestListener> result = new HashMap<>(moduleList.size());
         for (Module module : moduleList) {
             result.put(module, module.getTestListener());
         }

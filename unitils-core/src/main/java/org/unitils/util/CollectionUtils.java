@@ -41,7 +41,7 @@ public class CollectionUtils {
      * @return The sub-list, not null
      */
     public static <T> List<T> subList(List<T> list, int fromIndex, int toIndex) {
-        List<T> result = new ArrayList<T>();
+        List<T> result = new ArrayList<>();
         if (list == null) {
             return result;
         }
@@ -59,7 +59,7 @@ public class CollectionUtils {
      * @return The elements as a set, empty if elements was null
      */
     public static <T> Set<T> asSet(T... elements) {
-        Set<T> result = new HashSet<T>();
+        Set<T> result = new HashSet<>();
         if (elements == null) {
             return result;
         }

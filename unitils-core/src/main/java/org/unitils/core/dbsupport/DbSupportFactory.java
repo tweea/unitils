@@ -33,7 +33,7 @@ public class DbSupportFactory {
     public static final String PROPKEY_DATABASE_SCHEMA_NAMES = "database.schemaNames";
 
     /* Cache of created db support instance, per schema name */
-    private static Map<String, DbSupport> dbSupportCache = new HashMap<String, DbSupport>();
+    private static Map<String, DbSupport> dbSupportCache = new HashMap<>();
 
     /**
      * Returns the dbms specific {@link DbSupport} as configured in the given <code>Configuration</code> for the
@@ -43,7 +43,6 @@ public class DbSupportFactory {
      *     The config, not null
      * @param sqlHandler
      *     The sql handler, not null
-     * @param dialect
      * @return The dbms specific instance of {@link DbSupport}, not null
      */
     public static DbSupport getDefaultDbSupport(Properties configuration, SQLHandler sqlHandler, String dialect, String defaultSchemaName) {
@@ -84,11 +83,10 @@ public class DbSupportFactory {
      *     The config, not null
      * @param sqlHandler
      *     The sql handler, not null
-     * @param dialect
      * @return The dbms specific {@link DbSupport}, not null
      */
     public static List<DbSupport> getDbSupports(Properties configuration, SQLHandler sqlHandler, String dialect, List<String> schemaNames) {
-        List<DbSupport> result = new ArrayList<DbSupport>();
+        List<DbSupport> result = new ArrayList<>();
         // List<String> schemaNames = getStringList(PROPKEY_DATABASE_SCHEMA_NAMES, configuration, true);
         for (String schemaName : schemaNames) {
             DbSupport dbSupport = getDbSupport(configuration, sqlHandler, schemaName, dialect);

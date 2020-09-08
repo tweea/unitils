@@ -25,7 +25,7 @@ public class ObjectDifference
     extends Difference {
 
     /* The differences per field name */
-    private Map<String, Difference> fieldDifferences = new HashMap<String, Difference>();
+    private Map<String, Difference> fieldDifferences = new HashMap<>();
 
     /**
      * Creates a difference.

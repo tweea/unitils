@@ -34,6 +34,7 @@ public class SimpleDifferenceView
      *     The root difference, not null
      * @return The string representation, not null
      */
+    @Override
     public String createView(Difference difference) {
         String expectedStr = objectFormatter.format(difference.getLeftValue());
         String actualStr = objectFormatter.format(difference.getRightValue());

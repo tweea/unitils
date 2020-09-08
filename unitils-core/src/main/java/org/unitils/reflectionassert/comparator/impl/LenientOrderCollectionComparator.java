@@ -44,6 +44,7 @@ public class LenientOrderCollectionComparator
      *     The right object
      * @return True for Arrays and Collections
      */
+    @Override
     public boolean canCompare(Object left, Object right) {
         if (left == null || right == null) {
             return false;
@@ -69,10 +70,11 @@ public class LenientOrderCollectionComparator
      *     The root comparator for inner comparisons, not null
      * @return An UnorderedCollectionDifference or null if both collections are equal
      */
+    @Override
     public Difference compare(Object left, Object right, boolean onlyFirstDifference, ReflectionComparator reflectionComparator) {
         // Convert to list and compare as collection
-        ArrayList<Object> leftList = new ArrayList<Object>(convertToCollection(left));
-        ArrayList<Object> rightList = new ArrayList<Object>(convertToCollection(right));
+        ArrayList<Object> leftList = new ArrayList<>(convertToCollection(left));
+        ArrayList<Object> rightList = new ArrayList<>(convertToCollection(right));
 
         // check whether a combination exists
         boolean isEqual = isEqual(leftList, rightList, 0, reflectionComparator);
@@ -255,7 +257,7 @@ public class LenientOrderCollectionComparator
      * @return A list containing 0, 1, 2, ..., not null
      */
     protected ArrayList<Integer> createIndexList(int size) {
-        ArrayList<Integer> leftIndexes = new ArrayList<Integer>(size);
+        ArrayList<Integer> leftIndexes = new ArrayList<>(size);
         for (int i = 0; i < size; i++) {
             leftIndexes.add(i);
         }

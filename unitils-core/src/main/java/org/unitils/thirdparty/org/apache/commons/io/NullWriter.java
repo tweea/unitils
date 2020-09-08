@@ -43,6 +43,7 @@ public class NullWriter
      * @param idx
      *     The character to write
      */
+    @Override
     public void write(int idx) {
         // to /dev/null
     }
@@ -53,6 +54,7 @@ public class NullWriter
      * @param chr
      *     The characters to write
      */
+    @Override
     public void write(char[] chr) {
         // to /dev/null
     }
@@ -67,6 +69,7 @@ public class NullWriter
      * @param end
      *     The number of characters to write
      */
+    @Override
     public void write(char[] chr, int st, int end) {
         // to /dev/null
     }
@@ -77,6 +80,7 @@ public class NullWriter
      * @param str
      *     The string to write
      */
+    @Override
     public void write(String str) {
         // to /dev/null
     }
@@ -91,16 +95,19 @@ public class NullWriter
      * @param end
      *     The number of characters to write
      */
+    @Override
     public void write(String str, int st, int end) {
         // to /dev/null
     }
 
     /** @see java.io.Writer#flush() */
+    @Override
     public void flush() {
         // to /dev/null
     }
 
     /** @see java.io.Writer#close() */
+    @Override
     public void close() {
         // to /dev/null
     }

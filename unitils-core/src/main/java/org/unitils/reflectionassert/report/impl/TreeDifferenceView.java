@@ -54,6 +54,7 @@ public class TreeDifferenceView
      *     The root difference, not null
      * @return The string representation, not null
      */
+    @Override
     public String createView(Difference difference) {
         return difference.accept(treeDifferenceFormatterVisitor, null);
     }
@@ -263,26 +264,32 @@ public class TreeDifferenceView
      */
     protected class TreeDifferenceFormatterVisitor
         implements DifferenceVisitor<String, String> {
+        @Override
         public String visit(Difference difference, String fieldName) {
             return formatDifference(difference, fieldName);
         }
 
+        @Override
         public String visit(ObjectDifference objectDifference, String fieldName) {
             return formatDifference(objectDifference, fieldName);
         }
 
+        @Override
         public String visit(ClassDifference classDifference, String fieldName) {
             return formatDifference(classDifference, fieldName);
         }
 
+        @Override
         public String visit(MapDifference mapDifference, String fieldName) {
             return formatDifference(mapDifference, fieldName);
         }
 
+        @Override
         public String visit(CollectionDifference collectionDifference, String fieldName) {
             return formatDifference(collectionDifference, fieldName);
         }
 
+        @Override
         public String visit(UnorderedCollectionDifference unorderedCollectionDifference, String fieldName) {
             return formatDifference(unorderedCollectionDifference, fieldName);
         }

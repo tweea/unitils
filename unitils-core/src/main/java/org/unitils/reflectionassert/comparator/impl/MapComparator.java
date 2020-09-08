@@ -40,6 +40,7 @@ public class MapComparator
      *     The right object
      * @return True for maps
      */
+    @Override
     public boolean canCompare(Object left, Object right) {
         if (left == null || right == null) {
             return false;
@@ -64,12 +65,13 @@ public class MapComparator
      *     The root comparator for inner comparisons, not null
      * @return A MapDifference or null if both maps are equal
      */
+    @Override
     public Difference compare(Object left, Object right, boolean onlyFirstDifference, ReflectionComparator reflectionComparator) {
         Map<?, ?> leftMap = (Map<?, ?>) left;
         Map<?, ?> rightMap = (Map<?, ?>) right;
 
         // Create copy from which we can remove elements.
-        Map<Object, Object> rightCopy = new HashMap<Object, Object>(rightMap);
+        Map<Object, Object> rightCopy = new HashMap<>(rightMap);
 
         ReflectionComparator keyReflectionComparator = createRefectionComparator();
         MapDifference difference = new MapDifference("Different elements", left, right, leftMap, rightMap);

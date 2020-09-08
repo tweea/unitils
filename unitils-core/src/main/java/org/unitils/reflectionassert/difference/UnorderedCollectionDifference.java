@@ -28,10 +28,10 @@ public class UnorderedCollectionDifference
     extends Difference {
 
     /* The differences per left-index and right-index */
-    private Map<Integer, Map<Integer, Difference>> elementDifferences = new HashMap<Integer, Map<Integer, Difference>>();
+    private Map<Integer, Map<Integer, Difference>> elementDifferences = new HashMap<>();
 
     /* The best matching left and right indexes */
-    private Map<Integer, Integer> bestMatchingIndexes = new HashMap<Integer, Integer>();
+    private Map<Integer, Integer> bestMatchingIndexes = new HashMap<>();
 
     /* The matching score of the best matching indexes */
     private int bestMatchingScore = MAX_VALUE;
@@ -75,7 +75,7 @@ public class UnorderedCollectionDifference
     public void addElementDifference(int leftIndex, int rightIndex, Difference difference) {
         Map<Integer, Difference> rightDifferences = elementDifferences.get(leftIndex);
         if (rightDifferences == null) {
-            rightDifferences = new HashMap<Integer, Difference>();
+            rightDifferences = new HashMap<>();
             elementDifferences.put(leftIndex, rightDifferences);
         }
         rightDifferences.put(rightIndex, difference);

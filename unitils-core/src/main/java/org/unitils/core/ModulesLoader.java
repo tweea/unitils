@@ -96,13 +96,13 @@ public class ModulesLoader {
      */
     public List<Module> loadModules(Properties configuration) {
         // get all declared modules (filter doubles)
-        Set<String> moduleNames = new TreeSet<String>(getStringList(PROPKEY_MODULES, configuration));
+        Set<String> moduleNames = new TreeSet<>(getStringList(PROPKEY_MODULES, configuration));
 
         // remove all disable modules
         removeDisabledModules(moduleNames, configuration);
 
         // get all core dependencies
-        Map<String, List<String>> runAfters = new HashMap<String, List<String>>();
+        Map<String, List<String>> runAfters = new HashMap<>();
         for (String moduleName : moduleNames) {
             // get dependencies for core
             List<String> runAfterModuleNames = getStringList(PROPKEY_MODULE_PREFIX + moduleName + PROPKEY_MODULE_SUFFIX_RUN_AFTER, configuration);
@@ -110,7 +110,7 @@ public class ModulesLoader {
         }
 
         // Count each time a core is (indirectly) used in runAfter and order by count
-        Map<Integer, List<String>> runAfterCounts = new TreeMap<Integer, List<String>>();
+        Map<Integer, List<String>> runAfterCounts = new TreeMap<>();
         for (String moduleName : moduleNames) {
             // calculate the nr of times a core is (indirectly) referenced
             int count = countRunAfters(moduleName, runAfters, new HashMap<String, String>());
@@ -118,14 +118,14 @@ public class ModulesLoader {
             // store in map with count as key and a list corresponding modules as values
             List<String> countModuleNames = runAfterCounts.get(count);
             if (countModuleNames == null) {
-                countModuleNames = new ArrayList<String>();
+                countModuleNames = new ArrayList<>();
                 runAfterCounts.put(count, countModuleNames);
             }
             countModuleNames.add(moduleName);
         }
 
         // Create core instances in the correct sequence
-        List<Module> result = new ArrayList<Module>();
+        List<Module> result = new ArrayList<>();
         for (List<String> moduleNameList : runAfterCounts.values()) {
             List<Module> modules = createAndInitializeModules(moduleNameList, configuration);
             result.addAll(modules);
@@ -143,7 +143,7 @@ public class ModulesLoader {
      * @return the modules, not null
      */
     protected List<Module> createAndInitializeModules(List<String> moduleNames, Properties configuration) {
-        List<Module> result = new ArrayList<Module>();
+        List<Module> result = new ArrayList<>();
         for (String moduleName : moduleNames) {
             // get module class name
             String className = getString(PROPKEY_MODULE_PREFIX + moduleName + PROPKEY_MODULE_SUFFIX_CLASS_NAME, configuration);

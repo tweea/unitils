@@ -43,7 +43,6 @@ public class UnitilsParameterized
      * TestClassRunnerForParameters.
      * 
      * @author wiw
-     * @since
      */
     protected class TestClassRunnerForParameters
         extends UnitilsJUnit4TestClassRunner {
@@ -53,12 +52,6 @@ public class UnitilsParameterized
 
         private org.junit.internal.runners.TestClass testClassInternalRunners;
 
-        /**
-         * @param javaClass
-         * @param parametersList
-         * @param i
-         * @throws Exception
-         */
         public TestClassRunnerForParameters(Class<?> javaClass, List<Object[]> parametersList, int i)
             throws Exception {
             super(javaClass);
@@ -83,17 +76,13 @@ public class UnitilsParameterized
             return new TestClass(clazz);
         }
 
-        /**
-         * @return
-         * @throws Exception
-         */
         protected Object[] computeParams()
             throws Exception {
             try {
                 return fParameterList.get(fParameterSetNumber);
             } catch (ClassCastException e) {
                 throw new Exception(
-                    String.format("%s.%s() must return a Collection of arrays.", getTestClass().getName(), getParametersMethod(getfTestClass()).getName()));
+                    String.format("%s.%s() must return a Collection of arrays.", getTestClass().getName(), getParametersMethod(getfTestClass()).getName()), e);
             }
         }
 
@@ -144,13 +133,10 @@ public class UnitilsParameterized
         }
     }
 
-    private final List<Runner> runners = new ArrayList<Runner>();
+    private final List<Runner> runners = new ArrayList<>();
 
     /**
      * Only called reflectively. Do not use programmatically.
-     * 
-     * @param klass
-     * @throws Throwable
      */
     public UnitilsParameterized(Class<?> klass)
         throws Throwable {
@@ -174,10 +160,6 @@ public class UnitilsParameterized
         return (List<Object[]>) getParametersMethod(testClass).invokeExplosively(null);
     }
 
-    /**
-     * @param testClass
-     * @return
-     */
     protected FrameworkMethod getParametersMethod(TestClass testClass)
         throws Exception {
         List<FrameworkMethod> methods = testClass.getAnnotatedMethods(Parameters.class);
@@ -204,17 +186,13 @@ public class UnitilsParameterized
      * UnitilsMethodValidator.
      * 
      * @author wiw
-     * @since
      */
     protected static class UnitilsMethodValidator
         extends MethodValidator {
         private org.junit.internal.runners.TestClass testclass;
 
-        private List<Throwable> errors = new ArrayList<Throwable>();
+        private List<Throwable> errors = new ArrayList<>();
 
-        /**
-         * @param testClass
-         */
         public UnitilsMethodValidator(org.junit.internal.runners.TestClass testClass) {
             super(testClass);
             this.testclass = testClass;

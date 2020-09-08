@@ -84,6 +84,7 @@ public class DerbyDbSupport
      *
      * @return The names of all synonyms in the database
      */
+    @Override
     public Set<String> getSynonymNames() {
         return getSQLHandler().getItemsAsStringSet(
             "select t.TABLENAME from SYS.SYSTABLES t, SYS.SYSSCHEMAS s where t.TABLETYPE = 'A' AND t.SCHEMAID = s.SCHEMAID AND s.SCHEMANAME = '"
@@ -235,7 +236,7 @@ public class DerbyDbSupport
             connection = getSQLHandler().getDataSource().getConnection();
             DatabaseMetaData databaseMetaData = connection.getMetaData();
             resultSet = databaseMetaData.getPrimaryKeys(null, getSchemaName(), tableName);
-            Set<String> result = new HashSet<String>();
+            Set<String> result = new HashSet<>();
             while (resultSet.next()) {
                 result.add(resultSet.getString(4)); // COLUMN_NAME
             }
@@ -263,7 +264,7 @@ public class DerbyDbSupport
             connection = getSQLHandler().getDataSource().getConnection();
             DatabaseMetaData databaseMetaData = connection.getMetaData();
             resultSet = databaseMetaData.getColumns(null, getSchemaName(), tableName, "%");
-            Set<String> result = new HashSet<String>();
+            Set<String> result = new HashSet<>();
             while (resultSet.next()) {
                 if (resultSet.getInt(11) == DatabaseMetaData.columnNoNulls) { // NULLABLE
                     result.add(resultSet.getString(4)); // COLUMN_NAME

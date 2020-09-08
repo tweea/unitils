@@ -31,6 +31,9 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 /**
  * General IO stream manipulation utilities.
  * <p>
@@ -72,8 +75,9 @@ import java.util.List;
  * @author Sandy McArthur
  * @version $Id: IOUtils.java 385117 2006-03-11 18:07:02Z scolebourne $
  */
-@SuppressWarnings("all")
 public class IOUtils {
+    private static final Log LOG = LogFactory.getLog(IOUtils.class);
+
     // NOTE: This class is focussed on InputStream, OutputStream, Reader and
     // Writer. Each method should take at least one of these as a parameter,
     // or return one of them.
@@ -142,6 +146,7 @@ public class IOUtils {
                 input.close();
             }
         } catch (IOException ioe) {
+            LOG.trace("", ioe);
             // ignore
         }
     }
@@ -161,6 +166,7 @@ public class IOUtils {
                 output.close();
             }
         } catch (IOException ioe) {
+            LOG.trace("", ioe);
             // ignore
         }
     }
@@ -180,6 +186,7 @@ public class IOUtils {
                 input.close();
             }
         } catch (IOException ioe) {
+            LOG.trace("", ioe);
             // ignore
         }
     }
@@ -199,6 +206,7 @@ public class IOUtils {
                 output.close();
             }
         } catch (IOException ioe) {
+            LOG.trace("", ioe);
             // ignore
         }
     }
@@ -218,6 +226,7 @@ public class IOUtils {
      *     if an I/O error occurs (never occurs)
      * @deprecated Use {@link String#getBytes()}
      */
+    @Deprecated
     public static byte[] toByteArray(String input)
         throws IOException {
         return input.getBytes();
@@ -383,6 +392,7 @@ public class IOUtils {
      *     if an I/O error occurs (never occurs)
      * @deprecated Use {@link String#String(byte[])}
      */
+    @Deprecated
     public static String toString(byte[] input)
         throws IOException {
         return new String(input);
@@ -406,6 +416,7 @@ public class IOUtils {
      *     if an I/O error occurs (never occurs)
      * @deprecated Use {@link String#String(byte[],String)}
      */
+    @Deprecated
     public static String toString(byte[] input, String encoding)
         throws IOException {
         if (encoding == null) {

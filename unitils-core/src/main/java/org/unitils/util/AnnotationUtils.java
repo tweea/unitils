@@ -42,7 +42,7 @@ public class AnnotationUtils {
         if (Object.class.equals(clazz)) {
             return Collections.emptySet();
         }
-        Set<Field> annotatedFields = new HashSet<Field>();
+        Set<Field> annotatedFields = new HashSet<>();
         Field[] fields = clazz.getDeclaredFields();
         for (Field field : fields) {
             if (field.getAnnotation(annotation) != null) {
@@ -67,7 +67,7 @@ public class AnnotationUtils {
     }
 
     public static <T extends Annotation> Set<T> getMethodLevelAnnotations(Class<?> clazz, Class<T> annotation) {
-        Set<T> result = new HashSet<T>();
+        Set<T> result = new HashSet<>();
         Set<Method> annotatedMethods = getMethodsAnnotatedWith(clazz, annotation);
         for (Method annotatedMethod : annotatedMethods) {
             result.add(annotatedMethod.getAnnotation(annotation));
@@ -76,7 +76,7 @@ public class AnnotationUtils {
     }
 
     public static <T extends Annotation> Set<T> getFieldLevelAnnotations(Class<?> clazz, Class<T> annotation) {
-        Set<T> result = new HashSet<T>();
+        Set<T> result = new HashSet<>();
         Set<Field> annotatedFields = getFieldsAnnotatedWith(clazz, annotation);
         for (Field annotatedField : annotatedFields) {
             result.add(annotatedField.getAnnotation(annotation));
@@ -99,7 +99,7 @@ public class AnnotationUtils {
         if (Object.class.equals(clazz)) {
             return Collections.emptySet();
         }
-        Set<Method> annotatedMethods = new HashSet<Method>();
+        Set<Method> annotatedMethods = new HashSet<>();
         Method[] methods = clazz.getDeclaredMethods();
         for (Method method : methods) {
             if (method.getAnnotation(annotation) != null) {
@@ -120,24 +120,18 @@ public class AnnotationUtils {
         return getClassLevelAnnotation(annotationClass, clazz);
     }
 
-    @SuppressWarnings({
-        "unchecked"
-    })
     public static <T extends Annotation> T getClassLevelAnnotation(Class<T> annotationClass, Class<?> clazz) {
         if (Object.class.equals(clazz)) {
             return null;
         }
 
-        T annotation = (T) clazz.getAnnotation(annotationClass);
+        T annotation = clazz.getAnnotation(annotationClass);
         if (annotation != null) {
             return annotation;
         }
         return getClassLevelAnnotation(annotationClass, clazz.getSuperclass());
     }
 
-    @SuppressWarnings({
-        "unchecked"
-    })
     public static <S extends Annotation, T> T getMethodOrClassLevelAnnotationProperty(Class<S> annotationClass, String annotationPropertyName, T defaultValue,
         Method method, Class<?> clazz) {
         S annotation = method.getAnnotation(annotationClass);
@@ -151,9 +145,6 @@ public class AnnotationUtils {
         return getClassLevelAnnotationProperty(annotationClass, annotationPropertyName, defaultValue, clazz);
     }
 
-    @SuppressWarnings({
-        "unchecked"
-    })
     public static <S extends Annotation, T> T getClassLevelAnnotationProperty(Class<S> annotationClass, String annotationPropertyName, T defaultValue,
         Class<?> clazz) {
         if (Object.class.equals(clazz)) {
@@ -175,11 +166,10 @@ public class AnnotationUtils {
         try {
             return annotation.getMethod(annotationPropertyName);
         } catch (NoSuchMethodException e) {
-            throw new UnitilsException("Could not find annotation property named " + annotationPropertyName + " on annotation " + annotation.getName());
+            throw new UnitilsException("Could not find annotation property named " + annotationPropertyName + " on annotation " + annotation.getName(), e);
         }
     }
 
-    @SuppressWarnings("unchecked")
     public static <T> T getAnnotationPropertyValue(Method annotationProperty, Annotation annotation) {
         try {
             return (T) annotationProperty.invoke(annotation);

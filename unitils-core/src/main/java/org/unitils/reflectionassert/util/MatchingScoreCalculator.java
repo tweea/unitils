@@ -39,7 +39,7 @@ public class MatchingScoreCalculator {
     /**
      * Cache for matching scores
      */
-    protected Map<Difference, Integer> cachedMatchingScores = new IdentityHashMap<Difference, Integer>();
+    protected Map<Difference, Integer> cachedMatchingScores = new IdentityHashMap<>();
 
     /**
      * Gets the matching score for the given difference.
@@ -131,26 +131,32 @@ public class MatchingScoreCalculator {
      */
     protected class MatchingScoreVisitor
         implements DifferenceVisitor<Integer, Integer> {
+        @Override
         public Integer visit(Difference difference, Integer argument) {
             return getMatchingScore(difference);
         }
 
+        @Override
         public Integer visit(ObjectDifference objectDifference, Integer argument) {
             return getMatchingScore(objectDifference);
         }
 
+        @Override
         public Integer visit(ClassDifference classDifference, Integer argument) {
             return getMatchingScore(classDifference);
         }
 
+        @Override
         public Integer visit(MapDifference mapDifference, Integer argument) {
             return getMatchingScore(mapDifference);
         }
 
+        @Override
         public Integer visit(CollectionDifference collectionDifference, Integer argument) {
             return getMatchingScore(collectionDifference);
         }
 
+        @Override
         public Integer visit(UnorderedCollectionDifference unorderedCollectionDifference, Integer argument) {
             return getMatchingScore(unorderedCollectionDifference);
         }

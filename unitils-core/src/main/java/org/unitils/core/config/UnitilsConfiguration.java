@@ -108,10 +108,10 @@ public class UnitilsConfiguration {
             if (required) {
                 throw new UnitilsException("No value found for property " + propertyName);
             }
-            return new ArrayList<String>(0);
+            return new ArrayList<>(0);
         }
         String[] splitValues = values.split(",");
-        List<String> result = new ArrayList<String>(splitValues.length);
+        List<String> result = new ArrayList<>(splitValues.length);
         for (String value : splitValues) {
             if (value == null || "".equals(value.trim())) {
                 continue;
@@ -186,7 +186,7 @@ public class UnitilsConfiguration {
         try {
             return Long.valueOf(value.trim());
         } catch (NumberFormatException e) {
-            throw new UnitilsException("Value " + value + " for property " + propertyName + " is not a long.");
+            throw new UnitilsException("Value " + value + " for property " + propertyName + " is not a long.", e);
         }
     }
 
@@ -209,7 +209,7 @@ public class UnitilsConfiguration {
         try {
             return Long.valueOf(value.trim());
         } catch (NumberFormatException e) {
-            throw new UnitilsException("Value " + value + " for property " + propertyName + " is not a long.");
+            throw new UnitilsException("Value " + value + " for property " + propertyName + " is not a long.", e);
         }
     }
 
@@ -229,7 +229,7 @@ public class UnitilsConfiguration {
         try {
             return Integer.valueOf(value.trim());
         } catch (NumberFormatException e) {
-            throw new UnitilsException("Value " + value + " for property " + propertyName + " is not a number.");
+            throw new UnitilsException("Value " + value + " for property " + propertyName + " is not a number.", e);
         }
     }
 
@@ -252,7 +252,7 @@ public class UnitilsConfiguration {
         try {
             return Integer.valueOf(value.trim());
         } catch (NumberFormatException e) {
-            throw new UnitilsException("Value " + value + " for property " + propertyName + " is not a number.");
+            throw new UnitilsException("Value " + value + " for property " + propertyName + " is not a number.", e);
         }
     }
 
@@ -266,9 +266,6 @@ public class UnitilsConfiguration {
      *     The name, not null
      * @return The instance value, not null
      */
-    @SuppressWarnings({
-        "unchecked"
-    })
     public <T> T getInstance(String propertyName) {
         String className = getString(propertyName);
         return (T) createInstanceOfType(className, false);
@@ -286,9 +283,6 @@ public class UnitilsConfiguration {
      *     The default value
      * @return The instance value, not null
      */
-    @SuppressWarnings({
-        "unchecked"
-    })
     public <T> T getInstance(String propertyName, T defaultValue) {
         String className = getString(propertyName, null);
         if (className == null) {
@@ -330,9 +324,6 @@ public class UnitilsConfiguration {
      *     Optional. The values that define which specific implementation class should be used.
      * @return The instance
      */
-    @SuppressWarnings({
-        "unchecked"
-    })
     public <T> T getInstanceOf(Class<T> type, String... discriminators) {
         String implClassName = getImplClassName(type, discriminators);
         logger.debug("Creating instance of " + type + ". Implementation class " + implClassName);
@@ -360,9 +351,6 @@ public class UnitilsConfiguration {
         return className;
     }
 
-    @SuppressWarnings({
-        "unchecked"
-    })
     private <T> T createInstance(String className) {
         T instance = (T) createInstanceOfType(className, false);
         if (instance instanceof Configurable) {

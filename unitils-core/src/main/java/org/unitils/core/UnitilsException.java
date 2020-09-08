@@ -17,6 +17,8 @@ package org.unitils.core;
  */
 public class UnitilsException
     extends RuntimeException {
+    private static final long serialVersionUID = 1L;
+
     public UnitilsException() {
     }
 

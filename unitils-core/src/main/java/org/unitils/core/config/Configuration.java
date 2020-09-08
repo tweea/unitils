@@ -226,7 +226,7 @@ public class Configuration
     public List<Boolean> getOptionalBooleanList(String propertyName, String... classifiers) {
         List<String> values = getOptionalStringList(propertyName, classifiers);
 
-        List<Boolean> result = new ArrayList<Boolean>(values.size());
+        List<Boolean> result = new ArrayList<>(values.size());
         for (String value : values) {
             Boolean bool = toBoolean(value, propertyName, classifiers);
             result.add(bool);
@@ -296,7 +296,7 @@ public class Configuration
     public List<Integer> getOptionalIntegerList(String propertyName, String... classifiers) {
         List<String> values = getOptionalStringList(propertyName, classifiers);
 
-        List<Integer> result = new ArrayList<Integer>(values.size());
+        List<Integer> result = new ArrayList<>(values.size());
         for (String value : values) {
             Integer integer = toInteger(value, propertyName, classifiers);
             result.add(integer);
@@ -366,7 +366,7 @@ public class Configuration
     public List<Long> getOptionalLongList(String propertyName, String... classifiers) {
         List<String> values = getOptionalStringList(propertyName, classifiers);
 
-        List<Long> result = new ArrayList<Long>(values.size());
+        List<Long> result = new ArrayList<>(values.size());
         for (String value : values) {
             Long longValue = toLong(value, propertyName, classifiers);
             result.add(longValue);
@@ -437,7 +437,7 @@ public class Configuration
     public List<Class<?>> getOptionalClassList(String propertyName, String... classifiers) {
         List<String> values = getOptionalStringList(propertyName, classifiers);
 
-        List<Class<?>> result = new ArrayList<Class<?>>(values.size());
+        List<Class<?>> result = new ArrayList<>(values.size());
         for (String value : values) {
             Class<?> clazz = toClass(value, propertyName, classifiers);
             result.add(clazz);
@@ -461,6 +461,7 @@ public class Configuration
      *     An optional list of classifiers for the property name (see class javadoc for more info)
      * @return The instance
      */
+    @Override
     public <T> T getInstanceOf(Class<T> type, String... classifiers) {
         String propertyName = type.getName();
         String value = getString(propertyName, classifiers);
@@ -537,7 +538,7 @@ public class Configuration
         String propertyName = type.getName();
         List<String> values = getOptionalStringList(propertyName, classifiers);
 
-        List<T> result = new ArrayList<T>(values.size());
+        List<T> result = new ArrayList<>(values.size());
         for (String value : values) {
             T instance = toInstance(type, value, propertyName, classifiers);
             result.add(instance);
@@ -614,7 +615,7 @@ public class Configuration
     public <T extends Enum<T>> List<T> getOptionalEnumList(Class<T> type, String propertyName, String... classifiers) {
         List<String> values = getOptionalStringList(propertyName, classifiers);
 
-        List<T> result = new ArrayList<T>(values.size());
+        List<T> result = new ArrayList<>(values.size());
         for (String value : values) {
             T enumValue = toEnum(type, value, propertyName, classifiers);
             result.add(enumValue);
@@ -644,7 +645,7 @@ public class Configuration
     public <T> List<T> getOptionalValueListOfType(Class<T> type, String propertyName, String... classifiers) {
         List<String> values = getOptionalStringList(propertyName, classifiers);
 
-        List<T> result = new ArrayList<T>(values.size());
+        List<T> result = new ArrayList<>(values.size());
         for (String value : values) {
             T valueOfType = toValueOfType(type, value, propertyName, classifiers);
             result.add(valueOfType);
@@ -686,7 +687,7 @@ public class Configuration
             }
             return Integer.valueOf(value);
         } catch (NumberFormatException e) {
-            throw new UnitilsException("Value " + value + " of " + nameToString(propertyName, classifiers) + " is not an int.");
+            throw new UnitilsException("Value " + value + " of " + nameToString(propertyName, classifiers) + " is not an int.", e);
         }
     }
 
@@ -697,16 +698,16 @@ public class Configuration
             }
             return Long.valueOf(value);
         } catch (NumberFormatException e) {
-            throw new UnitilsException("Value " + value + " of " + nameToString(propertyName, classifiers) + " is not a long.");
+            throw new UnitilsException("Value " + value + " of " + nameToString(propertyName, classifiers) + " is not a long.", e);
         }
     }
 
     protected List<String> toStringList(String value) {
         if (value == null) {
-            return new ArrayList<String>(0);
+            return new ArrayList<>(0);
         }
         String[] splitValues = value.split(",");
-        List<String> result = new ArrayList<String>(splitValues.length);
+        List<String> result = new ArrayList<>(splitValues.length);
         for (String splitValue : splitValues) {
             splitValue = splitValue.trim();
             if ("".equals(splitValue)) {

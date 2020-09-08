@@ -87,7 +87,7 @@ public abstract class AnnotatedInstanceManager<T, A extends Annotation> {
     /**
      * All created intances per class
      */
-    protected Map<Class<?>, T> instances = new HashMap<Class<?>, T>();
+    protected Map<Class<?>, T> instances = new HashMap<>();
 
     /**
      * The type of the managed instances
@@ -280,7 +280,7 @@ public abstract class AnnotatedInstanceManager<T, A extends Annotation> {
      */
     protected List<String> getAnnotationValues(Class<?> testClass) {
         // check class level annotation values
-        List<A> annotations = new ArrayList<A>();
+        List<A> annotations = new ArrayList<>();
         A annotation = testClass.getAnnotation(annotationClass);
         if (annotation != null && !getAnnotationValues(annotation).isEmpty()) {
             annotations.add(annotation);
@@ -311,7 +311,7 @@ public abstract class AnnotatedInstanceManager<T, A extends Annotation> {
 
         // if nothing found, return empty list
         if (annotations.isEmpty()) {
-            return new ArrayList<String>();
+            return new ArrayList<>();
         }
 
         // found exactly 1 annotation ==> get values
@@ -341,7 +341,7 @@ public abstract class AnnotatedInstanceManager<T, A extends Annotation> {
         Set<Method> methods = getMethodsAnnotatedWith(testClass, annotationClass, false);
 
         // look for correct signature (no return value)
-        List<Method> customCreateMethods = new ArrayList<Method>();
+        List<Method> customCreateMethods = new ArrayList<>();
         for (Method method : methods) {
             // do not invoke setter methods
             if (method.getReturnType() != Void.TYPE) {
@@ -417,9 +417,6 @@ public abstract class AnnotatedInstanceManager<T, A extends Annotation> {
      *     The specified locations if there are any, not null
      * @return The instance, null if no create method was found
      */
-    @SuppressWarnings({
-        "unchecked"
-    })
     protected Object invokeCustomCreateMethod(Method customCreateMethod, Object testObject, List<String> annotationValues) {
         Object result;
         try {
@@ -441,7 +438,12 @@ public abstract class AnnotatedInstanceManager<T, A extends Annotation> {
         return result;
     }
 
-    @SuppressWarnings("unchecked")
+    /**
+     * @param testObject
+     *     The test object
+     * @param testClass
+     *     The test class
+     */
     protected T createCustomCreatedInstanceFromCustomCreateMethodResult(Object testObject, Class<?> testClass, Object customCreateMethodResult) {
         return (T) customCreateMethodResult;
     }
@@ -468,10 +470,6 @@ public abstract class AnnotatedInstanceManager<T, A extends Annotation> {
     /**
      * Creates an instance for the given values.
      * 
-     * @param testObject
-     *     TODO
-     * @param testClass
-     *     TODO
      * @param values
      *     The values, not null
      * @return The instance, not null

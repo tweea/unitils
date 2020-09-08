@@ -77,6 +77,7 @@ public class DefaultSQLHandler
      * (non-Javadoc)
      * @see org.unitils.core.dbsupport.SQLHandler#executeUpdate(java.lang.String)
      */
+    @Override
     public int executeUpdate(String sql) {
         logger.debug(sql);
 
@@ -101,6 +102,7 @@ public class DefaultSQLHandler
      * (non-Javadoc)
      * @see org.unitils.core.dbsupport.SQLHandler#executeQuery(java.lang.String)
      */
+    @Override
     public void executeQuery(String sql) {
         logger.debug(sql);
 
@@ -126,6 +128,7 @@ public class DefaultSQLHandler
      * (non-Javadoc)
      * @see org.dbmaintain.dbsupport.SQLHandler#executeUpdateAndCommit(java.lang.String)
      */
+    @Override
     public int executeUpdateAndCommit(String sql) {
         logger.debug(sql);
 
@@ -154,6 +157,7 @@ public class DefaultSQLHandler
      * (non-Javadoc)
      * @see org.unitils.core.dbsupport.SQLHandler#getItemAsLong(java.lang.String)
      */
+    @Override
     public long getItemAsLong(String sql) {
         logger.debug(sql);
 
@@ -181,6 +185,7 @@ public class DefaultSQLHandler
      * (non-Javadoc)
      * @see org.unitils.core.dbsupport.SQLHandler#getItemAsString(java.lang.String)
      */
+    @Override
     public String getItemAsString(String sql) {
         logger.debug(sql);
 
@@ -208,6 +213,7 @@ public class DefaultSQLHandler
      * (non-Javadoc)
      * @see org.unitils.core.dbsupport.SQLHandler#getItemsAsStringSet(java.lang.String)
      */
+    @Override
     public Set<String> getItemsAsStringSet(String sql) {
         logger.debug(sql);
 
@@ -218,7 +224,7 @@ public class DefaultSQLHandler
             connection = dataSource.getConnection();
             statement = connection.createStatement();
             resultSet = statement.executeQuery(sql);
-            Set<String> result = new HashSet<String>();
+            Set<String> result = new HashSet<>();
             while (resultSet.next()) {
                 result.add(resultSet.getString(1));
             }
@@ -234,6 +240,7 @@ public class DefaultSQLHandler
      * (non-Javadoc)
      * @see org.unitils.core.dbsupport.SQLHandler#exists(java.lang.String)
      */
+    @Override
     public boolean exists(String sql) {
         logger.debug(sql);
 
@@ -256,6 +263,7 @@ public class DefaultSQLHandler
      * (non-Javadoc)
      * @see org.unitils.core.dbsupport.SQLHandler#getDataSource()
      */
+    @Override
     public DataSource getDataSource() {
         return dataSource;
     }
@@ -264,6 +272,7 @@ public class DefaultSQLHandler
      * (non-Javadoc)
      * @see org.unitils.core.dbsupport.SQLHandler#isDoExecuteUpdates()
      */
+    @Override
     public boolean isDoExecuteUpdates() {
         return doExecuteUpdates;
     }

@@ -26,6 +26,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.unitils.core.UnitilsException;
 import org.unitils.core.util.TypeUtils;
 
@@ -42,6 +44,8 @@ import static org.apache.commons.lang.StringUtils.capitalize;
  * @author Tim Ducheyne
  */
 public class ReflectionUtils {
+    private static final Log LOG = LogFactory.getLog(ReflectionUtils.class);
+
     /**
      * Creates an instance of the class with the given name. The class's no
      * argument constructor is used to create an instance.
@@ -56,9 +60,6 @@ public class ReflectionUtils {
      *     if the class could not be found or no instance could be
      *     created
      */
-    @SuppressWarnings({
-        "unchecked"
-    })
     public static <T> T createInstanceOfType(String className, boolean bypassAccessibility) {
         try {
             Class<?> type = Class.forName(className);
@@ -142,7 +143,6 @@ public class ReflectionUtils {
      * @throws UnitilsException
      *     if the field could not be accessed
      */
-    @SuppressWarnings("unchecked")
     public static <T> T getFieldValue(Object object, Field field) {
         try {
             field.setAccessible(true);
@@ -181,12 +181,6 @@ public class ReflectionUtils {
 
     /**
      * Sets the given value to the given field on the given object
-     * 
-     * @param obj
-     * @param nameField
-     * @param newObject
-     * @throws SecurityException
-     * @throws NoSuchFieldException
      */
     public static void setFieldValue(Object obj, String nameField, Object newObject)
         throws SecurityException, NoSuchFieldException {
@@ -248,9 +242,6 @@ public class ReflectionUtils {
      * @throws InvocationTargetException
      *     If the called method throwed an exception
      */
-    @SuppressWarnings({
-        "unchecked"
-    })
     public static <T> T invokeMethod(Object target, Method method, Object... arguments)
         throws InvocationTargetException {
         try {
@@ -278,7 +269,7 @@ public class ReflectionUtils {
      * @return A list of Fields, empty list if none found
      */
     public static Set<Field> getFieldsAssignableFrom(Class<?> clazz, Type type, boolean isStatic) {
-        Set<Field> fieldsOfType = new HashSet<Field>();
+        Set<Field> fieldsOfType = new HashSet<>();
         Set<Field> allFields = getAllFields(clazz);
         for (Field field : allFields) {
             if (isAssignable(type, field.getGenericType()) && isStatic(field.getModifiers()) == isStatic) {
@@ -301,7 +292,7 @@ public class ReflectionUtils {
      * @return The fields with the given type
      */
     public static Set<Field> getFieldsOfType(Class<?> clazz, Type type, boolean isStatic) {
-        Set<Field> fields = new HashSet<Field>();
+        Set<Field> fields = new HashSet<>();
         Set<Field> allFields = getAllFields(clazz);
         for (Field field : allFields) {
             if (field.getType().equals(type) && isStatic == isStatic(field.getModifiers())) {
@@ -325,7 +316,7 @@ public class ReflectionUtils {
      * @return A list of Methods, empty list if none found
      */
     public static Set<Method> getSettersAssignableFrom(Class<?> clazz, Type type, boolean isStatic) {
-        Set<Method> settersAssignableFrom = new HashSet<Method>();
+        Set<Method> settersAssignableFrom = new HashSet<>();
 
         Set<Method> allMethods = getAllMethods(clazz);
         for (Method method : allMethods) {
@@ -350,7 +341,7 @@ public class ReflectionUtils {
      * @return All setters for an object of the given type
      */
     public static Set<Method> getSettersOfType(Class<?> clazz, Type type, boolean isStatic) {
-        Set<Method> settersOfType = new HashSet<Method>();
+        Set<Method> settersOfType = new HashSet<>();
         Set<Method> allMethods = getAllMethods(clazz);
         for (Method method : allMethods) {
             if (isSetter(method) && method.getGenericParameterTypes()[0].equals(type) && isStatic == isStatic(method.getModifiers())) {
@@ -417,6 +408,7 @@ public class ReflectionUtils {
                 result = getMethod(clazz, isName, isStatic);
             }
         } catch (Exception e) {
+            LOG.trace("", e);
             result = null;
         }
 
@@ -428,11 +420,10 @@ public class ReflectionUtils {
      * 
      * @param clazz
      *     The class
-     * @param isStatic
      * @return The methods, not null
      */
     public static Set<Method> getAllMethods(Class<?> clazz, boolean isStatic) {
-        Set<Method> result = new HashSet<Method>();
+        Set<Method> result = new HashSet<>();
         Set<Method> allMethods = getAllMethods(clazz);
         if (isStatic) {
             for (Method method : allMethods) {
@@ -448,13 +439,10 @@ public class ReflectionUtils {
     /**
      * Gets all methods of the given class and all its super-classes.
      * 
-     * @param clazz
-     * @param isStatic
-     * @param returnType
      * @return Set<Method>
      */
     public static Set<Method> getAllMethods(Class<?> clazz, boolean isStatic, Class<?> returnType) {
-        Set<Method> result = new HashSet<Method>();
+        Set<Method> result = new HashSet<>();
         Set<Method> allMethods = getAllMethods(clazz, isStatic);
         for (Method method : allMethods) {
             if (method.getReturnType().equals(returnType)) {
@@ -506,6 +494,7 @@ public class ReflectionUtils {
         try {
             field = clazz.getDeclaredField(fieldName);
         } catch (NoSuchFieldException e) {
+            LOG.trace("", e);
             field = null;
         }
 
@@ -584,7 +573,6 @@ public class ReflectionUtils {
      *     The name of the class, not null
      * @return The class, not null
      */
-    @SuppressWarnings("unchecked")
     public static <T> Class<T> getClassWithName(String className) {
         try {
             return (Class<T>) Class.forName(className);
@@ -616,6 +604,7 @@ public class ReflectionUtils {
         try {
             result = clazz.getDeclaredMethod(methodName, parameterTypes);
         } catch (NoSuchMethodException e) {
+            LOG.trace("", e);
             result = null;
         }
         if (result != null && isStatic(result.getModifiers()) == isStatic) {
@@ -632,7 +621,7 @@ public class ReflectionUtils {
      * @return The methods, not null
      */
     public static Set<Method> getAllMethods(Class<?> clazz) {
-        Set<Method> result = new HashSet<Method>();
+        Set<Method> result = new HashSet<>();
         if (clazz == null || clazz.equals(Object.class)) {
             return result;
         }
@@ -659,7 +648,7 @@ public class ReflectionUtils {
      * @return The fields, not null
      */
     public static Set<Field> getAllFields(Class<?> clazz) {
-        Set<Field> result = new HashSet<Field>();
+        Set<Field> result = new HashSet<>();
         if (clazz == null || clazz.equals(Object.class)) {
             return result;
         }
@@ -761,9 +750,6 @@ public class ReflectionUtils {
      *     The type to get a class instance for, not null
      * @return The class instance, not null
      */
-    @SuppressWarnings({
-        "unchecked"
-    })
     public static <T> Class<T> getClassForType(Type type) {
         if (type instanceof Class<?>) {
             return (Class<T>) type;

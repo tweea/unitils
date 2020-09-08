@@ -48,9 +48,9 @@ public class ReflectionComparator {
      * A different cache is used dependent on whether only the first difference is required or whether we need all
      * differences, since the resulting {@link Difference} objects differ.
      */
-    protected Map<Object, Map<Object, Difference>> firstDifferenceCachedResults = new IdentityHashMap<Object, Map<Object, Difference>>();
+    protected Map<Object, Map<Object, Difference>> firstDifferenceCachedResults = new IdentityHashMap<>();
 
-    protected Map<Object, Map<Object, Difference>> allDifferencesCachedResults = new IdentityHashMap<Object, Map<Object, Difference>>();
+    protected Map<Object, Map<Object, Difference>> allDifferencesCachedResults = new IdentityHashMap<>();
 
     /**
      * Creates a comparator that will use the given chain.
@@ -110,7 +110,7 @@ public class ReflectionComparator {
                 return cachedResult.get(right);
             }
         } else {
-            cachedResult = new IdentityHashMap<Object, Difference>();
+            cachedResult = new IdentityHashMap<>();
             saveResultInCache(left, cachedResult, onlyFirstDifference);
         }
         cachedResult.put(right, null);

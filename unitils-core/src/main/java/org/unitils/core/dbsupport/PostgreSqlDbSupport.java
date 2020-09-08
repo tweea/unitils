@@ -91,7 +91,7 @@ public class PostgreSqlDbSupport
      */
     @Override
     public Set<String> getTriggerNames() {
-        Set<String> result = new HashSet<String>();
+        Set<String> result = new HashSet<>();
 
         Set<String> triggerAndTableNames = getSQLHandler().getItemsAsStringSet(
             "select trigger_name || ',' || event_object_table from information_schema.triggers where trigger_schema = '" + getSchemaName() + "'");
@@ -114,6 +114,7 @@ public class PostgreSqlDbSupport
      * @param sequenceName
      *     The sequence to drop (case-sensitive), not null
      */
+    @Override
     public void dropSequence(String sequenceName) {
         getSQLHandler().executeUpdate("drop sequence " + qualified(sequenceName) + " cascade");
     }

@@ -23,6 +23,9 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.Map;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import static java.lang.reflect.Modifier.isStatic;
 import static java.lang.reflect.Modifier.isTransient;
 
@@ -39,6 +42,8 @@ import static org.unitils.reflectionassert.util.HibernateUtil.getUnproxiedValue;
  * @author Filip Neven
  */
 public class ObjectFormatter {
+    private static final Log LOG = LogFactory.getLog(ObjectFormatter.class);
+
     public static final String MOCK_NAME_CHAIN_SEPARATOR = "##chained##";
 
     /* The maximum recursion depth */
@@ -242,7 +247,7 @@ public class ObjectFormatter {
             } catch (IllegalAccessException e) {
                 // this can't happen. Would get a Security exception instead
                 // throw a runtime exception in case the impossible happens.
-                throw new InternalError("Unexpected IllegalAccessException");
+                throw new InternalError("Unexpected IllegalAccessException", e);
             }
         }
 
@@ -274,6 +279,7 @@ public class ObjectFormatter {
             result.append(">");
             return true;
         } catch (Exception e) {
+            LOG.trace("", e);
             return false;
         }
     }
@@ -318,6 +324,7 @@ public class ObjectFormatter {
         try {
             return Class.forName("org.unitils.mock.dummy.DummyObject");
         } catch (ClassNotFoundException e) {
+            LOG.trace("", e);
             return null;
         }
     }
@@ -329,6 +336,7 @@ public class ObjectFormatter {
         try {
             return Class.forName("org.unitils.mock.core.proxy.ProxyUtils");
         } catch (ClassNotFoundException e) {
+            LOG.trace("", e);
             return null;
         }
     }

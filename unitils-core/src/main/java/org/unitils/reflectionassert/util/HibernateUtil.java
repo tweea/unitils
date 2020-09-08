@@ -12,6 +12,8 @@
  */
 package org.unitils.reflectionassert.util;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.unitils.core.UnitilsException;
 
 /**
@@ -24,6 +26,8 @@ import org.unitils.core.UnitilsException;
  * @author Filip Neven
  */
 public class HibernateUtil {
+    private static final Log LOG = LogFactory.getLog(HibernateUtil.class);
+
     /**
      * The hibernate proxy type, null if the class is not found in the classpath
      */
@@ -33,6 +37,7 @@ public class HibernateUtil {
         try {
             hibernateProxyClass = Class.forName("org.hibernate.proxy.HibernateProxy");
         } catch (ClassNotFoundException e) {
+            LOG.trace("", e);
             // hibernate not found in the classpath
             hibernateProxyClass = null;
         }

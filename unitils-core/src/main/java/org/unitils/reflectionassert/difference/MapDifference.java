@@ -27,13 +27,13 @@ public class MapDifference
     extends Difference {
 
     /* The differences per key */
-    private Map<Object, Difference> valueDifferences = new IdentityHashMap<Object, Difference>();
+    private Map<Object, Difference> valueDifferences = new IdentityHashMap<>();
 
     /* The keys of the left map that were missing in the right map */
-    private List<Object> leftMissingKeys = new ArrayList<Object>();
+    private List<Object> leftMissingKeys = new ArrayList<>();
 
     /* The keys of the right map that were missing in the left map */
-    private List<Object> rightMissingKeys = new ArrayList<Object>();
+    private List<Object> rightMissingKeys = new ArrayList<>();
 
     /* The left object as a map */
     private Map<?, ?> leftMap;

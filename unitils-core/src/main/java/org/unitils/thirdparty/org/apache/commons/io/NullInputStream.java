@@ -128,6 +128,7 @@ public class NullInputStream
      *
      * @return The number of bytes that can be read.
      */
+    @Override
     public int available() {
         long avail = size - position;
         if (avail <= 0) {
@@ -146,6 +147,7 @@ public class NullInputStream
      * @throws IOException
      *     If an error occurs.
      */
+    @Override
     public void close()
         throws IOException {
         eof = false;
@@ -162,6 +164,7 @@ public class NullInputStream
      * @throws UnsupportedOperationException
      *     if mark is not supported.
      */
+    @Override
     public synchronized void mark(int readlimit) {
         if (!markSupported) {
             throw new UnsupportedOperationException("Mark not supported");
@@ -175,6 +178,7 @@ public class NullInputStream
      *
      * @return Whether <i>mark</i> is supported or not.
      */
+    @Override
     public boolean markSupported() {
         return markSupported;
     }
@@ -191,6 +195,7 @@ public class NullInputStream
      * @throws IOException
      *     if trying to read past the end of file.
      */
+    @Override
     public int read()
         throws IOException {
         if (eof) {
@@ -217,6 +222,7 @@ public class NullInputStream
      * @throws IOException
      *     if trying to read past the end of file.
      */
+    @Override
     public int read(byte[] bytes)
         throws IOException {
         return read(bytes, 0, bytes.length);
@@ -240,6 +246,7 @@ public class NullInputStream
      * @throws IOException
      *     if trying to read past the end of file.
      */
+    @Override
     public int read(byte[] bytes, int offset, int length)
         throws IOException {
         if (eof) {
@@ -268,6 +275,7 @@ public class NullInputStream
      *     or the read limit has been exceed since the last position was
      *     marked.
      */
+    @Override
     public synchronized void reset()
         throws IOException {
         if (!markSupported) {
@@ -297,6 +305,7 @@ public class NullInputStream
      * @throws IOException
      *     if trying to read past the end of file.
      */
+    @Override
     public long skip(long numberOfBytes)
         throws IOException {
         if (eof) {

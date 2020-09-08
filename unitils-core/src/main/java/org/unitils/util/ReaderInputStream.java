@@ -27,6 +27,7 @@ public class ReaderInputStream
         this.reader = reader;
     }
 
+    @Override
     public int read()
         throws IOException {
         return reader.read();

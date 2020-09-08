@@ -20,11 +20,16 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 /**
  * A collection of JDBC helper methods. This class is thread safe.
  * TODO Make sure we use DataSourceUtils.getConnection and releaseConnection for getting / releasing Connections
  */
 public final class DbUtils {
+    private static final Log LOG = LogFactory.getLog(DbUtils.class);
+
     /**
      * Close a <code>Connection</code>, avoid closing if null.
      *
@@ -81,6 +86,7 @@ public final class DbUtils {
         try {
             close(conn);
         } catch (SQLException e) {
+            LOG.trace("", e);
             // quiet
         }
     }
@@ -120,6 +126,7 @@ public final class DbUtils {
         try {
             close(rs);
         } catch (SQLException e) {
+            LOG.trace("", e);
             // quiet
         }
     }
@@ -135,6 +142,7 @@ public final class DbUtils {
         try {
             close(stmt);
         } catch (SQLException e) {
+            LOG.trace("", e);
             // quiet
         }
     }
@@ -171,6 +179,7 @@ public final class DbUtils {
         try {
             commitAndClose(conn);
         } catch (SQLException e) {
+            LOG.trace("", e);
             // quiet
         }
     }
@@ -188,13 +197,17 @@ public final class DbUtils {
             Class.forName(driverClassName).newInstance();
             return true;
         } catch (ClassNotFoundException e) {
+            LOG.trace("", e);
             return false;
         } catch (IllegalAccessException e) {
+            LOG.trace("", e);
             // Constructor is private, OK for DriverManager contract
             return true;
         } catch (InstantiationException e) {
+            LOG.trace("", e);
             return false;
         } catch (Throwable e) {
+            LOG.trace("", e);
             return false;
         }
     }
@@ -305,6 +318,7 @@ public final class DbUtils {
         try {
             rollbackAndClose(conn);
         } catch (SQLException e) {
+            LOG.trace("", e);
             // quiet
         }
     }

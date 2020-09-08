@@ -35,6 +35,7 @@ public class IgnoreDefaultsComparator
      *     The right object
      * @return True if left is null, false or 0
      */
+    @Override
     public boolean canCompare(Object left, Object right) {
         // object types
         if (left == null) {
@@ -68,6 +69,7 @@ public class IgnoreDefaultsComparator
      *     The root comparator for inner comparisons, not null
      * @return null
      */
+    @Override
     public Difference compare(Object left, Object right, boolean onlyFirstDifference, ReflectionComparator reflectionComparator) {
         // ignore
         return null;

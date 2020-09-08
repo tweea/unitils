@@ -41,6 +41,7 @@ public class ObjectComparator
      *     The right object
      * @return True if not null
      */
+    @Override
     public boolean canCompare(Object left, Object right) {
         if (left == null || right == null) {
             return false;
@@ -64,6 +65,7 @@ public class ObjectComparator
      *     The root comparator for inner comparisons, not null
      * @return A ObjectDifference or null if both maps are equal
      */
+    @Override
     public Difference compare(Object left, Object right, boolean onlyFirstDifference, ReflectionComparator reflectionComparator) {
         // check different class type
         Class<?> clazz = left.getClass();
@@ -118,7 +120,7 @@ public class ObjectComparator
             } catch (IllegalAccessException e) {
                 // this can't happen. Would get a Security exception instead
                 // throw a runtime exception in case the impossible happens.
-                throw new InternalError("Unexpected IllegalAccessException");
+                throw new InternalError("Unexpected IllegalAccessException", e);
             }
         }
 
