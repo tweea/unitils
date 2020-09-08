@@ -25,11 +25,10 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.unitils.mock.core.proxy.CloneUtil;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
-
-import static junit.framework.Assert.assertEquals;
 
 /**
  * @author Filip Neven
@@ -102,9 +101,9 @@ public class DummyObjectUtilTest {
         assertEquals(new Integer(0), dummy.getInteger());
         assertEquals(Long.valueOf(0), dummy.getLong());
         assertEquals(new Integer(0), dummy.getInteger());
-        assertEquals((float) 0, dummy.getFloat());
+        assertEquals(0, dummy.getFloat(), 0.00000001F);
         assertEquals(new BigInteger("0"), dummy.getBigInteger());
-        assertEquals((double) 0, dummy.getDouble());
+        assertEquals(0, dummy.getDouble(), 0.00000001D);
         assertEquals(new Short("0"), dummy.getShort());
         assertEquals(new BigDecimal("0"), dummy.getBigDecimal());
         assertEquals(new Byte("0"), dummy.getByte());
@@ -133,6 +132,10 @@ public class DummyObjectUtilTest {
     }
 
     private class TestClass {
+        /**
+         * @param someValue
+         *     Used for testing
+         */
         public TestClass(String someValue) {
         }
 

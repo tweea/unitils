@@ -92,11 +92,8 @@ public class DefaultTempServiceDeleteTempFileOrDirTest {
     public void fileInUse()
         throws Exception {
         File tempFile = defaultTempService.createTempFile("tempFile.tmp");
-        FileOutputStream out = new FileOutputStream(tempFile);
-        try {
+        try (FileOutputStream out = new FileOutputStream(tempFile)) {
             defaultTempService.deleteTempFileOrDir(tempFile);
-        } finally {
-            out.close();
         }
     }
 
@@ -106,11 +103,8 @@ public class DefaultTempServiceDeleteTempFileOrDirTest {
         throws Exception {
         File tempDir = defaultTempService.createTempDir("tempDir");
         File inUseFile = new File(tempDir, "file.tmp");
-        FileOutputStream out = new FileOutputStream(inUseFile);
-        try {
+        try (FileOutputStream out = new FileOutputStream(inUseFile)) {
             defaultTempService.deleteTempFileOrDir(tempDir);
-        } finally {
-            out.close();
         }
     }
 }

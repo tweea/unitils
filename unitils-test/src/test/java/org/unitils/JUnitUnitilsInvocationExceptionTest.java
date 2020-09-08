@@ -25,6 +25,7 @@ import org.unitils.TracingTestListener.TestFramework;
 import org.unitils.core.TestListener;
 import org.unitils.inject.util.InjectionUtils;
 
+import static org.junit.Assert.assertEquals;
 import static org.unitils.TracingTestListener.ListenerInvocation.LISTENER_AFTER_CREATE_TEST_OBJECT;
 import static org.unitils.TracingTestListener.ListenerInvocation.LISTENER_AFTER_TEST_METHOD;
 import static org.unitils.TracingTestListener.ListenerInvocation.LISTENER_AFTER_TEST_TEARDOWN;
@@ -39,8 +40,6 @@ import static org.unitils.TracingTestListener.TestInvocation.TEST_BEFORE_CLASS;
 import static org.unitils.TracingTestListener.TestInvocation.TEST_METHOD;
 import static org.unitils.TracingTestListener.TestInvocation.TEST_SET_UP;
 import static org.unitils.TracingTestListener.TestInvocation.TEST_TEAR_DOWN;
-
-import static junit.framework.Assert.assertEquals;
 
 /**
  * Test for the flows in case an exception occurs in one of the listener or test methods for JUnit3 ({@link UnitilsJUnit3}),

@@ -22,7 +22,7 @@ import java.security.DigestInputStream;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-import org.hibernate.lob.ReaderInputStream;
+import org.hibernate.engine.jdbc.ReaderInputStream;
 import org.unitils.core.UnitilsException;
 import org.unitils.thirdparty.org.apache.commons.io.IOUtils;
 import org.unitils.thirdparty.org.apache.commons.io.NullWriter;
@@ -73,9 +73,9 @@ public abstract class ScriptContentHandle {
 
     protected void readScript()
         throws IOException {
-        Reader scriptReader = openScriptContentReader();
-        IOUtils.copy(scriptReader, new NullWriter());
-        scriptReader.close();
+        try (Reader scriptReader = openScriptContentReader()) {
+            IOUtils.copy(scriptReader, new NullWriter());
+        }
     }
 
     protected String getHexPresentation(byte[] byteArray) {

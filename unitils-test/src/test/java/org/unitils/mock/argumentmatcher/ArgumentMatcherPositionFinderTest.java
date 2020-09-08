@@ -159,7 +159,7 @@ public class ArgumentMatcherPositionFinderTest {
      * Test class with 5 proxy method invocations.
      */
     public static class TestClass {
-        private MockObject<MockedClass> mockObject = new MockObject<MockedClass>("testMock", MockedClass.class, this);
+        private MockObject<MockedClass> mockObject = new MockObject<>("testMock", MockedClass.class, this);
 
         private MockBehavior dummyBehavior = MockUnitils.createDummy(MockBehavior.class);
 

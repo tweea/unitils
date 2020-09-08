@@ -65,9 +65,17 @@ public class ReflectionUtilsCreateInstanceOfTypeTest
         public TestConstructor() {
         }
 
+        /**
+         * @param test
+         *     Used for testing
+         */
         public TestConstructor(String test) {
         }
 
+        /**
+         * @param test
+         *     Used for testing
+         */
         @UsedForTesting
         private TestConstructor(int test) {
         }

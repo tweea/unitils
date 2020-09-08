@@ -89,11 +89,8 @@ public class DefaultTempServiceCreateTempDirTest {
         File existingDir = defaultTempService.createTempDir("tempDir");
         File existingFile = new File(existingDir, "file.txt");
         existingFile.createNewFile();
-        FileOutputStream out = new FileOutputStream(existingFile);
-        try {
+        try (FileOutputStream out = new FileOutputStream(existingFile)) {
             defaultTempService.createTempDir("tempDir");
-        } finally {
-            out.close();
         }
     }
 }

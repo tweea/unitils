@@ -85,11 +85,8 @@ public class DefaultTempServiceCreateTempFileTest {
     public void existingFileInUse()
         throws Exception {
         File existingFile = defaultTempService.createTempFile("tempFile.tmp");
-        FileOutputStream out = new FileOutputStream(existingFile);
-        try {
+        try (FileOutputStream out = new FileOutputStream(existingFile)) {
             defaultTempService.createTempFile("tempFile.tmp");
-        } finally {
-            out.close();
         }
     }
 }
