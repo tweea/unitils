@@ -39,18 +39,16 @@ public class JpaEntityManagerFactoryLoader
     implements OrmPersistenceUnitLoader<EntityManagerFactory, Object, JpaConfig> {
     protected String databaseName;
 
-    /**
-     * @param databaseName
-     */
     public JpaEntityManagerFactoryLoader(String databaseName) {
         this.databaseName = databaseName;
     }
 
+    @Override
     public ConfiguredOrmPersistenceUnit<EntityManagerFactory, Object> getConfiguredOrmPersistenceUnit(Object testObject, JpaConfig entityManagerConfig) {
         AbstractEntityManagerFactoryBean factoryBean = createEntityManagerFactoryBean(testObject, entityManagerConfig);
         EntityManagerFactory entityManagerFactory = factoryBean.getObject();
         Object providerSpecificConfigurationObject = getJpaProviderSupport().getProviderSpecificConfigurationObject(factoryBean.getPersistenceProvider());
-        return new ConfiguredOrmPersistenceUnit<EntityManagerFactory, Object>(entityManagerFactory, providerSpecificConfigurationObject);
+        return new ConfiguredOrmPersistenceUnit<>(entityManagerFactory, providerSpecificConfigurationObject);
     }
 
     /**

@@ -37,9 +37,6 @@ public class OrmConfig
 
     /**
      * Creates a new instance
-     * 
-     * @param configFiles
-     * @param configMethod
      */
     public OrmConfig(Set<String> configFiles, Method configMethod) {
         this.configFiles = configFiles;

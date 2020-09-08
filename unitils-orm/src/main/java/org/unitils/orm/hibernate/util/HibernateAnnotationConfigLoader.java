@@ -14,14 +14,17 @@ public class HibernateAnnotationConfigLoader
         super(HibernateSessionFactory.class);
     }
 
+    @Override
     protected boolean isConfiguringAnnotation(HibernateSessionFactory annotation) {
         return annotation.value().length > 0;
     }
 
+    @Override
     protected OrmConfig createResourceConfig(HibernateSessionFactory configuringAnnotation, Method customConfigMethod) {
         return new OrmConfig(CollectionUtils.asSet(configuringAnnotation.value()), customConfigMethod);
     }
 
+    @Override
     protected boolean isCustomConfigMethod(Method annotatedMethod) {
         return annotatedMethod.getReturnType().toString().equals("void") && annotatedMethod.getParameterTypes().length == 1
             && Configuration.class.isAssignableFrom(annotatedMethod.getParameterTypes()[0]);

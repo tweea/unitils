@@ -16,6 +16,7 @@ import java.util.Collection;
 
 import javax.persistence.EntityManagerFactory;
 
+import org.springframework.orm.hibernate3.LocalSessionFactoryBean;
 import org.springframework.orm.jpa.AbstractEntityManagerFactoryBean;
 import org.unitils.core.Unitils;
 import org.unitils.orm.common.spring.OrmSpringSupport;
@@ -32,17 +33,19 @@ import org.unitils.spring.SpringModule;
  */
 public class JpaSpringSupport
     implements OrmSpringSupport<EntityManagerFactory, Object> {
+    @Override
     public boolean isPersistenceUnitConfiguredInSpring(Object testObject) {
         return getEntityManagerFactoryBean(testObject) != null;
     }
 
+    @Override
     public ConfiguredOrmPersistenceUnit<EntityManagerFactory, Object> getConfiguredPersistenceUnit(Object testObject) {
         AbstractEntityManagerFactoryBean factoryBean = getEntityManagerFactoryBean(testObject);
 
         EntityManagerFactory entityManagerFactory = factoryBean.getObject();
         Object providerSpecificConfigurationObject = getJpaModule().getJpaProviderSupport()
             .getProviderSpecificConfigurationObject(factoryBean.getPersistenceProvider());
-        return new ConfiguredOrmPersistenceUnit<EntityManagerFactory, Object>(entityManagerFactory, providerSpecificConfigurationObject);
+        return new ConfiguredOrmPersistenceUnit<>(entityManagerFactory, providerSpecificConfigurationObject);
     }
 
     /**

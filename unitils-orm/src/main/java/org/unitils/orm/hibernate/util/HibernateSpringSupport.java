@@ -37,17 +37,19 @@ public class HibernateSpringSupport
     implements OrmSpringSupport<SessionFactory, Configuration> {
 
     // todo javadoc
+    @Override
     public boolean isPersistenceUnitConfiguredInSpring(Object testObject) {
         return getSessionFactoryBean(testObject) != null;
     }
 
     // todo javadoc
+    @Override
     public ConfiguredOrmPersistenceUnit<SessionFactory, Configuration> getConfiguredPersistenceUnit(Object testObject) {
         LocalSessionFactoryBean factoryBean = getSessionFactoryBean(testObject);
-        SessionFactory entityManagerFactory = (SessionFactory) factoryBean.getObject();
+        SessionFactory entityManagerFactory = factoryBean.getObject();
         Configuration hibernateConfiguration = factoryBean.getConfiguration();
 
-        return new ConfiguredOrmPersistenceUnit<SessionFactory, Configuration>(entityManagerFactory, hibernateConfiguration);
+        return new ConfiguredOrmPersistenceUnit<>(entityManagerFactory, hibernateConfiguration);
     }
 
     /**

@@ -45,7 +45,7 @@ public class HibernateAssert {
     public static void assertMappingWithDatabaseConsistent(Configuration configuration, Session session, Dialect databaseDialect) {
         String[] script = generateDatabaseUpdateScript(configuration, session, databaseDialect);
 
-        List<String> differences = new ArrayList<String>();
+        List<String> differences = new ArrayList<>();
         for (String line : script) {
             // ignore constraints
             if (line.indexOf("add constraint") == -1) {

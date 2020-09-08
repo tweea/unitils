@@ -29,12 +29,10 @@ import org.springframework.orm.hibernate3.SessionFactoryUtils;
 import org.springframework.orm.hibernate3.SessionHolder;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.support.TransactionSynchronizationManager;
-import org.unitils.core.Module;
 import org.unitils.core.TestListener;
 import org.unitils.core.UnitilsException;
 import org.unitils.database.DataSourceWrapper;
 import org.unitils.database.transaction.impl.UnitilsTransactionManagementConfiguration;
-import org.unitils.database.util.Flushable;
 import org.unitils.orm.common.OrmModule;
 import org.unitils.orm.common.util.ConfiguredOrmPersistenceUnit;
 import org.unitils.orm.common.util.OrmConfig;
@@ -65,8 +63,7 @@ import static org.unitils.util.PropertyUtils.getString;
  * @author Tim Ducheyne
  */
 public class HibernateModule
-    extends OrmModule<SessionFactory, Session, Configuration, HibernateSessionFactory, OrmConfig, HibernateAnnotationConfigLoader>
-    implements Module, Flushable {
+    extends OrmModule<SessionFactory, Session, Configuration, HibernateSessionFactory, OrmConfig, HibernateAnnotationConfigLoader> {
 
     /* Property that defines the class name of the hibernate configuration */
     public static final String PROPKEY_CONFIGURATION_CLASS_NAME = "HibernateModule.configuration.implClassName";
@@ -83,6 +80,7 @@ public class HibernateModule
      * @param configuration
      *     The Unitils configuration, not null
      */
+    @Override
     public void init(Properties configuration) {
         super.init(configuration);
 
@@ -90,6 +88,7 @@ public class HibernateModule
         configurationObjectClass = ReflectionUtils.getClassWithName(configurationImplClassName);
     }
 
+    @Override
     public void afterInit() {
         super.afterInit();
     }
@@ -99,10 +98,12 @@ public class HibernateModule
         // current test object defines a hibernate SessionFactory
         for (final DataSourceWrapper wrapper : wrappers) {
             getDatabaseModule().registerTransactionManagementConfiguration(new UnitilsTransactionManagementConfiguration() {
+                @Override
                 public boolean isApplicableFor(Object testObject) {
                     return isPersistenceUnitConfiguredFor(testObject);
                 }
 
+                @Override
                 public PlatformTransactionManager getSpringPlatformTransactionManager(Object testObject) {
                     SessionFactory sessionFactory = getPersistenceUnit(testObject);
                     HibernateTransactionManager hibernateTransactionManager = new HibernateTransactionManager(sessionFactory);
@@ -110,10 +111,12 @@ public class HibernateModule
                     return hibernateTransactionManager;
                 }
 
+                @Override
                 public boolean isTransactionalResourceAvailable(Object testObject) {
                     return wrapper.isDataSourceLoaded();
                 }
 
+                @Override
                 public Integer getPreference() {
                     return 10;
                 }
@@ -214,6 +217,7 @@ public class HibernateModule
     /**
      * @return The TestListener associated with this module
      */
+    @Override
     public TestListener getTestListener() {
         return new HibernateTestListener();
     }

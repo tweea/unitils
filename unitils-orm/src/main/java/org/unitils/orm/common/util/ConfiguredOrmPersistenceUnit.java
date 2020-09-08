@@ -35,9 +35,6 @@ public class ConfiguredOrmPersistenceUnit<ORMPU, ORMCONFOBJ> {
 
     /**
      * Creates a new instance
-     * 
-     * @param ormPersistenceUnit
-     * @param ormConfigurationObject
      */
     public ConfiguredOrmPersistenceUnit(ORMPU ormPersistenceUnit, ORMCONFOBJ ormConfigurationObject) {
         super();

@@ -28,18 +28,22 @@ import org.unitils.orm.jpa.util.JpaProviderSupport;
  */
 public class OpenJpaProviderSupport
     implements JpaProviderSupport {
+    @Override
     public void assertMappingWithDatabaseConsistent(EntityManager entityManager, Object configurationObject) {
         throw new UnsupportedOperationException("The method assertMappingWithDatabaseConsistent is not implemented for openjpa");
     }
 
+    @Override
     public Object getProviderSpecificConfigurationObject(PersistenceProvider persistenceProvider) {
         return null;
     }
 
+    @Override
     public JpaVendorAdapter getSpringJpaVendorAdaptor() {
         return new OpenJpaVendorAdapter();
     }
 
+    @Override
     public LoadTimeWeaver getLoadTimeWeaver() {
         return null;
     }

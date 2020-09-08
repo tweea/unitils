@@ -99,6 +99,7 @@ public class JpaModule
      * @param configuration
      *     The Unitils configuration, not null
      */
+    @Override
     public void init(Properties configuration) {
         super.init(configuration);
 
@@ -106,6 +107,7 @@ public class JpaModule
         jpaProviderSupport = ConfigUtils.getInstanceOf(JpaProviderSupport.class, configuration, persistenceProviderImplClassName);
     }
 
+    @Override
     public void afterInit() {
         super.afterInit();
     }
@@ -115,10 +117,12 @@ public class JpaModule
         // current test object defines a JPA EntityManagerFactory
         for (final DataSourceWrapper wrapper : wrappers) {
             getDatabaseModule().registerTransactionManagementConfiguration(new UnitilsTransactionManagementConfiguration() {
+                @Override
                 public boolean isApplicableFor(Object testObject) {
                     return isPersistenceUnitConfiguredFor(testObject);
                 }
 
+                @Override
                 public PlatformTransactionManager getSpringPlatformTransactionManager(Object testObject) {
                     EntityManagerFactory entityManagerFactory = getPersistenceUnit(testObject);
                     JpaTransactionManager jpaTransactionManager = new JpaTransactionManager(entityManagerFactory);
@@ -127,10 +131,12 @@ public class JpaModule
                     return jpaTransactionManager;
                 }
 
+                @Override
                 public boolean isTransactionalResourceAvailable(Object testObject) {
                     return wrapper.isDataSourceLoaded();
                 }
 
+                @Override
                 public Integer getPreference() {
                     return 10;
                 }
@@ -163,10 +169,12 @@ public class JpaModule
         return "org.unitils.orm.jpa.util.spring.JpaSpringSupport";
     }
 
+    @Override
     protected EntityManager doGetPersistenceContext(Object testObject) {
         return EntityManagerFactoryUtils.getTransactionalEntityManager(getPersistenceUnit(testObject));
     }
 
+    @Override
     protected EntityManager doGetActivePersistenceContext(Object testObject) {
         EntityManagerHolder entityManagerHolder = (EntityManagerHolder) TransactionSynchronizationManager.getResource(getPersistenceUnit(testObject));
         if (entityManagerHolder != null && entityManagerHolder.getEntityManager() != null && entityManagerHolder.getEntityManager().isOpen()) {
@@ -175,6 +183,7 @@ public class JpaModule
         return null;
     }
 
+    @Override
     protected void flushOrmPersistenceContext(EntityManager activeEntityManager) {
         logger.info("Flushing entity manager " + activeEntityManager);
         activeEntityManager.flush();
@@ -273,6 +282,7 @@ public class JpaModule
     /**
      * @return The TestListener associated with this module
      */
+    @Override
     public TestListener getTestListener() {
         return new JpaTestListener();
     }

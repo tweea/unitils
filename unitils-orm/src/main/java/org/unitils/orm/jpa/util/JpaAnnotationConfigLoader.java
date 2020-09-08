@@ -31,14 +31,17 @@ public class JpaAnnotationConfigLoader
         super(JpaEntityManagerFactory.class);
     }
 
+    @Override
     protected boolean isConfiguringAnnotation(JpaEntityManagerFactory annotation) {
         return !"".equals(annotation.persistenceUnit());
     }
 
+    @Override
     protected JpaConfig createResourceConfig(JpaEntityManagerFactory configuringAnnotation, Method customConfigMethod) {
         return new JpaConfig(configuringAnnotation.persistenceUnit(), configuringAnnotation.configFile(), customConfigMethod);
     }
 
+    @Override
     protected boolean isCustomConfigMethod(Method annotatedMethod) {
         return annotatedMethod.getReturnType().toString().equals("void") && annotatedMethod.getParameterTypes().length == 1
             && AbstractEntityManagerFactoryBean.class.isAssignableFrom(annotatedMethod.getParameterTypes()[0]);

@@ -78,7 +78,7 @@ abstract public class OrmModule<ORM_PERSISTENCE_UNIT, ORM_PERSISTENCE_CONTEXT, P
      * Cache for persistence units and its configuration. We use this to make sure that for tests that use the same
      * persistence unit configuration, the same persistence unit instance is reused
      */
-    protected Map<ORM_CONFIG, ConfiguredOrmPersistenceUnit<ORM_PERSISTENCE_UNIT, PROVIDER_CONFIGURATION_OBJECT>> configuredOrmPersistenceUnitCache = new HashMap<ORM_CONFIG, ConfiguredOrmPersistenceUnit<ORM_PERSISTENCE_UNIT, PROVIDER_CONFIGURATION_OBJECT>>();
+    protected Map<ORM_CONFIG, ConfiguredOrmPersistenceUnit<ORM_PERSISTENCE_UNIT, PROVIDER_CONFIGURATION_OBJECT>> configuredOrmPersistenceUnitCache = new HashMap<>();
 
     /**
      * Support class that enables getting a configured persistence unit from a spring ApplicationContext configured in
@@ -88,13 +88,15 @@ abstract public class OrmModule<ORM_PERSISTENCE_UNIT, ORM_PERSISTENCE_CONTEXT, P
 
     protected String databaseName;
 
-    protected Set<DataSourceWrapper> wrappers = new HashSet<DataSourceWrapper>();
+    protected Set<DataSourceWrapper> wrappers = new HashSet<>();
 
+    @Override
     public void init(Properties configuration) {
         persistenceUnitConfigLoader = createOrmConfigLoader();
         ormPersistenceUnitLoader = createOrmPersistenceUnitLoader();
     }
 
+    @Override
     public void afterInit() {
         initOrmSpringSupport();
     }
@@ -288,6 +290,7 @@ abstract public class OrmModule<ORM_PERSISTENCE_UNIT, ORM_PERSISTENCE_CONTEXT, P
      * @param testObject
      *     The test instance, not null
      */
+    @Override
     public void flushDatabaseUpdates(Object testObject) {
         ORM_PERSISTENCE_CONTEXT activePersistenceContext = getActivePersistenceContext(testObject);
         if (activePersistenceContext != null) {

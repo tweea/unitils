@@ -59,6 +59,7 @@ abstract public class AnnotationConfigLoader<A extends Annotation, CFG extends R
      * 
      * @return The resource configuration, if available. Null if not.
      */
+    @Override
     public CFG loadResourceConfig(Object testObject) {
         return getResourceConfig(testObject.getClass());
     }
@@ -70,7 +71,7 @@ abstract public class AnnotationConfigLoader<A extends Annotation, CFG extends R
      */
     protected CFG getResourceConfig(Class<?> testClass) {
         // look for a class level configuring annotation
-        Set<A> configuringAnnotations = new HashSet<A>();
+        Set<A> configuringAnnotations = new HashSet<>();
         A annotation = testClass.getAnnotation(annotationClass);
         if (annotation != null && isConfiguringAnnotation(annotation)) {
             configuringAnnotations.add(annotation);

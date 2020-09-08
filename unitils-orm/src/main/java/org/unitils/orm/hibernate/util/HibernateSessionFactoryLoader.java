@@ -32,18 +32,16 @@ public class HibernateSessionFactoryLoader
     implements OrmPersistenceUnitLoader<SessionFactory, Configuration, OrmConfig> {
     protected String databaseName;
 
-    /**
-     * @param databaseName
-     */
     public HibernateSessionFactoryLoader(String databaseName) {
         this.databaseName = databaseName;
     }
 
+    @Override
     public ConfiguredOrmPersistenceUnit<SessionFactory, Configuration> getConfiguredOrmPersistenceUnit(Object testObject, OrmConfig entityManagerConfig) {
         LocalSessionFactoryBean factoryBean = createSessionFactoryBean(testObject, entityManagerConfig);
-        SessionFactory entityManagerFactory = (SessionFactory) factoryBean.getObject();
+        SessionFactory entityManagerFactory = factoryBean.getObject();
         Configuration hibernateConfiguration = factoryBean.getConfiguration();
-        return new ConfiguredOrmPersistenceUnit<SessionFactory, Configuration>(entityManagerFactory, hibernateConfiguration);
+        return new ConfiguredOrmPersistenceUnit<>(entityManagerFactory, hibernateConfiguration);
     }
 
     protected LocalSessionFactoryBean createSessionFactoryBean(Object testObject, OrmConfig entityManagerConfig) {

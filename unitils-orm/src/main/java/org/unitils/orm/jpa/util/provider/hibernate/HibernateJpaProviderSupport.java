@@ -37,6 +37,7 @@ public class HibernateJpaProviderSupport
     /**
      * Checks if the mapping of the JPA entities with the database is still correct.
      */
+    @Override
     public void assertMappingWithDatabaseConsistent(EntityManager entityManager, Object configurationObject) {
         Ejb3Configuration configuration = (Ejb3Configuration) configurationObject;
         Dialect databaseDialect = getHibernateDatabaseDialect(configuration);
@@ -63,10 +64,12 @@ public class HibernateJpaProviderSupport
         }
     }
 
+    @Override
     public JpaVendorAdapter getSpringJpaVendorAdaptor() {
         return new UnitilsHibernateJpaVendorAdapter();
     }
 
+    @Override
     public Object getProviderSpecificConfigurationObject(PersistenceProvider persistenceProvider) {
         if (!(persistenceProvider instanceof UnitilsHibernatePersistenceProvider)) {
             throw new UnitilsException(
@@ -76,6 +79,7 @@ public class HibernateJpaProviderSupport
         return hibernatePersistenceProvider.getHibernateConfiguration();
     }
 
+    @Override
     public LoadTimeWeaver getLoadTimeWeaver() {
         return null;
     }
