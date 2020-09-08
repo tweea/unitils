@@ -18,8 +18,8 @@ import org.junit.Test;
 import org.unitils.UnitilsJUnit4;
 import org.unitils.io.annotation.TempFile;
 
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * @author Jeroen Horemans

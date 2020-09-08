@@ -4,13 +4,13 @@ import java.lang.reflect.Method;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.unitils.core.annotation.UsedForTesting;
 import org.unitils.util.ReflectionUtils;
 
 /**
  * Test <a href="https://unitils.atlassian.net/browse/UNI-263">STVE-183</a>.
  * 
  * @author Willemijn Wouters
- * @since
  */
 public class ReflectionUtilsTest {
     @Test
@@ -166,8 +166,6 @@ public class ReflectionUtilsTest {
         Assert.assertNotNull(ReflectionUtils.getSetter(TestClass1.class, "wrapperByte", false));
     }
 
-    /***/
-    @SuppressWarnings("unused")
     private class TestClass1 {
         private String str;
 
@@ -206,6 +204,7 @@ public class ReflectionUtilsTest {
         /**
          * @return the str
          */
+        @UsedForTesting
         public String getStr() {
             return str;
         }
@@ -214,6 +213,7 @@ public class ReflectionUtilsTest {
          * @param str
          *     the str to set
          */
+        @UsedForTesting
         public void setStr(String str) {
             this.str = str;
         }
@@ -221,6 +221,7 @@ public class ReflectionUtilsTest {
         /**
          * @return the i
          */
+        @UsedForTesting
         public int getI() {
             return i;
         }
@@ -229,6 +230,7 @@ public class ReflectionUtilsTest {
          * @param i
          *     the i to set
          */
+        @UsedForTesting
         public void setI(int i) {
             this.i = i;
         }
@@ -236,6 +238,7 @@ public class ReflectionUtilsTest {
         /**
          * @return the wrapperI
          */
+        @UsedForTesting
         public Integer getWrapperI() {
             return wrapperI;
         }
@@ -244,6 +247,7 @@ public class ReflectionUtilsTest {
          * @param wrapperI
          *     the wrapperI to set
          */
+        @UsedForTesting
         public void setWrapperI(Integer wrapperI) {
             this.wrapperI = wrapperI;
         }
@@ -251,6 +255,7 @@ public class ReflectionUtilsTest {
         /**
          * @return the d
          */
+        @UsedForTesting
         public double getD() {
             return d;
         }
@@ -259,6 +264,7 @@ public class ReflectionUtilsTest {
          * @param d
          *     the d to set
          */
+        @UsedForTesting
         public void setD(double d) {
             this.d = d;
         }
@@ -266,6 +272,7 @@ public class ReflectionUtilsTest {
         /**
          * @return the wrapperD
          */
+        @UsedForTesting
         public Double getWrapperD() {
             return wrapperD;
         }
@@ -274,6 +281,7 @@ public class ReflectionUtilsTest {
          * @param wrapperD
          *     the wrapperD to set
          */
+        @UsedForTesting
         public void setWrapperD(Double wrapperD) {
             this.wrapperD = wrapperD;
         }
@@ -281,6 +289,7 @@ public class ReflectionUtilsTest {
         /**
          * @return the b
          */
+        @UsedForTesting
         public boolean isB() {
             return b;
         }
@@ -289,6 +298,7 @@ public class ReflectionUtilsTest {
          * @param b
          *     the b to set
          */
+        @UsedForTesting
         public void setB(boolean b) {
             this.b = b;
         }
@@ -296,6 +306,7 @@ public class ReflectionUtilsTest {
         /**
          * @return the wrapperB
          */
+        @UsedForTesting
         public Boolean getWrapperB() {
             return wrapperB;
         }
@@ -304,6 +315,7 @@ public class ReflectionUtilsTest {
          * @param wrapperB
          *     the wrapperB to set
          */
+        @UsedForTesting
         public void setWrapperB(Boolean wrapperB) {
             this.wrapperB = wrapperB;
         }
@@ -311,6 +323,7 @@ public class ReflectionUtilsTest {
         /**
          * @return the byteVar
          */
+        @UsedForTesting
         public byte getByteVar() {
             return byteVar;
         }
@@ -319,6 +332,7 @@ public class ReflectionUtilsTest {
          * @param byteVar
          *     the byteVar to set
          */
+        @UsedForTesting
         public void setByteVar(byte byteVar) {
             this.byteVar = byteVar;
         }
@@ -326,6 +340,7 @@ public class ReflectionUtilsTest {
         /**
          * @return the wrapperByte
          */
+        @UsedForTesting
         public Byte getWrapperByte() {
             return wrapperByte;
         }
@@ -334,6 +349,7 @@ public class ReflectionUtilsTest {
          * @param wrapperByte
          *     the wrapperByte to set
          */
+        @UsedForTesting
         public void setWrapperByte(Byte wrapperByte) {
             this.wrapperByte = wrapperByte;
         }
@@ -341,6 +357,7 @@ public class ReflectionUtilsTest {
         /**
          * @return the s
          */
+        @UsedForTesting
         public short getS() {
             return s;
         }
@@ -349,6 +366,7 @@ public class ReflectionUtilsTest {
          * @param s
          *     the s to set
          */
+        @UsedForTesting
         public void setS(short s) {
             this.s = s;
         }
@@ -356,6 +374,7 @@ public class ReflectionUtilsTest {
         /**
          * @return the wrapperS
          */
+        @UsedForTesting
         public Short getWrapperS() {
             return wrapperS;
         }
@@ -364,6 +383,7 @@ public class ReflectionUtilsTest {
          * @param wrapperS
          *     the wrapperS to set
          */
+        @UsedForTesting
         public void setWrapperS(Short wrapperS) {
             this.wrapperS = wrapperS;
         }
@@ -371,6 +391,7 @@ public class ReflectionUtilsTest {
         /**
          * @return the l
          */
+        @UsedForTesting
         public long getL() {
             return l;
         }
@@ -379,6 +400,7 @@ public class ReflectionUtilsTest {
          * @param l
          *     the l to set
          */
+        @UsedForTesting
         public void setL(long l) {
             this.l = l;
         }
@@ -386,6 +408,7 @@ public class ReflectionUtilsTest {
         /**
          * @return the wrapperL
          */
+        @UsedForTesting
         public Long getWrapperL() {
             return wrapperL;
         }
@@ -394,6 +417,7 @@ public class ReflectionUtilsTest {
          * @param wrapperL
          *     the wrapperL to set
          */
+        @UsedForTesting
         public void setWrapperL(Long wrapperL) {
             this.wrapperL = wrapperL;
         }
@@ -401,6 +425,7 @@ public class ReflectionUtilsTest {
         /**
          * @return the f
          */
+        @UsedForTesting
         public float getF() {
             return f;
         }
@@ -409,6 +434,7 @@ public class ReflectionUtilsTest {
          * @param f
          *     the f to set
          */
+        @UsedForTesting
         public void setF(float f) {
             this.f = f;
         }
@@ -416,6 +442,7 @@ public class ReflectionUtilsTest {
         /**
          * @return the wrapperF
          */
+        @UsedForTesting
         public Float getWrapperF() {
             return wrapperF;
         }
@@ -424,6 +451,7 @@ public class ReflectionUtilsTest {
          * @param wrapperF
          *     the wrapperF to set
          */
+        @UsedForTesting
         public void setWrapperF(Float wrapperF) {
             this.wrapperF = wrapperF;
         }
@@ -431,6 +459,7 @@ public class ReflectionUtilsTest {
         /**
          * @return the c
          */
+        @UsedForTesting
         public char getC() {
             return c;
         }
@@ -439,6 +468,7 @@ public class ReflectionUtilsTest {
          * @param c
          *     the c to set
          */
+        @UsedForTesting
         public void setC(char c) {
             this.c = c;
         }
@@ -446,6 +476,7 @@ public class ReflectionUtilsTest {
         /**
          * @return the wrapperC
          */
+        @UsedForTesting
         public Character getWrapperC() {
             return wrapperC;
         }
@@ -454,6 +485,7 @@ public class ReflectionUtilsTest {
          * @param wrapperC
          *     the wrapperC to set
          */
+        @UsedForTesting
         public void setWrapperC(Character wrapperC) {
             this.wrapperC = wrapperC;
         }

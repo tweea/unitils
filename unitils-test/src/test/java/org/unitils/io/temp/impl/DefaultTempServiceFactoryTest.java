@@ -19,9 +19,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.unitils.core.UnitilsException;
 
+import static org.junit.Assert.assertEquals;
 import static org.unitils.io.temp.impl.DefaultTempServiceFactory.ROOT_TEMP_DIR;
-
-import static junit.framework.Assert.assertEquals;
 
 /**
  * @author Jeroen Horemans

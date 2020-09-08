@@ -129,6 +129,7 @@ public class UnitilsConfigurationGetInstanceTest {
         implements TestInterface, Configurable {
         public Properties configuration;
 
+        @Override
         public void init(Properties configuration) {
             this.configuration = configuration;
         }

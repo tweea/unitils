@@ -10,7 +10,7 @@ import org.junit.runners.Parameterized.Parameters;
 import org.unitils.UnitilsParameterized;
 
 /**
- * Test {@link StveParameterized}
+ * Test {@link UnitilsParameterized}
  * 
  * @author Jeroen Horemans
  * @author Thomas De Rycke

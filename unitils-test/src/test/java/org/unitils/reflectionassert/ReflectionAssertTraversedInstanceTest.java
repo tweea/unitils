@@ -110,8 +110,8 @@ public class ReflectionAssertTraversedInstanceTest {
 
         public Parent(String name) {
             this.name = name;
-            children1 = new ArrayList<Parent>();
-            children2 = new ArrayList<Parent>();
+            children1 = new ArrayList<>();
+            children2 = new ArrayList<>();
         }
 
         public List<Parent> getChildren1() {
@@ -122,6 +122,7 @@ public class ReflectionAssertTraversedInstanceTest {
             return children2;
         }
 
+        @Override
         public String toString() {
             return name;
         }

@@ -20,7 +20,7 @@ public class FileHandlerDeleteFilesTest {
     @Test
     public void testDeleteFiles()
         throws IOException {
-        List<File> lstFiles = new ArrayList<File>();
+        List<File> lstFiles = new ArrayList<>();
         File tempFile1 = File.createTempFile("FileHandlerDeleteFilesTest-", ".txt");
         File tempFile2 = File.createTempFile("FileHandlerDeleteFilesTest-", ".txt");
         File tempFile3 = File.createTempFile("FileHandlerDeleteFilesTest-", ".txt");

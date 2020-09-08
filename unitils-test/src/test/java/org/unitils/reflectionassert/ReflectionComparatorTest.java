@@ -17,6 +17,7 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 import java.util.Collection;
 
+import org.unitils.core.annotation.UsedForTesting;
 import org.unitils.reflectionassert.difference.Difference;
 
 import junit.framework.TestCase;
@@ -69,6 +70,7 @@ public class ReflectionComparatorTest
     /**
      * Initializes the test fixture.
      */
+    @Override
     protected void setUp()
         throws Exception {
         super.setUp();
@@ -206,6 +208,7 @@ public class ReflectionComparatorTest
         Collection<?> collection = (Collection<?>) Proxy.newProxyInstance(getClass().getClassLoader(), new Class[] {
             Collection.class
         }, new InvocationHandler() {
+            @Override
             public Object invoke(Object proxy, Method method, Object[] args)
                 throws Throwable {
                 if ("equals".equals(method.getName())) {
@@ -274,6 +277,7 @@ public class ReflectionComparatorTest
          *
          * @return the value
          */
+        @UsedForTesting
         public String getString1() {
             return string1;
         }
@@ -283,6 +287,7 @@ public class ReflectionComparatorTest
          *
          * @return the value
          */
+        @UsedForTesting
         public String getString2() {
             return string2;
         }
@@ -325,6 +330,7 @@ public class ReflectionComparatorTest
     private class CollectionWrapper {
 
         /* Collection instance */
+        @UsedForTesting
         protected Collection<?> innerCollection;
 
         /**

@@ -24,6 +24,7 @@ public class JUnit4TestExecutor
         super();
     }
 
+    @Override
     public void runTests(Class<?>... testClasses)
         throws Exception {
         result = new Result();
@@ -36,19 +37,23 @@ public class JUnit4TestExecutor
         }
     }
 
+    @Override
     public void runTests(String testGroup, Class<?>... testClasses)
         throws Exception {
         runTests(testClasses);
     }
 
+    @Override
     public int getRunCount() {
         return result.getRunCount();
     }
 
+    @Override
     public int getFailureCount() {
         return result.getFailureCount();
     }
 
+    @Override
     public int getIgnoreCount() {
         return result.getIgnoreCount();
     }

@@ -21,6 +21,7 @@ import org.junit.Test;
 import org.unitils.UnitilsJUnit4;
 import org.unitils.core.ConfigurationLoader;
 import org.unitils.core.UnitilsException;
+import org.unitils.core.annotation.UsedForTesting;
 import org.unitils.inject.annotation.InjectIntoByType;
 import org.unitils.inject.util.PropertyAccess;
 
@@ -147,63 +148,61 @@ public class InjectModuleInjectIntoByTypeExceptionsTest
         }
     }
 
-    @SuppressWarnings("unused")
     public class TestInjectIntoByType_TargetIsNull {
         @InjectIntoByType(target = "injectOn")
         private ToInject toInject;
 
+        @UsedForTesting
         private InjectOn injectOn;
     }
 
-    @SuppressWarnings("unused")
     public class TestInjectIntoByType_TargetDoesntExist {
         @InjectIntoByType(target = "nonExisting")
         private ToInject toInject;
     }
 
-    @SuppressWarnings("unused")
     public class TestInjectIntoByType_NoTargetSpecified {
         @InjectIntoByType
         private ToInject toInject;
     }
 
-    @SuppressWarnings("unused")
     public class TestInjectIntoByType_NoPropertyOfType {
         @InjectIntoByType(target = "injectOn")
         private ToInject toInject;
 
+        @UsedForTesting
         private InjectOn_NoPropertyOfType injectOn = new InjectOn_NoPropertyOfType();
     }
 
-    @SuppressWarnings("unused")
     public class TestInjectIntoByType_MoreThanOneFieldOfType {
         @InjectIntoByType(target = "injectOn")
         private ToInject toInject;
 
+        @UsedForTesting
         private InjectOn_MoreThanOneFieldOfType injectOn = new InjectOn_MoreThanOneFieldOfType();
     }
 
-    @SuppressWarnings("unused")
     public class TestInjectIntoByType_MoreThanOneSetterOfType {
         @InjectIntoByType(target = "injectOn", propertyAccess = PropertyAccess.SETTER)
         private ToInject toInject;
 
+        @UsedForTesting
         private InjectOn_MoreThanOneSetterOfType injectOn = new InjectOn_MoreThanOneSetterOfType();
     }
 
-    @SuppressWarnings("unused")
     public class TestInjectIntoByType_MoreThanOneFieldOfSuperType {
         @InjectIntoByType(target = "injectOn")
         private ToInject toInject;
 
+        @UsedForTesting
         private InjectOn_MoreThanOneFieldOfSuperType injectOn = new InjectOn_MoreThanOneFieldOfSuperType();
     }
 
-    @SuppressWarnings("unused")
     public class TestInjectIntoByType_MoreThanOneSetterOfSuperType {
         @InjectIntoByType(target = "injectOn", propertyAccess = PropertyAccess.SETTER)
         private ToInject toInject;
 
+        @UsedForTesting
         private InjectOn_MoreThanOneSetterOfSuperType injectOn = new InjectOn_MoreThanOneSetterOfSuperType();
     }
 
@@ -226,32 +225,50 @@ public class InjectModuleInjectIntoByTypeExceptionsTest
     public class InjectOn_NoPropertyOfType {
     }
 
-    @SuppressWarnings("unused")
     public class InjectOn_MoreThanOneFieldOfType {
+        @UsedForTesting
         private ToInject toInject1;
 
+        @UsedForTesting
         private ToInject toInject2;
     }
 
     public class InjectOn_MoreThanOneSetterOfType {
+        /**
+         * @param toInject1
+         *     Used for testing
+         */
         public void setToInject1(ToInject toInject1) {
         }
 
+        /**
+         * @param toInject2
+         *     Used for testing
+         */
         public void setToInject2(ToInject toInject2) {
         }
     }
 
-    @SuppressWarnings("unused")
     public class InjectOn_MoreThanOneFieldOfSuperType {
+        @UsedForTesting
         private ToInjectSuper toInject1;
 
+        @UsedForTesting
         private ToInjectSuper toInject2;
     }
 
     public class InjectOn_MoreThanOneSetterOfSuperType {
+        /**
+         * @param toInject1
+         *     Used for testing
+         */
         public void setToInject1(ToInjectSuper toInject1) {
         }
 
+        /**
+         * @param toInject2
+         *     Used for testing
+         */
         public void setToInject2(ToInjectSuper toInject2) {
         }
     }

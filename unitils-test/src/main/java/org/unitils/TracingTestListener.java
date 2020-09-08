@@ -91,7 +91,7 @@ public class TracingTestListener
     }
 
     public TracingTestListener() {
-        this.callList = new ArrayList<Call>();
+        this.callList = new ArrayList<>();
     }
 
     public List<Call> getCallList() {

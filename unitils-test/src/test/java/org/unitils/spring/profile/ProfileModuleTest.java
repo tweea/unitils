@@ -60,9 +60,6 @@ public class ProfileModuleTest {
         Unitils.getInstance().init();
     }
 
-    /**
-     * @throws java.lang.Exception
-     */
     @Before
     public void setUp()
         throws Exception {
@@ -144,7 +141,7 @@ public class ProfileModuleTest {
 
     @Test
     public void testInjectBeansBeansException()
-        throws BeansException, IllegalArgumentException, IllegalAccessException {
+        throws BeansException, IllegalArgumentException {
         profileModule.setCtx(annoCtx);
         EasyMock.expect(annoCtx.getBean("testClzz")).andThrow(new BeansException("test") {
             /***/

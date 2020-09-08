@@ -74,9 +74,11 @@ abstract public class DatabaseModuleTransactionalTestBase {
      */
     public static class MockDataSourceFactory
         implements DataSourceFactory {
+        @Override
         public void init(Properties configuration) {
         }
 
+        @Override
         public DataSource createDataSource() {
             return mockDataSource;
         }
@@ -84,10 +86,12 @@ abstract public class DatabaseModuleTransactionalTestBase {
         /**
          * @see org.unitils.database.config.DataSourceFactory#init(org.unitils.database.config.DatabaseConfiguration)
          */
+        @Override
         public void init(DatabaseConfiguration arg0) {
             // TODO Auto-generated method stub
         }
 
+        @Override
         public void init(Properties configuration, String databaseName) {
             // TODO Auto-generated method stub
         }

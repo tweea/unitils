@@ -22,16 +22,13 @@ import org.unitils.dbunit.util.DbUnitDatabaseConnection;
  * @since 3.4.1
  */
 @RunWith(UnitilsJUnit4TestClassRunner.class)
-public class DbUnitModuleTestDefaultDatabaseMetaHandler {
+public class DbUnitModuleTestDefaultDatabaseMetaHandlerTest {
     private DbUnitModule sut;
 
     private String schema;
 
     private Properties configuration;
 
-    /**
-     * @throws java.lang.Exception
-     */
     @Before
     public void setUp()
         throws Exception {

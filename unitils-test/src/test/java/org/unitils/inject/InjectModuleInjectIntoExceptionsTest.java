@@ -21,6 +21,7 @@ import org.junit.Test;
 import org.unitils.UnitilsJUnit4;
 import org.unitils.core.ConfigurationLoader;
 import org.unitils.core.UnitilsException;
+import org.unitils.core.annotation.UsedForTesting;
 import org.unitils.inject.annotation.InjectInto;
 
 import static org.junit.Assert.fail;
@@ -107,39 +108,37 @@ public class InjectModuleInjectIntoExceptionsTest
         }
     }
 
-    @SuppressWarnings("unused")
     public class TestInject_TargetIsNull {
         @InjectInto(target = "injectOn", property = "injectOnProperty")
         private ToInject toInject;
 
+        @UsedForTesting
         private InjectOn injectOn;
     }
 
-    @SuppressWarnings("unused")
     public class TestInject_TargetDoesntExist {
         @InjectInto(target = "nonExisting", property = "injectOnProperty")
         private ToInject toInject;
     }
 
-    @SuppressWarnings("unused")
     public class TestInject_NoTargetSpecified {
         @InjectInto(property = "injectOnProperty")
         private ToInject toInject;
     }
 
-    @SuppressWarnings("unused")
     public class TestInject_InvalidOGNLExpression {
         @InjectInto(target = "injectOn", property = "@#{[^")
         private ToInject toInject;
 
+        @UsedForTesting
         private InjectOn injectOn = new InjectOn();
     }
 
-    @SuppressWarnings("unused")
     public class TestInject_NonExistingPropertyInOGNLExpression {
         @InjectInto(target = "injectOn", property = "nonExisting")
         private ToInject toInject;
 
+        @UsedForTesting
         private InjectOn injectOn = new InjectOn();
     }
 

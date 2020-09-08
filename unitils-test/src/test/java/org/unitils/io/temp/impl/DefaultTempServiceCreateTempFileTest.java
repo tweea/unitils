@@ -14,17 +14,15 @@ package org.unitils.io.temp.impl;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.IOException;
 
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.unitils.core.UnitilsException;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.unitils.util.FileUtils.writeStringToFile;
-
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertTrue;
 
 /**
  * @author Jeroen Horemans
@@ -40,8 +38,7 @@ public class DefaultTempServiceCreateTempFileTest {
     private File rootTempDir;
 
     @Before
-    public void initialize()
-        throws IOException {
+    public void initialize() {
         rootTempDir = new File("target/" + DefaultTempServiceCreateTempFileTest.class.getSimpleName());
 
         defaultTempService = new DefaultTempService(rootTempDir);

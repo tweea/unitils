@@ -40,6 +40,7 @@ public class ReflectionAssertCyclicCollectionTest
     /**
      * Initializes the test fixture.
      */
+    @Override
     public void setUp()
         throws Exception {
         super.setUp();
@@ -92,7 +93,7 @@ public class ReflectionAssertCyclicCollectionTest
         private Set<TestObject> testObjects;
 
         public TestObject() {
-            this.testObjects = new HashSet<TestObject>();
+            this.testObjects = new HashSet<>();
         }
 
         public Set<TestObject> getTestObjects() {

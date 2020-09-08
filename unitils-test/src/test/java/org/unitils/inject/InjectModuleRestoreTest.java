@@ -17,6 +17,7 @@ import java.util.Properties;
 import org.junit.Before;
 import org.junit.Test;
 import org.unitils.core.ConfigurationLoader;
+import org.unitils.core.annotation.UsedForTesting;
 import org.unitils.inject.annotation.InjectIntoStatic;
 
 import static org.junit.Assert.assertEquals;
@@ -176,18 +177,22 @@ public class InjectModuleRestoreTest {
 
         private static int primitiveProperty;
 
+        @UsedForTesting
         public static String getStringProperty() {
             return stringProperty;
         }
 
+        @UsedForTesting
         public static void setStringProperty(String stringProperty) {
             SetterInjectionTarget.stringProperty = stringProperty;
         }
 
+        @UsedForTesting
         public static int getPrimitiveProperty() {
             return primitiveProperty;
         }
 
+        @UsedForTesting
         public static void setPrimitiveProperty(int primitiveProperty) {
             SetterInjectionTarget.primitiveProperty = primitiveProperty;
         }

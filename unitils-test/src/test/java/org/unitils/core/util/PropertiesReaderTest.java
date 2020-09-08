@@ -121,8 +121,7 @@ public class PropertiesReaderTest
     }
 
     @Test
-    public void loadPropertiesFileFromClasspath_withExistingFile_shouldReturnProperties()
-        throws IOException {
+    public void loadPropertiesFileFromClasspath_withExistingFile_shouldReturnProperties() {
         Properties returnedProperties = sut.loadPropertiesFileFromClasspath(TEST_FILE);
         assertNotNull(returnedProperties);
         assertEquals("some value", returnedProperties.getProperty("testprop"));

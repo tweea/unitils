@@ -13,7 +13,6 @@
 package org.unitils.dbunit;
 
 import java.lang.reflect.Method;
-import java.sql.SQLException;
 import java.util.Properties;
 
 import javax.sql.DataSource;
@@ -137,16 +136,14 @@ public class ExpectedDataSetWithPrimaryKeysTest
     /**
      * Utility method to create the test table.
      */
-    private void createTestTable()
-        throws SQLException {
+    private void createTestTable() {
         executeUpdate("create table TEST(pk varchar(2) primary key, column1 varchar(10), column2 varchar(10))", dataSource);
     }
 
     /**
      * Removes the test database table
      */
-    private void dropTestTable()
-        throws SQLException {
+    private void dropTestTable() {
         try {
             executeUpdate("drop table TEST", dataSource);
         } catch (UnitilsException e) {

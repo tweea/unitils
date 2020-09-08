@@ -42,6 +42,5 @@ public class InjectMultipleTargets2Test {
         Assert.assertNotNull(person.getAddress());
         Assert.assertNotNull(person2.getAddress());
         Assert.assertNotNull(animal2.getAddress());
-        ;
     }
 }

@@ -16,6 +16,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+import org.unitils.core.annotation.UsedForTesting;
 import org.unitils.reflectionassert.difference.Difference;
 import org.unitils.reflectionassert.difference.MapDifference;
 
@@ -70,6 +71,7 @@ public class ReflectionComparatorMapTest
     /**
      * Initializes the test fixture.
      */
+    @Override
     protected void setUp()
         throws Exception {
         super.setUp();
@@ -216,7 +218,7 @@ public class ReflectionComparatorMapTest
      * @return the test map
      */
     private Map<String, Element> createMap(String keyElement2, String stringValueElement2, Map<?, ?> innerElement2) {
-        Map<String, Element> map = new HashMap<String, Element>();
+        Map<String, Element> map = new HashMap<>();
         map.put("key 1", new Element("test 1", null));
         map.put(keyElement2, new Element(stringValueElement2, innerElement2));
         map.put("key 3", new Element("test 3", null));
@@ -231,7 +233,7 @@ public class ReflectionComparatorMapTest
      * @return the test map
      */
     private Map<Element, Element> createNotEqualsKeyMap(String keyElement2) {
-        Map<Element, Element> map = new HashMap<Element, Element>();
+        Map<Element, Element> map = new HashMap<>();
         map.put(new Element("key 1", null), new Element("test 1", null));
         map.put(new Element(keyElement2, null), new Element("test 2", null));
         return map;
@@ -266,6 +268,7 @@ public class ReflectionComparatorMapTest
          *
          * @return the value
          */
+        @UsedForTesting
         public String getString() {
             return string;
         }
@@ -275,6 +278,7 @@ public class ReflectionComparatorMapTest
          *
          * @return the map
          */
+        @UsedForTesting
         public Map<?, ?> getInner() {
             return inner;
         }

@@ -44,6 +44,7 @@ public class PropertyUtilsTest
     /**
      * Sets up the test fixture.
      */
+    @Override
     protected void setUp()
         throws Exception {
         super.setUp();
@@ -254,7 +255,7 @@ public class PropertyUtilsTest
      * Test for getting a object instance property passing a default
      */
     public void testGetInstance_default() {
-        Object result = getInstance("instanceProperty", new ArrayList<Object>(), testProperties);
+        Object result = getInstance("instanceProperty", new ArrayList<>(), testProperties);
         assertTrue(result instanceof StringBuffer);
     }
 
@@ -262,7 +263,7 @@ public class PropertyUtilsTest
      * Test for getting an unknown object instance property passing a default
      */
     public void testGetInstance_defaultNotFound() {
-        Object result = getInstance("xxxx", new ArrayList<Object>(), testProperties);
+        Object result = getInstance("xxxx", new ArrayList<>(), testProperties);
         assertTrue(result instanceof ArrayList);
     }
 
@@ -271,7 +272,7 @@ public class PropertyUtilsTest
      */
     public void testGetInstance_defaultCouldNotCreate() {
         try {
-            getInstance("stringProperty", new ArrayList<Object>(), testProperties);
+            getInstance("stringProperty", new ArrayList<>(), testProperties);
             fail("Expected UnitilsException");
         } catch (UnitilsException e) {
             // expected

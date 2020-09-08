@@ -15,6 +15,7 @@ package org.unitils.reflectionassert;
 import org.junit.Before;
 import org.junit.Test;
 import org.unitils.UnitilsJUnit4;
+import org.unitils.core.annotation.UsedForTesting;
 
 import junit.framework.AssertionFailedError;
 
@@ -215,6 +216,7 @@ public class ReflectionAssertTest
             this.string2 = stringValue2;
         }
 
+        @UsedForTesting
         public String getString1() {
             return string1;
         }
@@ -223,10 +225,12 @@ public class ReflectionAssertTest
             this.string1 = string1;
         }
 
+        @UsedForTesting
         public String getString2() {
             return string2;
         }
 
+        @UsedForTesting
         public void setString2(String string2) {
             this.string2 = string2;
         }
@@ -246,12 +250,11 @@ public class ReflectionAssertTest
     /**
      * Test class with int and string field.
      */
-    @SuppressWarnings({
-        "FieldCanBeLocal", "UnusedDeclaration"
-    })
     private class TestObjectIntString {
+        @UsedForTesting
         private int intValue;
 
+        @UsedForTesting
         private String stringValue;
 
         public TestObjectIntString(int intValue, String stringValue) {

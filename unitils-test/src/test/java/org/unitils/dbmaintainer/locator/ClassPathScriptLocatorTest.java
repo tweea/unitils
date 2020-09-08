@@ -39,13 +39,10 @@ public class ClassPathScriptLocatorTest {
 
     private String scriptDir = "/org/unitils/dbunit/testdbscripts/";
 
-    /**
-     * @throws Exception
-     */
     @Before
     public void setUp()
         throws Exception {
-        urlList = new ArrayList<URL>();
+        urlList = new ArrayList<>();
         urlList.add(getClass().getResource(scriptDir + "001_Initial_TESTcreate.sql"));
         urlList.add(getClass().getResource(scriptDir + "002_Initial_TESTcreate.sql"));
         urlList.add(getClass().getResource(scriptDir + "003_Initial_TESTcreate.sql"));
@@ -63,9 +60,9 @@ public class ClassPathScriptLocatorTest {
     public void loadScriptsTest() {
         String path = "/org/unitils/dbunit/testdbscripts/";
 
-        List<Script> scriptList = new ArrayList<Script>();
+        List<Script> scriptList = new ArrayList<>();
 
-        List<String> scriptExtensions = new ArrayList<String>();
+        List<String> scriptExtensions = new ArrayList<>();
         scriptExtensions.add(".sql");
 
         EasyMock.expect(resourcePickingStrategie.filter((List<URL>) EasyMock.anyObject(), (String) EasyMock.anyObject())).andReturn(urlList);

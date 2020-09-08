@@ -12,6 +12,7 @@
  */
 package org.unitils.reflectionassert;
 
+import org.unitils.core.annotation.UsedForTesting;
 import org.unitils.reflectionassert.difference.Difference;
 
 import junit.framework.TestCase;
@@ -26,9 +27,6 @@ import static org.unitils.reflectionassert.util.InnerDifferenceFinder.getInnerDi
  * @author Tim Ducheyne
  * @author Filip Neven
  */
-@SuppressWarnings({
-    "FieldCanBeLocal"
-})
 public class ReflectionComparatorEnumsTest
     extends TestCase {
 
@@ -47,6 +45,7 @@ public class ReflectionComparatorEnumsTest
     /**
      * Initializes the test fixture.
      */
+    @Override
     protected void setUp()
         throws Exception {
         super.setUp();
@@ -86,9 +85,7 @@ public class ReflectionComparatorEnumsTest
             TEST1, TEST2
         }
 
-        @SuppressWarnings({
-            "UnusedDeclaration"
-        })
+        @UsedForTesting
         private TestEnum testEnumValue;
 
         public Enums(TestEnum testEnumValue) {

@@ -12,14 +12,13 @@
  */
 package org.unitils.dbunit;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.Properties;
 
 import javax.sql.DataSource;
 
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.unitils.UnitilsJUnit4TestClassRunner;
@@ -33,14 +32,14 @@ import org.unitils.dbunit.annotation.DataSets;
 /**
  * @author willemijnwouters
  */
+@Ignore
 @RunWith(UnitilsJUnit4TestClassRunner.class)
-public class EmptyTablesTest2 {
+public class EmptyTables2Test {
     @TestDataSource("database1")
     private DataSource dataSource;
 
     @BeforeClass
-    public static void beforeClass()
-        throws FileNotFoundException, IOException {
+    public static void beforeClass() {
         Properties config = getCorrectProperties();
 
         DatabaseModule databaseModule = Unitils.getInstance().getModulesRepository().getModuleOfType(DatabaseModule.class);

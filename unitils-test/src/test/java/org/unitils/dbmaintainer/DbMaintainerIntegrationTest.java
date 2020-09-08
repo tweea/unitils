@@ -106,7 +106,7 @@ public class DbMaintainerIntegrationTest
     @Before
     public void setUp()
         throws Exception {
-        schemas = new ArrayList<String>();
+        schemas = new ArrayList<>();
         schemas.add("PUBLIC");
         configuration = new ConfigurationLoader().loadConfiguration();
         configuration.setProperty("org.unitils.dbmaintainer.script.ScriptSource.implClassName", "org.unitils.dbmaintainer.script.impl.DefaultScriptSource");
@@ -221,8 +221,7 @@ public class DbMaintainerIntegrationTest
         try {
             updateDatabase();
         } catch (UnitilsException e) {
-            // TODO
-            // assertMessageContains(e.getMessage(), "existing", "modified", INITIAL_INCREMENTAL_1 + ".sql");
+            // TODO assertMessageContains(e.getMessage(), "existing", "modified", INITIAL_INCREMENTAL_1 + ".sql");
         }
     }
 
@@ -252,8 +251,7 @@ public class DbMaintainerIntegrationTest
         try {
             updateDatabase();
         } catch (UnitilsException e) {
-            // TODO
-            // assertMessageContains(e.getMessage(), "added", "lower index", NEW_INCREMENTAL_LOWER_INDEX + ".sql");
+            // TODO assertMessageContains(e.getMessage(), "added", "lower index", NEW_INCREMENTAL_LOWER_INDEX + ".sql");
         }
     }
 
@@ -283,8 +281,7 @@ public class DbMaintainerIntegrationTest
         try {
             updateDatabase();
         } catch (UnitilsException e) {
-            // TODO
-            // assertMessageContains(e.getMessage(), "removed", INITIAL_INCREMENTAL_1 + ".sql");
+            // TODO assertMessageContains(e.getMessage(), "removed", INITIAL_INCREMENTAL_1 + ".sql");
         }
     }
 
@@ -380,8 +377,7 @@ public class DbMaintainerIntegrationTest
         try {
             updateDatabase();
         } catch (UnitilsException e) {
-            // TODO
-            // assertMessageContains(e.getMessage(), "error", INITIAL_INCREMENTAL_2 + ".sql");
+            // TODO assertMessageContains(e.getMessage(), "error", INITIAL_INCREMENTAL_2 + ".sql");
         }
         try {
             updateDatabase();

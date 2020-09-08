@@ -19,6 +19,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.unitils.mock.core.MockObject;
 
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.unitils.mock.ArgumentMatchers.eq;
 import static org.unitils.mock.ArgumentMatchers.isNull;
@@ -26,8 +27,6 @@ import static org.unitils.mock.ArgumentMatchers.lenEq;
 import static org.unitils.mock.ArgumentMatchers.notNull;
 import static org.unitils.mock.ArgumentMatchers.refEq;
 import static org.unitils.mock.ArgumentMatchers.same;
-
-import static junit.framework.Assert.assertFalse;
 
 /**
  * Tests the usage of argment matchers.
@@ -42,7 +41,7 @@ public class ArgumentMatcherTest {
 
     @Before
     public void setUp() {
-        mockObject = new MockObject<TestClass>("testMock", TestClass.class, this);
+        mockObject = new MockObject<>("testMock", TestClass.class, this);
     }
 
     /**
@@ -100,17 +99,17 @@ public class ArgumentMatcherTest {
      */
     @Test
     public void testEqualsArgumentMatcher_objectChangesBetweenCalls() {
-        List<String> list = new ArrayList<String>();
+        List<String> list = new ArrayList<>();
 
         mockObject.returns(true).testMethodObject(eq(list));
 
         list.add("test");
         assertTrue(mockObject.getMock().testMethodObject(list));
 
-        List<String> nonEqualList = new ArrayList<String>();
+        List<String> nonEqualList = new ArrayList<>();
         assertFalse(mockObject.getMock().testMethodObject(nonEqualList));
 
-        List<String> equalList = new ArrayList<String>();
+        List<String> equalList = new ArrayList<>();
         equalList.add("test");
         assertTrue(mockObject.getMock().testMethodObject(equalList));
 
@@ -241,17 +240,17 @@ public class ArgumentMatcherTest {
      */
     @Test
     public void testLenEqArgumentMatcher_objectChangesBetweenCalls() {
-        List<String> list = new ArrayList<String>();
+        List<String> list = new ArrayList<>();
 
         mockObject.returns(true).testMethodObject(lenEq(list));
 
         list.add("test");
         assertFalse(mockObject.getMock().testMethodObject(list));
 
-        List<String> emptyList = new ArrayList<String>();
+        List<String> emptyList = new ArrayList<>();
         assertTrue(mockObject.getMock().testMethodObject(emptyList));
 
-        List<String> oneElementList = new ArrayList<String>();
+        List<String> oneElementList = new ArrayList<>();
         oneElementList.add("test");
         assertFalse(mockObject.getMock().testMethodObject(oneElementList));
 
@@ -262,7 +261,7 @@ public class ArgumentMatcherTest {
 
     @Test
     public void testLenEqArgumentMatcher_objectChangesBetweenCalls_assertInvoked() {
-        List<String> list = new ArrayList<String>();
+        List<String> list = new ArrayList<>();
         mockObject.getMock().testMethodObject(list);
 
         list.add("test");
@@ -321,24 +320,24 @@ public class ArgumentMatcherTest {
      */
     @Test
     public void testRefEqArgumentMatcher_objectChangesBetweenCalls() {
-        List<String> list = new ArrayList<String>();
+        List<String> list = new ArrayList<>();
 
         mockObject.returns(true).testMethodObject(refEq(list));
 
         list.add("test");
         assertFalse(mockObject.getMock().testMethodObject(list));
 
-        List<String> emptyList = new ArrayList<String>();
+        List<String> emptyList = new ArrayList<>();
         assertTrue(mockObject.getMock().testMethodObject(emptyList));
 
-        List<String> oneElementList = new ArrayList<String>();
+        List<String> oneElementList = new ArrayList<>();
         oneElementList.add("test");
         assertFalse(mockObject.getMock().testMethodObject(oneElementList));
     }
 
     @Test
     public void testRefEqArgumentMatcher_objectChangesBetweenCalls_assertInvoked() {
-        List<String> list = new ArrayList<String>();
+        List<String> list = new ArrayList<>();
         mockObject.getMock().testMethodObject(list);
 
         list.add("test");
@@ -397,21 +396,21 @@ public class ArgumentMatcherTest {
      */
     @Test
     public void testSameArgumentMatcher_objectChangesBetweenCalls() {
-        List<String> list = new ArrayList<String>();
+        List<String> list = new ArrayList<>();
 
         mockObject.returns(true).testMethodObject(same(list));
 
         list.add("test");
         assertTrue(mockObject.getMock().testMethodObject(list));
 
-        List<String> equalList = new ArrayList<String>();
+        List<String> equalList = new ArrayList<>();
         equalList.add("test");
         assertFalse(mockObject.getMock().testMethodObject(equalList));
     }
 
     @Test
     public void testSameArgumentMatcher_objectChangesBetweenCalls_assertInvoked() {
-        List<String> list = new ArrayList<String>();
+        List<String> list = new ArrayList<>();
         mockObject.getMock().testMethodObject(list);
 
         list.add("test");
@@ -421,24 +420,24 @@ public class ArgumentMatcherTest {
 
     @Test
     public void testDefaultArgumentMatcher_objectChangesBetweenCalls() {
-        List<String> list = new ArrayList<String>();
+        List<String> list = new ArrayList<>();
 
         mockObject.returns(true).testMethodObject(list);
 
         list.add("test");
         assertTrue(mockObject.getMock().testMethodObject(list));
 
-        List<String> emptyList = new ArrayList<String>();
+        List<String> emptyList = new ArrayList<>();
         assertTrue(mockObject.getMock().testMethodObject(emptyList));
 
-        List<String> oneElementList = new ArrayList<String>();
+        List<String> oneElementList = new ArrayList<>();
         oneElementList.add("test");
         assertFalse(mockObject.getMock().testMethodObject(oneElementList));
     }
 
     @Test
     public void testDefaultArgumentMatcher_objectChangesBetweenCalls_assertInvoked() {
-        List<String> list = new ArrayList<String>();
+        List<String> list = new ArrayList<>();
         mockObject.getMock().testMethodObject(list);
         mockObject.assertInvoked().testMethodObject(refEq(new ArrayList<String>()));
 

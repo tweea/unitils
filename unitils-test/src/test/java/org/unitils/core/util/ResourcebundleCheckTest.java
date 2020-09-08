@@ -24,8 +24,6 @@ public class ResourcebundleCheckTest {
     /**
      * The french bundle contains more keys than the others.
      * invoice_declaration_yes, invoice_declaration_no =
-     * 
-     * @throws Exception
      */
     @Test(expected = MissingKeysException.class)
     public void testBad()

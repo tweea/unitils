@@ -14,11 +14,10 @@ package org.unitils.mock.core.proxy;
 
 import org.junit.Test;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.unitils.mock.core.proxy.StackTraceUtils.getInvocationLineNr;
 import static org.unitils.mock.core.proxy.StackTraceUtils.getInvocationStackTrace;
-
-import static junit.framework.Assert.assertEquals;
 
 /**
  * Tests the stack trace utilities.
@@ -32,7 +31,7 @@ public class StackTraceUtilsTest {
     @Test
     public void lineNr() {
         int result = testClass.lineNrTest();
-        assertEquals(34, result);
+        assertEquals(33, result);
     }
 
     @Test
@@ -67,10 +66,12 @@ public class StackTraceUtilsTest {
 
     private class TestClass
         implements TestInterface {
+        @Override
         public StackTraceElement[] stackTraceTest(boolean included) {
             return getStackTrace(included);
         }
 
+        @Override
         public int lineNrTest() {
             return getLineNr();
         }

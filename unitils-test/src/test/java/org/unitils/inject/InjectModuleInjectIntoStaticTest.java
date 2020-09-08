@@ -17,6 +17,7 @@ import java.util.Properties;
 import org.junit.Before;
 import org.junit.Test;
 import org.unitils.core.ConfigurationLoader;
+import org.unitils.core.annotation.UsedForTesting;
 import org.unitils.inject.annotation.InjectIntoStatic;
 
 import static org.junit.Assert.assertSame;
@@ -125,10 +126,12 @@ public class InjectModuleInjectIntoStaticTest {
             testObjectField = new TestObject();
         }
 
+        @UsedForTesting
         public static void setToInject(ToInject toInject) {
             InjectOnStatic.toInject = toInject;
         }
 
+        @UsedForTesting
         public static void setTestObject(TestObject testObject) {
             InjectOnStatic.testObject = testObject;
         }

@@ -12,6 +12,7 @@ import org.springframework.jdbc.datasource.embedded.EmbeddedDatabase;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 import org.unitils.UnitilsJUnit4TestClassRunner;
+import org.unitils.core.annotation.UsedForTesting;
 
 import static org.unitils.database.SQLUnitils.executeUpdate;
 
@@ -24,7 +25,7 @@ import static org.unitils.database.SQLUnitils.executeUpdate;
  * @since 3.4
  */
 @RunWith(UnitilsJUnit4TestClassRunner.class)
-public class ProfileModuleInjectBeans {
+public class ProfileModuleInjectBeansTest {
     private ProfileModule module;
 
     @BeforeClass
@@ -53,7 +54,7 @@ public class ProfileModuleInjectBeans {
 
     @Test
     public void testAutowiredNotAccessible()
-        throws IllegalArgumentException, SecurityException, IllegalAccessException, NoSuchFieldException {
+        throws IllegalArgumentException, SecurityException {
         module.setCtx(getAppContext());
 
         TestclassWithAutowired obj = new TestclassWithAutowired();
@@ -68,6 +69,7 @@ public class ProfileModuleInjectBeans {
 
     private class TestclassWithAutowired {
         @Autowired
+        @UsedForTesting
         private TestClassNoFields field1;
     }
 

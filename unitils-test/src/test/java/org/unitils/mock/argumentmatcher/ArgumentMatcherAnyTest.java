@@ -44,7 +44,7 @@ public class ArgumentMatcherAnyTest {
 
     @Before
     public void setUp() {
-        mockObject = new MockObject<TestClass>("testMock", TestClass.class, this);
+        mockObject = new MockObject<>("testMock", TestClass.class, this);
     }
 
     @Test

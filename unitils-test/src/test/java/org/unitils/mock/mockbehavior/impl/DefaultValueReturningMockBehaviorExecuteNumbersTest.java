@@ -163,9 +163,6 @@ public class DefaultValueReturningMockBehaviorExecuteNumbersTest {
         return new ProxyInvocation(null, null, method, null, null);
     }
 
-    @SuppressWarnings({
-        "UnusedDeclaration"
-    })
     private static interface TestClass {
         int intPrimitiveMethod();
 

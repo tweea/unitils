@@ -18,6 +18,8 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.Set;
 
+import org.unitils.core.annotation.UsedForTesting;
+
 import junit.framework.TestCase;
 
 import static java.lang.annotation.ElementType.FIELD;
@@ -199,7 +201,6 @@ public class AnnotationUtilsTest
     /**
      * Test class that class containing annotated fields and methods.
      */
-    @SuppressWarnings("all")
     @TestAnnotation(level = "class")
     private static class TestClass {
         @TestAnnotation
@@ -209,6 +210,7 @@ public class AnnotationUtilsTest
         private void annotatedMethod() {
         }
 
+        @UsedForTesting
         private void unAnnotatedMethod() {
         }
     }
@@ -216,10 +218,11 @@ public class AnnotationUtilsTest
     /**
      * Test class that class containing no annotated fields and methods.
      */
-    @SuppressWarnings("all")
     private static class TestClassNoAnnotation {
+        @UsedForTesting
         private String field;
 
+        @UsedForTesting
         private void method() {
         }
     }
@@ -227,7 +230,6 @@ public class AnnotationUtilsTest
     /**
      * Test class that extends the test super class. For testing inherited annotations.
      */
-    @SuppressWarnings("all")
     private static class TestSubClass
         extends TestClass {
         @TestAnnotation
@@ -237,6 +239,7 @@ public class AnnotationUtilsTest
         private void annotatedSubMethod() {
         }
 
+        @UsedForTesting
         private void unAnnotatedSubMethod() {
         }
     }

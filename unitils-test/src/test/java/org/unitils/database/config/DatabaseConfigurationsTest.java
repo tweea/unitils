@@ -22,9 +22,6 @@ public class DatabaseConfigurationsTest {
 
     private DatabaseConfiguration config1, config2;
 
-    /**
-     * @throws java.lang.Exception
-     */
     @Before
     public void setUp()
         throws Exception {
@@ -34,7 +31,7 @@ public class DatabaseConfigurationsTest {
             Arrays.asList("schemaNames"), true, true);
         config2 = new DatabaseConfiguration("Database2", "hsqldb", "org.hsqldb.jdbcDriver", "jdbc:hsqldb:mem:unitils", "sa", "", "defaultSchemaName",
             Arrays.asList("schemaNames"), true, true);
-        Map<String, DatabaseConfiguration> mapConfigs = new HashMap<String, DatabaseConfiguration>();
+        Map<String, DatabaseConfiguration> mapConfigs = new HashMap<>();
         mapConfigs.put("Database1", config1);
         mapConfigs.put("Database2", config2);
         databaseConfigurations = new DatabaseConfigurations(configDefault, mapConfigs);

@@ -74,9 +74,6 @@ public class ReflectionComparatorLenientOrderCollectionsTest {
         assertBestMatch(expected, "3", actual, "4", difference);
     }
 
-    @SuppressWarnings({
-        "RedundantCast"
-    })
     private void assertBestMatch(String[] expected, String expectedValue, String[] actual, String actualValue, UnorderedCollectionDifference difference) {
         int expectedIndex = binarySearch(expected, expectedValue);
         int actualIndex = binarySearch(actual, actualValue);

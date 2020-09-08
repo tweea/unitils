@@ -40,9 +40,9 @@ public class PartialMockConstructorTest {
 
     @Before
     public void initialize() {
-        mockObject = new PartialMockObject<TestClass>("testMock", TestClass.class, this);
-        mockObjectNoDefaultConstructor = new PartialMockObject<TestClassNoDefaultConstructor>("testMock", TestClassNoDefaultConstructor.class, this);
-        mockObjectInterface = new PartialMockObject<TestInterface>("testMock", TestInterface.class, this);
+        mockObject = new PartialMockObject<>("testMock", TestClass.class, this);
+        mockObjectNoDefaultConstructor = new PartialMockObject<>("testMock", TestClassNoDefaultConstructor.class, this);
+        mockObjectInterface = new PartialMockObject<>("testMock", TestInterface.class, this);
     }
 
     @Test
@@ -81,6 +81,10 @@ public class PartialMockConstructorTest {
             this.defaultConstructorCalled = true;
         }
 
+        /**
+         * @param value
+         *     Used for testing
+         */
         public TestClass(String value) {
             this.otherConstructorCalled = true;
         }
@@ -91,6 +95,10 @@ public class PartialMockConstructorTest {
 
         private int initializedValue = 999;
 
+        /**
+         * @param value
+         *     Used for testing
+         */
         public TestClassNoDefaultConstructor(String value) {
             this.otherConstructorCalled = true;
         }

@@ -25,7 +25,7 @@ import static org.unitils.TracingTestListener.TestInvocation.TEST_SET_UP;
 import static org.unitils.TracingTestListener.TestInvocation.TEST_TEAR_DOWN;
 
 /**
- * JUnit 4 test class containing 2 test methods. This test test-class is used in the {@link JUnitUnitilsInvocationTest} tests.
+ * JUnit 4 test class containing 2 test methods. This test test-class is used in the JUnitUnitilsInvocationTest tests.
  *
  * @author Tim Ducheyne
  */

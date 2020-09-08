@@ -54,7 +54,7 @@ public class DefaultFileContentReaderTest
     @Before
     public void initialize()
         throws Exception {
-        List<ConversionStrategy<?>> conversionStrategies = new ArrayList<ConversionStrategy<?>>();
+        List<ConversionStrategy<?>> conversionStrategies = new ArrayList<>();
         conversionStrategies.add(stringConversionStrategyMock.getMock());
         conversionStrategies.add(mapConversionStrategyMock.getMock());
 
@@ -78,7 +78,7 @@ public class DefaultFileContentReaderTest
     @Test
     public void secondConversionStrategyHasTargetType()
         throws Exception {
-        Map<String, String> map = new HashMap<String, String>();
+        Map<String, String> map = new HashMap<>();
         mapConversionStrategyMock.returns(map).convertContent(inputStreamMock.getMock(), "utf-8");
 
         Map result = defaultFileContentReader.readFileContent("fileName", Map.class, "utf-8", DefaultFileContentReader.class);

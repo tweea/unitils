@@ -45,7 +45,7 @@ public class DetailedObservedInvocationsReportTest {
     @Before
     public void initialize() {
         detailedObservedInvocationsReport = new DetailedObservedInvocationsReport(this);
-        testMock = new MockObject<TestInterface>("testMock", TestInterface.class, this);
+        testMock = new MockObject<>("testMock", TestInterface.class, this);
     }
 
     @Test

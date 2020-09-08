@@ -15,17 +15,23 @@ package org.unitils.reflectionassert;
 import java.util.Arrays;
 import java.util.List;
 
+import org.unitils.core.annotation.UsedForTesting;
+
 /**
  * @author Filip Neven
  * @author Tim Ducheyne
  */
 public class Person {
+    @UsedForTesting
     private String fName;
 
+    @UsedForTesting
     private String lName;
 
+    @UsedForTesting
     private String userName;
 
+    @UsedForTesting
     private List<Car> cars;
 
     public Person(String fName, String lName, String userName, Car... cars) {

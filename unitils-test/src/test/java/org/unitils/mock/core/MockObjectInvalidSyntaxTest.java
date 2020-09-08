@@ -38,7 +38,7 @@ public class MockObjectInvalidSyntaxTest {
 
     @Before
     public void setUp() {
-        mockObject = new MockObject<TestClass>("testMock1", TestClass.class, this);
+        mockObject = new MockObject<>("testMock1", TestClass.class, this);
     }
 
     @Test
@@ -81,6 +81,7 @@ public class MockObjectInvalidSyntaxTest {
     public void incompleteBehaviorDefinition_performs() {
         try {
             mockObject.performs(new MockBehavior() {
+                @Override
                 public Object execute(ProxyInvocation mockInvocation)
                     throws Throwable {
                     return null;
@@ -116,6 +117,7 @@ public class MockObjectInvalidSyntaxTest {
     public void incompleteBehaviorDefinition_oncePerforms() {
         try {
             mockObject.oncePerforms(new MockBehavior() {
+                @Override
                 public Object execute(ProxyInvocation mockInvocation)
                     throws Throwable {
                     return null;

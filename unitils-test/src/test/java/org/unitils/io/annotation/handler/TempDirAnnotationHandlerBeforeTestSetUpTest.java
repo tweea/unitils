@@ -19,6 +19,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.unitils.UnitilsJUnit4;
 import org.unitils.core.UnitilsException;
+import org.unitils.core.annotation.UsedForTesting;
 import org.unitils.io.annotation.TempDir;
 import org.unitils.io.temp.TempService;
 import org.unitils.mock.Mock;
@@ -110,6 +111,7 @@ public class TempDirAnnotationHandlerBeforeTestSetUpTest
     }
 
     private static class NoAnnotationTestClass {
+        @UsedForTesting
         protected File tempDir;
     }
 

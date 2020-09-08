@@ -15,10 +15,9 @@ package org.unitils.mock.core;
 import org.junit.Before;
 import org.junit.Test;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 import static org.unitils.mock.MockUnitils.assertNoMoreInvocations;
-
-import static junit.framework.Assert.assertEquals;
 
 /**
  * Tests the mock object functionality.
@@ -33,7 +32,7 @@ public class MockObjectAssertTest {
 
     @Before
     public void setUp() {
-        mockObject = new MockObject<TestClass>("testMock", TestClass.class, this);
+        mockObject = new MockObject<>("testMock", TestClass.class, this);
     }
 
     @Test

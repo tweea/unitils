@@ -25,15 +25,18 @@ import org.unitils.io.conversion.ConversionStrategy;
  */
 public class DummyConversionStrategy
     implements ConversionStrategy<Object> {
+    @Override
     public Object convertContent(InputStream inputStream, String encoding)
         throws IOException {
         return new Object();
     }
 
+    @Override
     public String getDefaultFileExtension() {
         return "dummy";
     }
 
+    @Override
     public Class<Object> getTargetType() {
         return Object.class;
     }

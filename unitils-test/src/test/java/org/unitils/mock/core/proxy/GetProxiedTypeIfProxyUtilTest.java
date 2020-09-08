@@ -62,6 +62,7 @@ public class GetProxiedTypeIfProxyUtilTest {
 
     private static class DummyProxyInvocationHandler
         implements ProxyInvocationHandler {
+        @Override
         public Object handleInvocation(ProxyInvocation invocation)
             throws Throwable {
             return null;

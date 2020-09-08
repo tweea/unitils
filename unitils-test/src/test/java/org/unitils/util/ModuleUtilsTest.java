@@ -179,12 +179,15 @@ public class ModuleUtilsTest
      */
     private static class TestModule
         implements Module {
+        @Override
         public void init(Properties configuration) {
         }
 
+        @Override
         public void afterInit() {
         }
 
+        @Override
         public TestListener getTestListener() {
             return null;
         }

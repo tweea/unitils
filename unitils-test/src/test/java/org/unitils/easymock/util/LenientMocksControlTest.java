@@ -55,10 +55,10 @@ public class LenientMocksControlTest {
     @Test
     public void testLenientMocksControl_equals() {
         MockedClass mock = lenientMocksControl.createMock(MockedClass.class);
-        expect(mock.someBehavior(true, 999, "Test", new ArrayList<Object>())).andReturn("Result");
+        expect(mock.someBehavior(true, 999, "Test", new ArrayList<>())).andReturn("Result");
         replay(mock);
 
-        String result = mock.someBehavior(true, 999, "Test", new ArrayList<Object>());
+        String result = mock.someBehavior(true, 999, "Test", new ArrayList<>());
 
         assertEquals("Result", result);
         verify(mock);
@@ -105,7 +105,7 @@ public class LenientMocksControlTest {
         expect(mock.someBehavior(false, 0, null, null)).andReturn("Result");
         replay(mock);
 
-        String result = mock.someBehavior(true, 999, "Test", new ArrayList<Object>());
+        String result = mock.someBehavior(true, 999, "Test", new ArrayList<>());
 
         assertEquals("Result", result);
         verify(mock);
@@ -117,7 +117,7 @@ public class LenientMocksControlTest {
     @Test
     public void testLenientMocksControl_notEqualsNotCalled() {
         MockedClass mock = lenientMocksControl.createMock(MockedClass.class);
-        expect(mock.someBehavior(true, 999, "XXXX", new ArrayList<Object>())).andReturn("Result");
+        expect(mock.someBehavior(true, 999, "XXXX", new ArrayList<>())).andReturn("Result");
         replay(mock);
 
         try {
@@ -134,11 +134,11 @@ public class LenientMocksControlTest {
     @Test
     public void testLenientMocksControl_notEqualsDifferentArguments() {
         MockedClass mock = lenientMocksControl.createMock(MockedClass.class);
-        expect(mock.someBehavior(true, 999, "XXXX", new ArrayList<Object>())).andReturn("Result");
+        expect(mock.someBehavior(true, 999, "XXXX", new ArrayList<>())).andReturn("Result");
         replay(mock);
 
         try {
-            mock.someBehavior(true, 999, "Test", new ArrayList<Object>());
+            mock.someBehavior(true, 999, "Test", new ArrayList<>());
             fail();
         } catch (AssertionError e) {
             // expected
@@ -151,10 +151,10 @@ public class LenientMocksControlTest {
     @Test
     public void testLenientMocksControl_mixingArgumentMatchers() {
         MockedClass mock = lenientMocksControl.createMock(MockedClass.class);
-        expect(mock.someBehavior(eq(true), refEq(999), eq("Test"), refEq(new ArrayList<Object>()))).andReturn("Result");
+        expect(mock.someBehavior(eq(true), refEq(999), eq("Test"), refEq(new ArrayList<>()))).andReturn("Result");
         replay(mock);
 
-        String result = mock.someBehavior(true, 999, "Test", new ArrayList<Object>());
+        String result = mock.someBehavior(true, 999, "Test", new ArrayList<>());
 
         assertEquals("Result", result);
         verify(mock);
@@ -189,10 +189,24 @@ public class LenientMocksControlTest {
         public void someBehavior() {
         }
 
+        /**
+         * @param b
+         *     Used for testing
+         * @param i
+         *     Used for testing
+         * @param object
+         *     Used for testing
+         * @param list
+         *     Used for testing
+         */
         public String someBehavior(boolean b, int i, Object object, List<?> list) {
             return null;
         }
 
+        /**
+         * @param testEnum
+         *     Used for testing
+         */
         public String someBehavior(TestEnum testEnum) {
             return null;
         }

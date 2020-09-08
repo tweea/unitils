@@ -2,7 +2,6 @@ package org.unitils.spring.profile;
 
 import javax.sql.DataSource;
 
-import org.junit.Ignore;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
@@ -17,7 +16,6 @@ import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
  * @author Willemijn Wouters
  * @since 3.4
  */
-@Ignore
 @Configuration
 @Profile("acc")
 public class TestProfile1 {

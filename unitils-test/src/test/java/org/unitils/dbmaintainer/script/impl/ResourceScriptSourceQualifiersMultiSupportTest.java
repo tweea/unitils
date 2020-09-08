@@ -25,7 +25,6 @@ import org.unitils.reflectionassert.ReflectionComparatorMode;
  * test qualifiers and multi user support in {@link ResourceScriptSource}.
  *
  * @author wiw
- * @since
  */
 @RunWith(UnitilsBlockJUnit4ClassRunner.class)
 public class ResourceScriptSourceQualifiersMultiSupportTest {
@@ -70,8 +69,6 @@ public class ResourceScriptSourceQualifiersMultiSupportTest {
 
     /**
      * test {@link DefaultScriptSource#checkIfThereAreNoQualifiers(String)}
-     * 
-     * @throws Exception
      */
     @Test
     public void testCheckIfThereAreNoQualifiers()
@@ -133,7 +130,7 @@ public class ResourceScriptSourceQualifiersMultiSupportTest {
         tempFolder.newFile("test1/1@people_addusers.sql");
 
         String path = getPath(parentFile);
-        List<Script> actual = new ArrayList<Script>();
+        List<Script> actual = new ArrayList<>();
         configuration.setProperty(DefaultScriptSource.PROPKEY_SCRIPT_LOCATIONS, LOCATION);
         configuration.setProperty(DefaultScriptSource.PROPKEY_SCRIPT_EXTENSIONS, "sql");
         configuration.setProperty(DefaultScriptSource.PROPKEY_POSTPROCESSINGSCRIPT_DIRNAME, "postprocessing");
@@ -141,7 +138,7 @@ public class ResourceScriptSourceQualifiersMultiSupportTest {
 
         scriptSource.init(configuration);
         scriptSource.getScriptsAt(actual, path, "test1", "users", true);
-        List<String> actualNames = new ArrayList<String>();
+        List<String> actualNames = new ArrayList<>();
         for (Script script : actual) {
             actualNames.add(script.getFileName());
         }
@@ -175,10 +172,10 @@ public class ResourceScriptSourceQualifiersMultiSupportTest {
 
         scriptSource.init(configuration);
 
-        List<Script> actual = new ArrayList<Script>();
+        List<Script> actual = new ArrayList<>();
 
         scriptSource.getScriptsAt(actual, path, nameFolder, "users", true);
-        List<String> actualNames = new ArrayList<String>();
+        List<String> actualNames = new ArrayList<>();
         for (Script script : actual) {
             actualNames.add(script.getFileName());
         }
@@ -208,7 +205,7 @@ public class ResourceScriptSourceQualifiersMultiSupportTest {
 
         String path = getPath(parentFile);
 
-        List<Script> actual = new ArrayList<Script>();
+        List<Script> actual = new ArrayList<>();
 
         scriptSource = new ResourceScriptSource();
         configuration.setProperty(DefaultScriptSource.PROPKEY_INCLUDE_QUALIFIERS, "include1, include2, include3");
@@ -217,12 +214,12 @@ public class ResourceScriptSourceQualifiersMultiSupportTest {
         scriptSource.init(configuration);
 
         scriptSource.getScriptsAt(actual, path, nameFolder, "users", true);
-        List<String> actualNames = new ArrayList<String>();
+        List<String> actualNames = new ArrayList<>();
         for (Script script : actual) {
             actualNames.add(script.getFileName());
         }
 
-        List<String> expected = new ArrayList<String>();
+        List<String> expected = new ArrayList<>();
         expected.add("01_%23include1_products.sql");
         expected.add("01_%23include2_@users_products.sql");
         expected.add("@users_%23include1_%23include2_products.sql");

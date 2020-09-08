@@ -171,6 +171,7 @@ public class ConfigurationGetValueListOfTypeTest {
 
     private static class FactoryClass
         implements Factory<Map> {
+        @Override
         public Map create() {
             return new Properties();
         }

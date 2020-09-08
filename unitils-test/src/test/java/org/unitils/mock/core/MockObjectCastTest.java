@@ -19,7 +19,7 @@ import org.junit.Test;
 import org.unitils.UnitilsJUnit4;
 import org.unitils.mock.PartialMock;
 
-import static junit.framework.Assert.assertNotNull;
+import static org.junit.Assert.assertNotNull;
 
 /**
  * Tests the casting of mock objects (UNI-168 and UNI-169).
@@ -27,9 +27,6 @@ import static junit.framework.Assert.assertNotNull;
  * @author Tim Ducheyne
  * @author Filip Neven
  */
-@SuppressWarnings({
-    "RedundantCast"
-})
 public class MockObjectCastTest
     extends UnitilsJUnit4 {
     private PartialMock<MyTimerTask> myTimerTask;
@@ -45,6 +42,7 @@ public class MockObjectCastTest
 
     public static class MyTimerTask
         extends TimerTask {
+        @Override
         public void run() {
         }
     }

@@ -28,9 +28,6 @@ public class BeforeTestClassStatementTest {
     @Mock
     private Statement statement;
 
-    /**
-     * @throws java.lang.Exception
-     */
     @Before
     public void setUp()
         throws Exception {

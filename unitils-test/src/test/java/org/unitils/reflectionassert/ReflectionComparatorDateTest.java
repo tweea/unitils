@@ -51,6 +51,7 @@ public class ReflectionComparatorDateTest
     /**
      * Initializes the test fixture.
      */
+    @Override
     protected void setUp()
         throws Exception {
         super.setUp();

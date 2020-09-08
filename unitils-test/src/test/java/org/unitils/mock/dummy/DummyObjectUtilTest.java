@@ -21,15 +21,15 @@ import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.Assert;
 import org.junit.Test;
 import org.unitils.mock.core.proxy.CloneUtil;
 
-import junit.framework.Assert;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertFalse;
-import static junit.framework.Assert.assertNotNull;
-import static junit.framework.Assert.assertTrue;
 
 /**
  * @author Filip Neven
@@ -132,9 +132,6 @@ public class DummyObjectUtilTest {
         assertEquals(dummy, clone);
     }
 
-    @SuppressWarnings({
-        "UnusedDeclaration"
-    })
     private class TestClass {
         public TestClass(String someValue) {
         }

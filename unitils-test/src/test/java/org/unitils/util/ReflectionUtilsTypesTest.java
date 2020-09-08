@@ -18,19 +18,18 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.unitils.core.annotation.UsedForTesting;
 import org.unitils.reflectionassert.ReflectionAssert;
-
-import junit.framework.Assert;
 
 import static java.util.Arrays.asList;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 import static org.unitils.reflectionassert.ReflectionAssert.assertPropertyLenientEquals;
-
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertNull;
-import static junit.framework.Assert.assertTrue;
 
 /**
  * Test for {@link ReflectionUtils} working with field types, eg assignable from.
@@ -224,10 +223,6 @@ public class ReflectionUtilsTypesTest {
         assertNull(method);
     }
 
-    /**
-     * @throws SecurityException
-     * @throws NoSuchFieldException
-     */
     @Test
     public void testString()
         throws SecurityException, NoSuchFieldException {
@@ -235,10 +230,6 @@ public class ReflectionUtilsTypesTest {
         Assert.assertEquals("test", testclass.getStringTest());
     }
 
-    /**
-     * @throws SecurityException
-     * @throws NoSuchFieldException
-     */
     @Test
     public void testInt()
         throws SecurityException, NoSuchFieldException {
@@ -246,10 +237,6 @@ public class ReflectionUtilsTypesTest {
         Assert.assertEquals(5, testclass.getIntTest());
     }
 
-    /**
-     * @throws SecurityException
-     * @throws NoSuchFieldException
-     */
     @Test
     public void testByte()
         throws SecurityException, NoSuchFieldException {
@@ -257,10 +244,6 @@ public class ReflectionUtilsTypesTest {
         ReflectionAssert.assertLenientEquals(new Byte("125"), testclass.getByteTest());
     }
 
-    /**
-     * @throws SecurityException
-     * @throws NoSuchFieldException
-     */
     @Test
     public void testObject()
         throws SecurityException, NoSuchFieldException {
@@ -269,10 +252,6 @@ public class ReflectionUtilsTypesTest {
         ReflectionAssert.assertLenientEquals(expected, testclass.getPersonTest());
     }
 
-    /**
-     * @throws SecurityException
-     * @throws NoSuchFieldException
-     */
     @Test
     public void testArray()
         throws SecurityException, NoSuchFieldException {
@@ -379,10 +358,6 @@ public class ReflectionUtilsTypesTest {
         assertNull(field);
     }
 
-    /**
-     * @throws SecurityException
-     * @throws NoSuchFieldException
-     */
     @Test(expected = NoSuchFieldException.class)
     public void testError()
         throws SecurityException, NoSuchFieldException {
@@ -586,7 +561,6 @@ public class ReflectionUtilsTypesTest {
         }
     }
 
-    @SuppressWarnings("unused")
     private static class Person {
         private static int countPersons = 0;
 
@@ -594,12 +568,9 @@ public class ReflectionUtilsTypesTest {
 
         private String surname;
 
+        @UsedForTesting
         private boolean female;
 
-        /**
-         * @param name
-         * @param surname
-         */
         public Person(String name, String surname) {
             super();
             this.name = name;
@@ -609,6 +580,7 @@ public class ReflectionUtilsTypesTest {
         /**
          * @return the name
          */
+        @UsedForTesting
         public String getName() {
             return name;
         }
@@ -616,6 +588,7 @@ public class ReflectionUtilsTypesTest {
         /**
          * @return the surname
          */
+        @UsedForTesting
         public String getSurname() {
             return surname;
         }
@@ -624,6 +597,7 @@ public class ReflectionUtilsTypesTest {
          * @param name
          *     the name to set
          */
+        @UsedForTesting
         public void setName(String name) {
             this.name = name;
         }
@@ -632,6 +606,7 @@ public class ReflectionUtilsTypesTest {
          * @param surname
          *     the surname to set
          */
+        @UsedForTesting
         public void setSurname(String surname) {
             this.surname = surname;
         }
@@ -639,6 +614,7 @@ public class ReflectionUtilsTypesTest {
         /**
          * @return the countPersons
          */
+        @UsedForTesting
         public static int getCountPersons() {
             return countPersons;
         }

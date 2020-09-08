@@ -114,9 +114,6 @@ public class DefaultValueReturningMockBehaviorExecuteTest {
         return new ProxyInvocation(null, null, method, null, null);
     }
 
-    @SuppressWarnings({
-        "UnusedDeclaration"
-    })
     private static interface TestClass {
         List listMethod();
 

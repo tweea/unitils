@@ -15,6 +15,7 @@
  */
 package org.unitils.reflectionassert;
 
+import org.unitils.core.annotation.UsedForTesting;
 import org.unitils.reflectionassert.difference.Difference;
 
 import junit.framework.TestCase;
@@ -58,6 +59,7 @@ public class ReflectionComparatorPrimitivesTest
     /**
      * Initializes the test fixture.
      */
+    @Override
     protected void setUp()
         throws Exception {
         super.setUp();
@@ -93,9 +95,6 @@ public class ReflectionComparatorPrimitivesTest
     /**
      * Test for two equal autoboxing. An autoboxed primitive should be considered equals to the object version.
      */
-    @SuppressWarnings({
-        "UnnecessaryBoxing"
-    })
     public void testGetDifference_equalsAutoboxing() {
         Difference result = reflectionComparator.getDifference(5L, new Long(5));
         assertNull(result);
@@ -198,18 +197,18 @@ public class ReflectionComparatorPrimitivesTest
     /**
      * Test class with failing equals.
      */
-    @SuppressWarnings({
-        "unused", "UnusedDeclaration", "FieldCanBeLocal"
-    })
     private static class Primitives {
 
         /* A fist int value */
+        @UsedForTesting
         private int intValue1;
 
         /* A second int value */
+        @UsedForTesting
         private int intValue2;
 
         /* An inner object */
+        @UsedForTesting
         private Primitives inner;
 
         /**

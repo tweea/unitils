@@ -18,11 +18,6 @@ public class JustATestClass {
 
     private Double k;
 
-    /**
-     * @param i
-     * @param j
-     * @param k
-     */
     public JustATestClass(Integer i, String j, Double k) {
         super();
         this.i = i;

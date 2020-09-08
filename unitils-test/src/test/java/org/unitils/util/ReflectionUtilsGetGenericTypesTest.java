@@ -19,6 +19,7 @@ import java.util.Map;
 
 import org.junit.Test;
 import org.unitils.core.UnitilsException;
+import org.unitils.core.annotation.UsedForTesting;
 
 import static org.junit.Assert.assertEquals;
 import static org.unitils.util.ReflectionUtils.getFieldWithName;
@@ -58,12 +59,16 @@ public class ReflectionUtilsGetGenericTypesTest {
     }
 
     private static class TestClass {
+        @UsedForTesting
         private Object notGenericField;
 
+        @UsedForTesting
         private Class<String> genericField;
 
+        @UsedForTesting
         private List<Map<String, List<String>>> nestedGenericField;
 
+        @UsedForTesting
         private Map<String, String> multipleGenericField;
     }
 }

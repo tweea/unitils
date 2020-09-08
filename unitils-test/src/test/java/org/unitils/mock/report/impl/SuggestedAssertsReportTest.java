@@ -23,10 +23,9 @@ import org.junit.Test;
 import org.unitils.mock.Mock;
 import org.unitils.mock.core.MockObject;
 
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.unitils.mock.core.MockObject.getCurrentScenario;
-
-import static junit.framework.Assert.assertFalse;
 
 /**
  * Test for the report that shows the suggested assert statements.
@@ -54,7 +53,7 @@ public class SuggestedAssertsReportTest {
     @Before
     public void setUp() {
         suggestedAssertsReport = new SuggestedAssertsReport();
-        testMock = new MockObject<TestInterface>("testMock", TestInterface.class, this);
+        testMock = new MockObject<>("testMock", TestInterface.class, this);
         testProxy = testMock.getMock();
     }
 

@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.Properties;
@@ -52,7 +51,7 @@ public class DatabaseModuleMultipleDatabasesTest {
 
     @Test
     public void testGetDatabase1()
-        throws SQLException, SecurityException, NoSuchMethodException, IllegalArgumentException, IllegalAccessException, InvocationTargetException {
+        throws SQLException, SecurityException, IllegalArgumentException {
         TestClassDatabase1 obj = new TestClassDatabase1();
         DataSourceWrapper wrapper = module.getWrapper("");
         module.setWrapper(wrapper);
@@ -64,8 +63,7 @@ public class DatabaseModuleMultipleDatabasesTest {
 
     @Test
     public void testGetDatabase2()
-        throws SQLException, SecurityException, NoSuchMethodException, IllegalArgumentException, IllegalAccessException, InvocationTargetException,
-        InterruptedException {
+        throws SQLException, SecurityException, IllegalArgumentException {
         TestClassDatabase2 obj = new TestClassDatabase2();
 
         DataSourceWrapper wrapper = module.getWrapper("database2");

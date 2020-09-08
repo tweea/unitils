@@ -27,9 +27,6 @@ import static org.junit.Assert.assertEquals;
  * @author Tim Ducheyne
  * @author Filip Neven
  */
-@SuppressWarnings({
-    "UnnecessaryBoxing"
-})
 public class ArgumentMatcherLongDoubleTest
     extends UnitilsJUnit4 {
     private Mock<TestInterface> testInterface;

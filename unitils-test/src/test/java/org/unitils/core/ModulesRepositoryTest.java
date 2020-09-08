@@ -137,12 +137,15 @@ public class ModulesRepositoryTest
      */
     private static class TestModule1
         implements Module {
+        @Override
         public void init(Properties configuration) {
         }
 
+        @Override
         public void afterInit() {
         }
 
+        @Override
         public TestListener getTestListener() {
             return new TestListener1();
         }
@@ -160,13 +163,13 @@ public class ModulesRepositoryTest
      * A test module that is a subtype of TestModule1 and also creates its own test listener.
      */
     private static class TestModule2
-        extends TestModule1
-        implements Module {
+        extends TestModule1 {
         @Override
         public TestListener getTestListener() {
             return new TestListener2();
         }
 
+        @Override
         public DatabaseModule getDatabaseModule() {
             return null;
         }

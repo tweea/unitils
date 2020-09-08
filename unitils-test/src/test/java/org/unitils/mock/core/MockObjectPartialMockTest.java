@@ -38,7 +38,7 @@ public class MockObjectPartialMockTest {
     @Before
     public void setUp() {
         TestClass.invocationCount = 0;
-        mockObject = new PartialMockObject<TestClass>("testMock", TestClass.class, this);
+        mockObject = new PartialMockObject<>("testMock", TestClass.class, this);
     }
 
     /**
@@ -134,6 +134,7 @@ public class MockObjectPartialMockTest {
         implements MockBehavior {
         public int invocationCount = 0;
 
+        @Override
         public Object execute(ProxyInvocation proxyInvocation)
             throws Throwable {
             invocationCount++;

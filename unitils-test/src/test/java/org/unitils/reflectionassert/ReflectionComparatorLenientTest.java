@@ -16,6 +16,7 @@ import java.util.Date;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.unitils.core.annotation.UsedForTesting;
 import org.unitils.reflectionassert.difference.Difference;
 
 import static org.junit.Assert.assertEquals;
@@ -291,6 +292,7 @@ public class ReflectionComparatorLenientTest {
          *
          * @return the boolean value
          */
+        @UsedForTesting
         public boolean isBooleanValue() {
             return booleanValue;
         }
@@ -300,6 +302,7 @@ public class ReflectionComparatorLenientTest {
          *
          * @return the char value
          */
+        @UsedForTesting
         public char getCharValue() {
             return charValue;
         }
@@ -309,6 +312,7 @@ public class ReflectionComparatorLenientTest {
          *
          * @return the byte value
          */
+        @UsedForTesting
         public byte getByteValue() {
             return byteValue;
         }
@@ -318,6 +322,7 @@ public class ReflectionComparatorLenientTest {
          *
          * @return the short value
          */
+        @UsedForTesting
         public short getShortValue() {
             return shortValue;
         }
@@ -327,6 +332,7 @@ public class ReflectionComparatorLenientTest {
          *
          * @return the int value
          */
+        @UsedForTesting
         public int getIntValue() {
             return intValue;
         }
@@ -336,6 +342,7 @@ public class ReflectionComparatorLenientTest {
          *
          * @return the long value
          */
+        @UsedForTesting
         public long getLongValue() {
             return longValue;
         }
@@ -345,6 +352,7 @@ public class ReflectionComparatorLenientTest {
          *
          * @return the float value
          */
+        @UsedForTesting
         public float getFloatValue() {
             return floatValue;
         }
@@ -354,6 +362,7 @@ public class ReflectionComparatorLenientTest {
          *
          * @return the double value
          */
+        @UsedForTesting
         public double getDoubleValue() {
             return doubleValue;
         }
@@ -372,6 +381,7 @@ public class ReflectionComparatorLenientTest {
          *
          * @return the object value
          */
+        @UsedForTesting
         public Object getObjectValue() {
             return objectValue;
         }

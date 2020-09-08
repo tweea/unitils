@@ -121,6 +121,7 @@ public class DbUnitModuleDataSetOperationTest
         implements DataSetLoadStrategy {
         private static boolean operationExecuted;
 
+        @Override
         public void execute(DbUnitDatabaseConnection dbUnitDatabaseConnection, IDataSet dataSet) {
             operationExecuted = true;
         }

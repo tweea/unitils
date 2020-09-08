@@ -18,7 +18,7 @@ import org.junit.Test;
 import org.unitils.UnitilsJUnit4;
 import org.unitils.io.annotation.FileContent;
 
-import static junit.framework.Assert.assertEquals;
+import static org.junit.Assert.assertEquals;
 
 /**
  * @author Jeroen Horemans

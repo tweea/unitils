@@ -22,7 +22,6 @@ import org.unitils.reflectionassert.ReflectionAssert;
  * @author Willemijn Wouters
  * @since 3.4
  */
-
 public class DatabaseConfigurationsFactoryMultipleDatabaseTest {
     private static final Log LOGGER = LogFactory.getLog(DatabaseConfigurationsFactoryMultipleDatabaseTest.class);
 
@@ -32,9 +31,6 @@ public class DatabaseConfigurationsFactoryMultipleDatabaseTest {
 
     private DatabaseConfiguration config2;
 
-    /**
-     * @throws java.lang.Exception
-     */
     @Before
     public void setUp()
         throws Exception {
@@ -56,7 +52,7 @@ public class DatabaseConfigurationsFactoryMultipleDatabaseTest {
 
     @Test
     public void testCreate() {
-        Map<String, DatabaseConfiguration> databaseConfigurations = new HashMap<String, DatabaseConfiguration>();
+        Map<String, DatabaseConfiguration> databaseConfigurations = new HashMap<>();
         databaseConfigurations.put("database1", config1);
         databaseConfigurations.put("database2", config2);
         DatabaseConfigurations configs = new DatabaseConfigurations(null, databaseConfigurations);

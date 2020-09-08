@@ -4,7 +4,6 @@
 package org.unitils.dbunit;
 
 import java.io.File;
-import java.io.IOException;
 
 import javax.sql.DataSource;
 
@@ -24,7 +23,6 @@ import org.unitils.database.annotations.TestDataSource;
  * test {@link DbUnitUnitils}.
  *
  * @author wiw
- * @since
  */
 @RunWith(UnitilsBlockJUnit4ClassRunner.class)
 public class DbUnitUnitilsTest {
@@ -38,9 +36,6 @@ public class DbUnitUnitilsTest {
         SQLUnitils.executeUpdate("CREATE TABLE fruit (id varchar(50),name varchar(50))", dataSource);
     }
 
-    /**
-     * @throws java.lang.Exception
-     */
     @Before
     public void setUp()
         throws Exception {
@@ -50,8 +45,7 @@ public class DbUnitUnitilsTest {
      * Test method for {@link org.unitils.dbunit.DbUnitUnitils#assertExpectedDataSet(java.io.File[])}.
      */
     @Test
-    public void testAssertExpectedDataSetFileArray()
-        throws IOException {
+    public void testAssertExpectedDataSetFileArray() {
         SQLUnitils.executeUpdate("insert into fruit (id, name) values(1, 'orange')", dataSource);
         SQLUnitils.executeUpdate("insert into fruit (id, name) values(2, 'apple')", dataSource);
 
@@ -59,8 +53,7 @@ public class DbUnitUnitilsTest {
     }
 
     @Test(expected = AssertionError.class)
-    public void testAssertExpectedDataSetFileArray_otherValuesInDataset()
-        throws IOException {
+    public void testAssertExpectedDataSetFileArray_otherValuesInDataset() {
         SQLUnitils.executeUpdate("insert into fruit (id, name) values(3, 'peach')", dataSource);
         SQLUnitils.executeUpdate("insert into fruit (id, name) values(4, 'banana')", dataSource);
 
@@ -79,8 +72,7 @@ public class DbUnitUnitilsTest {
     }
 
     @Test(expected = AssertionError.class)
-    public void testAssertExpectedDataSetStringArray_otherValuesInDataset()
-        throws IOException {
+    public void testAssertExpectedDataSetStringArray_otherValuesInDataset() {
         SQLUnitils.executeUpdate("insert into fruit (id, name) values(3, 'peach')", dataSource);
         SQLUnitils.executeUpdate("insert into fruit (id, name) values(4, 'banana')", dataSource);
 

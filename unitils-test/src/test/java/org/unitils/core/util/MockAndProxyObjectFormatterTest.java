@@ -43,7 +43,7 @@ public class MockAndProxyObjectFormatterTest
 
     @Test
     public void formatMock() {
-        Mock<Collection> mock = new MockObject<Collection>("mockName", Collection.class, this);
+        Mock<Collection> mock = new MockObject<>("mockName", Collection.class, this);
         String result = objectFormatter.format(mock);
         assertEquals("Mock<mockName>", result);
     }

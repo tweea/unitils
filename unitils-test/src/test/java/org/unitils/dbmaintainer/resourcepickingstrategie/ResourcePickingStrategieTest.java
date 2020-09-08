@@ -42,7 +42,7 @@ public class ResourcePickingStrategieTest {
     @Test
     public void testAddMostRecentDuplicateFile()
         throws IOException {
-        List<URL> filteredResources = new ArrayList<URL>();
+        List<URL> filteredResources = new ArrayList<>();
         File file1 = new File("src/test/resources/org/unitils/dbunit/test1/testFile.txt");
 
         URL urlFile1 = new URL("file:///" + file1.getAbsolutePath());
@@ -59,7 +59,7 @@ public class ResourcePickingStrategieTest {
     @Test
     public void testAddMostRecentDifferentFiles()
         throws Exception {
-        List<URL> filteredResources = new ArrayList<URL>();
+        List<URL> filteredResources = new ArrayList<>();
         File file1 = new File("src/test/resources/org/unitils/dbunit/test1/testFile.txt");
         File file2 = new File("src/test/resources/org/unitils/dbunit/test2/testFile.txt");
 
@@ -78,7 +78,7 @@ public class ResourcePickingStrategieTest {
     @Test
     public void testAddMostRecentEmptyFilteredResources()
         throws Exception {
-        List<URL> filteredResources = new ArrayList<URL>();
+        List<URL> filteredResources = new ArrayList<>();
         File file1 = new File("src/test/resources/org/unitils/dbunit/test1/testFile.txt");
 
         URL urlFile1 = new URL("file:///" + file1.getAbsolutePath());
@@ -93,7 +93,7 @@ public class ResourcePickingStrategieTest {
     @Test
     public void testFilter()
         throws MalformedURLException {
-        List<URL> filteredResources = new ArrayList<URL>();
+        List<URL> filteredResources = new ArrayList<>();
         File file1 = new File("src/test/resources/org/unitils/dbunit/test1/testFile.txt");
 
         URL urlFile1 = new URL("file:///" + file1.getAbsolutePath());

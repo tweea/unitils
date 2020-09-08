@@ -2,7 +2,7 @@ package org.unitils.core.junit;
 
 import java.lang.reflect.Method;
 
-import org.easymock.classextension.EasyMock;
+import org.easymock.EasyMock;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -27,9 +27,6 @@ public class AfterTestTearDownStatementTest {
     @Mock
     private TestListener listener;
 
-    /**
-     * @throws java.lang.Exception
-     */
     @Before
     public void setUp()
         throws Exception {

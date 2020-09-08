@@ -32,7 +32,7 @@ public class MockObjectPerformsTest {
 
     @Before
     public void setUp() {
-        mockObject = new MockObject<TestClass>("testMock", TestClass.class, this);
+        mockObject = new MockObject<>("testMock", TestClass.class, this);
     }
 
     /**
@@ -77,6 +77,7 @@ public class MockObjectPerformsTest {
         implements MockBehavior {
         public int invocationCount = 0;
 
+        @Override
         public Object execute(ProxyInvocation proxyInvocation)
             throws Throwable {
             invocationCount++;

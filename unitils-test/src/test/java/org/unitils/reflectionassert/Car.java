@@ -12,11 +12,14 @@
  */
 package org.unitils.reflectionassert;
 
+import org.unitils.core.annotation.UsedForTesting;
+
 /**
  * @author Filip Neven
  * @author Tim Ducheyne
  */
 public class Car {
+    @UsedForTesting
     private String brand;
 
     public Car(String brand) {

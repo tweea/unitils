@@ -104,8 +104,8 @@ public class DefaultScriptSourceTest
         // Copy test files
         copyDirectory(new File(getClass().getResource("DefaultScriptSourceTest").toURI()), new File(scriptsDirName));
 
-        alreadyExecutedScripts = new ArrayList<ExecutedScript>(asList(getExecutedScript("1_scripts/001_scriptA.sql"),
-            getExecutedScript("1_scripts/002_scriptB.sql"), getExecutedScript("2_scripts/002_scriptE.sql"), getExecutedScript("2_scripts/scriptF.sql"),
+        alreadyExecutedScripts = new ArrayList<>(asList(getExecutedScript("1_scripts/001_scriptA.sql"), getExecutedScript("1_scripts/002_scriptB.sql"),
+            getExecutedScript("2_scripts/002_scriptE.sql"), getExecutedScript("2_scripts/scriptF.sql"),
             getExecutedScript("2_scripts/subfolder/001_scriptG.sql"), getExecutedScript("2_scripts/subfolder/scriptH.sql"),
             getExecutedScript("scripts/001_scriptI.sql"), getExecutedScript("scripts/scriptJ.sql")));
 
@@ -123,7 +123,7 @@ public class DefaultScriptSourceTest
 
         scriptSource = new DefaultScriptSource();
         scriptSource.init(configuration);
-        schemas = new ArrayList<String>();
+        schemas = new ArrayList<>();
         schemas.add("public");
     }
 
@@ -199,8 +199,7 @@ public class DefaultScriptSourceTest
     public void testGetNewScripts() {
         alreadyExecutedScripts.set(5, new ExecutedScript(new Script("2_scripts/subfolder/scriptH.sql", 0L, "xxx"), executionDate, true));
 
-        List<Script> scripts = scriptSource.getNewScripts(new Version("2.x.1"), new HashSet<ExecutedScript>(alreadyExecutedScripts), dialect, schemas.get(0),
-            true);
+        List<Script> scripts = scriptSource.getNewScripts(new Version("2.x.1"), new HashSet<>(alreadyExecutedScripts), dialect, schemas.get(0), true);
 
         assertEquals("1_scripts/scriptD.sql", scripts.get(0).getFileName()); // x.1.x was added
         assertEquals("2_scripts/subfolder/scriptH.sql", scripts.get(1).getFileName()); // x.2.x.x was changed
@@ -209,50 +208,43 @@ public class DefaultScriptSourceTest
 
     @Test
     public void testIsExistingScriptsModfied_noModifications() {
-        assertFalse(scriptSource.isExistingIndexedScriptModified(new Version("x.x.x"), new HashSet<ExecutedScript>(alreadyExecutedScripts), dialect,
-            schemas.get(0), true));
+        assertFalse(scriptSource.isExistingIndexedScriptModified(new Version("x.x.x"), new HashSet<>(alreadyExecutedScripts), dialect, schemas.get(0), true));
     }
 
     @Test
     public void testIsExistingScriptsModfied_modifiedScript() {
         alreadyExecutedScripts.set(1, new ExecutedScript(new Script("1_scripts/002_scriptB.sql", 0L, "xxx"), executionDate, true));
 
-        assertTrue(scriptSource.isExistingIndexedScriptModified(new Version("x.x.x"), new HashSet<ExecutedScript>(alreadyExecutedScripts), dialect,
-            schemas.get(0), true));
+        assertTrue(scriptSource.isExistingIndexedScriptModified(new Version("x.x.x"), new HashSet<>(alreadyExecutedScripts), dialect, schemas.get(0), true));
     }
 
     @Test
     public void testIsExistingScriptsModfied_scriptAdded() {
         alreadyExecutedScripts.remove(1);
 
-        assertTrue(scriptSource.isExistingIndexedScriptModified(new Version("x.x.x"), new HashSet<ExecutedScript>(alreadyExecutedScripts), dialect,
-            schemas.get(0), true));
+        assertTrue(scriptSource.isExistingIndexedScriptModified(new Version("x.x.x"), new HashSet<>(alreadyExecutedScripts), dialect, schemas.get(0), true));
     }
 
     @Test
     public void testIsExistingScriptsModfied_scriptRemoved() {
         alreadyExecutedScripts.add(new ExecutedScript(new Script("1_scripts/003_scriptB.sql", 0L, "xxx"), executionDate, true));
 
-        assertTrue(scriptSource.isExistingIndexedScriptModified(new Version("x.x.x"), new HashSet<ExecutedScript>(alreadyExecutedScripts), dialect,
-            schemas.get(0), true));
+        assertTrue(scriptSource.isExistingIndexedScriptModified(new Version("x.x.x"), new HashSet<>(alreadyExecutedScripts), dialect, schemas.get(0), true));
     }
 
     @Test
     public void testIsExistingScriptsModfied_newScript() {
         alreadyExecutedScripts.remove(1);
 
-        assertFalse(scriptSource.isExistingIndexedScriptModified(new Version("1.1"), new HashSet<ExecutedScript>(alreadyExecutedScripts), dialect,
-            schemas.get(0), true));
+        assertFalse(scriptSource.isExistingIndexedScriptModified(new Version("1.1"), new HashSet<>(alreadyExecutedScripts), dialect, schemas.get(0), true));
     }
 
     @Test
     public void testIsExistingScriptsModfied_higherIndexScriptModified() {
         alreadyExecutedScripts.set(1, new ExecutedScript(new Script("1_scripts/002_scriptB.sql", 0L, "xxx"), executionDate, true));
 
-        assertFalse(scriptSource.isExistingIndexedScriptModified(new Version("1.1"), new HashSet<ExecutedScript>(alreadyExecutedScripts), dialect,
-            schemas.get(0), true));
-        assertTrue(scriptSource.isExistingIndexedScriptModified(new Version("1.2"), new HashSet<ExecutedScript>(alreadyExecutedScripts), dialect,
-            schemas.get(0), true));
+        assertFalse(scriptSource.isExistingIndexedScriptModified(new Version("1.1"), new HashSet<>(alreadyExecutedScripts), dialect, schemas.get(0), true));
+        assertTrue(scriptSource.isExistingIndexedScriptModified(new Version("1.2"), new HashSet<>(alreadyExecutedScripts), dialect, schemas.get(0), true));
     }
 
     /**
@@ -260,8 +252,7 @@ public class DefaultScriptSourceTest
      */
     @Test
     public void testIsExistingScriptsModfied_noLowerIndex() {
-        boolean result = scriptSource.isExistingIndexedScriptModified(new Version("0"), new HashSet<ExecutedScript>(alreadyExecutedScripts), dialect,
-            schemas.get(0), true);
+        boolean result = scriptSource.isExistingIndexedScriptModified(new Version("0"), new HashSet<>(alreadyExecutedScripts), dialect, schemas.get(0), true);
         assertFalse(result);
     }
 
@@ -298,8 +289,6 @@ public class DefaultScriptSourceTest
 
     /**
      * test {@link DefaultScriptSource#checkIfThereAreNoQualifiers(String)}
-     * 
-     * @throws Exception
      */
     @Test
     public void testCheckIfThereAreNoQualifiers()
@@ -360,10 +349,10 @@ public class DefaultScriptSourceTest
         tempFolder.newFile("test1/01_@users_addusers.sql");
         tempFolder.newFile("test1/1@people_addusers.sql");
 
-        List<Script> actual = new ArrayList<Script>();
+        List<Script> actual = new ArrayList<>();
 
         scriptSource.getScriptsAt(actual, parentFile.getParentFile().getAbsolutePath(), "test1", "users", true);
-        List<String> actualNames = new ArrayList<String>();
+        List<String> actualNames = new ArrayList<>();
         for (Script script : actual) {
             actualNames.add(script.getFileName());
         }
@@ -389,10 +378,10 @@ public class DefaultScriptSourceTest
         configuration.setProperty(DefaultScriptSource.PROPKEY_INCLUDE_QUALIFIERS, "include1, include2, include3");
         scriptSource.init(configuration);
 
-        List<Script> actual = new ArrayList<Script>();
+        List<Script> actual = new ArrayList<>();
 
         scriptSource.getScriptsAt(actual, parentFile.getParentFile().getAbsolutePath(), nameFolder, "users", true);
-        List<String> actualNames = new ArrayList<String>();
+        List<String> actualNames = new ArrayList<>();
         for (Script script : actual) {
             actualNames.add(script.getFileName());
         }
@@ -420,19 +409,19 @@ public class DefaultScriptSourceTest
         tempFolder.newFile(nameFolder + "/01_#refdata_#postgres_products.sql");
         tempFolder.newFile(nameFolder + "/01_#include1_#exclude2_products.sql");
 
-        List<Script> actual = new ArrayList<Script>();
+        List<Script> actual = new ArrayList<>();
 
         scriptSource = new DefaultScriptSource();
         configuration.setProperty(DefaultScriptSource.PROPKEY_INCLUDE_QUALIFIERS, "include1, include2, include3");
         scriptSource.init(configuration);
 
         scriptSource.getScriptsAt(actual, parentFile.getParentFile().getAbsolutePath(), nameFolder, "users", true);
-        List<String> actualNames = new ArrayList<String>();
+        List<String> actualNames = new ArrayList<>();
         for (Script script : actual) {
             actualNames.add(script.getFileName());
         }
 
-        List<String> expected = new ArrayList<String>();
+        List<String> expected = new ArrayList<>();
         expected.add(nameFolder + "/01_#include1_products.sql");
         expected.add(nameFolder + "/01_#include2_@users_products.sql");
         expected.add(nameFolder + "/@users_#include1_#include2_products.sql");

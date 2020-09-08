@@ -1,7 +1,6 @@
 package org.unitils.parameterized;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -12,15 +11,11 @@ import org.junit.Test;
  * @author Willemijn Wouters
  * @since 3.4
  */
-@Ignore
 public class JustATestClass {
     public JustATestClass() {
         // do nothing
     }
 
-    /**
-     * @throws java.lang.Exception
-     */
     @Before
     public void setUp()
         throws Exception {

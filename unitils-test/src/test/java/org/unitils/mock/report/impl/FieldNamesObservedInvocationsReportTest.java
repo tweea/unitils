@@ -36,12 +36,12 @@ public class FieldNamesObservedInvocationsReportTest {
 
     private Mock<TestInterface> testMock;
 
-    private List<String> myTestField = new ArrayList<String>();
+    private List<String> myTestField = new ArrayList<>();
 
     @Before
     public void initialize() {
         observedInvocationsReport = new ObservedInvocationsReport(this);
-        testMock = new MockObject<TestInterface>("testMock", TestInterface.class, this);
+        testMock = new MockObject<>("testMock", TestInterface.class, this);
     }
 
     @Test

@@ -85,8 +85,6 @@ public class DBMaintainerTest
 
     /**
      * Create an instance of DBMaintainer
-     *
-     * @throws Exception
      */
     @Before
     public void setUp()
@@ -99,7 +97,7 @@ public class DBMaintainerTest
         dbMaintainer.keepRetryingAfterError = true;
         dbMaintainer.disableConstraintsEnabled = true;
 
-        scripts = new ArrayList<Script>();
+        scripts = new ArrayList<>();
         sciptContentHandle1 = MockUnitils.createDummy(ScriptContentHandle.class);
         Script script1 = new Script("01_script1.sql", 0L, sciptContentHandle1);
         scripts.add(script1);
@@ -107,17 +105,17 @@ public class DBMaintainerTest
         Script script2 = new Script("02_script2.sql", 0L, sciptContentHandle2);
         scripts.add(script2);
 
-        alreadyExecutedScripts = new ArrayList<ExecutedScript>();
+        alreadyExecutedScripts = new ArrayList<>();
         alreadyExecutedScripts.add(new ExecutedScript(script1, null, true));
         alreadyExecutedScripts.add(new ExecutedScript(script2, null, true));
 
-        postProcessingScripts = new ArrayList<Script>();
+        postProcessingScripts = new ArrayList<>();
         postProcessingSciptContentHandle1 = MockUnitils.createDummy(ScriptContentHandle.class);
         postProcessingScripts.add(new Script("post-script1.sql", 0L, postProcessingSciptContentHandle1));
         postProcessingSciptContentHandle2 = MockUnitils.createDummy(ScriptContentHandle.class);
         postProcessingScripts.add(new Script("post-script2.sql", 0L, postProcessingSciptContentHandle2));
 
-        HashSet<ExecutedScript> hashSet = new HashSet<ExecutedScript>(alreadyExecutedScripts);
+        HashSet<ExecutedScript> hashSet = new HashSet<>(alreadyExecutedScripts);
         mockExecutedScriptInfoSource.returns(hashSet).getExecutedScripts();
     }
 
@@ -137,7 +135,6 @@ public class DBMaintainerTest
      * is not cleared but the new scripts are executed on by one, incrementing the database version each time.
      */
     @Test
-    @SuppressWarnings("unchecked")
     public void testUpdateDatabase_Incremental()
         throws Exception {
         expectNewScriptsAdded();
@@ -153,7 +150,6 @@ public class DBMaintainerTest
      * and all scripts are executed.
      */
     @Test
-    @SuppressWarnings("unchecked")
     public void testUpdateDatabase_FromScratch()
         throws Exception {
         expectExistingScriptModified();
@@ -233,9 +229,6 @@ public class DBMaintainerTest
         expectAllScripts(scripts);
     }
 
-    @SuppressWarnings({
-        "unchecked"
-    })
     private void expectNoScriptModifications() {
         expectModifiedScripts(false);
         expectNewScripts(Collections.EMPTY_LIST);
@@ -252,9 +245,6 @@ public class DBMaintainerTest
         expectAllScripts(scripts);
     }
 
-    @SuppressWarnings({
-        "unchecked"
-    })
     private void expectNoPostProcessingCodeScripts() {
         expectPostProcessingScripts(Collections.EMPTY_LIST);
     }

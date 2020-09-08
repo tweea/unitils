@@ -15,7 +15,7 @@ package org.unitils.easymock;
 import java.util.List;
 import java.util.Properties;
 
-import org.easymock.classextension.EasyMock;
+import org.easymock.EasyMock;
 import org.junit.Before;
 import org.junit.Test;
 import org.unitils.UnitilsJUnit4;

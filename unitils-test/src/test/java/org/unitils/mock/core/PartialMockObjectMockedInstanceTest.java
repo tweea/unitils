@@ -36,7 +36,7 @@ public class PartialMockObjectMockedInstanceTest {
     @Before
     public void setUp() {
         TestClass mockedInstance = new TestClass("original value");
-        mockObject = new PartialMockObject<TestClass>(mockedInstance, this);
+        mockObject = new PartialMockObject<>(mockedInstance, this);
     }
 
     @Test

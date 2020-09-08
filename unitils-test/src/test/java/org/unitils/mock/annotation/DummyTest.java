@@ -15,10 +15,9 @@
  */
 package org.unitils.mock.annotation;
 
+import org.junit.Assert;
 import org.junit.Test;
 import org.unitils.UnitilsJUnit4;
-
-import junit.framework.Assert;
 
 /**
  * @author Jeroen Horemans
@@ -37,9 +36,6 @@ public class DummyTest
         Assert.assertNotNull(dummy.getJustAClass());
     }
 
-    @SuppressWarnings({
-        "UnusedDeclaration"
-    })
     protected class JustAClass {
         private Long id = 10L;
 

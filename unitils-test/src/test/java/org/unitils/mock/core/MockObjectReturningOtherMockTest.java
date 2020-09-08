@@ -35,8 +35,8 @@ public class MockObjectReturningOtherMockTest {
 
     @Before
     public void setUp() {
-        mockReturning = new MockObject<MockReturning>("testMock", MockReturning.class, this);
-        mockObject = new MockObject<TestClass>("testMock", TestClass.class, this);
+        mockReturning = new MockObject<>("testMock", MockReturning.class, this);
+        mockObject = new MockObject<>("testMock", TestClass.class, this);
     }
 
     @Test(timeout = 1000)

@@ -39,8 +39,6 @@ public class ExtendedScriptSourceTest {
 
     /**
      * Cleans test directory and copies test files to it. Initializes test objects
-     * 
-     * @throws Exception
      */
     @Before
     public void setUp()
@@ -73,10 +71,10 @@ public class ExtendedScriptSourceTest {
     @Test
     public void testGetScriptsAt()
         throws Exception {
-        List<Script> actual = new ArrayList<Script>();
+        List<Script> actual = new ArrayList<>();
 
         scriptSource.getScriptsAt(actual, "org/unitils/dbunit/testdbscripts/", "", "users", true);
-        List<String> actualNames = new ArrayList<String>();
+        List<String> actualNames = new ArrayList<>();
         for (Script script : actual) {
             actualNames.add(script.getFileName());
         }

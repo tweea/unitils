@@ -1,7 +1,5 @@
 package org.unitils.dbunit.multidatabase;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.Properties;
 
 import javax.sql.DataSource;
@@ -43,8 +41,7 @@ public class MultiDatabaseIntTest {
     private DataSource dataSourceDatabase2;
 
     @BeforeClass
-    public static void beforeClass()
-        throws FileNotFoundException, IOException {
+    public static void beforeClass() {
         Properties config = getCorrectProperties();
 
         // DataabseUnitils.clearSchemas(DATABASE2);
@@ -68,9 +65,6 @@ public class MultiDatabaseIntTest {
         // databaseModule.getWrapper(DATABASE1).getDataSource());
     }
 
-    /**
-     * @throws java.lang.Exception
-     */
     @Before
     public void setUp()
         throws Exception {

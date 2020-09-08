@@ -18,6 +18,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.unitils.UnitilsJUnit4;
 import org.unitils.core.UnitilsException;
+import org.unitils.core.annotation.UsedForTesting;
 import org.unitils.io.annotation.FileContent;
 import org.unitils.io.filecontent.FileContentReader;
 import org.unitils.mock.Mock;
@@ -114,6 +115,7 @@ public class FileContentAnnotationHandlerTest
     }
 
     private static class NoAnnotationTestClass {
+        @UsedForTesting
         protected Properties properties;
     }
 }

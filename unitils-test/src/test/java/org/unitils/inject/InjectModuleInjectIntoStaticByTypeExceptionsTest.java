@@ -21,6 +21,7 @@ import org.junit.Test;
 import org.unitils.UnitilsJUnit4;
 import org.unitils.core.ConfigurationLoader;
 import org.unitils.core.UnitilsException;
+import org.unitils.core.annotation.UsedForTesting;
 import org.unitils.inject.annotation.InjectIntoStaticByType;
 import org.unitils.inject.util.PropertyAccess;
 
@@ -108,31 +109,26 @@ public class InjectModuleInjectIntoStaticByTypeExceptionsTest
         }
     }
 
-    @SuppressWarnings("unused")
     public class TestInjectIntoStaticByType_NoPropertyOfType {
         @InjectIntoStaticByType(target = InjectOn_NoPropertyOfType.class)
         private ToInject toInject;
     }
 
-    @SuppressWarnings("unused")
     public class TestInjectIntoStaticByType_MoreThanOneFieldOfType {
         @InjectIntoStaticByType(target = InjectOn_MoreThanOneFieldOfType.class)
         private ToInject toInject;
     }
 
-    @SuppressWarnings("unused")
     public class TestInjectIntoStaticByType_MoreThanOneSetterOfType {
         @InjectIntoStaticByType(target = InjectOn_MoreThanOneSetterOfType.class, propertyAccess = PropertyAccess.SETTER)
         private ToInject toInject;
     }
 
-    @SuppressWarnings("unused")
     public class TestInjectIntoStaticByType_MoreThanOneFieldOfSuperType {
         @InjectIntoStaticByType(target = InjectOn_MoreThanOneFieldOfSuperType.class)
         private ToInject toInject;
     }
 
-    @SuppressWarnings("unused")
     public class TestInjectIntoStaticByType_MoreThanOneSetterOfSuperType {
         @InjectIntoStaticByType(target = InjectOn_MoreThanOneSetterOfSuperType.class, propertyAccess = PropertyAccess.SETTER)
         private ToInject toInject;
@@ -157,32 +153,50 @@ public class InjectModuleInjectIntoStaticByTypeExceptionsTest
     public static class InjectOn_NoPropertyOfType {
     }
 
-    @SuppressWarnings("unused")
     public static class InjectOn_MoreThanOneFieldOfType {
+        @UsedForTesting
         private static ToInject toInject1;
 
+        @UsedForTesting
         private static ToInject toInject2;
     }
 
     public static class InjectOn_MoreThanOneSetterOfType {
+        /**
+         * @param toInject1
+         *     Used for testing
+         */
         public static void setToInject1(ToInject toInject1) {
         }
 
+        /**
+         * @param toInject2
+         *     Used for testing
+         */
         public static void setToInject2(ToInject toInject2) {
         }
     }
 
-    @SuppressWarnings("unused")
     public static class InjectOn_MoreThanOneFieldOfSuperType {
+        @UsedForTesting
         private static ToInjectSuper toInject1;
 
+        @UsedForTesting
         private static ToInjectSuper toInject2;
     }
 
     public static class InjectOn_MoreThanOneSetterOfSuperType {
+        /**
+         * @param toInject1
+         *     Used for testing
+         */
         public static void setToInject1(ToInjectSuper toInject1) {
         }
 
+        /**
+         * @param toInject2
+         *     Used for testing
+         */
         public static void setToInject2(ToInjectSuper toInject2) {
         }
     }

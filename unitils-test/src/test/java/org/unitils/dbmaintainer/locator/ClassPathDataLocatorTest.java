@@ -44,12 +44,12 @@ public class ClassPathDataLocatorTest {
     public void setUp() {
         resourceName = "/org/unitils/testdata/exampleResourceData.xml";
 
-        urlList = new ArrayList<URL>();
+        urlList = new ArrayList<>();
         URL url = getClass().getResource(resourceName);
         Assert.assertNotNull("Resource '" + resourceName + "' not found error in testSetup", url);
         urlList.add(url);
 
-        urlResultList = new ArrayList<URL>();
+        urlResultList = new ArrayList<>();
         urlResultList.add(url);
     }
 
@@ -89,7 +89,7 @@ public class ClassPathDataLocatorTest {
     @Test
     public void testGetDataSourceIOException()
         throws IOException {
-        List<URL> resourcesF = new ArrayList<URL>();
+        List<URL> resourcesF = new ArrayList<>();
         URL url = new URL("https://graph.facebook.com/me");
         resourcesF.add(url);
         EasyMock.expect(resourcePickingStrategie.filter((List<URL>) EasyMock.anyObject(), (String) EasyMock.anyObject())).andReturn(resourcesF);

@@ -34,6 +34,7 @@ public class ReflectionAssertPropertiesTest
     /**
      * Initializes the test fixture.
      */
+    @Override
     protected void setUp()
         throws Exception {
         super.setUp();

@@ -16,7 +16,7 @@ import static org.unitils.TracingTestListener.TestInvocation.TEST_METHOD;
 
 /**
  * JUnit 3 test class containing 2 test methods. This test test-class is used in the
- * {@link JUnitUnitilsInvocationTest} tests.
+ * JUnitUnitilsInvocationTest tests.
  *
  * @author Tim Ducheyne
  * @author Filip Neven

@@ -9,6 +9,7 @@ import org.junit.internal.runners.TestClass;
 import org.junit.runner.RunWith;
 import org.unitils.UnitilsParameterized.TestClassRunnerForParameters;
 import org.unitils.UnitilsParameterized.UnitilsMethodValidator;
+import org.unitils.core.annotation.UsedForTesting;
 import org.unitils.parameterized.JustATestClass;
 import org.unitils.parameterized.UnitilsParametersNullParametersStveParametersTest;
 import org.unitils.util.ReflectionUtils;
@@ -21,8 +22,6 @@ import org.unitils.util.ReflectionUtils;
  * @author Willemijn Wouters
  * @since 3.4
  */
-
-@SuppressWarnings("deprecation")
 @RunWith(UnitilsJUnit4TestClassRunner.class)
 public class UnitilsParameterizedTest {
     @Test
@@ -47,8 +46,8 @@ public class UnitilsParameterizedTest {
     @Test(expected = Exception.class)
     public void testComputeParams()
         throws Throwable {
-        List<Object[]> data = new ArrayList<Object[]>();
-        List<int[]> data2 = new ArrayList<int[]>();
+        List<Object[]> data = new ArrayList<>();
+        List<int[]> data2 = new ArrayList<>();
         data2.add(new int[] {
             1
         });
@@ -68,8 +67,8 @@ public class UnitilsParameterizedTest {
     @Test(expected = IndexOutOfBoundsException.class)
     public void testGetName()
         throws Throwable {
-        List<Object[]> data = new ArrayList<Object[]>();
-        List<int[]> data2 = new ArrayList<int[]>();
+        List<Object[]> data = new ArrayList<>();
+        List<int[]> data2 = new ArrayList<>();
         data2.add(new int[] {
             1
         });
@@ -103,7 +102,7 @@ public class UnitilsParameterizedTest {
     }
 
     private List<Throwable> getErrors() {
-        List<Throwable> lst = new ArrayList<Throwable>();
+        List<Throwable> lst = new ArrayList<>();
         lst.add(new Exception("Method test1() should not be static"));
         lst.add(new Exception("Method test2 should be public"));
         lst.add(new Exception("Method test3 should be void"));
@@ -116,13 +115,8 @@ public class UnitilsParameterizedTest {
     }
 
     private class Testclass3 {
+        @UsedForTesting
         public Testclass3() {
-            // do nothing
-        }
-    }
-
-    private class TestClass4 {
-        public TestClass4(int i) {
             // do nothing
         }
     }

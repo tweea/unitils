@@ -12,6 +12,7 @@
  */
 package org.unitils.reflectionassert;
 
+import org.unitils.core.annotation.UsedForTesting;
 import org.unitils.reflectionassert.difference.Difference;
 
 import junit.framework.TestCase;
@@ -63,6 +64,7 @@ public class ReflectionComparatorSharedReferencesTest
     /**
      * Initializes the test fixture.
      */
+    @Override
     protected void setUp()
         throws Exception {
         super.setUp();
@@ -138,14 +140,14 @@ public class ReflectionComparatorSharedReferencesTest
     /**
      * Test class.
      */
-    @SuppressWarnings({
-        "unused", "UnusedDeclaration"
-    })
     private static class References {
+        @UsedForTesting
         private String name;
 
+        @UsedForTesting
         private References ref1;
 
+        @UsedForTesting
         private References ref2;
 
         public References(String name, References ref1, References ref2) {
@@ -154,6 +156,7 @@ public class ReflectionComparatorSharedReferencesTest
             this.ref2 = ref2;
         }
 
+        @UsedForTesting
         public void setRef1(References ref1) {
             this.ref1 = ref1;
         }

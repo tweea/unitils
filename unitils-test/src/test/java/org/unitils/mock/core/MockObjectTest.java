@@ -49,8 +49,8 @@ public class MockObjectTest {
 
     @Before
     public void setUp() {
-        mockObject = new MockObject<TestClass>("testMock", TestClass.class, this);
-        equalMockObject = new MockObject<TestClass>("testMock", TestClass.class, this);
+        mockObject = new MockObject<>("testMock", TestClass.class, this);
+        equalMockObject = new MockObject<>("testMock", TestClass.class, this);
     }
 
     @Test
@@ -108,7 +108,7 @@ public class MockObjectTest {
 
     @Test
     public void useRawTypeWhenMockingGenericTypes() {
-        MockObject<List<String>> mockObject = new MockObject<List<String>>("testMock", List.class, this);
+        MockObject<List<String>> mockObject = new MockObject<>("testMock", List.class, this);
 
         mockObject.returns("value").get(0);
         assertEquals("value", mockObject.getMock().get(0));
@@ -116,13 +116,13 @@ public class MockObjectTest {
 
     @Test(expected = ClassCastException.class)
     public void typeMismatch() {
-        MockObject<List<String>> mockObject = new MockObject<List<String>>("testMock", Map.class, this);
+        MockObject<List<String>> mockObject = new MockObject<>("testMock", Map.class, this);
         mockObject.returns("value").get(0); // raises classcast
     }
 
     @Test
     public void defaultMockName() {
-        MockObject<TestClass> mockObject = new MockObject<TestClass>(TestClass.class, this);
+        MockObject<TestClass> mockObject = new MockObject<>(TestClass.class, this);
         assertEquals("testClassMock", mockObject.getName());
     }
 
@@ -131,13 +131,14 @@ public class MockObjectTest {
         Object proxy = Proxy.newProxyInstance(getClass().getClassLoader(), new Class<?>[] {
             Collection.class
         }, new InvocationHandler() {
+            @Override
             public Object invoke(Object proxy, Method method, Object[] args)
                 throws Throwable {
                 return null;
             }
         });
 
-        MockObject<TestClass> mockObject = new MockObject<TestClass>(TestClass.class, this);
+        MockObject<TestClass> mockObject = new MockObject<>(TestClass.class, this);
         mockObject.returns(proxy).doSomething(proxy);
 
         Object result = mockObject.getMock().doSomething(proxy);
@@ -165,6 +166,7 @@ public class MockObjectTest {
         implements MockBehavior {
         public int invocationCount = 0;
 
+        @Override
         public Object execute(ProxyInvocation proxyInvocation)
             throws Throwable {
             invocationCount++;

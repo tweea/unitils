@@ -26,9 +26,6 @@ public class InjectMultipleTargetsTest {
     })
     private Address address = new Address("5", "Nieuwstraat");
 
-    /**
-     * @throws java.lang.Exception
-     */
     @Before
     public void setUp()
         throws Exception {
@@ -53,10 +50,6 @@ public class InjectMultipleTargetsTest {
         public Animal() {
         }
 
-        /**
-         * @param name
-         * @param address
-         */
         public Animal(Address address) {
             super();
             this.address = address;
@@ -79,10 +72,6 @@ public class InjectMultipleTargetsTest {
 
         private Address address;
 
-        /**
-         * @param name
-         * @param address
-         */
         public Person(Address address) {
             super();
             this.address = address;
@@ -101,10 +90,6 @@ public class InjectMultipleTargetsTest {
 
         private String street;
 
-        /**
-         * @param number
-         * @param street
-         */
         public Address(String number, String street) {
             super();
             this.number = number;

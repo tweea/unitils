@@ -14,7 +14,7 @@ import org.unitils.dbunit.annotation.ExpectedDataSet;
 
 /**
  * Unit test for simple App.
- * The test looks for xml files with the same name as the value of the {@link ResourceDataSet} on the classpath
+ * The test looks for xml files with the same name as the value of the {@link DataSet} on the classpath
  * and gives the most recent.
  * There are 2 files with the same name:
  * <ul>

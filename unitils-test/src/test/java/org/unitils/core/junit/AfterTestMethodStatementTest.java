@@ -21,9 +21,6 @@ public class AfterTestMethodStatementTest {
     @Rule
     public ExpectedException expectedException = ExpectedException.none();
 
-    /**
-     * @throws java.lang.Exception
-     */
     @Before
     public void setUp()
         throws Exception {

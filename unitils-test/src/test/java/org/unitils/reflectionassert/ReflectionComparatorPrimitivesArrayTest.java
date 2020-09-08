@@ -12,6 +12,7 @@
  */
 package org.unitils.reflectionassert;
 
+import org.unitils.core.annotation.UsedForTesting;
 import org.unitils.reflectionassert.difference.Difference;
 
 import junit.framework.TestCase;
@@ -69,6 +70,7 @@ public class ReflectionComparatorPrimitivesArrayTest
     /**
      * Initializes the test fixture.
      */
+    @Override
     protected void setUp()
         throws Exception {
         super.setUp();
@@ -210,6 +212,7 @@ public class ReflectionComparatorPrimitivesArrayTest
          *
          * @return the array
          */
+        @UsedForTesting
         public int[] getInner() {
             return inner;
         }

@@ -8,6 +8,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.unitils.UnitilsParameterized.TestClassRunnerForParameters;
+import org.unitils.core.annotation.UsedForTesting;
 import org.unitils.parameterized.ParameterizedIntegrationTest;
 import org.unitils.reflectionassert.ReflectionAssert;
 
@@ -19,8 +20,7 @@ import org.unitils.reflectionassert.ReflectionAssert;
  * @author Willemijn Wouters
  * @since 3.4
  */
-
-public class UnitilsParameterizedTestClassRunnerForParameters {
+public class UnitilsParameterizedTestClassRunnerForParametersTest {
     private UnitilsParameterized unitilsParameterized;
 
     private TestClassRunnerForParameters sut;
@@ -34,7 +34,7 @@ public class UnitilsParameterizedTestClassRunnerForParameters {
     @Test
     public void testOneParameter()
         throws Exception {
-        List<Object[]> parameters = new ArrayList<Object[]>();
+        List<Object[]> parameters = new ArrayList<>();
         parameters.add(new Object[] {
             null
         });
@@ -48,7 +48,7 @@ public class UnitilsParameterizedTestClassRunnerForParameters {
     @Test
     public void testMultipleParametersArrays()
         throws Exception {
-        List<Object[]> parameters = new ArrayList<Object[]>();
+        List<Object[]> parameters = new ArrayList<>();
         parameters.add(new Object[] {
             1, 2
         });
@@ -65,7 +65,7 @@ public class UnitilsParameterizedTestClassRunnerForParameters {
     @Test(expected = IndexOutOfBoundsException.class)
     public void testIndexOutOfBounds()
         throws Exception {
-        List<Object[]> parameters = new ArrayList<Object[]>();
+        List<Object[]> parameters = new ArrayList<>();
         sut = unitilsParameterized.new TestClassRunnerForParameters(Testclass1.class, parameters, 1);
 
         sut.getName();
@@ -75,7 +75,7 @@ public class UnitilsParameterizedTestClassRunnerForParameters {
     public void testTestName()
         throws Exception {
         Method method = Testclass1.class.getMethod("testMethod1");
-        List<Object[]> parameters = new ArrayList<Object[]>();
+        List<Object[]> parameters = new ArrayList<>();
         parameters.add(new Object[] {
             1, 2
         });
@@ -89,7 +89,7 @@ public class UnitilsParameterizedTestClassRunnerForParameters {
     @Test
     public void testComputeParams()
         throws Exception {
-        List<Object[]> parameters = new ArrayList<Object[]>();
+        List<Object[]> parameters = new ArrayList<>();
         parameters.add(new Object[] {
             1, 2
         });
@@ -103,6 +103,7 @@ public class UnitilsParameterizedTestClassRunnerForParameters {
     }
 
     private class Testclass1 {
+        @UsedForTesting
         public void testMethod1() {
             // do nothing
         }

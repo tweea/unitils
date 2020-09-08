@@ -1,30 +1,15 @@
 package org.unitils;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runners.Parameterized.Parameters;
 import org.junit.runners.model.FrameworkMethod;
 import org.junit.runners.model.TestClass;
-import org.unitils.UnitilsParameterized.TestClassRunnerForParameters;
+import org.unitils.core.annotation.UsedForTesting;
 import org.unitils.parameterized.UnitilsParametersNullParametersTest;
 
-public class UnitilsParameterizedGetParametersMethod {
+public class UnitilsParameterizedGetParametersMethodTest {
     private UnitilsParameterized unitilsParameterized;
-
-    private TestClassRunnerForParameters sut;
-
-    private List<Object[]> parameters;
-
-    @Before
-    public void init()
-        throws Throwable {
-        parameters = new ArrayList<Object[]>();
-        // unitilsParameterized = new UnitilsParameterized(ParameterizedIntegrationTest.class);
-    }
 
     @Test(expected = Exception.class)
     public void testNoParameters()
@@ -63,6 +48,7 @@ public class UnitilsParameterizedGetParametersMethod {
     }
 
     private static class TestclassNoParameters {
+        @UsedForTesting
         private void method1() {
             // do nothing
         }

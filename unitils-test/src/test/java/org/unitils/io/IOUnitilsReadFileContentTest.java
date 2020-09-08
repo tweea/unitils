@@ -16,9 +16,8 @@ import java.util.Properties;
 
 import org.junit.Test;
 
+import static org.junit.Assert.assertEquals;
 import static org.unitils.io.IOUnitils.readFileContent;
-
-import static junit.framework.Assert.assertEquals;
 
 /**
  * @author Tim Ducheyne

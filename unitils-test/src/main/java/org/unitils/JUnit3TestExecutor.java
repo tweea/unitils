@@ -25,7 +25,7 @@ class JUnit3TestExecutor
         super();
     }
 
-    @SuppressWarnings("unchecked")
+    @Override
     public void runTests(Class<?>... testClasses)
         throws Exception {
         TestSuite suite = new TestSuite();
@@ -42,19 +42,23 @@ class JUnit3TestExecutor
         }
     }
 
+    @Override
     public void runTests(String testGroup, Class<?>... testClasses)
         throws Exception {
         runTests(testClasses);
     }
 
+    @Override
     public int getRunCount() {
         return result.runCount();
     }
 
+    @Override
     public int getFailureCount() {
         return result.errorCount() + result.failureCount();
     }
 
+    @Override
     public int getIgnoreCount() {
         return 0;
     }

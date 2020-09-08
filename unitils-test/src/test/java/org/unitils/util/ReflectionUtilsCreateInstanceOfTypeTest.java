@@ -15,6 +15,7 @@ package org.unitils.util;
 import org.junit.Test;
 import org.unitils.UnitilsJUnit4;
 import org.unitils.core.UnitilsException;
+import org.unitils.core.annotation.UsedForTesting;
 
 import static org.junit.Assert.assertNotNull;
 import static org.unitils.util.ReflectionUtils.createInstanceOfType;
@@ -67,6 +68,7 @@ public class ReflectionUtilsCreateInstanceOfTypeTest
         public TestConstructor(String test) {
         }
 
+        @UsedForTesting
         private TestConstructor(int test) {
         }
     }

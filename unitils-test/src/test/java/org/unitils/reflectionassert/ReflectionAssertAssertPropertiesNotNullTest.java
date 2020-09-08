@@ -4,6 +4,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.unitils.UnitilsJUnit4TestClassRunner;
 import org.unitils.core.UnitilsException;
+import org.unitils.core.annotation.UsedForTesting;
 
 /**
  * Test the {@link ReflectionAssert}: method assertAccessablePropertiesNotNullTest.
@@ -46,8 +47,8 @@ public class ReflectionAssertAssertPropertiesNotNullTest {
      * @author tdr
      * @since 1.0.5
      */
-    @SuppressWarnings("unused")
     private class TestObject {
+        @UsedForTesting
         private String sickness;
 
         public String name;
@@ -58,12 +59,7 @@ public class ReflectionAssertAssertPropertiesNotNullTest {
 
         TestObject childObject1;
 
-        /**
-         * @param name
-         * @param id
-         * @param age
-         */
-
+        @UsedForTesting
         public TestObject(String name, Long id, int age) {
             this.name = name;
             this.id = id;
@@ -74,16 +70,11 @@ public class ReflectionAssertAssertPropertiesNotNullTest {
          * @param sickness
          *     the sickness to set
          */
+        @UsedForTesting
         public void setSickness(String sickness) {
             this.sickness = sickness;
         }
 
-        /**
-         * @param name
-         * @param id
-         * @param age
-         * @param childObject
-         */
         public TestObject(String name, Long id, int age, TestObject childObject) {
             super();
             this.name = name;
@@ -92,9 +83,6 @@ public class ReflectionAssertAssertPropertiesNotNullTest {
             this.childObject1 = childObject;
         }
 
-        /**
-         * @param name
-         */
         public TestObject(String name) {
             super();
             this.name = name;
@@ -103,6 +91,7 @@ public class ReflectionAssertAssertPropertiesNotNullTest {
         /**
          * @return the name
          */
+        @UsedForTesting
         public String getName() {
             return name;
         }
@@ -111,6 +100,7 @@ public class ReflectionAssertAssertPropertiesNotNullTest {
          * @param name
          *     the name to set
          */
+        @UsedForTesting
         public void setName(String name) {
             this.name = name;
         }
@@ -118,6 +108,7 @@ public class ReflectionAssertAssertPropertiesNotNullTest {
         /**
          * @return the id
          */
+        @UsedForTesting
         public Long getId() {
             return id;
         }
@@ -126,6 +117,7 @@ public class ReflectionAssertAssertPropertiesNotNullTest {
          * @param id
          *     the id to set
          */
+        @UsedForTesting
         public void setId(Long id) {
             this.id = id;
         }
@@ -133,6 +125,7 @@ public class ReflectionAssertAssertPropertiesNotNullTest {
         /**
          * @return the age
          */
+        @UsedForTesting
         public int getAge() {
             return age;
         }
@@ -141,6 +134,7 @@ public class ReflectionAssertAssertPropertiesNotNullTest {
          * @param age
          *     the age to set
          */
+        @UsedForTesting
         public void setAge(int age) {
             this.age = age;
         }
@@ -148,6 +142,7 @@ public class ReflectionAssertAssertPropertiesNotNullTest {
         /**
          * @return the childObject
          */
+        @UsedForTesting
         public TestObject getChildObject() {
             return childObject1;
         }
@@ -156,6 +151,7 @@ public class ReflectionAssertAssertPropertiesNotNullTest {
          * @param childObject
          *     the childObject to set
          */
+        @UsedForTesting
         public void setChildObject(TestObject childObject) {
             this.childObject1 = childObject;
         }
@@ -172,6 +168,7 @@ public class ReflectionAssertAssertPropertiesNotNullTest {
          * @param age
          *     the age to set
          */
+        @UsedForTesting
         private void setAge(int age) {
             this.age = age;
         }
@@ -179,6 +176,7 @@ public class ReflectionAssertAssertPropertiesNotNullTest {
         /**
          * @return the age
          */
+        @UsedForTesting
         private int getAge() {
             return age;
         }

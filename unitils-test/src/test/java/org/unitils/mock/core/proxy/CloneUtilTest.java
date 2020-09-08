@@ -51,7 +51,7 @@ public class CloneUtilTest {
         simpleValues2 = new SimpleValues(null, 0L, 0, null);
 
         List<SimpleValues> listValue = asList(simpleValues1, simpleValues2);
-        Map<SimpleValues, SimpleValues> mapValue = new HashMap<SimpleValues, SimpleValues>();
+        Map<SimpleValues, SimpleValues> mapValue = new HashMap<>();
         mapValue.put(simpleValues1, simpleValues2);
         collections = new Collections(listValue, mapValue);
 
@@ -101,7 +101,7 @@ public class CloneUtilTest {
 
     @Test
     public void testCreateDeepClone_InnerClass()
-        throws IllegalArgumentException, IllegalAccessException {
+        throws IllegalArgumentException {
         ClassWithInnerClass classWithInnerClass = new ClassWithInnerClass();
         ClassWithInnerClass result = createDeepClone(classWithInnerClass);
         assertReflectionEquals(classWithInnerClass, result);
@@ -110,8 +110,9 @@ public class CloneUtilTest {
 
     @Test
     public void testCreateDeepClone_AnonymousClass()
-        throws IllegalArgumentException, IllegalAccessException {
+        throws IllegalArgumentException {
         Comparable<String> anonymousClass = new Comparable<String>() {
+            @Override
             public int compareTo(String o) {
                 return 0;
             }

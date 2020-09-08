@@ -17,6 +17,7 @@ import java.lang.reflect.Method;
 import java.util.HashSet;
 
 import org.unitils.core.UnitilsException;
+import org.unitils.core.annotation.UsedForTesting;
 
 import junit.framework.TestCase;
 
@@ -304,10 +305,12 @@ public class ReflectionUtilsTest
             return field;
         }
 
+        @UsedForTesting
         public void setField(String field) {
             this.field = field;
         }
 
+        @UsedForTesting
         public boolean isBoolField() {
             return boolField;
         }

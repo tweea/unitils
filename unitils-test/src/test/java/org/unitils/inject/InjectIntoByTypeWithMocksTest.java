@@ -89,7 +89,7 @@ public class InjectIntoByTypeWithMocksTest {
         public InjectTarget injectTarget = new InjectTarget();
 
         @InjectIntoByType
-        public Mock<Properties> mockedProperties = new MockObject<Properties>("test", Properties.class, this);
+        public Mock<Properties> mockedProperties = new MockObject<>("test", Properties.class, this);
     }
 
     public static class InjectIntoByTypeWithGenericTypeMock {
@@ -97,17 +97,17 @@ public class InjectIntoByTypeWithMocksTest {
         public InjectTarget injectTarget = new InjectTarget();
 
         @InjectIntoByType
-        public Mock<Map<String, List<String>>> mockedList = new MockObject<Map<String, List<String>>>("test", Map.class, this);
+        public Mock<Map<String, List<String>>> mockedList = new MockObject<>("test", Map.class, this);
     }
 
     public static class InjectIntoStaticByTypeWithMock {
         @InjectIntoStaticByType(target = InjectStaticTarget.class)
-        public Mock<Properties> mockedProperties = new MockObject<Properties>("test", Properties.class, this);
+        public Mock<Properties> mockedProperties = new MockObject<>("test", Properties.class, this);
     }
 
     public static class NoFieldOfMockedTypeFound {
         @InjectIntoStaticByType(target = InjectStaticTarget.class)
-        public Mock<Map> mockedProperties = new MockObject<Map>("test", Map.class, this);
+        public Mock<Map> mockedProperties = new MockObject<>("test", Map.class, this);
     }
 
     public static class InjectTarget {

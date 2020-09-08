@@ -16,9 +16,7 @@ import org.unitils.dbunit.annotation.DataSet;
  * EmptyTableTest.
  * 
  * @author Willemijn Wouters
- * @since
  */
-
 @RunWith(UnitilsJUnit4TestClassRunner.class)
 public class EmptyTableTest {
     @BeforeClass

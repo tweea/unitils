@@ -15,7 +15,6 @@
  */
 package org.unitils.dbmaintainer.version.impl;
 
-import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
@@ -40,6 +39,9 @@ import org.unitils.util.PropertyUtils;
 
 import static java.util.Arrays.asList;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static org.unitils.core.dbsupport.DbSupportFactory.getDefaultDbSupport;
 import static org.unitils.database.SQLUnitils.executeUpdate;
 import static org.unitils.database.SQLUnitils.executeUpdateQuietly;
@@ -49,10 +51,6 @@ import static org.unitils.reflectionassert.ReflectionAssert.assertReflectionEqua
 import static org.unitils.reflectionassert.ReflectionComparatorMode.LENIENT_DATES;
 import static org.unitils.reflectionassert.ReflectionComparatorMode.LENIENT_ORDER;
 import static org.unitils.util.CollectionUtils.asSet;
-
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertFalse;
-import static junit.framework.Assert.assertTrue;
 
 /**
  * Test class for {@link org.unitils.dbmaintainer.version.impl.DefaultExecutedScriptInfoSource}. The implementation is tested using a
@@ -180,8 +178,7 @@ public class DefaultExecutedScriptInfoSourceTest
     }
 
     @Test
-    public void testIsFromScratchUpdateRecommended()
-        throws SQLException {
+    public void testIsFromScratchUpdateRecommended() {
         assertFalse(dbVersionSource.isFromScratchUpdateRecommended());
         assertFalse(dbVersionSourceAutoCreate.isFromScratchUpdateRecommended());
 
@@ -194,16 +191,14 @@ public class DefaultExecutedScriptInfoSourceTest
     /**
      * Utility method to create the test version table.
      */
-    private void createExecutedScriptsTable()
-        throws SQLException {
+    private void createExecutedScriptsTable() {
         executeUpdate(dbVersionSource.getCreateExecutedScriptsTableStatement(), dataSource);
     }
 
     /**
      * Utility method to drop the test executed scripts table.
      */
-    private void dropExecutedScriptsTable()
-        throws SQLException {
+    private void dropExecutedScriptsTable() {
         executeUpdateQuietly("drop table dbmaintain_scripts", dataSource);
     }
 }

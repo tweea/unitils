@@ -578,6 +578,7 @@ public class DbSupportTest
      */
     public static class TestTrigger
         implements Trigger {
+        @Override
         public void fire(int i, String string, String string1, Object[] objects, Object[] objects1) {
         }
     }

@@ -24,16 +24,13 @@ import org.unitils.database.transaction.impl.DefaultUnitilsTransactionManager;
  * @since 3.4.1
  */
 @RunWith(UnitilsJUnit4TestClassRunner.class)
-public class DatabaseModuleGetCorrectWrapper {
+public class DatabaseModuleGetCorrectWrapperTest {
     private DatabaseModule sut;
 
     private DatabaseConfigurationsFactory databaseFactory;
 
     private static final String DEFAULT_DATABASENAME = "database1";
 
-    /**
-     * @throws java.lang.Exception
-     */
     @Before
     public void setUp()
         throws Exception {
@@ -58,7 +55,7 @@ public class DatabaseModuleGetCorrectWrapper {
     @Test
     public void testGetDefaultWrapperDoesAlreadyExist()
         throws Exception {
-        Map<String, DataSourceWrapper> testWrappers = new HashMap<String, DataSourceWrapper>();
+        Map<String, DataSourceWrapper> testWrappers = new HashMap<>();
         DataSourceWrapper wrapper = new DataSourceWrapper(databaseFactory.create().getDatabaseConfiguration(), new DefaultUnitilsTransactionManager());
         testWrappers.put(DEFAULT_DATABASENAME, wrapper);
         sut.wrappers = testWrappers;
@@ -70,7 +67,7 @@ public class DatabaseModuleGetCorrectWrapper {
     @Test
     public void testGetDefaultWrapperDoesAlreadyExistNameIsNull()
         throws Exception {
-        Map<String, DataSourceWrapper> testWrappers = new HashMap<String, DataSourceWrapper>();
+        Map<String, DataSourceWrapper> testWrappers = new HashMap<>();
         DataSourceWrapper wrapper = new DataSourceWrapper(databaseFactory.create().getDatabaseConfiguration(), new DefaultUnitilsTransactionManager());
         testWrappers.put(DEFAULT_DATABASENAME, wrapper);
         sut.wrappers = testWrappers;
@@ -92,7 +89,7 @@ public class DatabaseModuleGetCorrectWrapper {
     public void testGetWrapperDoesAlreadyExist()
         throws Exception {
         String databaseName = "database2";
-        Map<String, DataSourceWrapper> testWrappers = new HashMap<String, DataSourceWrapper>();
+        Map<String, DataSourceWrapper> testWrappers = new HashMap<>();
         DataSourceWrapper wrapper = new DataSourceWrapper(databaseFactory.create().getDatabaseConfiguration(databaseName),
             new DefaultUnitilsTransactionManager());
         testWrappers.put(databaseName, wrapper);

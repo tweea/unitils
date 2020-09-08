@@ -133,15 +133,18 @@ public class DefaultFileContentReaderFactoryTest {
 
     public static class CustomConversionStrategy
         implements ConversionStrategy<String> {
+        @Override
         public String convertContent(InputStream inputStream, String encoding)
             throws IOException {
             return null;
         }
 
+        @Override
         public String getDefaultFileExtension() {
             return null;
         }
 
+        @Override
         public Class<String> getTargetType() {
             return null;
         }

@@ -27,7 +27,7 @@ import static org.unitils.TracingTestListener.TestInvocation.TEST_TEAR_DOWN;
 
 /**
  * JUnit 4 test class containing 2 active and 1 ignored test method. This test test-class is used
- * in the {@link JUnitUnitilsInvocationTest} and {@link UnitilsInvocationExceptionTest} tests.
+ * in the JUnitUnitilsInvocationTest and JUnitUnitilsInvocationExceptionTest tests.
  *
  * @author Tim Ducheyne
  */

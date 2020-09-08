@@ -20,7 +20,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.unitils.core.UnitilsException;
 
-import static junit.framework.Assert.assertFalse;
+import static org.junit.Assert.assertFalse;
 
 /**
  * @author Jeroen Horemans

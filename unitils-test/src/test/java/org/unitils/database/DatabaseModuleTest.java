@@ -20,6 +20,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.unitils.UnitilsJUnit4;
 import org.unitils.core.ConfigurationLoader;
+import org.unitils.core.annotation.UsedForTesting;
 import org.unitils.core.dbsupport.SQLHandler;
 import org.unitils.database.annotations.TestDataSource;
 
@@ -89,8 +90,13 @@ public class DatabaseModuleTest
      */
     public class TestDatabaseModule
         extends DatabaseModule {
+        @UsedForTesting
         private boolean updateDataSchemaCalled = false;
 
+        /**
+         * @param sqlHandler
+         *     Used for testing
+         */
         public void updateDatabase(SQLHandler sqlHandler) {
             updateDataSchemaCalled = true;
         }

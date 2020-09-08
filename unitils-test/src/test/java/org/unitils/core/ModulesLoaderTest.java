@@ -214,12 +214,15 @@ public class ModulesLoaderTest
      */
     public static class TestModuleA
         implements Module {
+        @Override
         public void init(Properties configuration) {
         }
 
+        @Override
         public void afterInit() {
         }
 
+        @Override
         public TestListener getTestListener() {
             return null;
         }
@@ -230,12 +233,15 @@ public class ModulesLoaderTest
      */
     public static class TestModuleB
         implements Module {
+        @Override
         public void init(Properties configuration) {
         }
 
+        @Override
         public void afterInit() {
         }
 
+        @Override
         public TestListener getTestListener() {
             return null;
         }
@@ -246,12 +252,15 @@ public class ModulesLoaderTest
      */
     public static class TestModuleC
         implements Module {
+        @Override
         public void init(Properties configuration) {
         }
 
+        @Override
         public void afterInit() {
         }
 
+        @Override
         public TestListener getTestListener() {
             return null;
         }
@@ -262,12 +271,15 @@ public class ModulesLoaderTest
      */
     public static class TestModuleD
         implements Module {
+        @Override
         public void init(Properties configuration) {
         }
 
+        @Override
         public void afterInit() {
         }
 
+        @Override
         public TestListener getTestListener() {
             return null;
         }
@@ -278,15 +290,18 @@ public class ModulesLoaderTest
      */
     public static class TestModulePrivate
         implements Module {
+        @Override
         public void init(Properties configuration) {
         }
 
+        @Override
         public void afterInit() {
         }
 
         private TestModulePrivate() {
         }
 
+        @Override
         public TestListener getTestListener() {
             return null;
         }
@@ -302,12 +317,15 @@ public class ModulesLoaderTest
                 throw new RuntimeException("init error");
         }
 
+        @Override
         public void init(Properties configuration) {
         }
 
+        @Override
         public void afterInit() {
         }
 
+        @Override
         public TestListener getTestListener() {
             return null;
         }

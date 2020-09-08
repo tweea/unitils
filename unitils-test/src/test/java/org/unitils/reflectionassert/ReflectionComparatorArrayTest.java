@@ -15,6 +15,7 @@ package org.unitils.reflectionassert;
 import java.util.Arrays;
 import java.util.Collection;
 
+import org.unitils.core.annotation.UsedForTesting;
 import org.unitils.reflectionassert.difference.Difference;
 
 import junit.framework.TestCase;
@@ -69,6 +70,7 @@ public class ReflectionComparatorArrayTest
     /**
      * Initializes the test fixture.
      */
+    @Override
     protected void setUp()
         throws Exception {
         super.setUp();
@@ -330,6 +332,7 @@ public class ReflectionComparatorArrayTest
          *
          * @return the value
          */
+        @UsedForTesting
         public String getString() {
             return string;
         }
@@ -339,6 +342,7 @@ public class ReflectionComparatorArrayTest
          *
          * @return the array
          */
+        @UsedForTesting
         public Element[] getInner() {
             return inner;
         }

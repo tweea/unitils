@@ -35,7 +35,7 @@ public class InjectionUtilsInjectIntoByTypeTest {
 
     private Properties testProperties = new Properties();
 
-    private Map<String, List<String>> testMap = new HashMap<String, List<String>>();
+    private Map<String, List<String>> testMap = new HashMap<>();
 
     @Test
     public void injectIntoByType() {

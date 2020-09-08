@@ -100,7 +100,6 @@ public class ParameterizedIntegrationTest {
         private TrophyDao trophyDao1;
 
         /**
-         * @param championship
          * @return {@link List}
          */
         public List<Player> winnersInChampionship(String championship) {
@@ -129,7 +128,6 @@ public class ParameterizedIntegrationTest {
 
     private interface PlayerDao {
         /**
-         * @param trophy1
          * @return {@link List}
          */
         public List<Player> getPlayersHavingTrophy(Trophy trophy1);
@@ -137,7 +135,6 @@ public class ParameterizedIntegrationTest {
 
     private interface TrophyDao {
         /**
-         * @param championship
          * @return {@link Trophy}
          */
         public Trophy findByChampionshipsName(String championship);

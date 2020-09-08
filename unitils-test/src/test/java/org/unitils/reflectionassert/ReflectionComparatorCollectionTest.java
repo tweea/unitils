@@ -17,6 +17,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedList;
 
+import org.unitils.core.annotation.UsedForTesting;
 import org.unitils.reflectionassert.difference.CollectionDifference;
 import org.unitils.reflectionassert.difference.Difference;
 
@@ -63,6 +64,7 @@ public class ReflectionComparatorCollectionTest
     /**
      * Initializes the test fixture.
      */
+    @Override
     protected void setUp()
         throws Exception {
         super.setUp();
@@ -70,7 +72,7 @@ public class ReflectionComparatorCollectionTest
         collectionA = createCollection("test 2", null);
         collectionB = createCollection("test 2", null);
         collectionDifferentValue = createCollection("XXXXXX", null);
-        collectionDifferentType = new LinkedList<Element>(collectionA);
+        collectionDifferentType = new LinkedList<>(collectionA);
 
         collectionInnerA = createCollection(null, collectionA);
         collectionInnerB = createCollection(null, collectionB);
@@ -219,7 +221,7 @@ public class ReflectionComparatorCollectionTest
      * @return the test collection
      */
     private Collection<Element> createCollection(String stringValueElement2, Collection<Element> innerElement2) {
-        Collection<Element> collection = new ArrayList<Element>();
+        Collection<Element> collection = new ArrayList<>();
         collection.add(new Element("test 1", null));
         collection.add(new Element(stringValueElement2, innerElement2));
         collection.add(new Element("test 3", null));
@@ -255,6 +257,7 @@ public class ReflectionComparatorCollectionTest
          *
          * @return the value
          */
+        @UsedForTesting
         public String getString() {
             return string;
         }
@@ -264,6 +267,7 @@ public class ReflectionComparatorCollectionTest
          *
          * @return the collection
          */
+        @UsedForTesting
         public Collection<?> getInner() {
             return inner;
         }
