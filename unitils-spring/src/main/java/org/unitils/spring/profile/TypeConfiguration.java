@@ -1,5 +1,6 @@
 package org.unitils.spring.profile;
 
+import org.springframework.context.annotation.Configuration;
 import org.unitils.spring.annotation.SpringApplicationContext;
 
 /**

@@ -34,6 +34,7 @@ public class ClassPathXmlApplicationContextFactory
      *     The configuration file locations, not null
      * @return A context, on which the <code>refresh()</code> method hasn't been called yet
      */
+    @Override
     public ConfigurableApplicationContext createApplicationContext(List<String> locations) {
         return new ClassPathXmlApplicationContext(locations.toArray(new String[locations.size()]), false);
     }

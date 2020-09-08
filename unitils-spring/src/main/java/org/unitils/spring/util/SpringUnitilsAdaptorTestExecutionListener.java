@@ -7,6 +7,7 @@ import org.unitils.core.Unitils;
 
 public class SpringUnitilsAdaptorTestExecutionListener
     implements TestExecutionListener {
+    @Override
     public void prepareTestInstance(TestContext testContext)
         throws Exception {
         registerTestContext(testContext);
@@ -18,11 +19,13 @@ public class SpringUnitilsAdaptorTestExecutionListener
         getTestListener().beforeTestSetUp(testContext.getTestInstance(), testContext.getTestMethod());
     }
 
+    @Override
     public void beforeTestMethod(TestContext testContext)
         throws Exception {
         getTestListener().beforeTestMethod(testContext.getTestInstance(), testContext.getTestMethod());
     }
 
+    @Override
     public void afterTestMethod(TestContext testContext)
         throws Exception {
         getTestListener().afterTestMethod(testContext.getTestInstance(), testContext.getTestMethod(), testContext.getTestException());
@@ -53,11 +56,13 @@ public class SpringUnitilsAdaptorTestExecutionListener
         return Unitils.getInstance();
     }
 
+    @Override
     public void afterTestClass(TestContext arg0)
         throws Exception {
         // do nothing
     }
 
+    @Override
     public void beforeTestClass(TestContext arg0)
         throws Exception {
         // do nothing

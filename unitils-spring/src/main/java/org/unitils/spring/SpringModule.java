@@ -114,7 +114,6 @@ public class SpringModule
                 }
 
                 @Override
-                @SuppressWarnings("unchecked")
                 public PlatformTransactionManager getSpringPlatformTransactionManager(Object testObject) {
                     ApplicationContext context = getApplicationContext(testObject);
                     Class<?> platformTransactionManagerClass = getPlatformTransactionManagerClass();
@@ -173,7 +172,7 @@ public class SpringModule
         try {
             return getApplicationContext(testObject).getBean(name);
         } catch (BeansException e) {
-            throw new UnitilsException("Unable to get Spring bean. No Spring bean found for name " + name);
+            throw new UnitilsException("Unable to get Spring bean. No Spring bean found for name " + name, e);
         }
     }
 

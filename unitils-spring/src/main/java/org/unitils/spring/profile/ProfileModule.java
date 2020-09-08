@@ -10,6 +10,7 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.context.support.GenericApplicationContext;
 import org.springframework.context.support.GenericXmlApplicationContext;
@@ -41,6 +42,7 @@ public class ProfileModule
     /**
      * @see org.unitils.core.Module#init(java.util.Properties)
      */
+    @Override
     public void init(Properties configuration) {
         // do nothing
     }
@@ -49,6 +51,7 @@ public class ProfileModule
      * @see org.unitils.core.Module#afterInit()
      */
 
+    @Override
     public void afterInit() {
         // do nothing
     }
@@ -57,8 +60,6 @@ public class ProfileModule
      * First it will look if the {@link ConfigureProfile} is present. This
      * annotation contains the profilename.
      * The {@link Profile} is set active and all the beans will be loaded.
-     * 
-     * @param testClass
      */
     protected void getProfile(Class<?> testClass) {
         if (checkIfEverythingIsInPlace(testClass)) {
@@ -77,9 +78,6 @@ public class ProfileModule
 
     /**
      * How to do the configuration when you use {@link Configuration}
-     * 
-     * @param ctx
-     * @param profile
      */
     protected void setConfigurationAsTypeConfiguration(AnnotationConfigApplicationContext ctx, ConfigureProfile profile) {
         ctx.getEnvironment().setActiveProfiles(profile.value());
@@ -96,8 +94,6 @@ public class ProfileModule
 
     /**
      * The injection of beans doesn't happen automatically anymore when you use {@link SpringBeanByName} or {@link SpringBeanByType}
-     * 
-     * @param testObject
      */
     public boolean injectBeans(Object testObject) {
         // inject beans
@@ -131,7 +127,6 @@ public class ProfileModule
     /**
      * This method checks if the testclass contains a {@link SpringApplicationContext} and a {@link ConfigureProfile}.
      * 
-     * @param testClass
      * @return boolean
      */
     protected boolean checkIfEverythingIsInPlace(Class<?> testClass) {
@@ -186,6 +181,7 @@ public class ProfileModule
     /**
      * @see org.unitils.core.Module#getTestListener()
      */
+    @Override
     public TestListener getTestListener() {
         return new TestListener() {
             /**
