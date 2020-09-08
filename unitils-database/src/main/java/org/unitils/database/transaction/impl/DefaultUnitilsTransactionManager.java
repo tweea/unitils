@@ -55,19 +55,19 @@ public class DefaultUnitilsTransactionManager
      */
     private static Log logger = LogFactory.getLog(DefaultUnitilsTransactionManager.class);
 
-    protected Map<Object, Boolean> testObjectTransactionActiveMap = new HashMap<Object, Boolean>();
+    protected Map<Object, Boolean> testObjectTransactionActiveMap = new HashMap<>();
 
     /**
      * ThreadLocal for holding the TransactionStatus that keeps track of the
      * current test's transaction status
      */
-    protected Map<Object, TransactionStatus> testObjectTransactionStatusMap = new HashMap<Object, TransactionStatus>();
+    protected Map<Object, TransactionStatus> testObjectTransactionStatusMap = new HashMap<>();
 
     /**
      * ThreadLocal for holding the PlatformTransactionManager that is used by
      * the current test
      */
-    protected Map<Object, PlatformTransactionManager> testObjectPlatformTransactionManagerMap = new HashMap<Object, PlatformTransactionManager>();
+    protected Map<Object, PlatformTransactionManager> testObjectPlatformTransactionManagerMap = new HashMap<>();
 
     /**
      * Set of possible providers of a spring
@@ -75,6 +75,7 @@ public class DefaultUnitilsTransactionManager
      */
     protected List<UnitilsTransactionManagementConfiguration> transactionManagementConfigurations;
 
+    @Override
     public void init(Set<UnitilsTransactionManagementConfiguration> transactionManagementConfigurations) {
         setTransactionManagementConfigurations(transactionManagementConfigurations);
     }
@@ -83,6 +84,7 @@ public class DefaultUnitilsTransactionManager
      * Returns the given datasource, wrapped in a spring
      * <code>TransactionAwareDataSourceProxy</code>
      */
+    @Override
     public DataSource getTransactionalDataSource(DataSource dataSource) {
         return new TransactionAwareDataSourceProxy(dataSource);
     }
@@ -94,6 +96,7 @@ public class DefaultUnitilsTransactionManager
      * @param testObject
      *     The test object, not null
      */
+    @Override
     public void startTransaction(Object testObject) {
         UnitilsTransactionManagementConfiguration transactionManagementConfiguration = getTransactionManagementConfiguration(testObject);
         if (transactionManagementConfiguration.isTransactionalResourceAvailable(testObject)) {
@@ -104,6 +107,7 @@ public class DefaultUnitilsTransactionManager
         }
     }
 
+    @Override
     public void activateTransactionIfNeeded(Object testObject) {
         if (testObjectTransactionActiveMap.containsKey(testObject) && !testObjectTransactionActiveMap.get(testObject)) {
             testObjectTransactionActiveMap.put(testObject, Boolean.TRUE);
@@ -127,6 +131,7 @@ public class DefaultUnitilsTransactionManager
      * @param testObject
      *     The test object, not null
      */
+    @Override
     public void commit(Object testObject) {
         if (!testObjectTransactionActiveMap.containsKey(testObject)) {
             throw new UnitilsException("Trying to commit, while no transaction is currently active");
@@ -148,6 +153,7 @@ public class DefaultUnitilsTransactionManager
      * @param testObject
      *     The test object, not null
      */
+    @Override
     public void rollback(Object testObject) {
         if (!testObjectTransactionActiveMap.containsKey(testObject)) {
             throw new UnitilsException("Trying to rollback, while no transaction is currently active");
@@ -186,9 +192,10 @@ public class DefaultUnitilsTransactionManager
     }
 
     protected void setTransactionManagementConfigurations(Set<UnitilsTransactionManagementConfiguration> transactionManagementConfigurationsSet) {
-        List<UnitilsTransactionManagementConfiguration> configurations = new ArrayList<UnitilsTransactionManagementConfiguration>();
+        List<UnitilsTransactionManagementConfiguration> configurations = new ArrayList<>();
         configurations.addAll(transactionManagementConfigurationsSet);
         Collections.sort(configurations, new Comparator<UnitilsTransactionManagementConfiguration>() {
+            @Override
             public int compare(UnitilsTransactionManagementConfiguration o1, UnitilsTransactionManagementConfiguration o2) {
                 return o2.getPreference().compareTo(o1.getPreference());
             }

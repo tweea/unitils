@@ -30,9 +30,10 @@ public class DatabaseConfigurationsFactory
         this.configuration = configuration;
     }
 
+    @Override
     public DatabaseConfigurations create() {
         DatabaseConfiguration defaultDatabaseConfiguration = null;
-        Map<String, DatabaseConfiguration> databaseConfigurations = new HashMap<String, DatabaseConfiguration>(3);
+        Map<String, DatabaseConfiguration> databaseConfigurations = new HashMap<>(3);
 
         List<String> databaseNames = configuration.getOptionalStringList("database.names");
         for (String databaseName : databaseNames) {

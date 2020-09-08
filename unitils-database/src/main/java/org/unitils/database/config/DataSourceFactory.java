@@ -35,8 +35,6 @@ public interface DataSourceFactory
 
     /**
      * Configure the default database by {@link DatabaseConfiguration}
-     * 
-     * @param tempConfig
      */
     void init(DatabaseConfiguration tempConfig);
 
@@ -45,7 +43,6 @@ public interface DataSourceFactory
      *
      * @param configuration
      *     The configuration, not null
-     * @param databaseName
      */
     public void init(Properties configuration, String databaseName);
 }

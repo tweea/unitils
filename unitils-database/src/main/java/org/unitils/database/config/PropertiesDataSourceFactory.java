@@ -41,8 +41,8 @@ public class PropertiesDataSourceFactory
      *
      * @param configuration
      *     The config, not null
-     * @param databaseName
      */
+    @Override
     public void init(Properties configuration, String databaseName) {
         DatabaseConfigurations factory = new DatabaseConfigurationsFactory(new Configuration(configuration)).create();
         config = factory.getDatabaseConfiguration(databaseName);
@@ -54,15 +54,18 @@ public class PropertiesDataSourceFactory
      * @param configuration
      *     The config, not null
      */
+    @Override
     public void init(Properties configuration) {
         DatabaseConfigurations factory = new DatabaseConfigurationsFactory(new Configuration(configuration)).create();
         config = factory.getDatabaseConfiguration();
     }
 
+    @Override
     public void init(DatabaseConfiguration tempConfig) {
         this.config = tempConfig;
     }
 
+    @Override
     public DataSource createDataSource() {
         logger.info("Creating data source. Driver: " + config.getDriverClassName() + ", url: " + config.getUrl() + ", user: " + config.getUserName()
             + ", password: <not shown>");

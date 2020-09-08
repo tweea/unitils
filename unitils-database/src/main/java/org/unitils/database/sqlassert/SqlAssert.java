@@ -46,9 +46,6 @@ public abstract class SqlAssert {
      * To be succesfull the result of the SQL should only return one row, this row should be identical to the given parameter. The sequence
      * of the values is not important.
      * The datasource will be fetched from the database module of unitils ({@link DatabaseModule}).
-     *
-     * @param sql
-     * @param row
      */
     public static void assertSingleRowSqlResult(String sql, String[] row) {
         assertSingleRowSqlResult(sql, "", row);
@@ -58,9 +55,6 @@ public abstract class SqlAssert {
      * To be succesfull the result of the SQL should only return one row, this row should be identical to the given parameter. The sequence
      * of the values is not important.
      * The datasource will be fetched from the database module of unitils ({@link DatabaseModule}).
-     *
-     * @param sql
-     * @param row
      */
     public static void assertSingleRowSqlResult(String sql, String databaseName, String[] row) {
         assertSingleRowSqlResult(sql, getDataSourceFromUnitils(databaseName), row);
@@ -70,10 +64,6 @@ public abstract class SqlAssert {
      * To be succesfull the result of the SQL should return as many rows as the two dimensional arrey has, each row should be identical to
      * the given parameter. The sequence of the values is not important nor is the order of the rows.
      * The datasource will be fetched from the database module of unitils ({@link DatabaseModule}).
-     *
-     * @param sql
-     * @param databaseName
-     * @param rows
      */
     public static void assertMultipleRowSqlResult(String sql, String databaseName, String[]... rows) {
         assertMultipleRowSqlResult(sql, getDataSourceFromUnitils(databaseName), rows);
@@ -83,9 +73,6 @@ public abstract class SqlAssert {
      * To be succesfull the result of the SQL should return as many rows as the two dimensional arrey has, each row should be identical to
      * the given parameter. The sequence of the values is not important nor is the order of the rows.
      * The datasource will be fetched from the database module of unitils ({@link DatabaseModule}).
-     *
-     * @param sql
-     * @param rows
      */
     public static void assertMultipleRowSqlResult(String sql, String[]... rows) {
         assertMultipleRowSqlResult(sql, "", rows);
@@ -95,9 +82,6 @@ public abstract class SqlAssert {
      * The SQL given should only return one row with one column, this column should be a number (preferred a count(*)). The result is
      * asserted with the countResult parameter.
      * The datasource will be fetched from the database module of unitils ({@link DatabaseModule}).
-     *
-     * @param sql
-     * @param countResult
      */
     public static void assertCountSqlResult(String sql, Long countResult) {
         assertCountSqlResult(sql, countResult, "");
@@ -107,9 +91,6 @@ public abstract class SqlAssert {
      * The SQL given should only return one row with one column, this column should be a number (preferred a count(*)). The result is
      * asserted with the countResult parameter.
      * The datasource will be fetched from the database module of unitils ({@link DatabaseModule}).
-     *
-     * @param sql
-     * @param countResult
      */
     public static void assertCountSqlResult(String sql, Long countResult, String databaseName) {
         assertCountSqlResult(sql, getDataSourceFromUnitils(databaseName), countResult);
@@ -118,10 +99,6 @@ public abstract class SqlAssert {
     /**
      * To be successful the result of the SQL should only return one row, this row should be identical to the given parameter. The sequence
      * of the values is not important.
-     *
-     * @param sql
-     * @param dataSource
-     * @param row
      */
     public static void assertSingleRowSqlResult(String sql, DataSource dataSource, String[] row) {
         assertMultipleRowSqlResult(sql, dataSource, new String[][] {
@@ -132,10 +109,6 @@ public abstract class SqlAssert {
     /**
      * To be successful the result of the SQL should return as many rows as the two dimensional array has, each row should be identical to
      * the given parameter. The sequence of the values is not important nor the order of the rows.
-     *
-     * @param sql
-     * @param dataSource
-     * @param rows
      */
     public static void assertMultipleRowSqlResult(String sql, DataSource dataSource, String[]... rows) {
         String[][] itemAsString = getItemAsString(sql, dataSource, rows[0].length);
@@ -145,10 +118,6 @@ public abstract class SqlAssert {
     /**
      * The SQL given should only return one row with one column, this column should be a number (preferred a count(*)). The result is
      * asserted with the countResult parameter.
-     *
-     * @param sql
-     * @param dataSource
-     * @param countResult
      */
     public static void assertCountSqlResult(String sql, DataSource dataSource, Long countResult) {
         Long itemAsLong = SQLUnitils.getItemAsLong(sql, dataSource);
@@ -176,7 +145,7 @@ public abstract class SqlAssert {
             connection = dataSource.getConnection();
             statement = connection.createStatement();
             resultSet = statement.executeQuery(sql);
-            ArrayList<String[]> resultList = new ArrayList<String[]>();
+            ArrayList<String[]> resultList = new ArrayList<>();
 
             while (resultSet.next()) {
                 String[] row = new String[columnCount];

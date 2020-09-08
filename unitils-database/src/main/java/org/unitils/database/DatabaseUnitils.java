@@ -223,14 +223,10 @@ public class DatabaseUnitils {
     }
 
     /**
-     * This method gets a {@link Connection} from the {@link DataSource} and checks if it is a {@link oracle.jdbc.driver.OracleConnection}.
-     * There is a bug with commons-dbcp 1.4: if you want to create a {@link oracle.sql.BLOB} or a {@link java.sql.Clob} than you must get the inner
+     * This method gets a {@link Connection} from the {@link DataSource} and checks if it is a oracle.jdbc.driver.OracleConnection.
+     * There is a bug with commons-dbcp 1.4: if you want to create a oracle.sql.BLOB or a {@link java.sql.Clob} than you must get the inner
      * {@link Connection} but you get another {@link Connection}.
      * This is fixed in this method.
-     * 
-     * @param connection
-     * @param dataSource
-     * @return
      */
     public static Connection getGoodConnection(Connection connection, DataSource dataSource) {
         if (dataSource instanceof BasicDataSource) {

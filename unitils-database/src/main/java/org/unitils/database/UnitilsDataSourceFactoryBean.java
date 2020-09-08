@@ -49,6 +49,7 @@ public class UnitilsDataSourceFactoryBean
      *
      * @return The data source, not null
      */
+    @Override
     public Object getObject()
         throws Exception {
         return getObject("");
@@ -59,6 +60,7 @@ public class UnitilsDataSourceFactoryBean
      *
      * @return The type, not null
      */
+    @Override
     public Class<?> getObjectType() {
         return DataSource.class;
     }
@@ -66,6 +68,7 @@ public class UnitilsDataSourceFactoryBean
     /**
      * @return true, this is a singleton
      */
+    @Override
     public boolean isSingleton() {
         return true;
     }

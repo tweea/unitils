@@ -25,8 +25,6 @@ package org.unitils.database.util;
 public interface Flushable {
     /**
      * Flush all cached database operations.
-     * 
-     * @param testObject
      */
     void flushDatabaseUpdates(Object testObject);
 }

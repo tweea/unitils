@@ -58,10 +58,10 @@ public class DatabaseConfigurations {
     }
 
     public List<String> getDatabaseNames() {
-        return new ArrayList<String>(databaseConfigurations.keySet());
+        return new ArrayList<>(databaseConfigurations.keySet());
     }
 
     public List<DatabaseConfiguration> getDatabaseConfigurations() {
-        return new ArrayList<DatabaseConfiguration>(databaseConfigurations.values());
+        return new ArrayList<>(databaseConfigurations.values());
     }
 }

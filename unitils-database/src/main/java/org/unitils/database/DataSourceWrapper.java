@@ -87,13 +87,12 @@ public class DataSourceWrapper {
     /**
      * Returns the <code>DataSource</code> that provides connection to the unit test database. When invoked the first
      * time, the DBMaintainer is invoked to make sure the test database is up-to-date (if database updating is enabled)
-     * If the property {@link #PROPERTY_WRAP_DATASOURCE_IN_TRANSACTIONAL_PROXY} has been set to true, the <code>DataSource</code>
+     * If the property {@link DatabaseModule#PROPERTY_WRAP_DATASOURCE_IN_TRANSACTIONAL_PROXY} has been set to true, the <code>DataSource</code>
      * returned will make sure that, for the duration of a transaction, the same <code>java.sql.Connection</code> is returned,
      * and that invocations of the close() method of these connections are suppressed.
      *
      * @param testObject
      *     The test instance, not null
-     * @param wrapDataSourceInTransactionalProxy
      * @return The <code>DataSource</code> (default database).
      */
     public DataSource getTransactionalDataSourceAndActivateTransactionIfNeeded(Object testObject) {
@@ -136,7 +135,7 @@ public class DataSourceWrapper {
      *
      * @param sqlHandler
      *     SQLHandler that needs to be used for the database updates
-     * @see {@link DBMaintainer}
+     * @see DBMaintainer
      */
     public void updateDatabase(SQLHandler sqlHandler) {
         LOGGER.info("Checking if database has to be updated.");

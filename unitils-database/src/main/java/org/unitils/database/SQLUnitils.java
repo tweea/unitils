@@ -76,6 +76,7 @@ public class SQLUnitils {
         try {
             return executeUpdate(sql, dataSource);
         } catch (UnitilsException e) {
+            logger.trace("", e);
             // Ignored
             return -1;
         }
@@ -166,7 +167,7 @@ public class SQLUnitils {
             connection = dataSource.getConnection();
             statement = connection.createStatement();
             resultSet = statement.executeQuery(sql);
-            Set<String> result = new HashSet<String>();
+            Set<String> result = new HashSet<>();
             while (resultSet.next()) {
                 result.add(resultSet.getString(1));
             }

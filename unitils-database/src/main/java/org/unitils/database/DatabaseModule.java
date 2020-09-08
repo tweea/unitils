@@ -40,6 +40,7 @@ import org.unitils.core.dbsupport.DefaultSQLHandler;
 import org.unitils.core.dbsupport.SQLHandler;
 import org.unitils.database.annotations.TestDataSource;
 import org.unitils.database.annotations.Transactional;
+import org.unitils.database.config.DataSourceFactory;
 import org.unitils.database.config.DatabaseConfiguration;
 import org.unitils.database.config.DatabaseConfigurations;
 import org.unitils.database.config.DatabaseConfigurationsFactory;
@@ -111,7 +112,7 @@ public class DatabaseModule
     /**
      * Property indicating whether the datasource injected onto test fields
      * annotated with @TestDataSource or retrieved using
-     * {@link #getTransactionalDataSourceAndActivateTransactionIfNeeded(Object)}
+     * {@link DataSourceWrapper#getTransactionalDataSourceAndActivateTransactionIfNeeded(Object)}
      * must be wrapped in a transactional proxy
      */
     public static final String PROPERTY_WRAP_DATASOURCE_IN_TRANSACTIONAL_PROXY = "dataSource.wrapInTransactionalProxy";
@@ -143,7 +144,7 @@ public class DatabaseModule
      * Indicates whether the datasource injected onto test fields annotated with
      *
      * @TestDataSource or retrieved using
-     *     {@link #getTransactionalDataSourceAndActivateTransactionIfNeeded} must be
+     *     {@link DataSourceWrapper#getTransactionalDataSourceAndActivateTransactionIfNeeded} must be
      *     wrapped in a transactional proxy
      */
     protected boolean wrapDataSourceInTransactionalProxy;
@@ -157,13 +158,13 @@ public class DatabaseModule
      * Set of possible providers of a spring
      * <code>PlatformTransactionManager</code>
      */
-    protected Set<UnitilsTransactionManagementConfiguration> transactionManagementConfigurations = new HashSet<UnitilsTransactionManagementConfiguration>();
+    protected Set<UnitilsTransactionManagementConfiguration> transactionManagementConfigurations = new HashSet<>();
 
     // protected String dialect;
     private DatabaseConfigurations databaseConfigurations;
 
     // protected DataSourceWrapper wrapper;
-    protected Map<String, DataSourceWrapper> wrappers = new HashMap<String, DataSourceWrapper>();
+    protected Map<String, DataSourceWrapper> wrappers = new HashMap<>();
 
     /**
      * Initializes this module using the given <code>Configuration</code>
@@ -171,7 +172,7 @@ public class DatabaseModule
      * @param configuration
      *     The config, not null
      */
-    @SuppressWarnings("unchecked")
+    @Override
     public void init(Properties configuration) {
         this.configuration = configuration;
         DatabaseConfigurationsFactory configFactory = new DatabaseConfigurationsFactory(new Configuration(configuration));
@@ -185,6 +186,7 @@ public class DatabaseModule
     /**
      * Initializes the spring support object
      */
+    @Override
     public void afterInit() {
         // do nothing
     }
@@ -199,18 +201,22 @@ public class DatabaseModule
         // Make sure that a spring DataSourceTransactionManager is used for transaction management, if
         // no other transaction management configuration takes preference
         registerTransactionManagementConfiguration(new UnitilsTransactionManagementConfiguration() {
+            @Override
             public boolean isApplicableFor(Object testObject) {
                 return true;
             }
 
+            @Override
             public PlatformTransactionManager getSpringPlatformTransactionManager(Object testObject) {
                 return new DataSourceTransactionManager(wrapper.getDataSourceAndActivateTransactionIfNeeded());
             }
 
+            @Override
             public boolean isTransactionalResourceAvailable(Object testObject) {
                 return wrapper.isDataSourceLoaded();
             }
 
+            @Override
             public Integer getPreference() {
                 return 1;
             }
@@ -284,14 +290,11 @@ public class DatabaseModule
      *
      * @param testObject
      *     The test instance, not null
-     * @throws InvocationTargetException
-     * @throws IllegalAccessException
-     * @throws IllegalArgumentException
      */
     public void injectDataSource(Object testObject) {
         Set<Field> fields = getFieldsAnnotatedWith(testObject.getClass(), TestDataSource.class);
         Set<Method> methods = getMethodsAnnotatedWith(testObject.getClass(), TestDataSource.class);
-        Map<String, DataSource> mapDatasources = new HashMap<String, DataSource>();
+        Map<String, DataSource> mapDatasources = new HashMap<>();
         // update all databases
         for (Entry<String, DataSourceWrapper> wrapper : wrappers.entrySet()) {
             DataSource dataSource2 = getDataSource(wrapper.getKey(), mapDatasources, testObject);
@@ -300,9 +303,6 @@ public class DatabaseModule
         }
     }
 
-    /**
-     * @return
-     */
     protected void setFieldDataSource(String databaseName, DataSource dataSource, Object testObject, Set<Field> fields, Set<Method> methods) {
         if (fields.isEmpty() && methods.isEmpty()) {
             // Nothing to do. Jump out to make sure that we don't try to instantiate the DataSource
@@ -310,18 +310,25 @@ public class DatabaseModule
         }
         for (Field field : fields) {
             TestDataSource annotation = field.getAnnotation(TestDataSource.class);
+            if (annotation == null) {
+                continue;
+            }
+
             String tempDatabaseName = StringUtils.isEmpty(annotation.value()) ? databaseConfigurations.getDatabaseConfiguration().getDatabaseName()
                 : annotation.value();
-            if (annotation != null && tempDatabaseName.equals(databaseName)) {
+            if (tempDatabaseName.equals(databaseName)) {
                 ReflectionUtils.setFieldValue(testObject, field, dataSource);
             }
         }
         for (Method method : methods) {
             TestDataSource annotation = method.getAnnotation(TestDataSource.class);
+            if (annotation == null) {
+                continue;
+            }
+
             String tempDatabaseName = StringUtils.isEmpty(annotation.value()) ? databaseConfigurations.getDatabaseConfiguration().getDatabaseName()
                 : annotation.value();
-
-            if (annotation != null && tempDatabaseName.equals(databaseName)) {
+            if (tempDatabaseName.equals(databaseName)) {
                 try {
                     method.invoke(testObject, dataSource);
                 } catch (IllegalAccessException ex) {
@@ -457,6 +464,7 @@ public class DatabaseModule
     /**
      * @return The {@link TestListener} associated with this module
      */
+    @Override
     public TestListener getTestListener() {
         return new DatabaseTestListener();
     }
@@ -494,7 +502,6 @@ public class DatabaseModule
     }
 
     /**
-     * @param databaseName
      * @return the wrapper
      */
     public DataSourceWrapper getWrapper(String databaseName) {
