@@ -84,7 +84,7 @@ public class InjectModule
     private Map<Class<? extends Annotation>, Map<String, String>> defaultAnnotationPropertyValues;
 
     /* List holding all values to restore after test was performed */
-    private List<ValueToRestore> valuesToRestoreAfterTest = new ArrayList<ValueToRestore>();
+    private List<ValueToRestore> valuesToRestoreAfterTest = new ArrayList<>();
 
     /* Indicates if tested object instance should be created if they are not created yet */
     private boolean createTestedObjectsIfNullEnabled;
@@ -150,7 +150,8 @@ public class InjectModule
             } catch (NoSuchMethodException e) {
                 logger.warn(
                     "Field " + testedObjectField.getName() + " (annotated with @TestedObject) has type " + testedObjectField.getDeclaringClass().getSimpleName()
-                        + " which has no default (parameterless) constructor. It is not automatically instantiated.");
+                        + " which has no default (parameterless) constructor. It is not automatically instantiated.",
+                    e);
             }
         }
     }
@@ -457,7 +458,7 @@ public class InjectModule
      *     The class of the annotation, not null
      * @param annotatedField
      *     The annotated field, not null
-     * @param targetName
+     * @param targetNames
      *     The explicit target name or empty string for TestedObject targets
      * @param test
      *     The test instance
@@ -468,13 +469,13 @@ public class InjectModule
         if (ArrayUtils.isEmpty(targetNames)) {
             // Default targetName, so it is probably not specified. Return all objects that are annotated with the TestedObject annotation.
             Set<Field> testedObjectFields = getFieldsAnnotatedWith(test.getClass(), TestedObject.class);
-            targets = new ArrayList<Object>(testedObjectFields.size());
+            targets = new ArrayList<>(testedObjectFields.size());
             for (Field testedObjectField : testedObjectFields) {
                 Object target = getTarget(test, testedObjectField);
                 targets.add(target);
             }
         } else {
-            targets = new ArrayList<Object>(targetNames.length);
+            targets = new ArrayList<>(targetNames.length);
             for (String targetName : targetNames) {
                 Field field = getFieldWithName(test.getClass(), targetName, false);
                 if (field == null) {

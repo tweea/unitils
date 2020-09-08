@@ -27,7 +27,7 @@ import org.unitils.mock.core.proxy.ProxyInvocation;
 public class BehaviorDefiningInvocations {
     protected boolean removeWhenUsed;
 
-    protected List<BehaviorDefiningInvocation> behaviorDefiningInvocations = new ArrayList<BehaviorDefiningInvocation>();
+    protected List<BehaviorDefiningInvocation> behaviorDefiningInvocations = new ArrayList<>();
 
     public BehaviorDefiningInvocations(boolean removeWhenUsed) {
         this.removeWhenUsed = removeWhenUsed;

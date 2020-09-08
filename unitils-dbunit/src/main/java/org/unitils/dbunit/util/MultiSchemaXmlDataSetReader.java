@@ -175,7 +175,7 @@ public class MultiSchemaXmlDataSetReader {
         protected String defaultSchemaName;
 
         /* All created data sets per schema */
-        protected Map<String, DbUnitDataSet> dbUnitDataSetsPerSchemaName = new LinkedHashMap<String, DbUnitDataSet>();
+        protected Map<String, DbUnitDataSet> dbUnitDataSetsPerSchemaName = new LinkedHashMap<>();
 
         /**
          * Creates a data set SAX content handler
@@ -264,7 +264,7 @@ public class MultiSchemaXmlDataSetReader {
                 Column column = new Column(attributes.getQName(i), UNKNOWN);
                 table.addColumn(column);
             }
-            List<Object> row = new ArrayList<Object>(10);
+            List<Object> row = new ArrayList<>(10);
             for (String columnName : table.getColumnNames()) {
                 Object value = NO_VALUE;
                 if (attributes.getIndex(columnName) != -1) {

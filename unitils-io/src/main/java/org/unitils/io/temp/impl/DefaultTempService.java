@@ -36,6 +36,7 @@ public class DefaultTempService
         this.rootTempDir = rootTempDir;
     }
 
+    @Override
     public File createTempDir(String dirName) {
         File dir = new File(rootTempDir, dirName);
         deleteTempFileOrDir(dir);
@@ -46,6 +47,7 @@ public class DefaultTempService
         return dir;
     }
 
+    @Override
     public File createTempFile(String fileName) {
         try {
             File file = new File(rootTempDir, fileName);
@@ -59,6 +61,7 @@ public class DefaultTempService
         }
     }
 
+    @Override
     public void deleteTempFileOrDir(File fileOrDir) {
         if (fileOrDir == null || !fileOrDir.exists()) {
             return;
@@ -66,7 +69,7 @@ public class DefaultTempService
         try {
             forceDelete(fileOrDir);
         } catch (IOException e) {
-            throw new UnitilsException("Unable to delete temp file/dir " + fileOrDir.getAbsolutePath());
+            throw new UnitilsException("Unable to delete temp file/dir " + fileOrDir.getAbsolutePath(), e);
         }
     }
 }

@@ -32,6 +32,7 @@ import org.unitils.thirdparty.org.apache.commons.io.IOUtils;
  */
 public class StringConversionStrategy
     implements ConversionStrategy<String> {
+    @Override
     public String convertContent(InputStream inputStream, String encoding)
         throws IOException {
         StringWriter writer = new StringWriter();
@@ -41,10 +42,12 @@ public class StringConversionStrategy
         return writer.toString();
     }
 
+    @Override
     public String getDefaultFileExtension() {
         return "txt";
     }
 
+    @Override
     public Class<String> getTargetType() {
         return String.class;
     }

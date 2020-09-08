@@ -73,6 +73,7 @@ public class DummyObjectUtil {
          *     The method invocation, not null
          * @return The result value for the method invocation
          */
+        @Override
         public Object handleInvocation(ProxyInvocation invocation)
             throws Throwable {
             return dummyObjectBehavior.execute(invocation);

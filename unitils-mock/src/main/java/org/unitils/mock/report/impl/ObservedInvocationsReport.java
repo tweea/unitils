@@ -62,9 +62,9 @@ public class ObservedInvocationsReport
     public String createReport(List<ObservedInvocation> observedInvocations) {
         StringBuilder result = new StringBuilder();
 
-        List<FormattedObject> currentLargeObjects = new ArrayList<FormattedObject>();
-        Map<Object, FormattedObject> allLargeObjects = new IdentityHashMap<Object, FormattedObject>();
-        Map<Class<?>, Integer> largeObjectNameIndexes = new HashMap<Class<?>, Integer>();
+        List<FormattedObject> currentLargeObjects = new ArrayList<>();
+        Map<Object, FormattedObject> allLargeObjects = new IdentityHashMap<>();
+        Map<Class<?>, Integer> largeObjectNameIndexes = new HashMap<>();
 
         // append all invocations
         int invocationIndex = 0;

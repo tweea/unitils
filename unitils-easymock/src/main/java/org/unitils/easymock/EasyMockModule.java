@@ -90,9 +90,8 @@ public class EasyMockModule
      * Initializes the module
      */
     @Override
-    @SuppressWarnings("unchecked")
     public void init(Properties configuration) {
-        mocksControls = new ArrayList<MocksControl>();
+        mocksControls = new ArrayList<>();
         defaultAnnotationPropertyValues = getAnnotationPropertyDefaults(EasyMockModule.class, configuration, RegularMock.class, Mock.class);
         autoVerifyAfterTestEnabled = PropertyUtils.getBoolean(PROPKEY_AUTO_VERIFY_AFTER_TEST_ENABLED, configuration);
     }
@@ -183,7 +182,7 @@ public class EasyMockModule
         dates = getEnumValueReplaceDefault(Mock.class, "dates", dates, defaultAnnotationPropertyValues);
         defaults = getEnumValueReplaceDefault(Mock.class, "defaults", defaults, defaultAnnotationPropertyValues);
 
-        List<ReflectionComparatorMode> comparatorModes = new ArrayList<ReflectionComparatorMode>();
+        List<ReflectionComparatorMode> comparatorModes = new ArrayList<>();
         if (Order.LENIENT == order) {
             comparatorModes.add(LENIENT_ORDER);
         }

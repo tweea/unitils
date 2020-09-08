@@ -43,9 +43,7 @@ public class DefaultFileContentReader
         this.defaultEncoding = defaultEncoding;
     }
 
-    @SuppressWarnings({
-        "unchecked"
-    })
+    @Override
     public <T> T readFileContent(String fileName, Class<T> targetType, String encoding, Class<?> testClass) {
         ConversionStrategy<?> conversionStrategy = determineConversionStrategy(targetType);
         if (isBlank(encoding)) {

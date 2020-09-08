@@ -84,9 +84,6 @@ public class ProxyUtils {
      *     The object to check
      * @return The proxied type, null if the object is not a proxy or mock
      */
-    @SuppressWarnings({
-        "UnusedDeclaration"
-    })
     public static String getMockName(Object object) {
         if (object == null) {
             return null;
@@ -110,7 +107,7 @@ public class ProxyUtils {
      * @return The proxied method trace, not null
      */
     public static StackTraceElement[] getProxiedMethodStackTrace() {
-        List<StackTraceElement> stackTrace = new ArrayList<StackTraceElement>();
+        List<StackTraceElement> stackTrace = new ArrayList<>();
 
         boolean foundProxyMethod = false;
         StackTraceElement[] stackTraceElements = Thread.currentThread().getStackTrace();

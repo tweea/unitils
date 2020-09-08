@@ -39,6 +39,7 @@ public class DefaultScenarioReport
      *     The scenario to output, not null
      * @return the report, not null
      */
+    @Override
     public String createReport(Scenario scenario) {
         StringBuilder result = new StringBuilder();
         List<ObservedInvocation> observedInvocations = scenario.getObservedInvocations();

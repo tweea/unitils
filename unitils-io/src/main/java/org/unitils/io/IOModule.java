@@ -46,15 +46,18 @@ public class IOModule
 
     protected TempService tempService;
 
+    @Override
     public void init(Properties configuration) {
         this.configuration = configuration;
         fileContentReader = createFileContentReader();
         tempService = createTempService();
     }
 
+    @Override
     public void afterInit() {
     }
 
+    @Override
     public TestListener getTestListener() {
         boolean cleanUpAfterTest = getBoolean(CLEANUP_AFTER_TEST, configuration);
 

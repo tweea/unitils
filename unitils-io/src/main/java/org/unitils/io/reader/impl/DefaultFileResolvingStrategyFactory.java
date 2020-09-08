@@ -35,6 +35,7 @@ public class DefaultFileResolvingStrategyFactory
     /* Property key for the path prefix */
     public static final String PATH_PREFIX_PROPERTY = "IOModule.file.pathPrefix";
 
+    @Override
     public FileResolvingStrategy createFileResolvingStrategy(Properties configuration) {
         boolean prefixWithPackageName = getBoolean(PREFIX_WITH_PACKAGE_NAME_PROPERTY, configuration);
         String pathPrefix = getString(PATH_PREFIX_PROPERTY, null, configuration);

@@ -32,9 +32,9 @@ public class Table {
     private String name;
 
     /* The data set rows */
-    private List<Row> rows = new ArrayList<Row>();
+    private List<Row> rows = new ArrayList<>();
 
-    private List<Column> columns = new ArrayList<Column>();
+    private List<Column> columns = new ArrayList<>();
 
     /**
      * Creates a data set table.
@@ -112,7 +112,7 @@ public class Table {
      *     The result to add the differences to, not null
      */
     protected void compareRows(List<Row> rows, Table actualTable, TableDifference result) {
-        List<Row> rowsWithoutMatch = new ArrayList<Row>(rows);
+        List<Row> rowsWithoutMatch = new ArrayList<>(rows);
         for (Row actualRow : actualTable.getRows()) {
             Iterator<Row> rowIterator = rowsWithoutMatch.iterator();
             while (rowIterator.hasNext()) {

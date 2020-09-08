@@ -47,7 +47,7 @@ public class DummyValueReturningMockBehavior
     /*
      * this list keeps track of what object we have returned. So that we return the "same" instance on each invocation
      */
-    private Map<MethodKey, Object> returnValues = new HashMap<MethodKey, Object>();
+    private Map<MethodKey, Object> returnValues = new HashMap<>();
 
     /**
      * Executes the mock behavior.
@@ -56,6 +56,7 @@ public class DummyValueReturningMockBehavior
      *     The proxy method invocation, not null
      * @return The default value defined by this behavior
      */
+    @Override
     public Object execute(ProxyInvocation proxyInvocation) {
         Object result = null;
 

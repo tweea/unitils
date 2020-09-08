@@ -72,13 +72,13 @@ public class DetailedObservedInvocationsReport
     public String createReport(List<ObservedInvocation> observedInvocations) {
         StringBuilder result = new StringBuilder();
 
-        Map<Object, FormattedObject> allLargeObjects = new IdentityHashMap<Object, FormattedObject>();
-        Map<Class<?>, Integer> largeObjectNameIndexes = new HashMap<Class<?>, Integer>();
+        Map<Object, FormattedObject> allLargeObjects = new IdentityHashMap<>();
+        Map<Class<?>, Integer> largeObjectNameIndexes = new HashMap<>();
 
         // append all invocations
         int invocationIndex = 1;
         for (ObservedInvocation observedInvocation : observedInvocations) {
-            List<FormattedObject> currentLargeObjects = new ArrayList<FormattedObject>();
+            List<FormattedObject> currentLargeObjects = new ArrayList<>();
 
             result.append(invocationIndex++);
             result.append(". ");
@@ -100,6 +100,7 @@ public class DetailedObservedInvocationsReport
      *     The invocation to format, not null
      * @return The string representation, not null
      */
+    @Override
     protected String formatInvokedAt(ProxyInvocation proxyInvocation) {
         StringBuilder result = new StringBuilder();
         result.append("- Observed at ");
@@ -151,7 +152,7 @@ public class DetailedObservedInvocationsReport
     protected String formatLargeObjects(List<FormattedObject> largeObjects) {
         StringBuilder result = new StringBuilder();
 
-        List<String> usedNames = new ArrayList<String>();
+        List<String> usedNames = new ArrayList<>();
         if (!largeObjects.isEmpty()) {
             for (FormattedObject largeObject : largeObjects) {
                 String name = largeObject.getName();

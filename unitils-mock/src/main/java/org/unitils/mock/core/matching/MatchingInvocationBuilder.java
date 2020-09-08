@@ -90,7 +90,7 @@ public class MatchingInvocationBuilder {
     }
 
     protected List<ArgumentMatcher> createArgumentMatchers(ProxyInvocation proxyInvocation) {
-        List<ArgumentMatcher> result = new ArrayList<ArgumentMatcher>();
+        List<ArgumentMatcher> result = new ArrayList<>();
 
         ArgumentMatcherRepository argumentMatcherRepository = ArgumentMatcherRepository.getInstance();
         int matchInvocationStartLineNr = argumentMatcherRepository.getMatchInvocationStartLineNr();
@@ -120,6 +120,7 @@ public class MatchingInvocationBuilder {
             this.matchingInvocationHandler = matchingInvocationHandler;
         }
 
+        @Override
         public Object handleInvocation(ProxyInvocation proxyInvocation)
             throws Throwable {
             return handleProxyInvocation(proxyInvocation, matchingInvocationHandler);

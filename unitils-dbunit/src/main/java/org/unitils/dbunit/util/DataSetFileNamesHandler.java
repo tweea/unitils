@@ -7,6 +7,8 @@ import java.io.InputStream;
 import java.lang.reflect.Method;
 import java.util.Properties;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.unitils.core.Unitils;
 import org.unitils.core.UnitilsException;
 import org.unitils.core.util.ConfigUtils;
@@ -22,6 +24,8 @@ import org.unitils.util.PropertyUtils;
  * @since 3.4.4
  */
 public class DataSetFileNamesHandler {
+    private static final Log LOG = LogFactory.getLog(DataSetFileNamesHandler.class);
+
     /**
      * Gets the name of the default testdata file at class level The default name is constructed as follows: 'classname without
      * packagename'.xml
@@ -51,9 +55,6 @@ public class DataSetFileNamesHandler {
      * Gets the name of the default testdata file at class level The default name is constructed as follows: 'classname without
      * packagename'-"testmethod".xml
      *
-     * @param testClass
-     * @param method
-     * @param extension
      * @return {@link String}
      */
     public String getDefaultDataSetFileNameMethodLevel(Class<?> testClass, Method method, String extension) {
@@ -89,8 +90,6 @@ public class DataSetFileNamesHandler {
     }
 
     /**
-     * @param nameResource
-     * @param packageTestClass
      * @return {@link String}
      */
     public String generateResourceName(String nameResource, Package packageTestClass) {
@@ -117,6 +116,7 @@ public class DataSetFileNamesHandler {
             dataSetResolver.resolve(testClass, name);
             return testClass.getPackage().getName() + "." + name;
         } catch (Exception e) {
+            LOG.trace("", e);
             // the DefaultDataSetFileNameMethodLevel does not exist.
             // so the dataset should exist on classlevel.
         }
@@ -124,13 +124,6 @@ public class DataSetFileNamesHandler {
         return getDefaultDataSetFileNameClassLevel(testClass, extension);
     }
 
-    /**
-     * @param locator
-     * @param nameResource
-     * @param strategy
-     * @param testClass
-     * @return
-     */
     public File locateResource(ClassPathDataLocator locator, String nameResource, ResourcePickingStrategie strategy, Class<?> testClass) {
         InputStream in = null;
 
@@ -150,7 +143,7 @@ public class DataSetFileNamesHandler {
                 in = new FileInputStream(resolvedFile);
             } catch (FileNotFoundException e) {
                 throw new UnitilsException(
-                    (new StringBuilder()).append("DataSetResource file with name '").append(nameResource).append("' cannot be found").toString());
+                    (new StringBuilder()).append("DataSetResource file with name '").append(nameResource).append("' cannot be found").toString(), e);
             }
         }
 

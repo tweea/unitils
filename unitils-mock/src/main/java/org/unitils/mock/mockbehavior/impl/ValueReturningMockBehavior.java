@@ -49,6 +49,7 @@ public class ValueReturningMockBehavior
      * @param proxyInvocation
      *     The proxy method invocation, not null
      */
+    @Override
     public void assertCanExecute(ProxyInvocation proxyInvocation)
         throws UnitilsException {
         Class<?> returnType = proxyInvocation.getMethod().getReturnType();
@@ -68,6 +69,7 @@ public class ValueReturningMockBehavior
      *     The proxy method invocation, not null
      * @return The value
      */
+    @Override
     public Object execute(ProxyInvocation proxyInvocation) {
         return valueToReturn;
     }

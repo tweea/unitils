@@ -23,9 +23,6 @@ public class FileHandler {
 
     /**
      * Create temporary files to store the XML.
-     * 
-     * @param dataSetResourceName
-     * @return
      */
     public File createTempFile(String dataSetResourceName) {
         LOGGER.debug("Creating temp file.");
@@ -45,8 +42,6 @@ public class FileHandler {
 
     /**
      * Write {@link InputStream} to {@link File}
-     * 
-     * @param file
      */
     public void writeToFile(File file, InputStream in) {
         try {
@@ -71,8 +66,6 @@ public class FileHandler {
 
     /**
      * Delete all the files
-     * 
-     * @param files
      */
     public void deleteFiles(List<File> files) {
         for (File file : files) {

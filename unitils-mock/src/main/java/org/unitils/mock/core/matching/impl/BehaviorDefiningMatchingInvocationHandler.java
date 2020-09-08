@@ -48,6 +48,7 @@ public class BehaviorDefiningMatchingInvocationHandler
         this.mockFactory = mockFactory;
     }
 
+    @Override
     public Object handleInvocation(ProxyInvocation proxyInvocation, List<ArgumentMatcher> argumentMatchers)
         throws Throwable {
         if (mockBehavior instanceof ChainedMockBehavior) {
@@ -91,6 +92,7 @@ public class BehaviorDefiningMatchingInvocationHandler
             behaviorDefiningInvocation.setMockBehavior(new ValueReturningMockBehavior(mock.getMock()));
         }
 
+        @Override
         public Object execute(ProxyInvocation proxyInvocation)
             throws Throwable {
             return originalMockBehavior.execute(proxyInvocation);

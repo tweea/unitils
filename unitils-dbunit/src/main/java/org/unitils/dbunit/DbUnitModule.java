@@ -113,7 +113,7 @@ public class DbUnitModule
      * A different DbUnit connection is used for every database schema. Since DbUnit can only work with a single schema, this is the
      * simplest way to obtain multi-schema support.
      */
-    protected Map<String, DbUnitDatabaseConnection> dbUnitDatabaseConnections = new HashMap<String, DbUnitDatabaseConnection>();
+    protected Map<String, DbUnitDatabaseConnection> dbUnitDatabaseConnections = new HashMap<>();
 
     /**
      * The unitils configuration
@@ -133,7 +133,6 @@ public class DbUnitModule
      *     The config, not null
      */
     @Override
-    @SuppressWarnings("unchecked")
     public void init(Properties configuration) {
         this.configuration = configuration;
         defaultAnnotationPropertyValues = getAnnotationPropertyDefaults(DbUnitModule.class, configuration, DataSet.class, ExpectedDataSet.class);
@@ -237,7 +236,7 @@ public class DbUnitModule
     }
 
     protected Map<String, List<DataSet>> getDataSetsSorted(DataSets dataSets) {
-        Map<String, List<DataSet>> map = new HashMap<String, List<DataSet>>();
+        Map<String, List<DataSet>> map = new HashMap<>();
 
         for (DataSet dataSet : dataSets.value()) {
             if (map.containsKey(dataSet.databaseName())) {
@@ -246,7 +245,7 @@ public class DbUnitModule
                 tempList.add(dataSet);
             } else {
                 // new entry
-                List<DataSet> tempList = new ArrayList<DataSet>();
+                List<DataSet> tempList = new ArrayList<>();
                 tempList.add(dataSet);
                 map.put(dataSet.databaseName(), tempList);
             }
@@ -431,13 +430,12 @@ public class DbUnitModule
      * The value of the found annotation determines which files need to be used for the dataset. If one or more filenames are explicitly
      * specified, these names will be used. Filenames that start with '/' are treated absolute. Filenames that do not start with '/', are
      * relative to the current class. If an empty filename ("") is specified, this method will look for a file named 'classname'.xml.
-     * {@link #getDefaultDataSetFileName}).
      * <p/>
      * If a file is not found or could not be loaded (but was requested, because there is an annotation), an exception is thrown.
      *
      * @param testMethod
      *     The test method, not null
-     * @param testObject
+     * @param testClass
      *     The test object, not null
      * @return The dataset, null if no {@link DataSet} annotation is found.
      */
@@ -498,7 +496,7 @@ public class DbUnitModule
      * @return The data set, null if the file does not exist
      */
     protected MultiSchemaDataSet getDataSet(Class<?> testClass, String[] dataSetFileNames, DataSetFactory dataSetFactory) {
-        List<File> dataSetFiles = new ArrayList<File>();
+        List<File> dataSetFiles = new ArrayList<>();
 
         ResourcePickingStrategie resourcePickingStrategie = getResourcePickingStrategie();
 
@@ -523,9 +521,6 @@ public class DbUnitModule
      *     The test class, not null
      * @return The DbUnit operation, not null
      */
-    @SuppressWarnings({
-        "unchecked"
-    })
     protected DataSetLoadStrategy getDataSetLoadStrategy(Method testMethod, Class<?> testClass, DataSet dataSet) {
         Class<? extends DataSetLoadStrategy> dataSetOperationClass = dataSet.loadStrategy();
         dataSetOperationClass = (Class<? extends DataSetLoadStrategy>) getClassValueReplaceDefault(DataSet.class, "loadStrategy", dataSetOperationClass,
@@ -605,7 +600,6 @@ public class DbUnitModule
      *     The class that is looked for class-level annotations
      * @return The configured DataSetFactory
      */
-    @SuppressWarnings("unchecked")
     protected DataSetFactory getDataSetFactory(Class<? extends Annotation> annotationClass, Method testMethod, Class<?> testClass) {
         Class<? extends DataSetFactory> dataSetFactoryClass = getMethodOrClassLevelAnnotationProperty(annotationClass, "factory", DataSetFactory.class,
             testMethod, testClass);

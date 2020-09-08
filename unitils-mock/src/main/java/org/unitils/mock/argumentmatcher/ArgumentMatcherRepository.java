@@ -34,6 +34,7 @@ public class ArgumentMatcherRepository {
 
     /* The singleton instance */
     private static ThreadLocal<ArgumentMatcherRepository> instance = new InheritableThreadLocal<ArgumentMatcherRepository>() {
+        @Override
         protected ArgumentMatcherRepository initialValue() {
             return new ArgumentMatcherRepository();
         }
@@ -47,7 +48,7 @@ public class ArgumentMatcherRepository {
     }
 
     /* The current argument matchers */
-    private List<ArgumentMatcher> argumentMatchers = new ArrayList<ArgumentMatcher>();
+    private List<ArgumentMatcher> argumentMatchers = new ArrayList<>();
 
     /* Determines whether the repository can accept argument matchers */
     private boolean acceptingArgumentMatchers = false;

@@ -13,6 +13,7 @@
 package org.unitils.easymock;
 
 import org.easymock.EasyMock;
+import org.easymock.Mock;
 import org.easymock.internal.MocksControl;
 import org.unitils.core.Unitils;
 import org.unitils.core.UnitilsException;
@@ -65,7 +66,7 @@ public class EasyMockUnitils {
      * @return null
      */
     public static <T> T refEq(T object, ReflectionComparatorMode... modes) {
-        ReflectionArgumentMatcher<T> reflectionArgumentMatcher = new ReflectionArgumentMatcher<T>(object, modes);
+        ReflectionArgumentMatcher<T> reflectionArgumentMatcher = new ReflectionArgumentMatcher<>(object, modes);
         reportMatcher(reflectionArgumentMatcher);
         return object;
     }
@@ -177,8 +178,6 @@ public class EasyMockUnitils {
 
     /**
      * If you create a mock with {@link EasyMock} than you can add the mock to the controllist in the {@link EasyMockModule} with this method.
-     * 
-     * @param object
      */
     public static void addMockstoControlsList(Object... objects) {
         for (Object object : objects) {

@@ -33,6 +33,7 @@ public class StubMockBehavior
      * @param proxyInvocation
      *     The proxy method invocation, not null
      */
+    @Override
     public void assertCanExecute(ProxyInvocation proxyInvocation)
         throws UnitilsException {
         // allow void methods

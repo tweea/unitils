@@ -58,12 +58,9 @@ public class CloneUtil {
      *     The object to clone
      * @return The cloned instance
      */
-    @SuppressWarnings({
-        "unchecked"
-    })
     public static <T> T createDeepClone(T object) {
         try {
-            return (T) cloneObject(object, new IdentityHashMap<Object, Object>());
+            return (T) cloneObject(object, new IdentityHashMap<>());
         } catch (Throwable e) {
             throw new UnitilsException("Unexpected exception during cloning of " + object, e);
         }
@@ -177,6 +174,7 @@ public class CloneUtil {
             cloneMethod.setAccessible(true);
             return cloneMethod.invoke(instanceToClone);
         } catch (Throwable t) {
+            logger.trace("", t);
             return null;
         }
     }
@@ -192,6 +190,7 @@ public class CloneUtil {
         try {
             return objenesis.newInstance(instanceToClone.getClass());
         } catch (Throwable t) {
+            logger.trace("", t);
             return null;
         }
     }

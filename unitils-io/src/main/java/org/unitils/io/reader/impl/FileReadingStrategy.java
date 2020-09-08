@@ -33,12 +33,14 @@ public class FileReadingStrategy
         this.fileResolvingStrategy = fileResolvingStrategy;
     }
 
+    @Override
     public InputStream getDefaultInputStream(String extension, Class<?> testClass)
         throws IOException {
         URI fileURI = fileResolvingStrategy.resolveDefaultFileName(extension, testClass);
         return fileURI.toURL().openStream();
     }
 
+    @Override
     public InputStream getInputStream(String fileName, Class<?> testClass)
         throws IOException {
         URI fileURI = fileResolvingStrategy.resolveFileName(fileName, testClass);

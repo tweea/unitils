@@ -51,6 +51,7 @@ public class ExceptionThrowingMockBehavior
      * @param proxyInvocation
      *     The proxy method invocation, not null
      */
+    @Override
     public void assertCanExecute(ProxyInvocation proxyInvocation)
         throws UnitilsException {
         if (exceptionToThrow instanceof RuntimeException || exceptionToThrow instanceof Error) {
@@ -73,6 +74,7 @@ public class ExceptionThrowingMockBehavior
      *     The proxy method invocation, not null
      * @return Nothing
      */
+    @Override
     public Object execute(ProxyInvocation proxyInvocation)
         throws Throwable {
         exceptionToThrow.setStackTrace(getInvocationStackTrace(Mock.class, false));

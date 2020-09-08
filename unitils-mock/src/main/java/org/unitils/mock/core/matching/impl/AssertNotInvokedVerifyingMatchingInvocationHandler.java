@@ -27,10 +27,12 @@ public class AssertNotInvokedVerifyingMatchingInvocationHandler
         super(scenario, mockFactory);
     }
 
+    @Override
     protected void performAssertion(Scenario scenario, BehaviorDefiningInvocation behaviorDefiningInvocation) {
         scenario.assertNotInvoked(behaviorDefiningInvocation);
     }
 
+    @Override
     protected Object performChainedAssertion(Mock<?> mock) {
         return mock.assertNotInvoked();
     }

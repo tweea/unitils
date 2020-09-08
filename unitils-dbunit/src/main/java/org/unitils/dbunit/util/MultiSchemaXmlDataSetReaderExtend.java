@@ -9,7 +9,7 @@ import org.xml.sax.InputSource;
 import org.xml.sax.XMLReader;
 
 /**
- * A simple extension on th {@link } allowing to work with
+ * A simple extension on the {@link MultiSchemaXmlDataSetReader} allowing to work with
  * inputstreams instead of Files.
  * 
  * @author Thomas De Rycke
@@ -35,9 +35,6 @@ public class MultiSchemaXmlDataSetReaderExtend
         this.defaultSchemaName = defaultSchemaName;
     }
 
-    /**
-     * @param defaultSchemaName
-     */
     public MultiSchemaXmlDataSetReaderExtend(String defaultSchemaName) {
         super(defaultSchemaName);
         this.defaultSchemaName = defaultSchemaName;
@@ -50,7 +47,6 @@ public class MultiSchemaXmlDataSetReaderExtend
      * @param inputStreams
      *     The inputstreams , not null
      * @return The read data set, not null
-     * @throws UnitilsException
      */
     public MultiSchemaDataSet readDataSetXml(List<InputStream> inputStreams)
         throws UnitilsException {

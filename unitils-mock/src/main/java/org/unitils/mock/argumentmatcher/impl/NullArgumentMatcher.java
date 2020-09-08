@@ -41,6 +41,7 @@ public class NullArgumentMatcher
      *     Copy of the argument, taken at the time that the invocation was performed, not null
      * @return The match result, not null
      */
+    @Override
     public MatchResult matches(Object argument, Object argumentAtInvocationTime) {
         if (argument == null) {
             return SAME;

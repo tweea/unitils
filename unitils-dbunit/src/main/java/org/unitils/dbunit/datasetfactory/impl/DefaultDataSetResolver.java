@@ -68,6 +68,7 @@ public class DefaultDataSetResolver
      * @param configuration
      *     The configuration, not null
      */
+    @Override
     public void init(Properties configuration) {
         boolean prefixWithPackageName = getBoolean(PROPKEY_PREFIX_WITH_PACKAGE_NAME, configuration);
         String pathPrefix = getString(PROPKEY_DATA_SET_PATH_PREFIX, null, configuration);
@@ -85,6 +86,7 @@ public class DefaultDataSetResolver
      *     The name of the data set, not null
      * @return The data set file, not null
      */
+    @Override
     public File resolve(Class<?> testClass, String dataSetName) {
         return new File(fileResolver.resolveFileName(dataSetName, testClass));
     }

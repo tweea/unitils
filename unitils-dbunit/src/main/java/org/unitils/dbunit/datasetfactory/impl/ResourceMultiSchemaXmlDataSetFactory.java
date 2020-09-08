@@ -9,11 +9,13 @@ import java.util.Arrays;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.unitils.core.UnitilsException;
+import org.unitils.dbunit.annotation.DataSet;
+import org.unitils.dbunit.annotation.ExpectedDataSet;
 import org.unitils.dbunit.util.MultiSchemaDataSet;
 import org.unitils.dbunit.util.MultiSchemaXmlDataSetReaderExtend;
 
 /**
- * ResourceMultiSchemaXmlDataSetFactory - A factory to create datasets for {@link ResourceDataSet} and {@link ExpectedResourceDataSet} .
+ * ResourceMultiSchemaXmlDataSetFactory - A factory to create datasets for {@link DataSet} and {@link ExpectedDataSet} .
  * 
  * @author wiw
  * @since 1.2.8
@@ -26,7 +28,6 @@ public class ResourceMultiSchemaXmlDataSetFactory
     /**
      * Creates a {@link MultiSchemaDataSet}
      * 
-     * @param inputStreams
      * @return {@link MultiSchemaDataSet}
      */
     public MultiSchemaDataSet createDataSet(InputStream... inputStreams) {

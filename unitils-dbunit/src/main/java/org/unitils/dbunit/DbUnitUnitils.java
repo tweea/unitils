@@ -13,7 +13,6 @@
 package org.unitils.dbunit;
 
 import java.io.File;
-import java.io.IOException;
 import java.lang.annotation.Annotation;
 
 import org.unitils.core.TestContext;
@@ -74,8 +73,7 @@ public class DbUnitUnitils {
         getDbUnitModule().insertDataSet(dataSetFile, dataSetFactoryClass, dataSetLoadStrategyClass);
     }
 
-    public static void assertExpectedDataSet(File... datasetFile)
-        throws IOException {
+    public static void assertExpectedDataSet(File... datasetFile) {
         DbUnitModule dbUnitModule = getDbUnitModule();
         try {
             MultiSchemaDataSet dataSet = dbUnitModule.getDefaultDataSetFactory().createDataSet(datasetFile);

@@ -26,8 +26,9 @@ import org.dbunit.dataset.ITableIterator;
  */
 public class DbUnitDataSet
     extends AbstractDataSet {
-    protected Map<String, DbUnitTable> tablesPerName = new LinkedHashMap<String, DbUnitTable>(5);
+    protected Map<String, DbUnitTable> tablesPerName = new LinkedHashMap<>(5);
 
+    @Override
     public ITable getTable(String tableName) {
         return getDbUnitTable(tableName);
     }

@@ -177,7 +177,7 @@ public abstract class ProxyInvocationsReport {
      * @return The values and names in an identity map, empty if tested object is null
      */
     protected Map<Object, String> getFieldValuesAndNames(Object testedObject) {
-        Map<Object, String> result = new IdentityHashMap<Object, String>();
+        Map<Object, String> result = new IdentityHashMap<>();
         if (testedObject == null) {
             return result;
         }

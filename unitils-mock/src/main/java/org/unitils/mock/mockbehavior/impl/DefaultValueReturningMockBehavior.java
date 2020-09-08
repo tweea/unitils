@@ -53,6 +53,7 @@ public class DefaultValueReturningMockBehavior
      * @param proxyInvocation
      *     The proxy method invocation, not null
      */
+    @Override
     public void assertCanExecute(ProxyInvocation proxyInvocation)
         throws UnitilsException {
         Class<?> returnType = proxyInvocation.getMethod().getReturnType();
@@ -68,7 +69,7 @@ public class DefaultValueReturningMockBehavior
      *     The proxy method invocation, not null
      * @return The default value
      */
-    @SuppressWarnings("unchecked")
+    @Override
     public Object execute(ProxyInvocation proxyInvocation) {
         Class<?> returnType = proxyInvocation.getMethod().getReturnType();
         if (returnType == Void.TYPE) {

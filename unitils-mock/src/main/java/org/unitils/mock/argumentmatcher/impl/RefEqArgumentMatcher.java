@@ -60,6 +60,7 @@ public class RefEqArgumentMatcher
      *     Copy of the argument, taken at the time that the invocation was performed, not null
      * @return The match result, not null
      */
+    @Override
     public MatchResult matches(Object argument, Object argumentAtInvocationTime) {
         ReflectionComparator reflectionComparator = createRefectionComparator();
         if (reflectionComparator.isEqual(value, argumentAtInvocationTime)) {

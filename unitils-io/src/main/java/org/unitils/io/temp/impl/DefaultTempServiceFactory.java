@@ -31,6 +31,7 @@ public class DefaultTempServiceFactory
     implements TempServiceFactory {
     public static final String ROOT_TEMP_DIR = "IOModule.temp.rootTempDir";
 
+    @Override
     public TempService createTempService(Properties configuration) {
         File rootTempDir = getRootTempDir(configuration);
         return new DefaultTempService(rootTempDir);

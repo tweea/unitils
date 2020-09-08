@@ -40,9 +40,9 @@ public class Scenario {
         UNVERIFIED, VERIFIED, VERIFIED_IN_ORDER
     }
 
-    protected List<ObservedInvocation> observedInvocations = new ArrayList<ObservedInvocation>();
+    protected List<ObservedInvocation> observedInvocations = new ArrayList<>();
 
-    protected List<VerificationStatus> invocationVerificationStatuses = new ArrayList<VerificationStatus>();
+    protected List<VerificationStatus> invocationVerificationStatuses = new ArrayList<>();
 
     protected Object testObject;
 
@@ -73,7 +73,7 @@ public class Scenario {
     }
 
     public void assertNoMoreInvocations(StackTraceElement[] assertedAt) {
-        List<ObservedInvocation> unexpectedInvocations = new ArrayList<ObservedInvocation>();
+        List<ObservedInvocation> unexpectedInvocations = new ArrayList<>();
         for (int i = 0; i < observedInvocations.size(); i++) {
             ObservedInvocation observedInvocation = observedInvocations.get(i);
             VerificationStatus invocationVerificationStatus = invocationVerificationStatuses.get(i);

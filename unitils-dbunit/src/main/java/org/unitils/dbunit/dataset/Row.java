@@ -28,10 +28,10 @@ import org.unitils.dbunit.dataset.comparison.RowDifference;
 public class Row {
 
     /* The primary key columns, empty if none defined */
-    private List<Column> primaryKeyColumns = new ArrayList<Column>();
+    private List<Column> primaryKeyColumns = new ArrayList<>();
 
     /* The columns of the row */
-    private List<Column> columns = new ArrayList<Column>();
+    private List<Column> columns = new ArrayList<>();
 
     /**
      * Gets the column for the given name. The name is case insensitive.

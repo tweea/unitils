@@ -42,6 +42,7 @@ public abstract class AssertVerifyingMatchingInvocationHandler
         this.mockFactory = mockFactory;
     }
 
+    @Override
     public Object handleInvocation(ProxyInvocation proxyInvocation, List<ArgumentMatcher> argumentMatchers)
         throws Throwable {
         BehaviorDefiningInvocation behaviorDefiningInvocation = new BehaviorDefiningInvocation(proxyInvocation, null, argumentMatchers);

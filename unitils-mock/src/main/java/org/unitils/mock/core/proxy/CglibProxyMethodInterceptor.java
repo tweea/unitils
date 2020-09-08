@@ -75,6 +75,7 @@ public class CglibProxyMethodInterceptor<T>
      *     The cglib method proxy, not null
      * @return The value to return for the method call, ignored for void methods
      */
+    @Override
     public Object intercept(Object proxy, Method method, Object[] arguments, MethodProxy methodProxy)
         throws Throwable {
         if (isFinalizeMethod(method)) {

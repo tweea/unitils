@@ -30,7 +30,7 @@ import org.dbunit.dataset.IDataSet;
 public class MultiSchemaDataSet {
 
     /* Maps schemanames on dbunit datasets */
-    public Map<String, IDataSet> schemaDataSetMap = new HashMap<String, IDataSet>();
+    public Map<String, IDataSet> schemaDataSetMap = new HashMap<>();
 
     /**
      * Returns the dbunit <code>IDataSet</code> for the given schema name, if any

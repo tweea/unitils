@@ -40,6 +40,7 @@ public class DefaultFileResolvingStrategy
      *     The test class, not null
      * @return The file, not null
      */
+    @Override
     public URI resolveDefaultFileName(String extension, Class<?> testClass) {
         return fileResolver.resolveDefaultFileName(extension, testClass);
     }
@@ -54,6 +55,7 @@ public class DefaultFileResolvingStrategy
      *     The test class, not null
      * @return The file, not null
      */
+    @Override
     public URI resolveFileName(String fileName, Class<?> testClass) {
         return fileResolver.resolveFileName(fileName, testClass);
     }

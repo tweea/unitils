@@ -96,10 +96,6 @@ public class ProxyFactory {
      *     The handler that will handle the method invocations of the proxy, not null.
      * @return The proxy object, not null
      */
-
-    @SuppressWarnings({
-        "unchecked"
-    })
     protected static <T> T createProxy(String mockName, boolean initialize, ProxyInvocationHandler invocationHandler, Class<T> proxiedClass,
         Class<?>... implementedInterfaces) {
         Class<T> enhancedClass = createEnhancedClass(proxiedClass, implementedInterfaces);
@@ -127,7 +123,6 @@ public class ProxyFactory {
      *     The class for which an instance is requested
      * @return An instance of the given class
      */
-    @SuppressWarnings("unchecked")
     public static <T> T createInitializedOrUninitializedInstanceOfType(Class<T> clazz) {
         try {
             return createInstanceOfType(clazz, true);
@@ -149,17 +144,15 @@ public class ProxyFactory {
      *     The class for which an instance is requested
      * @return An instance of the given class
      */
-    @SuppressWarnings("unchecked")
     public static <T> T createUninitializedInstanceOfType(Class<T> clazz) {
         Objenesis objenesis = new ObjenesisStd();
-        return (T) objenesis.newInstance(clazz);
+        return objenesis.newInstance(clazz);
     }
 
-    @SuppressWarnings("unchecked")
     protected static <T> Class<T> createEnhancedClass(Class<T> proxiedClass, Class<?>... implementedInterfaces) {
         Enhancer enhancer = new Enhancer();
 
-        Set<Class<?>> interfaces = new HashSet<Class<?>>();
+        Set<Class<?>> interfaces = new HashSet<>();
         if (proxiedClass.isInterface()) {
             enhancer.setSuperclass(Object.class);
             interfaces.add(proxiedClass);

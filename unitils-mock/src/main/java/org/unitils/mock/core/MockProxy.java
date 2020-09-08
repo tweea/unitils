@@ -48,7 +48,6 @@ public class MockProxy<T> {
         this.proxy = createProxy(mockName, new InvocationHandler(), mockedType, Cloneable.class);
     }
 
-    @SuppressWarnings("unchecked")
     public T getProxy() {
         return proxy;
     }
@@ -131,6 +130,7 @@ public class MockProxy<T> {
 
     protected class InvocationHandler
         implements ProxyInvocationHandler {
+        @Override
         public Object handleInvocation(ProxyInvocation invocation)
             throws Throwable {
             return handleMockInvocation(invocation);

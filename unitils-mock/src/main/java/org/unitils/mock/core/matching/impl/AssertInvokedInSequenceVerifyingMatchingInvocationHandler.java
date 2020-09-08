@@ -27,10 +27,12 @@ public class AssertInvokedInSequenceVerifyingMatchingInvocationHandler
         super(scenario, mockFactory);
     }
 
+    @Override
     protected void performAssertion(Scenario scenario, BehaviorDefiningInvocation behaviorDefiningInvocation) {
         scenario.assertInvokedInOrder(behaviorDefiningInvocation);
     }
 
+    @Override
     protected Object performChainedAssertion(Mock<?> mock) {
         return mock.assertInvokedInSequence();
     }

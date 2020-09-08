@@ -33,10 +33,10 @@ public class RowDifference {
     private Row actualRow;
 
     /* The columns that were not found in the actual row, empty if none found */
-    private List<Column> missingColumns = new ArrayList<Column>();
+    private List<Column> missingColumns = new ArrayList<>();
 
     /* The differences between the rows, empty if there is a match */
-    private List<ColumnDifference> columnDifferences = new ArrayList<ColumnDifference>();
+    private List<ColumnDifference> columnDifferences = new ArrayList<>();
 
     /**
      * Create a row difference.

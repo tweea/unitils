@@ -31,6 +31,7 @@ import org.unitils.io.conversion.ConversionStrategy;
  */
 public class PropertiesConversionStrategy
     implements ConversionStrategy<Properties> {
+    @Override
     public Properties convertContent(InputStream inputStream, String encoding)
         throws IOException {
         Properties result = new Properties();
@@ -38,10 +39,12 @@ public class PropertiesConversionStrategy
         return result;
     }
 
+    @Override
     public String getDefaultFileExtension() {
         return "properties";
     }
 
+    @Override
     public Class<Properties> getTargetType() {
         return Properties.class;
     }

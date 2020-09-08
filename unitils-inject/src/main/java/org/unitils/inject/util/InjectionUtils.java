@@ -180,7 +180,7 @@ public class InjectionUtils {
             } catch (IllegalArgumentException e) {
                 throw new UnitilsException("Method " + annotatedMethod.getName() + " annotated with " + annotation.getName()
                     + " must have exactly one argument with a type equal to or a superclass / implemented interface of "
-                    + objectToInject.getClass().getSimpleName());
+                    + objectToInject.getClass().getSimpleName(), e);
             } catch (IllegalAccessException e) {
                 throw new UnitilsException(
                     "Unable to inject value into following method annotated with " + annotation.getName() + ": " + annotatedMethod.getName(), e);

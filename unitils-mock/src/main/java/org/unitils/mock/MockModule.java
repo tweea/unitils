@@ -50,9 +50,11 @@ import static org.unitils.util.ReflectionUtils.setFieldValue;
  */
 public class MockModule
     implements Module {
+    @Override
     public void init(Properties configuration) {
     }
 
+    @Override
     public void afterInit() {
     }
 
@@ -83,11 +85,11 @@ public class MockModule
     }
 
     protected <T> Mock<T> createMock(Object testObject, String name, Class<?> type) {
-        return new MockObject<T>(name, type, testObject);
+        return new MockObject<>(name, type, testObject);
     }
 
     protected <T> Mock<T> createPartialMock(Object testObject, String name, Class<?> type) {
-        return new PartialMockObject<T>(name, type, testObject);
+        return new PartialMockObject<>(name, type, testObject);
     }
 
     protected Class<?> getMockedClass(Field field) {
@@ -154,6 +156,7 @@ public class MockModule
      *
      * @return the listener
      */
+    @Override
     public TestListener getTestListener() {
         return new MockTestListener();
     }

@@ -180,7 +180,7 @@ public class LenientMocksControl
             }
 
             for (Object argument : arguments) {
-                LastControl.reportMatcher(new ReflectionArgumentMatcher<Object>(argument, modes));
+                LastControl.reportMatcher(new ReflectionArgumentMatcher<>(argument, modes));
             }
         }
 

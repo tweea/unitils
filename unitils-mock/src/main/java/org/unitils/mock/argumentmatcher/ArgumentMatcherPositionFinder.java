@@ -87,9 +87,6 @@ public class ArgumentMatcherPositionFinder {
      *     The index of the matcher on that line, 1 for the first, 2 for the second etc
      * @return The argument indexes, empty if there are no matchers
      */
-    @SuppressWarnings({
-        "unchecked"
-    })
     public static List<Integer> getArgumentMatcherIndexes(Class<?> clazz, String methodName, Method invokedMethod, int fromLineNr, int toLineNr, int index) {
         // read the bytecode of the test class
         ClassNode restClassNode = readClass(clazz);
@@ -211,6 +208,7 @@ public class ArgumentMatcherPositionFinder {
          * @param nextInstructionIndex
          *     The next index
          */
+        @Override
         protected void newControlFlowEdge(int instructionIndex, int nextInstructionIndex) {
             AbstractInsnNode insnNode = methodNode.instructions.get(instructionIndex);
             if (insnNode instanceof LineNumberNode) {
@@ -273,7 +271,7 @@ public class ArgumentMatcherPositionFinder {
 
         protected Method currentMatcherMethod;
 
-        protected Set<MethodInsnNode> handledMethodInsnNodes = new HashSet<MethodInsnNode>();
+        protected Set<MethodInsnNode> handledMethodInsnNodes = new HashSet<>();
 
         /* The resulting indexes or null if method was not found */
         protected List<Integer> resultArgumentMatcherIndexes;
@@ -364,9 +362,6 @@ public class ArgumentMatcherPositionFinder {
          * @return The merged values or an ArugmentMatcherValue if an argument matcher method was found
          */
         @Override
-        @SuppressWarnings({
-            "unchecked"
-        })
         public Value naryOperation(AbstractInsnNode instructionNode, List values)
             throws AnalyzerException {
             Value resultValue = super.naryOperation(instructionNode, values);
@@ -427,7 +422,7 @@ public class ArgumentMatcherPositionFinder {
         }
 
         protected List<Integer> getArgumentMatcherIndexes(MethodInsnNode methodInsnNode, List values) {
-            List<Integer> result = new ArrayList<Integer>();
+            List<Integer> result = new ArrayList<>();
 
             // for non-static invocations the first operand is always 'this'
             boolean isStatic = methodInsnNode.getOpcode() == INVOKESTATIC;

@@ -31,7 +31,7 @@ public class Schema {
     private String name;
 
     /* The tables in the schema, not null */
-    private List<Table> tables = new ArrayList<Table>();
+    private List<Table> tables = new ArrayList<>();
 
     /**
      * Creates a data set schema.
@@ -61,7 +61,7 @@ public class Schema {
      * @return The names of the tables of the schema, not null
      */
     public List<String> getTableNames() {
-        List<String> tableNames = new ArrayList<String>();
+        List<String> tableNames = new ArrayList<>();
         for (Table table : tables) {
             tableNames.add(table.getName());
         }

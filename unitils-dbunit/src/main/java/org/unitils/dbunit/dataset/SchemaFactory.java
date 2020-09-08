@@ -153,7 +153,7 @@ public class SchemaFactory {
      */
     protected List<String> getPrimaryKeyColumnNames(ITable dbUnitTable)
         throws DataSetException {
-        List<String> result = new ArrayList<String>();
+        List<String> result = new ArrayList<>();
         for (org.dbunit.dataset.Column column : dbUnitTable.getTableMetaData().getPrimaryKeys()) {
             result.add(column.getColumnName());
         }

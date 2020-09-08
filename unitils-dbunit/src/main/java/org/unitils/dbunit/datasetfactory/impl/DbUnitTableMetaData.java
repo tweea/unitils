@@ -30,18 +30,20 @@ public class DbUnitTableMetaData
     extends AbstractTableMetaData {
     protected String tableName;
 
-    protected Set<Column> columns = new LinkedHashSet<Column>(10);
+    protected Set<Column> columns = new LinkedHashSet<>(10);
 
-    protected List<String> columnNames = new ArrayList<String>(10);
+    protected List<String> columnNames = new ArrayList<>(10);
 
     public DbUnitTableMetaData(String tableName) {
         this.tableName = tableName;
     }
 
+    @Override
     public String getTableName() {
         return tableName;
     }
 
+    @Override
     public Column[] getColumns()
         throws DataSetException {
         return columns.toArray(new Column[columns.size()]);
@@ -60,9 +62,6 @@ public class DbUnitTableMetaData
         implements Predicate {
         private String columnName;
 
-        /**
-         * @param columnName
-         */
         protected FindColumnPredicate(String columnName) {
             super();
             this.columnName = columnName;
@@ -77,6 +76,7 @@ public class DbUnitTableMetaData
         }
     }
 
+    @Override
     public Column[] getPrimaryKeys()
         throws DataSetException {
         return new Column[0];

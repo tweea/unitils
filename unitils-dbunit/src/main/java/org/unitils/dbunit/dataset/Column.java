@@ -102,8 +102,7 @@ public class Column {
             return null;
         } else if (castedValue == null && actualColumn.getValue() != null) {
             return new ColumnDifference(this, actualColumn);
-        }
-        if (!castedValue.equals(actualColumn.getValue())) {
+        } else if (castedValue != null && !castedValue.equals(actualColumn.getValue())) {
             return new ColumnDifference(this, actualColumn);
         }
         return null;

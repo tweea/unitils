@@ -20,6 +20,8 @@ import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.unitils.core.util.ObjectToInjectHolder;
 import org.unitils.mock.Mock;
 import org.unitils.mock.annotation.MatchStatement;
@@ -48,6 +50,7 @@ import static org.unitils.util.ReflectionUtils.getGenericType;
  */
 public class MockObject<T>
     implements Mock<T>, MockFactory, ObjectToInjectHolder<T> {
+    private static final Log LOG = LogFactory.getLog(MockObject.class);
 
     /* The name of the mock (e.g. the name of the field) */
     protected String name;
@@ -67,9 +70,9 @@ public class MockObject<T>
     protected Map<String, Mock<?>> chainedMocksPerName;
 
     /* The scenario that will record all observed invocations */
-    protected static ThreadLocal<Scenario> scenarioThreadLocal = new ThreadLocal<Scenario>();
+    protected static ThreadLocal<Scenario> scenarioThreadLocal = new ThreadLocal<>();
 
-    protected static ThreadLocal<MatchingInvocationBuilder> matchingInvocationBuilderThreadLocal = new ThreadLocal<MatchingInvocationBuilder>();
+    protected static ThreadLocal<MatchingInvocationBuilder> matchingInvocationBuilderThreadLocal = new ThreadLocal<>();
 
     public static Scenario getCurrentScenario() {
         return scenarioThreadLocal.get();
@@ -106,9 +109,6 @@ public class MockObject<T>
      * @param testObject
      *     The test object, not null
      */
-    @SuppressWarnings({
-        "unchecked"
-    })
     public MockObject(String name, Class<?> mockedType, Object testObject) {
         if (isBlank(name)) {
             this.name = uncapitalize(mockedType.getSimpleName()) + "Mock";
@@ -118,7 +118,7 @@ public class MockObject<T>
         this.mockedType = (Class<T>) mockedType;
         this.oneTimeMatchingBehaviorDefiningInvocations = createOneTimeMatchingBehaviorDefiningInvocations();
         this.alwaysMatchingBehaviorDefiningInvocations = createAlwaysMatchingBehaviorDefiningInvocations();
-        this.chainedMocksPerName = new HashMap<String, Mock<?>>();
+        this.chainedMocksPerName = new HashMap<>();
 
         Scenario scenario = getScenario(testObject);
         if (scenario.getTestObject() != testObject) {
@@ -140,6 +140,7 @@ public class MockObject<T>
      *
      * @return The mock proxy instance, not null
      */
+    @Override
     public T getObjectToInject() {
         return getMock();
     }
@@ -149,6 +150,7 @@ public class MockObject<T>
      *     The field that declared this mock object, null if there is no field (or not known)
      * @return The type of the object to inject (i.e. the mocked type), not null.
      */
+    @Override
     public Type getObjectToInjectType(Field field) {
         if (field == null) {
             return mockedType;
@@ -167,6 +169,7 @@ public class MockObject<T>
      *
      * @return The proxy instance, not null
      */
+    @Override
     public T getMock() {
         return mockProxy.getProxy();
     }
@@ -193,6 +196,7 @@ public class MockObject<T>
      *     The value to return
      * @return The proxy instance that will record the method call, not null
      */
+    @Override
     @MatchStatement
     public T returns(Object returnValue) {
         MatchingInvocationHandler matchingInvocationHandler = createAlwaysMatchingBehaviorDefiningMatchingInvocationHandler(
@@ -215,6 +219,7 @@ public class MockObject<T>
      *     The exception to raise, not null
      * @return The proxy instance that will record the method call, not null
      */
+    @Override
     @MatchStatement
     public T raises(Throwable exception) {
         MatchingInvocationHandler matchingInvocationHandler = createAlwaysMatchingBehaviorDefiningMatchingInvocationHandler(
@@ -237,6 +242,7 @@ public class MockObject<T>
      *     The type of exception to raise, not null
      * @return The proxy instance that will record the method call, not null
      */
+    @Override
     @MatchStatement
     public T raises(Class<? extends Throwable> exceptionClass) {
         Throwable exception = createInitializedOrUninitializedInstanceOfType(exceptionClass);
@@ -261,6 +267,7 @@ public class MockObject<T>
      *     The behavior to perform, not null
      * @return The proxy instance that will record the method call, not null
      */
+    @Override
     @MatchStatement
     public T performs(MockBehavior mockBehavior) {
         MatchingInvocationHandler matchingInvocationHandler = createAlwaysMatchingBehaviorDefiningMatchingInvocationHandler(mockBehavior);
@@ -283,6 +290,7 @@ public class MockObject<T>
      *     The value to return
      * @return The proxy instance that will record the method call, not null
      */
+    @Override
     @MatchStatement
     public T onceReturns(Object returnValue) {
         MatchingInvocationHandler matchingInvocationHandler = createOneTimeMatchingBehaviorDefiningMatchingInvocationHandler(
@@ -306,6 +314,7 @@ public class MockObject<T>
      *     The exception to raise, not null
      * @return The proxy instance that will record the method call, not null
      */
+    @Override
     @MatchStatement
     public T onceRaises(Throwable exception) {
         MatchingInvocationHandler matchingInvocationHandler = createOneTimeMatchingBehaviorDefiningMatchingInvocationHandler(
@@ -329,6 +338,7 @@ public class MockObject<T>
      *     The type of exception to raise, not null
      * @return The proxy instance that will record the method call, not null
      */
+    @Override
     @MatchStatement
     public T onceRaises(Class<? extends Throwable> exceptionClass) {
         Throwable exception = createInitializedOrUninitializedInstanceOfType(exceptionClass);
@@ -353,6 +363,7 @@ public class MockObject<T>
      *     The behavior to perform, not null
      * @return The proxy instance that will record the method call, not null
      */
+    @Override
     @MatchStatement
     public T oncePerforms(MockBehavior mockBehavior) {
         MatchingInvocationHandler matchingInvocationHandler = createOneTimeMatchingBehaviorDefiningMatchingInvocationHandler(mockBehavior);
@@ -365,6 +376,7 @@ public class MockObject<T>
      *
      * @return The proxy instance that will record the method call, not null
      */
+    @Override
     @MatchStatement
     public T assertInvoked() {
         MatchingInvocationHandler matchingInvocationHandler = createAssertInvokedVerifyingMatchingInvocationHandler();
@@ -380,6 +392,7 @@ public class MockObject<T>
      *
      * @return The proxy instance that will record the method call, not null
      */
+    @Override
     @MatchStatement
     public T assertInvokedInSequence() {
         MatchingInvocationHandler matchingInvocationHandler = createAssertInvokedInSequenceVerifyingMatchingInvocationHandler();
@@ -392,6 +405,7 @@ public class MockObject<T>
      *
      * @return The proxy instance that will record the method call, not null
      */
+    @Override
     @MatchStatement
     public T assertNotInvoked() {
         MatchingInvocationHandler matchingInvocationHandler = createAssertNotInvokedVerifyingMatchingInvocationHandler();
@@ -402,6 +416,7 @@ public class MockObject<T>
      * Removes all behavior defined for this mock.
      * This will only remove the behavior, not the observed invocations for this mock.
      */
+    @Override
     @MatchStatement
     public void resetBehavior() {
         oneTimeMatchingBehaviorDefiningInvocations.clear();
@@ -411,9 +426,7 @@ public class MockObject<T>
         ArgumentMatcherRepository.getInstance().reset();
     }
 
-    @SuppressWarnings({
-        "unchecked"
-    })
+    @Override
     public <M> Mock<M> createChainedMock(String name, Class<M> mockedType) {
         Mock<?> chainedMock = chainedMocksPerName.get(name);
         if (chainedMock != null) {
@@ -427,6 +440,7 @@ public class MockObject<T>
             chainedMocksPerName.put(name, chainedMock);
             return (Mock<M>) chainedMock;
         } catch (Throwable t) {
+            LOG.trace("", t);
             return null;
         }
     }
@@ -458,7 +472,7 @@ public class MockObject<T>
     }
 
     protected MockProxy<T> createMockProxy() {
-        return new MockProxy<T>(name, mockedType, oneTimeMatchingBehaviorDefiningInvocations, alwaysMatchingBehaviorDefiningInvocations, getCurrentScenario(),
+        return new MockProxy<>(name, mockedType, oneTimeMatchingBehaviorDefiningInvocations, alwaysMatchingBehaviorDefiningInvocations, getCurrentScenario(),
             getMatchingInvocationBuilder());
     }
 

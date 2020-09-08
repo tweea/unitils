@@ -42,6 +42,7 @@ public class MultiSchemaXmlDataSetFactory
      * @param defaultSchemaName
      *     The name of the default schema of the test database, not null
      */
+    @Override
     public void init(Properties configuration, String defaultSchemaName) {
         this.defaultSchemaName = defaultSchemaName;
     }
@@ -53,6 +54,7 @@ public class MultiSchemaXmlDataSetFactory
      *     The dataset files, not null
      * @return A {@link MultiSchemaDataSet} containing the datasets per schema, not null
      */
+    @Override
     public MultiSchemaDataSet createDataSet(File... dataSetFiles) {
         try {
             MultiSchemaXmlDataSetReader multiSchemaXmlDataSetReader = new MultiSchemaXmlDataSetReader(defaultSchemaName);
@@ -65,6 +67,7 @@ public class MultiSchemaXmlDataSetFactory
     /**
      * @return The extension that files which can be interpreted by this factory must have
      */
+    @Override
     public String getDataSetFileExtension() {
         return "xml";
     }

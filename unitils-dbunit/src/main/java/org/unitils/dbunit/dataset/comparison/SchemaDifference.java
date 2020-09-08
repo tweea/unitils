@@ -33,10 +33,10 @@ public class SchemaDifference {
     private Schema actualSchema;
 
     /* The tables that were not found in the actual schema, empty if none found */
-    private List<Table> missingTables = new ArrayList<Table>();
+    private List<Table> missingTables = new ArrayList<>();
 
     /* The differences between the tables of the schemas, empty if none found */
-    private List<TableDifference> tableDifferences = new ArrayList<TableDifference>();
+    private List<TableDifference> tableDifferences = new ArrayList<>();
 
     /**
      * Create a schema difference.

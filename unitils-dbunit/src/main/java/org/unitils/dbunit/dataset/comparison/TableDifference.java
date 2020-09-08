@@ -36,10 +36,10 @@ public class TableDifference {
     private Table actualTable;
 
     /* The rows for which no other row was found in the actual table, empty if none found */
-    private List<Row> missingRows = new ArrayList<Row>();
+    private List<Row> missingRows = new ArrayList<>();
 
     /* The best differences of the comparisons between the rows of the tables */
-    private Map<Row, RowDifference> bestRowDifferences = new HashMap<Row, RowDifference>();
+    private Map<Row, RowDifference> bestRowDifferences = new HashMap<>();
 
     /**
      * Creates a table difference.
@@ -89,7 +89,7 @@ public class TableDifference {
      * @return The best results in the comparison between the rows, not null
      */
     public List<RowDifference> getBestRowDifferences() {
-        return new ArrayList<RowDifference>(bestRowDifferences.values());
+        return new ArrayList<>(bestRowDifferences.values());
     }
 
     /**

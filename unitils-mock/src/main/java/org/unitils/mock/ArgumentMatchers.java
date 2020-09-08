@@ -125,7 +125,7 @@ public class ArgumentMatchers {
         return 0;
     }
 
-    protected static <T> void registerArgumentMatcher(org.unitils.mock.argumentmatcher.ArgumentMatcher argumentMatcher) {
+    protected static void registerArgumentMatcher(org.unitils.mock.argumentmatcher.ArgumentMatcher argumentMatcher) {
         ArgumentMatcherRepository argumentMatcherRepository = ArgumentMatcherRepository.getInstance();
         argumentMatcherRepository.registerArgumentMatcher(argumentMatcher, getInvocationLineNr(ArgumentMatchers.class));
     }

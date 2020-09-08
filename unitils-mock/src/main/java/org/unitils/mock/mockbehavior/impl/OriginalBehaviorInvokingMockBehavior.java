@@ -39,6 +39,7 @@ public class OriginalBehaviorInvokingMockBehavior
      * @param proxyInvocation
      *     The proxy method invocation, not null
      */
+    @Override
     public void assertCanExecute(ProxyInvocation proxyInvocation)
         throws UnitilsException {
         if (isAbstract(proxyInvocation.getMethod().getModifiers())) {
@@ -53,6 +54,7 @@ public class OriginalBehaviorInvokingMockBehavior
      *     The proxy method invocation, not null
      * @return The result value
      */
+    @Override
     public Object execute(ProxyInvocation proxyInvocation)
         throws Throwable {
         return proxyInvocation.invokeOriginalBehavior();

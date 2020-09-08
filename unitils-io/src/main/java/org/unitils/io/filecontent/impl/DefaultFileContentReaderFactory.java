@@ -41,6 +41,7 @@ public class DefaultFileContentReaderFactory
 
     public static final String DEFAULT_FILE_ENCODING = "IOModule.encoding.default";
 
+    @Override
     public FileContentReader createFileContentReader(Properties configuration) {
         ReadingStrategy readingStrategy = createReadingStrategy(configuration);
         List<ConversionStrategy<?>> conversionStrategies = createConversionStrategies(configuration);
@@ -55,7 +56,7 @@ public class DefaultFileContentReaderFactory
     }
 
     protected List<ConversionStrategy<?>> createConversionStrategies(Properties configuration) {
-        List<ConversionStrategy<?>> conversionStrategies = new LinkedList<ConversionStrategy<?>>();
+        List<ConversionStrategy<?>> conversionStrategies = new LinkedList<>();
         conversionStrategies.addAll(createConversionStrategies(configuration, CUSTOM_CONVERSION_STRATEGY_KEY));
         conversionStrategies.addAll(createConversionStrategies(configuration, DEFAULT_CONVERSION_STRATEGY_KEY));
         return conversionStrategies;
@@ -63,7 +64,7 @@ public class DefaultFileContentReaderFactory
 
     protected List<ConversionStrategy<?>> createConversionStrategies(Properties configuration, String propertyName) {
         List<String> conversionStrategyClassNames = getStringList(propertyName, configuration);
-        List<ConversionStrategy<?>> conversionStrategies = new ArrayList<ConversionStrategy<?>>(conversionStrategyClassNames.size());
+        List<ConversionStrategy<?>> conversionStrategies = new ArrayList<>(conversionStrategyClassNames.size());
 
         for (String conversionStrategyClassName : conversionStrategyClassNames) {
             ConversionStrategy<?> conversionStrategy = createInstanceOfType(conversionStrategyClassName, false);

@@ -30,6 +30,7 @@ public class NoopMockBehavior
      *     The proxy method invocation, not null
      * @return null
      */
+    @Override
     public Object execute(ProxyInvocation proxyInvocation) {
         return null;
     }

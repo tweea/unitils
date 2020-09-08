@@ -120,6 +120,7 @@ public class PartialMockObject<T>
      *
      * @return The proxy instance that will record the method call, not null
      */
+    @Override
     @MatchStatement
     public T stub() {
         MatchingInvocationHandler matchingInvocationHandler = createAlwaysMatchingBehaviorDefiningMatchingInvocationHandler(new StubMockBehavior());
@@ -128,7 +129,7 @@ public class PartialMockObject<T>
 
     @Override
     protected MockProxy<T> createMockProxy() {
-        return new PartialMockProxy<T>(name, mockedType, oneTimeMatchingBehaviorDefiningInvocations, alwaysMatchingBehaviorDefiningInvocations,
+        return new PartialMockProxy<>(name, mockedType, oneTimeMatchingBehaviorDefiningInvocations, alwaysMatchingBehaviorDefiningInvocations,
             getCurrentScenario(), getMatchingInvocationBuilder());
     }
 }

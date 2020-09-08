@@ -27,12 +27,13 @@ public class DbUnitTable
     extends AbstractTable {
     protected DbUnitTableMetaData tableMetaData;
 
-    protected List<List<?>> rows = new ArrayList<List<?>>(5);
+    protected List<List<?>> rows = new ArrayList<>(5);
 
     public DbUnitTable(String tableName) {
         this.tableMetaData = new DbUnitTableMetaData(tableName);
     }
 
+    @Override
     public ITableMetaData getTableMetaData() {
         return tableMetaData;
     }
@@ -49,10 +50,12 @@ public class DbUnitTable
         rows.add(row);
     }
 
+    @Override
     public int getRowCount() {
         return rows.size();
     }
 
+    @Override
     public Object getValue(int rowIndex, String columnName)
         throws DataSetException {
         assertValidRowIndex(rowIndex);
