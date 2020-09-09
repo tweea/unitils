@@ -23,11 +23,9 @@ License. ~ */ -->
 
     <dependencies>
 
-        <!-- There is a mismatch in the version of cglib that hibernate and unitils-mock 
-        uses. -->
+        <!-- There is a mismatch in the version of cglib that hibernate and unitils-mock uses. -->
         <!-- Make sure we use the same version as the unitils-mock module -->
-        <!-- In the final artifacts this mismatch is resolved by bundling and repackaging 
-        cglib into unitils-mock -->
+        <!-- In the final artifacts this mismatch is resolved by bundling and repackaging cglib into unitils-mock -->
         <dependency>
             <groupId>asm</groupId>
             <artifactId>asm</artifactId>
@@ -127,9 +125,9 @@ License. ~ */ -->
             <version>3.6.10.Final</version>
         </dependency>
         <dependency>
-          <groupId>org.hibernate.javax.persistence</groupId>
-          <artifactId>hibernate-jpa-2.0-api</artifactId>
-          <version>1.0.1.Final</version>
+            <groupId>org.hibernate.javax.persistence</groupId>
+            <artifactId>hibernate-jpa-2.0-api</artifactId>
+            <version>1.0.1.Final</version>
         </dependency>
         <dependency>
             <groupId>concurrent</groupId>
@@ -152,17 +150,17 @@ License. ~ */ -->
             <version>1.4</version>
         </dependency>
     </dependencies>
-    
+
     <build>
-      <plugins>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-surefire-plugin</artifactId>
-          <configuration>
-          <excludes>
-          </excludes>
-          </configuration>
-        </plugin>
-      </plugins>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <excludes>
+                    </excludes>
+                </configuration>
+            </plugin>
+        </plugins>
     </build>
 </project>
