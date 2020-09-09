@@ -7,8 +7,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.unitils.dbmaintainer.locator.resourcepickingstrategie.ResourcePickingStrategie;
 
 /**
@@ -20,7 +20,7 @@ import org.unitils.dbmaintainer.locator.resourcepickingstrategie.ResourcePicking
  */
 public class UniqueMostRecentPickingStrategie
     implements ResourcePickingStrategie {
-    private static Log logger = LogFactory.getLog(UniqueMostRecentPickingStrategie.class);
+    private static Logger logger = LoggerFactory.getLogger(UniqueMostRecentPickingStrategie.class);
 
     /**
      * @see org.unitils.dbmaintainer.locator.resourcepickingstrategie.ResourcePickingStrategie#filter(List, String)

@@ -16,8 +16,8 @@ import java.lang.reflect.Method;
 import java.util.List;
 import java.util.Properties;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Core class of the Unitils library, and the main entry point that gives access to the {@link TestContext} and the
@@ -36,7 +36,7 @@ import org.apache.commons.logging.LogFactory;
  * is defined by the added behaviour of all modules.
  */
 public class Unitils {
-    private static final Log LOG = LogFactory.getLog(Unitils.class);
+    private static final Logger LOG = LoggerFactory.getLogger(Unitils.class);
 
     /* The singleton instance */
     private static Unitils unitils;

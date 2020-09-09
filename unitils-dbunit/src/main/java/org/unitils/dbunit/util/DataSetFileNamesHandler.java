@@ -7,8 +7,8 @@ import java.io.InputStream;
 import java.lang.reflect.Method;
 import java.util.Properties;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.unitils.core.Unitils;
 import org.unitils.core.UnitilsException;
 import org.unitils.core.util.ConfigUtils;
@@ -24,7 +24,7 @@ import org.unitils.util.PropertyUtils;
  * @since 3.4.4
  */
 public class DataSetFileNamesHandler {
-    private static final Log LOG = LogFactory.getLog(DataSetFileNamesHandler.class);
+    private static final Logger LOG = LoggerFactory.getLogger(DataSetFileNamesHandler.class);
 
     /**
      * Gets the name of the default testdata file at class level The default name is constructed as follows: 'classname without

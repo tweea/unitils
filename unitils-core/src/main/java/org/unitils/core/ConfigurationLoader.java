@@ -15,8 +15,8 @@ package org.unitils.core;
 import java.util.Properties;
 
 import org.apache.commons.lang.text.StrSubstitutor;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.unitils.core.util.PropertiesReader;
 import org.unitils.util.PropertyUtils;
 
@@ -71,7 +71,7 @@ public class ConfigurationLoader {
     public static final String PROPKEY_LOCAL_CONFIGURATION = "unitils.configuration.localFileName";
 
     /* The logger instance for this class */
-    private static Log logger = LogFactory.getLog(ConfigurationLoader.class);
+    private static Logger logger = LoggerFactory.getLogger(ConfigurationLoader.class);
 
     /**
      * reads properties from configuration file

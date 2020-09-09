@@ -7,10 +7,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.junit.Before;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.unitils.core.config.Configuration;
 import org.unitils.reflectionassert.ReflectionAssert;
 
@@ -23,7 +23,7 @@ import org.unitils.reflectionassert.ReflectionAssert;
  * @since 3.4
  */
 public class DatabaseConfigurationsFactoryMultipleDatabaseTest {
-    private static final Log LOGGER = LogFactory.getLog(DatabaseConfigurationsFactoryMultipleDatabaseTest.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(DatabaseConfigurationsFactoryMultipleDatabaseTest.class);
 
     private DatabaseConfigurationsFactory factory;
 

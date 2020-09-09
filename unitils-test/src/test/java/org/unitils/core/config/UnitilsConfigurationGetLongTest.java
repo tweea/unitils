@@ -14,10 +14,10 @@ package org.unitils.core.config;
 
 import java.util.Properties;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.junit.Before;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.unitils.core.UnitilsException;
 
 import static org.junit.Assert.assertEquals;
@@ -28,7 +28,7 @@ import static org.junit.Assert.fail;
  * @author Filip Neven
  */
 public class UnitilsConfigurationGetLongTest {
-    private static final Log LOG = LogFactory.getLog(UnitilsConfigurationGetLongTest.class);
+    private static final Logger LOG = LoggerFactory.getLogger(UnitilsConfigurationGetLongTest.class);
 
     /* Tested object */
     private UnitilsConfiguration unitilsConfiguration;

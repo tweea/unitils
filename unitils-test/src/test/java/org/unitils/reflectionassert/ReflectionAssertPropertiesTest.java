@@ -12,8 +12,8 @@
  */
 package org.unitils.reflectionassert;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import junit.framework.AssertionFailedError;
 import junit.framework.TestCase;
@@ -30,7 +30,7 @@ import static org.unitils.reflectionassert.ReflectionComparatorMode.IGNORE_DEFAU
  */
 public class ReflectionAssertPropertiesTest
     extends TestCase {
-    private static final Log LOG = LogFactory.getLog(ReflectionAssertPropertiesTest.class);
+    private static final Logger LOG = LoggerFactory.getLogger(ReflectionAssertPropertiesTest.class);
 
     /* Test object */
     private TestObject testObject;

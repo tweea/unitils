@@ -12,8 +12,8 @@
  */
 package org.unitils.reflectionassert.util;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.unitils.core.UnitilsException;
 
 /**
@@ -26,7 +26,7 @@ import org.unitils.core.UnitilsException;
  * @author Filip Neven
  */
 public class HibernateUtil {
-    private static final Log LOG = LogFactory.getLog(HibernateUtil.class);
+    private static final Logger LOG = LoggerFactory.getLogger(HibernateUtil.class);
 
     /**
      * The hibernate proxy type, null if the class is not found in the classpath

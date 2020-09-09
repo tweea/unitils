@@ -20,8 +20,8 @@ import java.util.Set;
 
 import javax.sql.DataSource;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.unitils.core.UnitilsException;
 
 import static org.unitils.thirdparty.org.apache.commons.dbutils.DbUtils.closeQuietly;
@@ -38,7 +38,7 @@ public class DefaultSQLHandler
     implements SQLHandler {
 
     /* The logger instance for this class */
-    private static Log logger = LogFactory.getLog(DefaultSQLHandler.class);
+    private static Logger logger = LoggerFactory.getLogger(DefaultSQLHandler.class);
 
     /* The DataSource that provides access to the database, on which all queries and updates are executed */
     private DataSource dataSource;

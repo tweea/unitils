@@ -6,8 +6,8 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.Arrays;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.unitils.core.UnitilsException;
 import org.unitils.dbunit.annotation.DataSet;
 import org.unitils.dbunit.annotation.ExpectedDataSet;
@@ -23,7 +23,7 @@ import org.unitils.dbunit.util.MultiSchemaXmlDataSetReaderExtend;
  */
 public class ResourceMultiSchemaXmlDataSetFactory
     extends MultiSchemaXmlDataSetFactory {
-    private static final Log LOGGER = LogFactory.getLog(ResourceMultiSchemaXmlDataSetFactory.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ResourceMultiSchemaXmlDataSetFactory.class);
 
     /**
      * Creates a {@link MultiSchemaDataSet}

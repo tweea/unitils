@@ -14,9 +14,9 @@ package org.unitils.core;
 
 import java.util.Properties;
 
-import org.apache.commons.logging.Log;
 import org.junit.Before;
 import org.junit.Test;
+import org.slf4j.Logger;
 import org.unitils.UnitilsJUnit4;
 import org.unitils.core.util.PropertiesReader;
 import org.unitils.inject.annotation.InjectIntoByType;
@@ -48,7 +48,7 @@ public class ConfigurationLoaderPropertyTest
 
     /* Logger used by sut */
     @InjectIntoStaticByType(target = ConfigurationLoader.class)
-    private Mock<Log> usedLogger;
+    private Mock<Logger> usedLogger;
 
     /* Faked default Properties (unitils.properties) */
     private Properties unitilsDefaultProperties;

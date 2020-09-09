@@ -20,8 +20,8 @@ import java.lang.reflect.Type;
 import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.unitils.core.UnitilsException;
 import org.unitils.util.AnnotationUtils;
 import org.unitils.util.ReflectionUtils;
@@ -50,7 +50,7 @@ import static org.unitils.util.ReflectionUtils.setFieldValue;
 public class InjectionUtils {
 
     /* The logger instance for this class */
-    private static Log logger = LogFactory.getLog(InjectionUtils.class);
+    private static Logger logger = LoggerFactory.getLogger(InjectionUtils.class);
 
     /**
      * Explicit injection of the objectToInject into the specified property of the target. The property should be a

@@ -7,8 +7,8 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.unitils.core.UnitilsException;
@@ -24,7 +24,7 @@ import static org.apache.commons.lang.StringUtils.replace;
  */
 public abstract class ClassPathResourceLocator {
     /* The logger instance for this class */
-    private static Log logger = LogFactory.getLog(ClassPathResourceLocator.class);
+    private static Logger logger = LoggerFactory.getLogger(ClassPathResourceLocator.class);
 
     protected List<URL> resourceList;
 

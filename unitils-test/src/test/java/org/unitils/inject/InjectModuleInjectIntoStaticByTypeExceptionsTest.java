@@ -14,10 +14,10 @@ package org.unitils.inject;
 
 import java.util.Properties;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.junit.Before;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.unitils.UnitilsJUnit4;
 import org.unitils.core.ConfigurationLoader;
 import org.unitils.core.UnitilsException;
@@ -33,7 +33,7 @@ import static org.junit.Assert.fail;
  */
 public class InjectModuleInjectIntoStaticByTypeExceptionsTest
     extends UnitilsJUnit4 {
-    private static final Log logger = LogFactory.getLog(InjectModuleInjectIntoStaticByTypeExceptionsTest.class);
+    private static final Logger logger = LoggerFactory.getLogger(InjectModuleInjectIntoStaticByTypeExceptionsTest.class);
 
     private TestInjectIntoStaticByType_NoPropertyOfType testInjectIntoStaticByType_noPropertyOfType = new TestInjectIntoStaticByType_NoPropertyOfType();
 
@@ -61,7 +61,7 @@ public class InjectModuleInjectIntoStaticByTypeExceptionsTest
             fail("UnitilsException should have been thrown");
         } catch (UnitilsException e) {
             // Expected flow
-            logger.debug(this, e);
+            logger.debug("", e);
         }
     }
 
@@ -72,7 +72,7 @@ public class InjectModuleInjectIntoStaticByTypeExceptionsTest
             fail("UnitilsException should have been thrown");
         } catch (UnitilsException e) {
             // Expected flow
-            logger.debug(this, e);
+            logger.debug("", e);
         }
     }
 
@@ -83,7 +83,7 @@ public class InjectModuleInjectIntoStaticByTypeExceptionsTest
             fail("UnitilsException should have been thrown");
         } catch (UnitilsException e) {
             // Expected flow
-            logger.debug(this, e);
+            logger.debug("", e);
         }
     }
 
@@ -94,7 +94,7 @@ public class InjectModuleInjectIntoStaticByTypeExceptionsTest
             fail("UnitilsException should have been thrown");
         } catch (UnitilsException e) {
             // Expected flow
-            logger.debug(this, e);
+            logger.debug("", e);
         }
     }
 
@@ -105,7 +105,7 @@ public class InjectModuleInjectIntoStaticByTypeExceptionsTest
             fail("UnitilsException should have been thrown");
         } catch (UnitilsException e) {
             // Expected flow
-            logger.debug(this, e);
+            logger.debug("", e);
         }
     }
 

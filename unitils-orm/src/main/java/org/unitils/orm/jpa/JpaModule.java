@@ -23,8 +23,8 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceUnit;
 import javax.sql.DataSource;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.orm.jpa.AbstractEntityManagerFactoryBean;
 import org.springframework.orm.jpa.EntityManagerFactoryUtils;
 import org.springframework.orm.jpa.EntityManagerHolder;
@@ -79,7 +79,7 @@ public class JpaModule
     public static final String PROPKEY_PERSISTENCE_PROVIDER = "jpa.persistenceProvider";
 
     /* The logger instance for this class */
-    private static Log logger = LogFactory.getLog(JpaModule.class);
+    private static Logger logger = LoggerFactory.getLogger(JpaModule.class);
 
     /**
      * Implements provider specific operations

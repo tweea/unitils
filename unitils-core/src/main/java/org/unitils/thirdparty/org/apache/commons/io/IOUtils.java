@@ -31,8 +31,8 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * General IO stream manipulation utilities.
@@ -76,7 +76,7 @@ import org.apache.commons.logging.LogFactory;
  * @version $Id: IOUtils.java 385117 2006-03-11 18:07:02Z scolebourne $
  */
 public class IOUtils {
-    private static final Log LOG = LogFactory.getLog(IOUtils.class);
+    private static final Logger LOG = LoggerFactory.getLogger(IOUtils.class);
 
     // NOTE: This class is focussed on InputStream, OutputStream, Reader and
     // Writer. Each method should take at least one of these as a parameter,

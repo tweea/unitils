@@ -23,10 +23,10 @@ import java.util.Collection;
 import java.util.IdentityHashMap;
 import java.util.Map;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.objenesis.Objenesis;
 import org.objenesis.ObjenesisStd;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.unitils.core.UnitilsException;
 
 import static java.lang.reflect.Modifier.isStatic;
@@ -44,7 +44,7 @@ import static org.unitils.mock.core.proxy.ProxyUtils.isProxy;
 public class CloneUtil {
 
     /* The logger instance for this class */
-    private static Log logger = LogFactory.getLog(CloneUtil.class);
+    private static Logger logger = LoggerFactory.getLogger(CloneUtil.class);
 
     /* Objenesis instance for creating new instances of types */
     private static Objenesis objenesis = new ObjenesisStd();

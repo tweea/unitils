@@ -27,8 +27,8 @@ import java.util.Set;
 import javax.sql.DataSource;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.unitils.core.Module;
@@ -118,7 +118,7 @@ public class DatabaseModule
     public static final String PROPERTY_WRAP_DATASOURCE_IN_TRANSACTIONAL_PROXY = "dataSource.wrapInTransactionalProxy";
 
     /* The logger instance for this class */
-    private static Log logger = LogFactory.getLog(DatabaseModule.class);
+    private static Logger logger = LoggerFactory.getLogger(DatabaseModule.class);
 
     /**
      * Map holding the default configuration of the database module annotations

@@ -18,11 +18,11 @@ import java.util.Set;
 
 import javax.sql.DataSource;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.unitils.UnitilsJUnit4;
 import org.unitils.core.ConfigurationLoader;
 import org.unitils.core.Unitils;
@@ -52,7 +52,7 @@ import static org.unitils.reflectionassert.ReflectionAssert.assertLenientEquals;
  */
 public class DbUnitModuleDataSetTest
     extends UnitilsJUnit4 {
-    private static final Log LOG = LogFactory.getLog(DbUnitModuleDataSetTest.class);
+    private static final Logger LOG = LoggerFactory.getLogger(DbUnitModuleDataSetTest.class);
 
     /* Tested object */
     private DbUnitModule dbUnitModule;

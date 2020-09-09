@@ -8,8 +8,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -22,6 +20,8 @@ import org.junit.runners.Parameterized.Parameters;
 import org.junit.runners.Suite;
 import org.junit.runners.model.FrameworkMethod;
 import org.junit.runners.model.TestClass;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Parameterized runner.
@@ -35,7 +35,7 @@ public class UnitilsParameterized
     extends Suite {
     private Class<?> clazz;
 
-    private static final Log LOGGER = LogFactory.getLog(UnitilsParameterized.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(UnitilsParameterized.class);
 
     private static final String METHOD = "Method ";
 

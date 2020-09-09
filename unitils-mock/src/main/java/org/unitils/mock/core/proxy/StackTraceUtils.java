@@ -15,8 +15,8 @@
  */
 package org.unitils.mock.core.proxy;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.unitils.core.UnitilsException;
 
 import static java.lang.System.arraycopy;
@@ -31,7 +31,7 @@ import static org.unitils.util.ReflectionUtils.getClassWithName;
  * @author Tim Ducheyne
  */
 public class StackTraceUtils {
-    private static final Log LOG = LogFactory.getLog(StackTraceUtils.class);
+    private static final Logger LOG = LoggerFactory.getLogger(StackTraceUtils.class);
 
     /**
      * @param invokedClass

@@ -24,8 +24,8 @@ import java.util.HashSet;
 import java.util.Properties;
 import java.util.Set;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.unitils.core.UnitilsException;
 import org.unitils.dbmaintainer.script.ExecutedScript;
 import org.unitils.dbmaintainer.script.Script;
@@ -50,7 +50,7 @@ public class DefaultExecutedScriptInfoSource
     implements ExecutedScriptInfoSource {
 
     /* The logger instance for this class */
-    private static Log logger = LogFactory.getLog(DefaultExecutedScriptInfoSource.class);
+    private static Logger logger = LoggerFactory.getLogger(DefaultExecutedScriptInfoSource.class);
 
     /* The key of the property that specifies the datase table in which the DB version is stored */
     public static final String PROPERTY_EXECUTED_SCRIPTS_TABLE_NAME = "dbMaintainer.executedScriptsTableName";

@@ -12,8 +12,8 @@
  */
 package org.unitils.dbmaintainer.structure.impl;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.unitils.core.dbsupport.DbSupport;
 import org.unitils.dbmaintainer.structure.ConstraintsDisabler;
 import org.unitils.dbmaintainer.util.BaseDatabaseAccessor;
@@ -32,7 +32,7 @@ public class DefaultConstraintsDisabler
     implements ConstraintsDisabler {
 
     /* The logger instance for this class */
-    private static Log logger = LogFactory.getLog(DefaultConstraintsDisabler.class);
+    private static Logger logger = LoggerFactory.getLogger(DefaultConstraintsDisabler.class);
 
     /**
      * Disable every foreign key or not-null constraint

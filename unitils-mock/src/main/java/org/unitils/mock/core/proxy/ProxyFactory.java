@@ -18,10 +18,10 @@ package org.unitils.mock.core.proxy;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.objenesis.Objenesis;
 import org.objenesis.ObjenesisStd;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.unitils.core.UnitilsException;
 
 import net.sf.cglib.proxy.Callback;
@@ -41,7 +41,7 @@ import static org.unitils.util.ReflectionUtils.createInstanceOfType;
  * @author Tim Ducheyne
  */
 public class ProxyFactory {
-    private static Log logger = LogFactory.getLog(ProxyFactory.class);
+    private static Logger logger = LoggerFactory.getLogger(ProxyFactory.class);
 
     /**
      * Creates a proxy object for the given type. All method invocations will be passed to the given invocation handler.

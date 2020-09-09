@@ -20,8 +20,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.unitils.core.UnitilsException;
 import org.unitils.core.util.BaseConfigurable;
 import org.unitils.dbmaintainer.script.ExecutedScript;
@@ -50,7 +50,7 @@ public class DefaultScriptSource
     implements ScriptSource {
 
     /* Logger instance for this class */
-    private static final Log logger = LogFactory.getLog(DefaultScriptSource.class);
+    private static final Logger logger = LoggerFactory.getLogger(DefaultScriptSource.class);
 
     /**
      * Property key for the directory in which the script files are located

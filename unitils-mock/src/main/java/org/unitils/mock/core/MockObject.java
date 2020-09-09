@@ -20,8 +20,8 @@ import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.unitils.core.util.ObjectToInjectHolder;
 import org.unitils.mock.Mock;
 import org.unitils.mock.annotation.MatchStatement;
@@ -50,7 +50,7 @@ import static org.unitils.util.ReflectionUtils.getGenericType;
  */
 public class MockObject<T>
     implements Mock<T>, MockFactory, ObjectToInjectHolder<T> {
-    private static final Log LOG = LogFactory.getLog(MockObject.class);
+    private static final Logger LOG = LoggerFactory.getLogger(MockObject.class);
 
     /* The name of the mock (e.g. the name of the field) */
     protected String name;

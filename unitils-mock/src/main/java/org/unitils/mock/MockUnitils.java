@@ -15,8 +15,8 @@
  */
 package org.unitils.mock;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.unitils.core.Unitils;
 import org.unitils.mock.core.MockObject;
 import org.unitils.mock.core.Scenario;
@@ -32,7 +32,7 @@ import static org.unitils.mock.core.proxy.StackTraceUtils.getInvocationStackTrac
 public class MockUnitils {
 
     /* The logger instance for this class */
-    private static Log logger = LogFactory.getLog(MockModule.class);
+    private static Logger logger = LoggerFactory.getLogger(MockModule.class);
 
     public static void assertNoMoreInvocations() {
         MockObject.getCurrentScenario().assertNoMoreInvocations(getInvocationStackTrace(MockUnitils.class, false));

@@ -17,10 +17,10 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.junit.Before;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.unitils.UnitilsJUnit4;
 import org.unitils.core.UnitilsException;
 import org.unitils.dbmaintainer.clean.DBClearer;
@@ -50,7 +50,7 @@ import static org.unitils.mock.MockUnitils.assertNoMoreInvocations;
  */
 public class DBMaintainerTest
     extends UnitilsJUnit4 {
-    private static final Log LOG = LogFactory.getLog(DBMaintainerTest.class);
+    private static final Logger LOG = LoggerFactory.getLogger(DBMaintainerTest.class);
 
     @InjectIntoByType
     private Mock<ExecutedScriptInfoSource> mockExecutedScriptInfoSource;

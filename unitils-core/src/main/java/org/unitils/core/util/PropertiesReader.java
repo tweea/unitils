@@ -17,8 +17,8 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.Properties;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.unitils.core.UnitilsException;
 
 import static org.unitils.thirdparty.org.apache.commons.io.IOUtils.closeQuietly;
@@ -29,7 +29,7 @@ import static org.unitils.thirdparty.org.apache.commons.io.IOUtils.closeQuietly;
 public class PropertiesReader {
 
     /* The logger instance for this class */
-    private static Log logger = LogFactory.getLog(PropertiesReader.class);
+    private static Logger logger = LoggerFactory.getLogger(PropertiesReader.class);
 
     /**
      * Loads the properties file with the given name, which is available in the user home folder. If no

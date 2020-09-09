@@ -26,8 +26,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.unitils.core.UnitilsException;
 import org.unitils.core.util.TypeUtils;
 
@@ -44,7 +44,7 @@ import static org.apache.commons.lang.StringUtils.capitalize;
  * @author Tim Ducheyne
  */
 public class ReflectionUtils {
-    private static final Log LOG = LogFactory.getLog(ReflectionUtils.class);
+    private static final Logger LOG = LoggerFactory.getLogger(ReflectionUtils.class);
 
     /**
      * Creates an instance of the class with the given name. The class's no

@@ -22,8 +22,8 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import static org.unitils.util.PropertyUtils.getBoolean;
 import static org.unitils.util.PropertyUtils.getString;
@@ -85,7 +85,7 @@ public class ModulesLoader {
     /**
      * The logger instance for this class.
      */
-    private static Log logger = LogFactory.getLog(ModulesLoader.class);
+    private static Logger logger = LoggerFactory.getLogger(ModulesLoader.class);
 
     /**
      * Loads all unitils modules as described in the class javadoc.

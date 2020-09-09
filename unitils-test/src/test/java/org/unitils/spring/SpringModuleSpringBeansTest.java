@@ -17,10 +17,10 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.junit.Before;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.unitils.core.ConfigurationLoader;
 import org.unitils.core.UnitilsException;
 import org.unitils.spring.annotation.SpringApplicationContext;
@@ -39,7 +39,7 @@ import static org.junit.Assert.fail;
  * @author Filip Neven
  */
 public class SpringModuleSpringBeansTest {
-    private static final Log LOG = LogFactory.getLog(SpringModuleSpringBeansTest.class);
+    private static final Logger LOG = LoggerFactory.getLogger(SpringModuleSpringBeansTest.class);
 
     /* Tested object */
     private SpringModule springModule;

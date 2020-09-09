@@ -16,8 +16,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.unitils.core.UnitilsException;
 
 import junit.framework.TestCase;
@@ -39,7 +39,7 @@ import static org.unitils.util.PropertyUtils.getStringList;
  */
 public class PropertyUtilsTest
     extends TestCase {
-    private static final Log LOG = LogFactory.getLog(PropertyUtilsTest.class);
+    private static final Logger LOG = LoggerFactory.getLogger(PropertyUtilsTest.class);
 
     /* A test properties instance */
     private Properties testProperties;

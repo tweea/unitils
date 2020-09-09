@@ -14,8 +14,8 @@ package org.unitils.core.util;
 
 import java.util.Properties;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.unitils.core.UnitilsException;
 import org.unitils.util.PropertyUtils;
 
@@ -30,7 +30,7 @@ import static org.unitils.util.ReflectionUtils.createInstanceOfType;
 public class ConfigUtils {
 
     /* The logger instance for this class */
-    private static Log logger = LogFactory.getLog(ConfigUtils.class);
+    private static Logger logger = LoggerFactory.getLogger(ConfigUtils.class);
 
     /**
      * Retrieves the concrete instance of the class with the given type as configured by the given <code>Configuration</code>.

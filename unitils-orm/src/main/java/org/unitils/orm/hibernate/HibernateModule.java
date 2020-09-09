@@ -18,12 +18,12 @@ import java.util.Set;
 
 import javax.sql.DataSource;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.dialect.Dialect;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.orm.hibernate3.HibernateTransactionManager;
 import org.springframework.orm.hibernate3.SessionFactoryUtils;
 import org.springframework.orm.hibernate3.SessionHolder;
@@ -69,7 +69,7 @@ public class HibernateModule
     public static final String PROPKEY_CONFIGURATION_CLASS_NAME = "HibernateModule.configuration.implClassName";
 
     /* The logger instance for this class */
-    private static Log logger = LogFactory.getLog(HibernateModule.class);
+    private static Logger logger = LoggerFactory.getLogger(HibernateModule.class);
 
     /**
      * Subclass of org.hibernate.cfg.Configuration that is used for configuring hibernate

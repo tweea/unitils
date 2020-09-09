@@ -19,8 +19,8 @@ import java.util.ArrayList;
 
 import javax.sql.DataSource;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.unitils.core.Unitils;
 import org.unitils.core.UnitilsException;
 import org.unitils.database.DataSourceWrapper;
@@ -40,7 +40,7 @@ import static org.unitils.thirdparty.org.apache.commons.dbutils.DbUtils.closeQui
 public abstract class SqlAssert {
 
     /* The logger instance for this class */
-    private static Log logger = LogFactory.getLog(SqlAssert.class);
+    private static Logger logger = LoggerFactory.getLogger(SqlAssert.class);
 
     /**
      * To be succesfull the result of the SQL should only return one row, this row should be identical to the given parameter. The sequence

@@ -17,12 +17,12 @@ import java.util.Properties;
 
 import javax.sql.DataSource;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.hsqldb.Trigger;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.unitils.UnitilsJUnit4;
 import org.unitils.core.ConfigurationLoader;
 import org.unitils.core.Unitils;
@@ -62,7 +62,7 @@ public class DefaultDBClearerPreserveTest
     extends UnitilsJUnit4 {
 
     /* The logger instance for this class */
-    private static Log logger = LogFactory.getLog(DefaultDBClearerPreserveTest.class);
+    private static Logger logger = LoggerFactory.getLogger(DefaultDBClearerPreserveTest.class);
 
     /* DataSource for the test database, is injected */
     private DataSource dataSource = null;

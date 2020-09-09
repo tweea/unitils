@@ -15,10 +15,10 @@ package org.unitils.easymock.util;
 import java.util.Arrays;
 import java.util.List;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.junit.Before;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import static org.easymock.EasyMock.createMock;
 import static org.easymock.EasyMock.replay;
@@ -33,7 +33,7 @@ import static org.unitils.reflectionassert.ReflectionComparatorMode.LENIENT_ORDE
  * Test for {@link org.unitils.easymock.util.ReflectionArgumentMatcher}.
  */
 public class ReflectionArgumentMatcherTest {
-    private static final Log LOG = LogFactory.getLog(ReflectionArgumentMatcherTest.class);
+    private static final Logger LOG = LoggerFactory.getLogger(ReflectionArgumentMatcherTest.class);
 
     /* A test mock instance */
     private TestMock testMock;

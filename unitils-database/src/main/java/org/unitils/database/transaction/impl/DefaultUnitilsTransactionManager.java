@@ -22,8 +22,8 @@ import java.util.Set;
 
 import javax.sql.DataSource;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.datasource.TransactionAwareDataSourceProxy;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionDefinition;
@@ -53,7 +53,7 @@ public class DefaultUnitilsTransactionManager
     /**
      * The logger instance for this class
      */
-    private static Log logger = LogFactory.getLog(DefaultUnitilsTransactionManager.class);
+    private static Logger logger = LoggerFactory.getLogger(DefaultUnitilsTransactionManager.class);
 
     protected Map<Object, Boolean> testObjectTransactionActiveMap = new HashMap<>();
 

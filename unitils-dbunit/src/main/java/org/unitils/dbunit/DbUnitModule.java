@@ -25,12 +25,12 @@ import java.util.Properties;
 import javax.sql.DataSource;
 
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.dbunit.database.DatabaseConfig;
 import org.dbunit.database.IMetadataHandler;
 import org.dbunit.dataset.IDataSet;
 import org.dbunit.dataset.datatype.IDataTypeFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.unitils.core.Module;
 import org.unitils.core.TestListener;
 import org.unitils.core.Unitils;
@@ -97,7 +97,7 @@ public class DbUnitModule
     public static final String PROPERTY_METAHANDLER = "org.dbunit.database.DatabaseConfig.metadatahandler";
 
     /* The logger instance for this class */
-    private static Log logger = LogFactory.getLog(DbUnitModule.class);
+    private static Logger logger = LoggerFactory.getLogger(DbUnitModule.class);
 
     /**
      * Map holding the default configuration of the dbunit module annotations

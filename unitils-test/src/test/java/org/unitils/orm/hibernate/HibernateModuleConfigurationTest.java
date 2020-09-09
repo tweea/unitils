@@ -15,12 +15,12 @@ package org.unitils.orm.hibernate;
 import java.util.List;
 import java.util.Properties;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.junit.Before;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.unitils.UnitilsJUnit4;
 import org.unitils.core.ConfigurationLoader;
 import org.unitils.core.UnitilsException;
@@ -40,7 +40,7 @@ import static org.junit.Assert.fail;
  */
 public class HibernateModuleConfigurationTest
     extends UnitilsJUnit4 {
-    private static final Log LOG = LogFactory.getLog(HibernateModuleConfigurationTest.class);
+    private static final Logger LOG = LoggerFactory.getLogger(HibernateModuleConfigurationTest.class);
 
     /* Tested object */
     private HibernateModule hibernateModule;

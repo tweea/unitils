@@ -17,8 +17,8 @@ import java.util.List;
 import java.util.Properties;
 import java.util.Set;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.unitils.core.UnitilsException;
 import org.unitils.core.dbsupport.SQLHandler;
 import org.unitils.core.util.ConfigUtils;
@@ -74,7 +74,7 @@ import static org.unitils.dbmaintainer.util.DatabaseModuleConfigUtils.getConfigu
 public class DBMaintainer {
 
     /* The logger instance for this class */
-    private static Log logger = LogFactory.getLog(DBMaintainer.class);
+    private static Logger logger = LoggerFactory.getLogger(DBMaintainer.class);
 
     /**
      * Property indicating if deleting all data from all tables before updating is enabled

@@ -27,8 +27,8 @@ import java.util.Set;
 
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.unitils.core.Module;
 import org.unitils.core.TestListener;
 import org.unitils.core.UnitilsException;
@@ -75,7 +75,7 @@ public class InjectModule
     implements Module {
 
     /* The logger instance for this class */
-    private static Log logger = LogFactory.getLog(InjectModule.class);
+    private static Logger logger = LoggerFactory.getLogger(InjectModule.class);
 
     /* Property key indicating if the tested objects should automatically be created if they are not created yet */
     private static final String PROPKEY_CREATE_TESTEDOBJECTS_IF_NULL_ENABLED = "InjectModule.TestedObject.createIfNull.enabled";

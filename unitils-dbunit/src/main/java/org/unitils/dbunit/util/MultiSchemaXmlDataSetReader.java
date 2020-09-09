@@ -22,10 +22,10 @@ import java.util.Map;
 
 import javax.xml.parsers.SAXParserFactory;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.dbunit.dataset.Column;
 import org.dbunit.dataset.ReplacementDataSet;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.unitils.core.UnitilsException;
 import org.unitils.dbunit.datasetfactory.impl.DbUnitDataSet;
 import org.unitils.dbunit.datasetfactory.impl.DbUnitTable;
@@ -79,7 +79,7 @@ import static org.unitils.thirdparty.org.apache.commons.io.IOUtils.closeQuietly;
 public class MultiSchemaXmlDataSetReader {
 
     /* The logger instance for this class */
-    private static Log logger = LogFactory.getLog(MultiSchemaXmlDataSetReader.class);
+    private static Logger logger = LoggerFactory.getLogger(MultiSchemaXmlDataSetReader.class);
 
     /* The schema name to use when none is specified */
     private String defaultSchemaName;

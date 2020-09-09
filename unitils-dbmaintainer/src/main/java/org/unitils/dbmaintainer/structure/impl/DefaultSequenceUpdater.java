@@ -15,8 +15,8 @@ package org.unitils.dbmaintainer.structure.impl;
 import java.util.Properties;
 import java.util.Set;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.unitils.core.UnitilsException;
 import org.unitils.core.dbsupport.DbSupport;
 import org.unitils.dbmaintainer.structure.SequenceUpdater;
@@ -38,7 +38,7 @@ public class DefaultSequenceUpdater
     public static final String PROPKEY_LOWEST_ACCEPTABLE_SEQUENCE_VALUE = "sequenceUpdater.sequencevalue.lowestacceptable";
 
     /* The logger instance for this class */
-    private static Log logger = LogFactory.getLog(DefaultSequenceUpdater.class);
+    private static Logger logger = LoggerFactory.getLogger(DefaultSequenceUpdater.class);
 
     /* The lowest acceptable sequence value */
     protected long lowestAcceptableSequenceValue;

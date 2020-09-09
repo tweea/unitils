@@ -20,15 +20,15 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * A collection of JDBC helper methods. This class is thread safe.
  * TODO Make sure we use DataSourceUtils.getConnection and releaseConnection for getting / releasing Connections
  */
 public final class DbUtils {
-    private static final Log LOG = LogFactory.getLog(DbUtils.class);
+    private static final Logger LOG = LoggerFactory.getLogger(DbUtils.class);
 
     /**
      * Close a <code>Connection</code>, avoid closing if null.

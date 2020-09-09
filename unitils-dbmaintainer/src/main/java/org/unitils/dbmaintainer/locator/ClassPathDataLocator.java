@@ -5,8 +5,8 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.List;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.unitils.dbmaintainer.locator.resourcepickingstrategie.ResourcePickingStrategie;
 
 /**
@@ -19,7 +19,7 @@ public class ClassPathDataLocator
     extends ClassPathResourceLocator {
 
     /* The logger instance for this class */
-    private static Log logger = LogFactory.getLog(ClassPathDataLocator.class);
+    private static Logger logger = LoggerFactory.getLogger(ClassPathDataLocator.class);
 
     /**
      * The resources are loaded and than does the {@link ResourcePickingStrategie} the first filtering.<br/>

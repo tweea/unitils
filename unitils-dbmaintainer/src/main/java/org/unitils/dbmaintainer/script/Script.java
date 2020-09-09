@@ -17,8 +17,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.unitils.core.UnitilsException;
 import org.unitils.dbmaintainer.version.Version;
 
@@ -30,7 +30,7 @@ import org.unitils.dbmaintainer.version.Version;
  */
 public class Script
     implements Comparable<Script> {
-    private static final Log LOG = LogFactory.getLog(Script.class);
+    private static final Logger LOG = LoggerFactory.getLogger(Script.class);
 
     /* The name of the script */
     private String fileName;

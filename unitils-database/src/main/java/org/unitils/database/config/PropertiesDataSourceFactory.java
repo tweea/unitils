@@ -17,8 +17,8 @@ import java.util.Properties;
 import javax.sql.DataSource;
 
 import org.apache.commons.dbcp.BasicDataSource;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.unitils.core.config.Configuration;
 
 /**
@@ -31,7 +31,7 @@ public class PropertiesDataSourceFactory
     implements DataSourceFactory {
 
     /* The logger instance for this class */
-    private static Log logger = LogFactory.getLog(PropertiesDataSourceFactory.class);
+    private static Logger logger = LoggerFactory.getLogger(PropertiesDataSourceFactory.class);
 
     // Configuration
     private DatabaseConfiguration config;

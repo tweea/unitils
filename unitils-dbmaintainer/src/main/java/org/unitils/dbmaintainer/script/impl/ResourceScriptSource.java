@@ -5,8 +5,8 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.apache.commons.lang.ArrayUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.unitils.dbmaintainer.locator.ClassPathScriptLocator;
 import org.unitils.dbmaintainer.locator.resourcepickingstrategie.ResourcePickingStrategie;
@@ -32,7 +32,7 @@ import org.unitils.util.PropertyUtils;
  */
 public class ResourceScriptSource
     extends DefaultScriptSource {
-    private static final Log LOGGER = LogFactory.getLog(ResourceScriptSource.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ResourceScriptSource.class);
 
     public ResourceScriptSource() {
     }

@@ -20,8 +20,8 @@ import java.util.Set;
 
 import javax.sql.DataSource;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.unitils.core.UnitilsException;
 
 import static org.unitils.thirdparty.org.apache.commons.dbutils.DbUtils.closeQuietly;
@@ -35,7 +35,7 @@ import static org.unitils.thirdparty.org.apache.commons.dbutils.DbUtils.closeQui
 public class SQLUnitils {
 
     /* The logger instance for this class */
-    private static final Log logger = LogFactory.getLog(SQLUnitils.class);
+    private static final Logger logger = LoggerFactory.getLogger(SQLUnitils.class);
 
     /**
      * Executes the given update statement.

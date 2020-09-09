@@ -23,8 +23,8 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.Map;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import static java.lang.reflect.Modifier.isStatic;
 import static java.lang.reflect.Modifier.isTransient;
@@ -42,7 +42,7 @@ import static org.unitils.reflectionassert.util.HibernateUtil.getUnproxiedValue;
  * @author Filip Neven
  */
 public class ObjectFormatter {
-    private static final Log LOG = LogFactory.getLog(ObjectFormatter.class);
+    private static final Logger LOG = LoggerFactory.getLogger(ObjectFormatter.class);
 
     public static final String MOCK_NAME_CHAIN_SEPARATOR = "##chained##";
 

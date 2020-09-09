@@ -6,8 +6,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.unitils.dbmaintainer.locator.resourcepickingstrategie.ResourcePickingStrategie;
 import org.unitils.dbmaintainer.script.Script;
 import org.unitils.dbmaintainer.script.impl.DefaultScriptSource;
@@ -22,7 +22,7 @@ public class ClassPathScriptLocator
     extends ClassPathResourceLocator {
 
     /* The logger instance for this class */
-    private static Log logger = LogFactory.getLog(ClassPathScriptLocator.class);
+    private static Logger logger = LoggerFactory.getLogger(ClassPathScriptLocator.class);
 
     protected List<Script> scriptList;
 

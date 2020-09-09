@@ -17,11 +17,11 @@ import java.util.Properties;
 
 import javax.sql.DataSource;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.unitils.UnitilsJUnit4;
 import org.unitils.core.ConfigurationLoader;
 import org.unitils.core.UnitilsException;
@@ -46,7 +46,7 @@ import static org.unitils.dbmaintainer.util.DatabaseModuleConfigUtils.getConfigu
  */
 public class ConstraintsDisablerTest
     extends UnitilsJUnit4 {
-    private static final Log LOG = LogFactory.getLog(ConstraintsDisablerTest.class);
+    private static final Logger LOG = LoggerFactory.getLogger(ConstraintsDisablerTest.class);
 
     /* The tested object */
     private ConstraintsDisabler constraintsDisabler;

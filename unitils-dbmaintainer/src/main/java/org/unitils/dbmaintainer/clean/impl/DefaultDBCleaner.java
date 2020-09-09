@@ -17,8 +17,8 @@ import java.util.List;
 import java.util.Properties;
 import java.util.Set;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.unitils.core.dbsupport.DbSupport;
 import org.unitils.dbmaintainer.clean.DBCleaner;
 import org.unitils.dbmaintainer.util.BaseDatabaseAccessor;
@@ -61,7 +61,7 @@ public class DefaultDBCleaner
     public static final String PROPKEY_VERSION_TABLE_NAME = "dbMaintainer.executedScriptsTableName";
 
     /* The logger instance for this class */
-    private static Log logger = LogFactory.getLog(DefaultDBCleaner.class);
+    private static Logger logger = LoggerFactory.getLogger(DefaultDBCleaner.class);
 
     /**
      * Names of schemas that should left untouched.

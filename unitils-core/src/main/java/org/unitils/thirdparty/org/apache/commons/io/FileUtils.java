@@ -25,8 +25,8 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * General file manipulation utilities.
@@ -63,7 +63,7 @@ import org.apache.commons.logging.LogFactory;
  * @version $Id: FileUtils.java 384037 2006-03-07 22:26:37Z scolebourne $
  */
 public class FileUtils {
-    private static final Log LOG = LogFactory.getLog(FileUtils.class);
+    private static final Logger LOG = LoggerFactory.getLogger(FileUtils.class);
 
     /**
      * Instances should NOT be constructed in standard programming.
