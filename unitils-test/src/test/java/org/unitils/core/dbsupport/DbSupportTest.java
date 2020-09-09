@@ -683,6 +683,7 @@ public class DbSupportTest
         try {
             executeUpdate("create language plpgsql", dataSource);
         } catch (Exception e) {
+            logger.trace("", e);
             // ignore language already exists
         }
         executeUpdate("create or replace function test() returns trigger as $$ declare begin end; $$ language plpgsql", dataSource);

@@ -187,15 +187,37 @@ public class ArgumentMatcherPositionFinderTest {
      * Simulates a proxy
      */
     public static class MockedClass {
+        /**
+         * @param param1
+         *     Used for testing
+         * @param param2
+         *     Used for testing
+         * @param param3
+         *     Used for testing
+         */
         public void someMethod(String param1, String param2, String param3) {
         }
 
+        /**
+         * @param param1
+         *     Used for testing
+         * @param param2
+         *     Used for testing
+         */
         public static void someStaticMethod(int param1, int param2) {
         }
 
         public void someMethod() {
         }
 
+        /**
+         * @param param1
+         *     Used for testing
+         * @param param2
+         *     Used for testing
+         * @param param3
+         *     Used for testing
+         */
         public String valueReturningMethod(String param1, String param2, String param3) {
             return null;
         }

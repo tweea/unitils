@@ -242,6 +242,10 @@ public class SpringModuleApplicationContextTest {
      * Test SpringTest class with setter level locations.
      */
     private class SpringTestSetter {
+        /**
+         * @param field
+         *     Used for testing
+         */
         @SpringApplicationContext({
             "classpath:org/unitils/spring/services-config.xml", "classpath:org/unitils/spring/services-config.xml"
         })
@@ -292,11 +296,19 @@ public class SpringModuleApplicationContextTest {
      * Test SpringTest class with 2 custom create methods.
      */
     private class SpringTestTwoCreateMethods {
+        /**
+         * @param locations
+         *     Used for testing
+         */
         @SpringApplicationContext
         protected ApplicationContext createMethod1(List<String> locations) {
             return null;
         }
 
+        /**
+         * @param locations
+         *     Used for testing
+         */
         @SpringApplicationContext
         protected ApplicationContext createMethod2(List<String> locations) {
             return null;
@@ -307,6 +319,10 @@ public class SpringModuleApplicationContextTest {
      * Test SpringTest class with a custom create method having a wrong signature.
      */
     private class SpringTestCreateMethodWrongSignature {
+        /**
+         * @param a
+         *     Used for testing
+         */
         @SpringApplicationContext
         protected List<?> createMethod(String a) {
             return null;

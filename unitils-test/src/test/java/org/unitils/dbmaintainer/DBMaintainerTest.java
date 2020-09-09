@@ -17,6 +17,8 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.junit.Before;
 import org.junit.Test;
 import org.unitils.UnitilsJUnit4;
@@ -48,6 +50,8 @@ import static org.unitils.mock.MockUnitils.assertNoMoreInvocations;
  */
 public class DBMaintainerTest
     extends UnitilsJUnit4 {
+    private static final Log LOG = LogFactory.getLog(DBMaintainerTest.class);
+
     @InjectIntoByType
     private Mock<ExecutedScriptInfoSource> mockExecutedScriptInfoSource;
 
@@ -190,6 +194,7 @@ public class DBMaintainerTest
             dbMaintainer.updateDatabase(schema, true);
             fail("A UnitilsException should have been thrown");
         } catch (UnitilsException e) {
+            LOG.trace("", e);
             // expected
         }
         mockExecutedScriptInfoSource.assertInvoked().registerExecutedScript(new ExecutedScript(scripts.get(0), null, false));
@@ -206,6 +211,7 @@ public class DBMaintainerTest
             dbMaintainer.updateDatabase(schema, true);
             fail("A UnitilsException should have been thrown");
         } catch (UnitilsException e) {
+            LOG.trace("", e);
             // Expected
         }
         assertScriptsExecutedAndDbVersionSet();

@@ -20,6 +20,8 @@ import org.unitils.core.TestListener;
 
 import junit.framework.AssertionFailedError;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.unitils.TracingTestListener.InvocationSource.TEST;
 import static org.unitils.TracingTestListener.InvocationSource.UNITILS;
 import static org.unitils.TracingTestListener.ListenerInvocation.LISTENER_AFTER_CREATE_TEST_OBJECT;
@@ -28,9 +30,6 @@ import static org.unitils.TracingTestListener.ListenerInvocation.LISTENER_AFTER_
 import static org.unitils.TracingTestListener.ListenerInvocation.LISTENER_BEFORE_CLASS;
 import static org.unitils.TracingTestListener.ListenerInvocation.LISTENER_BEFORE_TEST_METHOD;
 import static org.unitils.TracingTestListener.ListenerInvocation.LISTENER_BEFORE_TEST_SET_UP;
-
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertTrue;
 
 /**
  * Test listener that records all method invocations.

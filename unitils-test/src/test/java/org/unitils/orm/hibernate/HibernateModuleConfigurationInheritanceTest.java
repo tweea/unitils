@@ -109,6 +109,10 @@ public class HibernateModuleConfigurationInheritanceTest {
     public class HibernateTestSuper {
         protected boolean initMethod1Called = false;
 
+        /**
+         * @param cfg
+         *     Used for testing
+         */
         @HibernateSessionFactory
         protected void initMethod1(Configuration cfg) {
             initMethod1Called = true;
@@ -123,6 +127,10 @@ public class HibernateModuleConfigurationInheritanceTest {
         extends HibernateTestSuper {
         protected boolean initMethod2Called = false;
 
+        /**
+         * @param cfg
+         *     Used for testing
+         */
         @HibernateSessionFactory
         protected void initMethod2(Configuration cfg) {
             initMethod2Called = true;

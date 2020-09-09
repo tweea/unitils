@@ -108,6 +108,10 @@ public class HibernateModuleInjectionTest
             this.sessionFactorySetter = sessionFactorySetter;
         }
 
+        /**
+         * @param configuration
+         *     Used for testing
+         */
         @HibernateSessionFactory
         public void customInitializer(Configuration configuration) {
             customInitializerCalled = true;

@@ -15,6 +15,8 @@ package org.unitils.orm.hibernate;
 import java.util.List;
 import java.util.Properties;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.junit.Before;
@@ -38,6 +40,7 @@ import static org.junit.Assert.fail;
  */
 public class HibernateModuleConfigurationTest
     extends UnitilsJUnit4 {
+    private static final Log LOG = LogFactory.getLog(HibernateModuleConfigurationTest.class);
 
     /* Tested object */
     private HibernateModule hibernateModule;
@@ -75,6 +78,7 @@ public class HibernateModuleConfigurationTest
             hibernateModule.getConfigurationObject(hibernateTestClassLevelNoLocation);
             fail("Expected UnitilsException");
         } catch (UnitilsException e) {
+            LOG.trace("", e);
             // expected
         }
     }
@@ -101,6 +105,7 @@ public class HibernateModuleConfigurationTest
             hibernateModule.getConfigurationObject(hibernateTestFieldLevelNoLocation);
             fail("Expected UnitilsException");
         } catch (UnitilsException e) {
+            LOG.trace("", e);
             // expected
         }
     }
@@ -127,6 +132,7 @@ public class HibernateModuleConfigurationTest
             hibernateModule.getConfigurationObject(hibernateTestSetterLevelNoLocation);
             fail("Expected UnitilsException");
         } catch (UnitilsException e) {
+            LOG.trace("", e);
             // expected
         }
     }
@@ -141,6 +147,7 @@ public class HibernateModuleConfigurationTest
             hibernateModule.getConfigurationObject(hibernateTestMultipleAnnotationsWithValues);
             fail("Expected UnitilsException");
         } catch (UnitilsException e) {
+            LOG.trace("", e);
             // expected
         }
     }
@@ -155,6 +162,7 @@ public class HibernateModuleConfigurationTest
             hibernateModule.getConfigurationObject(hibernateTestCustomCreateWrongSignature);
             fail("Expected UnitilsException");
         } catch (UnitilsException e) {
+            LOG.trace("", e);
             // expected
         }
     }
@@ -180,6 +188,7 @@ public class HibernateModuleConfigurationTest
             hibernateModule.getConfigurationObject(hibernateTestWrongLocation);
             fail("Expected UnitilsException");
         } catch (UnitilsException e) {
+            LOG.trace("", e);
             // expected
         }
     }
@@ -231,6 +240,10 @@ public class HibernateModuleConfigurationTest
      * Setter level configuration.
      */
     public class HibernateTestSetterLevel {
+        /**
+         * @param sessionFactory
+         *     Used for testing
+         */
         @HibernateSessionFactory("org/unitils/orm/hibernate/hibernate.cfg.xml")
         public void setField(SessionFactory sessionFactory) {
         }
@@ -240,6 +253,10 @@ public class HibernateModuleConfigurationTest
      * Setter level configuration no location specified.
      */
     public class HibernateTestSetterLevelNoLocation {
+        /**
+         * @param sessionFactory
+         *     Used for testing
+         */
         @HibernateSessionFactory
         public void setField(SessionFactory sessionFactory) {
         }
@@ -267,6 +284,10 @@ public class HibernateModuleConfigurationTest
      * Configuration with custom create with wrong signature.
      */
     public class HibernateTestCustomCreateWrongSignature {
+        /**
+         * @param a
+         *     Used for testing
+         */
         @HibernateSessionFactory
         public List<?> createMethod(String a) {
             return null;
@@ -280,6 +301,10 @@ public class HibernateModuleConfigurationTest
     public class HibernateTestCustomInitialization {
         public boolean initCalled = false;
 
+        /**
+         * @param configuration
+         *     Used for testing
+         */
         @HibernateSessionFactory
         public void initializationMethod(Configuration configuration) {
             initCalled = true;

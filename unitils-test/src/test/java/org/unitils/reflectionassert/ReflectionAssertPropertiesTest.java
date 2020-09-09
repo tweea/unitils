@@ -12,6 +12,9 @@
  */
 package org.unitils.reflectionassert;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import junit.framework.AssertionFailedError;
 import junit.framework.TestCase;
 
@@ -27,6 +30,7 @@ import static org.unitils.reflectionassert.ReflectionComparatorMode.IGNORE_DEFAU
  */
 public class ReflectionAssertPropertiesTest
     extends TestCase {
+    private static final Log LOG = LogFactory.getLog(ReflectionAssertPropertiesTest.class);
 
     /* Test object */
     private TestObject testObject;
@@ -85,6 +89,7 @@ public class ReflectionAssertPropertiesTest
             assertPropertyReflectionEquals("stringProperty", "xxxxxx", testObject);
             fail("Expected AssertionFailedError");
         } catch (AssertionFailedError a) {
+            LOG.trace("", a);
             // expected
         }
     }
@@ -97,6 +102,7 @@ public class ReflectionAssertPropertiesTest
             assertPropertyReflectionEquals("stringProperty", null, testObject);
             fail("Expected AssertionFailedError");
         } catch (AssertionFailedError a) {
+            LOG.trace("", a);
             // expected
         }
     }
@@ -110,6 +116,7 @@ public class ReflectionAssertPropertiesTest
             assertPropertyReflectionEquals("stringProperty", "stringValue", testObject);
             fail("Expected AssertionFailedError");
         } catch (AssertionFailedError a) {
+            LOG.trace("", a);
             // expected
         }
     }
@@ -122,6 +129,7 @@ public class ReflectionAssertPropertiesTest
             assertPropertyReflectionEquals("aProperty", "aValue", null);
             fail("Expected AssertionFailedError");
         } catch (AssertionFailedError a) {
+            LOG.trace("", a);
             // expected
         }
     }

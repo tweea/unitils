@@ -12,6 +12,8 @@
  */
 package org.unitils.mock.core;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -26,6 +28,7 @@ import static org.junit.Assert.fail;
  * @author Filip Neven
  */
 public class MockObjectRaisesTest {
+    private static final Log LOG = LogFactory.getLog(MockObjectRaisesTest.class);
 
     /* Class under test */
     private MockObject<TestClass> mockObject;
@@ -47,12 +50,14 @@ public class MockObjectRaisesTest {
         try {
             mockObject.getMock().testMethodString();
         } catch (ThreadDeath e) {
+            LOG.trace("", e);
             exception1 = true;
         }
         boolean exception2 = false;
         try {
             mockObject.getMock().testMethodString();
         } catch (ThreadDeath e) {
+            LOG.trace("", e);
             exception2 = true;
         }
         assertTrue(exception1);
@@ -71,12 +76,14 @@ public class MockObjectRaisesTest {
         try {
             mockObject.getMock().testMethodString();
         } catch (ThreadDeath e) {
+            LOG.trace("", e);
             exception1 = true;
         }
         boolean exception2 = false;
         try {
             mockObject.getMock().testMethodString();
         } catch (ThreadDeath e) {
+            LOG.trace("", e);
             exception2 = true;
         }
         assertTrue(exception1);
@@ -91,6 +98,7 @@ public class MockObjectRaisesTest {
             mockObject.getMock().testMethodString();
             fail("Expected exception");
         } catch (IllegalArgumentException e) {
+            LOG.trace("", e);
             // expected
         }
     }
@@ -103,6 +111,7 @@ public class MockObjectRaisesTest {
             mockObject.getMock().testMethodString();
             fail("Expected exception");
         } catch (IllegalArgumentException e) {
+            LOG.trace("", e);
             // expected
         }
     }

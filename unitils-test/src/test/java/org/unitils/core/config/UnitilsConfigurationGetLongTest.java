@@ -14,6 +14,8 @@ package org.unitils.core.config;
 
 import java.util.Properties;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.junit.Before;
 import org.junit.Test;
 import org.unitils.core.UnitilsException;
@@ -26,6 +28,7 @@ import static org.junit.Assert.fail;
  * @author Filip Neven
  */
 public class UnitilsConfigurationGetLongTest {
+    private static final Log LOG = LogFactory.getLog(UnitilsConfigurationGetLongTest.class);
 
     /* Tested object */
     private UnitilsConfiguration unitilsConfiguration;
@@ -70,6 +73,7 @@ public class UnitilsConfigurationGetLongTest {
             unitilsConfiguration.getLong("xxx");
             fail("Expected UnitilsException");
         } catch (UnitilsException e) {
+            LOG.trace("", e);
             // expected
         }
     }
@@ -86,6 +90,7 @@ public class UnitilsConfigurationGetLongTest {
             unitilsConfiguration.getLong("invalidLongValue");
             fail("Expected UnitilsException");
         } catch (UnitilsException e) {
+            LOG.trace("", e);
             // expected
         }
     }
@@ -96,6 +101,7 @@ public class UnitilsConfigurationGetLongTest {
             unitilsConfiguration.getLong("invalidLongValue", 6L);
             fail("Expected UnitilsException");
         } catch (UnitilsException e) {
+            LOG.trace("", e);
             // expected
         }
     }

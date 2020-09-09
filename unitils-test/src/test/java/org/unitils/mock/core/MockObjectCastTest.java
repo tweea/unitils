@@ -34,10 +34,11 @@ public class MockObjectCastTest
     @Test
     public void testCasting()
         throws Exception {
-        assertNotNull((TimerTask) myTimerTask.getMock());
+        MyTimerTask myTimerTaskMock = myTimerTask.getMock();
+        assertNotNull(myTimerTaskMock);
 
         Timer timer = new Timer();
-        timer.schedule(myTimerTask.getMock(), 0);
+        timer.schedule(myTimerTaskMock, 0);
     }
 
     public static class MyTimerTask

@@ -107,6 +107,10 @@ public class JpaModuleInjectionTest {
             this.entityManagerSetter = entityManagerSetter;
         }
 
+        /**
+         * @param factoryBean
+         *     Used for testing
+         */
         @JpaEntityManagerFactory
         public void customInitializer(LocalContainerEntityManagerFactoryBean factoryBean) {
             customInitializerCalled = true;

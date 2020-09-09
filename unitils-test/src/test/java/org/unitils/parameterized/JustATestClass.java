@@ -37,6 +37,10 @@ public class JustATestClass {
         return "";
     }
 
+    /**
+     * @param param1
+     *     Used for testing
+     */
     @Test
     public void test4(String param1) {
         // test method

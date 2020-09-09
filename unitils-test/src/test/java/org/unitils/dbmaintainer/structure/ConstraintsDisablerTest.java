@@ -17,6 +17,8 @@ import java.util.Properties;
 
 import javax.sql.DataSource;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -44,6 +46,7 @@ import static org.unitils.dbmaintainer.util.DatabaseModuleConfigUtils.getConfigu
  */
 public class ConstraintsDisablerTest
     extends UnitilsJUnit4 {
+    private static final Log LOG = LogFactory.getLog(ConstraintsDisablerTest.class);
 
     /* The tested object */
     private ConstraintsDisabler constraintsDisabler;
@@ -95,6 +98,7 @@ public class ConstraintsDisablerTest
             executeUpdate("insert into table2 (col1) values ('test')", dataSource);
             fail("UnitilsException should have been thrown");
         } catch (UnitilsException e) {
+            LOG.trace("", e);
             // Expected foreign key violation
         }
         constraintsDisabler.disableConstraints();
@@ -113,6 +117,7 @@ public class ConstraintsDisablerTest
             executeUpdate("insert into table3 (col1) values ('test')", dataSource);
             fail("UnitilsException should have been thrown");
         } catch (UnitilsException e) {
+            LOG.trace("", e);
             // Expected foreign key violation
         }
         constraintsDisabler.disableConstraints();
@@ -130,6 +135,7 @@ public class ConstraintsDisablerTest
             executeUpdate("insert into table1 (col1, col2) values ('test', null)", dataSource);
             fail("UnitilsException should have been thrown");
         } catch (UnitilsException e) {
+            LOG.trace("", e);
             // Expected not null violation
         }
         constraintsDisabler.disableConstraints();

@@ -12,6 +12,8 @@
  */
 package org.unitils.core.util;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.unitils.core.UnitilsException;
 import org.unitils.core.dbsupport.DbSupport;
 
@@ -22,6 +24,8 @@ import org.unitils.core.dbsupport.DbSupport;
  * @author Filip Neven
  */
 public class SQLTestUtils {
+    private static final Log LOG = LogFactory.getLog(SQLTestUtils.class);
+
     /**
      * Drops the test tables
      *
@@ -36,6 +40,7 @@ public class SQLTestUtils {
                 String correctCaseTableName = dbSupport.toCorrectCaseIdentifier(tableName);
                 dbSupport.dropTable(correctCaseTableName);
             } catch (UnitilsException e) {
+                LOG.trace("", e);
                 // Ignored
             }
         }
@@ -55,6 +60,7 @@ public class SQLTestUtils {
                 String correctCaseViewName = dbSupport.toCorrectCaseIdentifier(viewName);
                 dbSupport.dropView(correctCaseViewName);
             } catch (UnitilsException e) {
+                LOG.trace("", e);
                 // Ignored
             }
         }
@@ -74,6 +80,7 @@ public class SQLTestUtils {
                 String correctCaseViewName = dbSupport.toCorrectCaseIdentifier(materializedViewName);
                 dbSupport.dropMaterializedView(correctCaseViewName);
             } catch (UnitilsException e) {
+                LOG.trace("", e);
                 // Ignored
             }
         }
@@ -93,6 +100,7 @@ public class SQLTestUtils {
                 String correctCaseSynonymName = dbSupport.toCorrectCaseIdentifier(synonymName);
                 dbSupport.dropSynonym(correctCaseSynonymName);
             } catch (UnitilsException e) {
+                LOG.trace("", e);
                 // Ignored
             }
         }
@@ -112,6 +120,7 @@ public class SQLTestUtils {
                 String correctCaseSequenceName = dbSupport.toCorrectCaseIdentifier(sequenceName);
                 dbSupport.dropSequence(correctCaseSequenceName);
             } catch (UnitilsException e) {
+                LOG.trace("", e);
                 // Ignored
             }
         }
@@ -131,6 +140,7 @@ public class SQLTestUtils {
                 String correctCaseTriggerName = dbSupport.toCorrectCaseIdentifier(triggerName);
                 dbSupport.dropTrigger(correctCaseTriggerName);
             } catch (UnitilsException e) {
+                LOG.trace("", e);
                 // Ignored
             }
         }
@@ -150,6 +160,7 @@ public class SQLTestUtils {
                 String correctCaseTypeName = dbSupport.toCorrectCaseIdentifier(typeName);
                 dbSupport.dropType(correctCaseTypeName);
             } catch (UnitilsException e) {
+                LOG.trace("", e);
                 // Ignored
             }
         }

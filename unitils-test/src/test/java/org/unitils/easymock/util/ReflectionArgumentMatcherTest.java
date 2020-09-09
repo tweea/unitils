@@ -15,6 +15,8 @@ package org.unitils.easymock.util;
 import java.util.Arrays;
 import java.util.List;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -31,6 +33,7 @@ import static org.unitils.reflectionassert.ReflectionComparatorMode.LENIENT_ORDE
  * Test for {@link org.unitils.easymock.util.ReflectionArgumentMatcher}.
  */
 public class ReflectionArgumentMatcherTest {
+    private static final Log LOG = LogFactory.getLog(ReflectionArgumentMatcherTest.class);
 
     /* A test mock instance */
     private TestMock testMock;
@@ -68,6 +71,7 @@ public class ReflectionArgumentMatcherTest {
             testMock.method("xxxx", 3, "objectValue1", "objectValue2");
             fail("Expected AssertionError");
         } catch (AssertionError e) {
+            LOG.trace("", e);
             // expected
         }
     }
@@ -84,6 +88,7 @@ public class ReflectionArgumentMatcherTest {
             testMock.method("stringValue", 3, "objectValue1");
             fail("Expected AssertionError");
         } catch (AssertionError e) {
+            LOG.trace("", e);
             // expected
         }
     }
@@ -125,6 +130,7 @@ public class ReflectionArgumentMatcherTest {
             testMock.method(Arrays.asList("element3", "element1", "element2"));
             fail("Expected AssertionError");
         } catch (AssertionError e) {
+            LOG.trace("", e);
             // expected
         }
     }
@@ -153,6 +159,7 @@ public class ReflectionArgumentMatcherTest {
             testMock.method(Arrays.asList("element3", "element1", "element2"));
             fail("Expected AssertionError");
         } catch (AssertionError e) {
+            LOG.trace("", e);
             // expected
         }
     }

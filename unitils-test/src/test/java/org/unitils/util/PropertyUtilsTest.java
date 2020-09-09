@@ -16,6 +16,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.unitils.core.UnitilsException;
 
 import junit.framework.TestCase;
@@ -37,6 +39,7 @@ import static org.unitils.util.PropertyUtils.getStringList;
  */
 public class PropertyUtilsTest
     extends TestCase {
+    private static final Log LOG = LogFactory.getLog(PropertyUtilsTest.class);
 
     /* A test properties instance */
     private Properties testProperties;
@@ -75,6 +78,7 @@ public class PropertyUtilsTest
             getString("xxxx", testProperties);
             fail("Expected UnitilsException");
         } catch (UnitilsException e) {
+            LOG.trace("", e);
             // expected
         }
     }
@@ -119,6 +123,7 @@ public class PropertyUtilsTest
             getStringList("xxxx", testProperties, true);
             fail("Expected UnitilsException");
         } catch (UnitilsException e) {
+            LOG.trace("", e);
             // expected
         }
     }
@@ -139,6 +144,7 @@ public class PropertyUtilsTest
             getBoolean("xxxx", testProperties);
             fail("Expected UnitilsException");
         } catch (UnitilsException e) {
+            LOG.trace("", e);
             // expected
         }
     }
@@ -175,6 +181,7 @@ public class PropertyUtilsTest
             getLong("stringProperty", testProperties);
             fail("Expected UnitilsException");
         } catch (UnitilsException e) {
+            LOG.trace("", e);
             // expected
         }
     }
@@ -187,6 +194,7 @@ public class PropertyUtilsTest
             getLong("xxxx", testProperties);
             fail("Expected UnitilsException");
         } catch (UnitilsException e) {
+            LOG.trace("", e);
             // expected
         }
     }
@@ -207,6 +215,7 @@ public class PropertyUtilsTest
             getLong("stringProperty", 10, testProperties);
             fail("Expected UnitilsException");
         } catch (UnitilsException e) {
+            LOG.trace("", e);
             // expected
         }
     }
@@ -235,6 +244,7 @@ public class PropertyUtilsTest
             getInstance("xxxx", testProperties);
             fail("Expected UnitilsException");
         } catch (UnitilsException e) {
+            LOG.trace("", e);
             // expected
         }
     }
@@ -247,6 +257,7 @@ public class PropertyUtilsTest
             getInstance("stringProperty", testProperties);
             fail("Expected UnitilsException");
         } catch (UnitilsException e) {
+            LOG.trace("", e);
             // expected
         }
     }
@@ -275,6 +286,7 @@ public class PropertyUtilsTest
             getInstance("stringProperty", new ArrayList<>(), testProperties);
             fail("Expected UnitilsException");
         } catch (UnitilsException e) {
+            LOG.trace("", e);
             // expected
         }
     }

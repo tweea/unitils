@@ -17,6 +17,8 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.junit.Before;
 import org.junit.Test;
 import org.unitils.core.ConfigurationLoader;
@@ -37,6 +39,7 @@ import static org.junit.Assert.fail;
  * @author Filip Neven
  */
 public class SpringModuleSpringBeansTest {
+    private static final Log LOG = LogFactory.getLog(SpringModuleSpringBeansTest.class);
 
     /* Tested object */
     private SpringModule springModule;
@@ -108,6 +111,7 @@ public class SpringModuleSpringBeansTest {
             springModule.injectSpringBeans(springTestNotFound);
             fail("Expected UnitilsException");
         } catch (UnitilsException e) {
+            LOG.trace("", e);
             // expected
         }
         assertNull(springTestNotFound.testBean);
@@ -123,6 +127,7 @@ public class SpringModuleSpringBeansTest {
             springModule.injectSpringBeansByType(springTestByTypeNotFound);
             fail("Expected UnitilsException");
         } catch (UnitilsException e) {
+            LOG.trace("", e);
             // expected
         }
         assertNull(springTestByTypeNotFound.testBean);
@@ -138,6 +143,7 @@ public class SpringModuleSpringBeansTest {
             springModule.injectSpringBeansByType(springTestByTypeAmbiguous);
             fail("Expected UnitilsException");
         } catch (UnitilsException e) {
+            LOG.trace("", e);
             // expected
         }
         assertNull(springTestByTypeAmbiguous.testBean);
@@ -153,6 +159,7 @@ public class SpringModuleSpringBeansTest {
             springModule.injectSpringBeansByName(springTestByNameNotFound);
             fail("Expected UnitilsException");
         } catch (UnitilsException e) {
+            LOG.trace("", e);
             // expected
         }
         assertNull(springTestByNameNotFound.xxxx);

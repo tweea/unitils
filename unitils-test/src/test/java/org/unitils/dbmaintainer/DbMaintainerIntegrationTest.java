@@ -220,6 +220,7 @@ public class DbMaintainerIntegrationTest
         try {
             updateDatabase();
         } catch (UnitilsException e) {
+            logger.trace("", e);
             // TODO assertMessageContains(e.getMessage(), "existing", "modified", INITIAL_INCREMENTAL_1 + ".sql");
         }
     }
@@ -250,6 +251,7 @@ public class DbMaintainerIntegrationTest
         try {
             updateDatabase();
         } catch (UnitilsException e) {
+            logger.trace("", e);
             // TODO assertMessageContains(e.getMessage(), "added", "lower index", NEW_INCREMENTAL_LOWER_INDEX + ".sql");
         }
     }
@@ -280,6 +282,7 @@ public class DbMaintainerIntegrationTest
         try {
             updateDatabase();
         } catch (UnitilsException e) {
+            logger.trace("", e);
             // TODO assertMessageContains(e.getMessage(), "removed", INITIAL_INCREMENTAL_1 + ".sql");
         }
     }
@@ -376,6 +379,7 @@ public class DbMaintainerIntegrationTest
         try {
             updateDatabase();
         } catch (UnitilsException e) {
+            logger.trace("", e);
             // TODO assertMessageContains(e.getMessage(), "error", INITIAL_INCREMENTAL_2 + ".sql");
         }
         try {
@@ -554,6 +558,7 @@ public class DbMaintainerIntegrationTest
         } catch (IOException e) {
             throw new UnitilsException(e);
         } catch (IllegalArgumentException e) {
+            logger.trace("", e);
             // Ignored
         }
     }

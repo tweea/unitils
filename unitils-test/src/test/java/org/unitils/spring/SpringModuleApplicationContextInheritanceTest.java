@@ -114,6 +114,10 @@ public class SpringModuleApplicationContextInheritanceTest {
     private class SpringTestSuper {
         protected boolean createMethod1Called = false;
 
+        /**
+         * @param locations
+         *     Used for testing
+         */
         @SpringApplicationContext
         protected ApplicationContext createMethod1(List<String> locations) {
             createMethod1Called = true;

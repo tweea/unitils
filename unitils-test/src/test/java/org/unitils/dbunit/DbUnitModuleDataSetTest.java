@@ -18,6 +18,8 @@ import java.util.Set;
 
 import javax.sql.DataSource;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -50,6 +52,7 @@ import static org.unitils.reflectionassert.ReflectionAssert.assertLenientEquals;
  */
 public class DbUnitModuleDataSetTest
     extends UnitilsJUnit4 {
+    private static final Log LOG = LogFactory.getLog(DbUnitModuleDataSetTest.class);
 
     /* Tested object */
     private DbUnitModule dbUnitModule;
@@ -113,6 +116,7 @@ public class DbUnitModuleDataSetTest
             dbUnitModule.insertDataSet(DataSetTest.class.getMethod("testNotFound1"), new DataSetTest());
             fail("Expected UnitilsException");
         } catch (UnitilsException e) {
+            LOG.trace("", e);
             // expected
         }
     }
@@ -127,6 +131,7 @@ public class DbUnitModuleDataSetTest
             dbUnitModule.insertDataSet(DataSetTest.class.getMethod("testNotFound2"), new DataSetTest());
             fail("Expected UnitilsException");
         } catch (UnitilsException e) {
+            LOG.trace("", e);
             // expected
         }
     }
