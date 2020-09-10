@@ -14,7 +14,7 @@ package org.unitils.database.config;
 
 import java.util.List;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * @author Tim Ducheyne

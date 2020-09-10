@@ -20,7 +20,7 @@ import org.unitils.io.conversion.ConversionStrategy;
 import org.unitils.io.filecontent.FileContentReader;
 import org.unitils.io.reader.ReadingStrategy;
 
-import static org.apache.commons.lang.StringUtils.isBlank;
+import static org.apache.commons.lang3.StringUtils.isBlank;
 import static org.unitils.thirdparty.org.apache.commons.io.IOUtils.closeQuietly;
 
 /**

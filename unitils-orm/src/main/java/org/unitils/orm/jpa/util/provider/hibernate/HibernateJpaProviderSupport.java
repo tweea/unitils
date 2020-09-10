@@ -24,7 +24,7 @@ import org.unitils.core.UnitilsException;
 import org.unitils.orm.hibernate.util.HibernateAssert;
 import org.unitils.orm.jpa.util.JpaProviderSupport;
 
-import static org.apache.commons.lang.StringUtils.isEmpty;
+import static org.apache.commons.lang3.StringUtils.isEmpty;
 
 /**
  * Implementation of {@link JpaProviderSupport} for hibernate JPA

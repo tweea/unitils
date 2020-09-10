@@ -8,7 +8,7 @@ import java.io.OutputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.unitils.core.UnitilsException;
 import org.unitils.thirdparty.org.apache.commons.io.IOUtils;
 

@@ -24,8 +24,8 @@ import java.util.Set;
 import org.unitils.core.util.ObjectFormatter;
 import org.unitils.mock.core.proxy.ProxyInvocation;
 
-import static org.apache.commons.lang.StringUtils.rightPad;
-import static org.apache.commons.lang.StringUtils.uncapitalize;
+import static org.apache.commons.lang3.StringUtils.rightPad;
+import static org.apache.commons.lang3.StringUtils.uncapitalize;
 import static org.unitils.util.ReflectionUtils.getAllFields;
 import static org.unitils.util.ReflectionUtils.getFieldValue;
 

@@ -21,7 +21,7 @@ import java.util.Properties;
 import org.unitils.core.Module;
 import org.unitils.core.UnitilsException;
 
-import static org.apache.commons.lang.ClassUtils.getShortClassName;
+import static org.apache.commons.lang3.ClassUtils.getShortClassName;
 import static org.unitils.util.PropertyUtils.containsProperty;
 import static org.unitils.util.PropertyUtils.getString;
 import static org.unitils.util.ReflectionUtils.getClassWithName;

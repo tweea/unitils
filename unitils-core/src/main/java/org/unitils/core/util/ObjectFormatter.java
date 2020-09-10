@@ -29,7 +29,7 @@ import org.slf4j.LoggerFactory;
 import static java.lang.reflect.Modifier.isStatic;
 import static java.lang.reflect.Modifier.isTransient;
 
-import static org.apache.commons.lang.ClassUtils.getShortClassName;
+import static org.apache.commons.lang3.ClassUtils.getShortClassName;
 import static org.unitils.reflectionassert.util.HibernateUtil.getUnproxiedValue;
 
 /**

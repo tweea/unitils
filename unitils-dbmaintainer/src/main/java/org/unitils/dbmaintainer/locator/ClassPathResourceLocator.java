@@ -13,7 +13,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.unitils.core.UnitilsException;
 
-import static org.apache.commons.lang.StringUtils.replace;
+import static org.apache.commons.lang3.StringUtils.replace;
 
 /**
  * Abstract class to locate resources on the classpath.

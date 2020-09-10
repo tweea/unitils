@@ -37,7 +37,7 @@ import org.unitils.dbmaintainer.util.DatabaseModuleConfigUtils;
 import org.unitils.thirdparty.org.apache.commons.io.IOUtils;
 import org.unitils.util.PropertyUtils;
 
-import static org.apache.commons.lang.StringUtils.deleteWhitespace;
+import static org.apache.commons.lang3.StringUtils.deleteWhitespace;
 import static org.junit.Assert.assertTrue;
 import static org.unitils.database.SQLUnitils.executeUpdate;
 import static org.unitils.database.SQLUnitils.executeUpdateQuietly;

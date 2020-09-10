@@ -36,8 +36,8 @@ import org.unitils.mock.mockbehavior.MockBehavior;
 import org.unitils.mock.mockbehavior.impl.ExceptionThrowingMockBehavior;
 import org.unitils.mock.mockbehavior.impl.ValueReturningMockBehavior;
 
-import static org.apache.commons.lang.StringUtils.isBlank;
-import static org.apache.commons.lang.StringUtils.uncapitalize;
+import static org.apache.commons.lang3.StringUtils.isBlank;
+import static org.apache.commons.lang3.StringUtils.uncapitalize;
 import static org.unitils.mock.core.proxy.ProxyFactory.createInitializedOrUninitializedInstanceOfType;
 import static org.unitils.util.ReflectionUtils.getGenericType;
 

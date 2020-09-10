@@ -14,7 +14,7 @@ package org.unitils.core;
 
 import java.util.Properties;
 
-import org.apache.commons.lang.text.StrSubstitutor;
+import org.apache.commons.text.StringSubstitutor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.unitils.core.util.PropertiesReader;
@@ -166,7 +166,7 @@ public class ConfigurationLoader {
         for (Object key : properties.keySet()) {
             Object value = properties.get(key);
             try {
-                String expandedValue = StrSubstitutor.replace(value, properties);
+                String expandedValue = StringSubstitutor.replace(value, properties);
                 properties.put(key, expandedValue);
             } catch (Exception e) {
                 throw new UnitilsException("Unable to load unitils configuration. Could not expand property value for key: " + key + ", value " + value, e);

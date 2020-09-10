@@ -25,7 +25,7 @@ import org.unitils.reflectionassert.difference.ObjectDifference;
 import org.unitils.reflectionassert.difference.UnorderedCollectionDifference;
 import org.unitils.reflectionassert.report.DifferenceView;
 
-import static org.apache.commons.lang.ClassUtils.getShortClassName;
+import static org.apache.commons.lang3.ClassUtils.getShortClassName;
 import static org.unitils.reflectionassert.report.impl.DefaultDifferenceReport.MatchType.NO_MATCH;
 
 /**

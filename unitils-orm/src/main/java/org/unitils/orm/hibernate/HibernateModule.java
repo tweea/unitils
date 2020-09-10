@@ -44,7 +44,7 @@ import org.unitils.orm.hibernate.util.HibernateSessionFactoryLoader;
 import org.unitils.util.AnnotationUtils;
 import org.unitils.util.ReflectionUtils;
 
-import static org.apache.commons.lang.StringUtils.isEmpty;
+import static org.apache.commons.lang3.StringUtils.isEmpty;
 import static org.unitils.util.PropertyUtils.getString;
 
 /**

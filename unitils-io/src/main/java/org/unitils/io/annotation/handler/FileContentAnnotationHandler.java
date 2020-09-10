@@ -21,7 +21,7 @@ import org.unitils.core.UnitilsException;
 import org.unitils.io.annotation.FileContent;
 import org.unitils.io.filecontent.FileContentReader;
 
-import static org.apache.commons.lang.StringUtils.isEmpty;
+import static org.apache.commons.lang3.StringUtils.isEmpty;
 import static org.unitils.util.AnnotationUtils.getFieldsAnnotatedWith;
 import static org.unitils.util.ReflectionUtils.setFieldValue;
 

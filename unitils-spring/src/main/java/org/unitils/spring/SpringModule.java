@@ -40,7 +40,7 @@ import org.unitils.spring.util.ApplicationContextManager;
 import org.unitils.util.AnnotationUtils;
 import org.unitils.util.ReflectionUtils;
 
-import static org.apache.commons.lang.StringUtils.isEmpty;
+import static org.apache.commons.lang3.StringUtils.isEmpty;
 import static org.unitils.util.AnnotationUtils.getFieldsAnnotatedWith;
 import static org.unitils.util.AnnotationUtils.getMethodOrClassLevelAnnotationProperty;
 import static org.unitils.util.AnnotationUtils.getMethodsAnnotatedWith;

@@ -25,7 +25,7 @@ import java.lang.reflect.Type;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.unitils.core.UnitilsException;
@@ -34,7 +34,7 @@ import org.unitils.core.util.TypeUtils;
 import static java.lang.reflect.Modifier.isStatic;
 import static java.util.Arrays.asList;
 
-import static org.apache.commons.lang.StringUtils.capitalize;
+import static org.apache.commons.lang3.StringUtils.capitalize;
 
 /**
  * Utility methods that use reflection for instance creation or class

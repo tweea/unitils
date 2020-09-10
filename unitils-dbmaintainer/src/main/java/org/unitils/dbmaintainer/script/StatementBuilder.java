@@ -1,6 +1,6 @@
 package org.unitils.dbmaintainer.script;
 
-import static org.apache.commons.lang.StringUtils.isEmpty;
+import static org.apache.commons.lang3.StringUtils.isEmpty;
 
 /**
  * A class for building statements.

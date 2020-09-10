@@ -18,7 +18,7 @@ import java.util.Map;
 
 import org.unitils.core.UnitilsException;
 
-import static org.apache.commons.lang.StringUtils.isBlank;
+import static org.apache.commons.lang3.StringUtils.isBlank;
 
 /**
  * @author Tim Ducheyne
