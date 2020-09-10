@@ -114,6 +114,10 @@ License. ~ */ -->
             <version>3.6.10.Final</version>
             <exclusions>
                 <exclusion>
+                    <groupId>commons-collections</groupId>
+                    <artifactId>commons-collections</artifactId>
+                </exclusion>
+                <exclusion>
                     <groupId>javax.transaction</groupId>
                     <artifactId>jta</artifactId>
                 </exclusion>
