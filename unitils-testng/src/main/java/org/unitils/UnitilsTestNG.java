@@ -90,7 +90,7 @@ public abstract class UnitilsTestNG
     public void run(IHookCallBack callBack, ITestResult testResult) {
         Throwable beforeTestMethodException = null;
         try {
-            getTestListener().beforeTestMethod(this, testResult.getMethod().getMethod());
+            getTestListener().beforeTestMethod(this, testResult.getMethod().getConstructorOrMethod().getMethod());
         } catch (Throwable e) {
             // hold exception until later, first call afterTestMethod
             beforeTestMethodException = e;
@@ -109,7 +109,7 @@ public abstract class UnitilsTestNG
 
         Throwable afterTestMethodException = null;
         try {
-            getTestListener().afterTestMethod(this, testResult.getMethod().getMethod(),
+            getTestListener().afterTestMethod(this, testResult.getMethod().getConstructorOrMethod().getMethod(),
                 beforeTestMethodException != null ? beforeTestMethodException : testMethodException);
         } catch (Throwable e) {
             afterTestMethodException = e;
