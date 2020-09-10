@@ -22,10 +22,10 @@ import java.security.DigestInputStream;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-import org.hibernate.engine.jdbc.ReaderInputStream;
 import org.unitils.core.UnitilsException;
 import org.unitils.thirdparty.org.apache.commons.io.IOUtils;
 import org.unitils.thirdparty.org.apache.commons.io.NullWriter;
+import org.unitils.util.ReaderInputStream;
 
 /**
  * A handle for getting the script content as a stream.
