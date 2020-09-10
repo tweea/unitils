@@ -1,12 +1,13 @@
 package org.unitils.dbmaintainer.locator;
 
-import org.apache.log4j.Logger;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.unitils.UnitilsJUnit4TestClassRunner;
 import org.unitils.core.Unitils;
 import org.unitils.database.DatabaseModule;
@@ -23,7 +24,7 @@ import org.unitils.dbunit.util.FileHandler;
  */
 @RunWith(UnitilsJUnit4TestClassRunner.class)
 public class ResourceLoadingMethodTest {
-    private static final Logger LOGGER = Logger.getLogger(ResourceLoadingMethodTest.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ResourceLoadingMethodTest.class);
 
     @BeforeClass
     public static void setUp() {

@@ -3,10 +3,11 @@ package org.unitils.parameterized;
 import java.util.Arrays;
 import java.util.Collection;
 
-import org.apache.log4j.Logger;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized.Parameters;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.unitils.UnitilsParameterized;
 
 /**
@@ -19,7 +20,7 @@ import org.unitils.UnitilsParameterized;
  */
 @RunWith(UnitilsParameterized.class)
 public class UnitilsParametersNullParametersStveParametersTest {
-    private static final Logger LOGGER = Logger.getLogger(UnitilsParametersNullParametersStveParametersTest.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(UnitilsParametersNullParametersStveParametersTest.class);
 
     @Parameters
     public static Collection<Object[]> data() {
@@ -45,6 +46,6 @@ public class UnitilsParametersNullParametersStveParametersTest {
 
     @Test
     public void test() {
-        LOGGER.debug(number);
+        LOGGER.debug("{}", number);
     }
 }
