@@ -22,7 +22,7 @@ import org.hibernate.dialect.Dialect;
 import org.hibernate.tool.hbm2ddl.DatabaseMetadata;
 import org.unitils.core.UnitilsException;
 
-import static junit.framework.Assert.assertTrue;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Assert class that offers assert methods for testing things that are specific to Hibernate.

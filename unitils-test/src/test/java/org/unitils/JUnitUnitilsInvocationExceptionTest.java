@@ -130,7 +130,7 @@ public class JUnitUnitilsInvocationExceptionTest
      * @see #assertInvocationOrder_beforeTestSetUp
      */
     @Test
-    public void testBeforeTestSetUp_AssertionFailedError()
+    public void testBeforeTestSetUp_AssertionError()
         throws Exception {
         tracingTestListener.expectExceptionInMethod(LISTENER_BEFORE_TEST_SET_UP, true);
         testExecutor.runTests(testClass);
@@ -170,7 +170,7 @@ public class JUnitUnitilsInvocationExceptionTest
      * @see #assertInvocationOrder_testSetUp
      */
     @Test
-    public void testTestSetUp_AssertionFailedError()
+    public void testTestSetUp_AssertionError()
         throws Exception {
         tracingTestListener.expectExceptionInMethod(TEST_SET_UP, true);
         testExecutor.runTests(testClass);
@@ -205,7 +205,7 @@ public class JUnitUnitilsInvocationExceptionTest
      * @see #assertInvocationOrder_beforeTestMethod
      */
     @Test
-    public void testBeforeTestMethod_AssertionFailedError()
+    public void testBeforeTestMethod_AssertionError()
         throws Exception {
         tracingTestListener.expectExceptionInMethod(LISTENER_BEFORE_TEST_METHOD, true);
         testExecutor.runTests(testClass);
@@ -235,7 +235,7 @@ public class JUnitUnitilsInvocationExceptionTest
      * @see #assertInvocationOrder
      */
     @Test
-    public void testTestMethod_AssertionFailedError()
+    public void testTestMethod_AssertionError()
         throws Exception {
         tracingTestListener.expectExceptionInMethod(TEST_METHOD, true);
         testExecutor.runTests(testClass);
@@ -265,7 +265,7 @@ public class JUnitUnitilsInvocationExceptionTest
      * @see #assertInvocationOrder
      */
     @Test
-    public void testAfterTestMethod_AssertionFailedError()
+    public void testAfterTestMethod_AssertionError()
         throws Exception {
         tracingTestListener.expectExceptionInMethod(LISTENER_AFTER_TEST_METHOD, true);
         testExecutor.runTests(testClass);
@@ -297,7 +297,7 @@ public class JUnitUnitilsInvocationExceptionTest
      * @see #assertInvocationOrder
      */
     @Test
-    public void testTestTearDown_AssertionFailedError()
+    public void testTestTearDown_AssertionError()
         throws Exception {
         tracingTestListener.expectExceptionInMethod(TEST_TEAR_DOWN, true);
         testExecutor.runTests(testClass);
@@ -331,7 +331,7 @@ public class JUnitUnitilsInvocationExceptionTest
      * @see #assertInvocationOrder_afterTestTearDown
      */
     @Test
-    public void testAfterTestTearDown_AssertionFailedError()
+    public void testAfterTestTearDown_AssertionError()
         throws Exception {
         tracingTestListener.expectExceptionInMethod(LISTENER_AFTER_TEST_TEARDOWN, true);
         testExecutor.runTests(testClass);

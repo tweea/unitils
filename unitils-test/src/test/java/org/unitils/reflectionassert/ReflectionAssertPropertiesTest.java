@@ -15,7 +15,6 @@ package org.unitils.reflectionassert;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import junit.framework.AssertionFailedError;
 import junit.framework.TestCase;
 
 import static org.unitils.reflectionassert.ReflectionAssert.assertPropertyLenientEquals;
@@ -87,8 +86,8 @@ public class ReflectionAssertPropertiesTest
     public void testAssertPropertyReflectionEquals_notEqualsDifferentValues() {
         try {
             assertPropertyReflectionEquals("stringProperty", "xxxxxx", testObject);
-            fail("Expected AssertionFailedError");
-        } catch (AssertionFailedError a) {
+            fail("Expected AssertionError");
+        } catch (AssertionError a) {
             LOG.trace("", a);
             // expected
         }
@@ -100,8 +99,8 @@ public class ReflectionAssertPropertiesTest
     public void testAssertPropertyReflectionEquals_leftNull() {
         try {
             assertPropertyReflectionEquals("stringProperty", null, testObject);
-            fail("Expected AssertionFailedError");
-        } catch (AssertionFailedError a) {
+            fail("Expected AssertionError");
+        } catch (AssertionError a) {
             LOG.trace("", a);
             // expected
         }
@@ -114,8 +113,8 @@ public class ReflectionAssertPropertiesTest
         testObject.setStringProperty(null);
         try {
             assertPropertyReflectionEquals("stringProperty", "stringValue", testObject);
-            fail("Expected AssertionFailedError");
-        } catch (AssertionFailedError a) {
+            fail("Expected AssertionError");
+        } catch (AssertionError a) {
             LOG.trace("", a);
             // expected
         }
@@ -127,8 +126,8 @@ public class ReflectionAssertPropertiesTest
     public void testAssertPropertyReflectionEquals_actualObjectNull() {
         try {
             assertPropertyReflectionEquals("aProperty", "aValue", null);
-            fail("Expected AssertionFailedError");
-        } catch (AssertionFailedError a) {
+            fail("Expected AssertionError");
+        } catch (AssertionError a) {
             LOG.trace("", a);
             // expected
         }

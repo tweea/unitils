@@ -17,8 +17,6 @@ import java.util.List;
 
 import org.junit.Test;
 
-import junit.framework.AssertionFailedError;
-
 /**
  * Tests for correct handling of traversed instances pairs in ReflectionAssert.
  * <p/>
@@ -72,7 +70,7 @@ public class ReflectionAssertTraversedInstanceTest {
      * Same as doubleCheckTest(), but showing a case when assert should actually fail, but it doesn't.
      * This test case is highly dependent on order of fields in collection returned by {@link Class#getDeclaredFields()}
      */
-    @Test(expected = AssertionFailedError.class)
+    @Test(expected = AssertionError.class)
     public void doubleCheckTestShouldFail() {
         Parent root1 = new Parent("root");
         Parent root2 = new Parent("root");

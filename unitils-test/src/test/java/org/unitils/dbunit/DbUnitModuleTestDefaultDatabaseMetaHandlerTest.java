@@ -7,6 +7,7 @@ import org.dbunit.database.DefaultMetadataHandler;
 import org.dbunit.database.IMetadataHandler;
 import org.dbunit.ext.mysql.MySqlMetadataHandler;
 import org.hamcrest.CoreMatchers;
+import org.hamcrest.MatcherAssert;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -48,7 +49,7 @@ public class DbUnitModuleTestDefaultDatabaseMetaHandlerTest {
         Object metaHandler = databaseConfig.getProperty(DatabaseConfig.PROPERTY_METADATA_HANDLER);
 
         Assert.assertNotNull(metaHandler);
-        Assert.assertThat(metaHandler, CoreMatchers.instanceOf(DefaultMetadataHandler.class));
+        MatcherAssert.assertThat(metaHandler, CoreMatchers.instanceOf(DefaultMetadataHandler.class));
     }
 
     /**
@@ -65,7 +66,7 @@ public class DbUnitModuleTestDefaultDatabaseMetaHandlerTest {
         Object metaHandler = databaseConfig.getProperty(DatabaseConfig.PROPERTY_METADATA_HANDLER);
 
         Assert.assertNotNull(metaHandler);
-        Assert.assertThat(metaHandler, CoreMatchers.instanceOf(MySqlMetadataHandler.class));
+        MatcherAssert.assertThat(metaHandler, CoreMatchers.instanceOf(MySqlMetadataHandler.class));
     }
 
     @Test
@@ -76,7 +77,7 @@ public class DbUnitModuleTestDefaultDatabaseMetaHandlerTest {
 
         IMetadataHandler metaHandler1 = sut.getDefaultDatabaseMetaHandler();
         Assert.assertNotNull(metaHandler1);
-        Assert.assertThat(metaHandler1, CoreMatchers.instanceOf(DefaultMetadataHandler.class));
+        MatcherAssert.assertThat(metaHandler1, CoreMatchers.instanceOf(DefaultMetadataHandler.class));
 
         prop = new Properties();
         prop.setProperty("org.dbunit.database.IMetadataHandler.implClassName", "org.dbunit.ext.mysql.MySqlMetadataHandler");
@@ -85,6 +86,6 @@ public class DbUnitModuleTestDefaultDatabaseMetaHandlerTest {
         metaHandler1 = sut.getDefaultDatabaseMetaHandler();
 
         Assert.assertNotNull(metaHandler1);
-        Assert.assertThat(metaHandler1, CoreMatchers.instanceOf(MySqlMetadataHandler.class));
+        MatcherAssert.assertThat(metaHandler1, CoreMatchers.instanceOf(MySqlMetadataHandler.class));
     }
 }

@@ -16,8 +16,6 @@ import org.unitils.core.util.ObjectFormatter;
 import org.unitils.reflectionassert.difference.Difference;
 import org.unitils.reflectionassert.report.DifferenceView;
 
-import junit.framework.AssertionFailedError;
-
 import static org.unitils.reflectionassert.report.impl.DefaultDifferenceReport.MAX_LINE_SIZE;
 
 /**
@@ -39,7 +37,7 @@ public class SimpleDifferenceView
         String expectedStr = objectFormatter.format(difference.getLeftValue());
         String actualStr = objectFormatter.format(difference.getRightValue());
         String formattedOnOneLine = formatOnOneLine(expectedStr, actualStr);
-        if (AssertionFailedError.class.getName().length() + 2 + formattedOnOneLine.length() < MAX_LINE_SIZE) {
+        if (AssertionError.class.getName().length() + 2 + formattedOnOneLine.length() < MAX_LINE_SIZE) {
             return formattedOnOneLine;
         } else {
             return formatOnTwoLines(expectedStr, actualStr);

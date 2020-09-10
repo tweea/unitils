@@ -17,8 +17,6 @@ import org.junit.Test;
 import org.unitils.UnitilsJUnit4;
 import org.unitils.core.annotation.UsedForTesting;
 
-import junit.framework.AssertionFailedError;
-
 import static java.util.Arrays.asList;
 
 import static org.junit.Assert.assertTrue;
@@ -100,7 +98,7 @@ public class ReflectionAssertTest
     /**
      * Test for two objects that contain different values.
      */
-    @Test(expected = AssertionFailedError.class)
+    @Test(expected = AssertionError.class)
     public void testAssertReflectionEquals_notEqualsDifferentValues() {
         assertReflectionEquals(testObjectAString, testObjectDifferentValueString);
     }
@@ -108,7 +106,7 @@ public class ReflectionAssertTest
     /**
      * Test case for a null left-argument.
      */
-    @Test(expected = AssertionFailedError.class)
+    @Test(expected = AssertionError.class)
     public void testAssertReflectionEquals_leftNull() {
         assertReflectionEquals(null, testObjectAString);
     }
@@ -116,7 +114,7 @@ public class ReflectionAssertTest
     /**
      * Test case for a null right-argument.
      */
-    @Test(expected = AssertionFailedError.class)
+    @Test(expected = AssertionError.class)
     public void testAssertReflectionEquals_rightNull() {
         assertReflectionEquals(testObjectAString, null);
     }
@@ -186,7 +184,7 @@ public class ReflectionAssertTest
             }, new Integer[] {
                 1, 2
             });
-        } catch (AssertionFailedError a) {
+        } catch (AssertionError a) {
             // expected
             assertTrue(a.getMessage().contains("[\"test1\", \"test2\"]"));
             assertTrue(a.getMessage().contains("[1, 2]"));

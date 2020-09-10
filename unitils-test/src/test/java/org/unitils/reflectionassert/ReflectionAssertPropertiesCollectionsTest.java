@@ -14,7 +14,6 @@ package org.unitils.reflectionassert;
 
 import java.util.List;
 
-import junit.framework.AssertionFailedError;
 import junit.framework.TestCase;
 
 import static java.util.Arrays.asList;
@@ -67,8 +66,8 @@ public class ReflectionAssertPropertiesCollectionsTest
     public void testAssertPropertyReflectionEquals_notEqualsDifferentValues() {
         try {
             assertPropertyReflectionEquals("stringProperty", asList("xxxxx", "xxxxx"), list);
-            fail("Expected AssertionFailedError");
-        } catch (AssertionFailedError e) {
+            fail("Expected AssertionError");
+        } catch (AssertionError e) {
             // Expected
         }
     }
@@ -93,8 +92,8 @@ public class ReflectionAssertPropertiesCollectionsTest
     public void testAssertPropertyReflectionEquals_notEqualsDifferentOrder() {
         try {
             assertPropertyReflectionEquals("stringProperty", asList("el2", "el1"), list);
-            fail("Expected AssertionFailedError");
-        } catch (AssertionFailedError e) {
+            fail("Expected AssertionError");
+        } catch (AssertionError e) {
             // Expected
         }
     }
@@ -112,8 +111,8 @@ public class ReflectionAssertPropertiesCollectionsTest
     public void testAssertPropertyReflectionEquals_notEqualsPrimitivesList() {
         try {
             assertPropertyLenientEquals("primitiveProperty", asList(999, 1), list);
-            fail("Expected AssertionFailedError");
-        } catch (AssertionFailedError e) {
+            fail("Expected AssertionError");
+        } catch (AssertionError e) {
             // Expected
         }
     }
@@ -124,8 +123,8 @@ public class ReflectionAssertPropertiesCollectionsTest
     public void testAssertPropertyReflectionEquals_actualObjectNull() {
         try {
             assertPropertyLenientEquals("stringProperty", asList(1, 2), null);
-            fail("Expected AssertionFailedError");
-        } catch (AssertionFailedError a) {
+            fail("Expected AssertionError");
+        } catch (AssertionError a) {
             // expected
         }
     }

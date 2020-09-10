@@ -18,8 +18,6 @@ import java.util.List;
 
 import org.unitils.core.TestListener;
 
-import junit.framework.AssertionFailedError;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.unitils.TracingTestListener.InvocationSource.TEST;
@@ -66,7 +64,7 @@ public class TracingTestListener
 
     private Invocation exceptionMethod;
 
-    private boolean throwAssertionFailedError;
+    private boolean throwAssertionError;
 
     /**
      * Delegate target for functions that need the original testlistener (with module support).
@@ -106,9 +104,9 @@ public class TracingTestListener
         return result.toString();
     }
 
-    public void expectExceptionInMethod(Invocation exceptionMethod, boolean throwAssertionFailedError) {
+    public void expectExceptionInMethod(Invocation exceptionMethod, boolean throwAssertionError) {
         this.exceptionMethod = exceptionMethod;
-        this.throwAssertionFailedError = throwAssertionFailedError;
+        this.throwAssertionError = throwAssertionError;
     }
 
     public void registerTestInvocation(TestInvocation invocation, Class<?> testClass, String methodName) {
@@ -174,8 +172,8 @@ public class TracingTestListener
         if (this.exceptionMethod == null || !this.exceptionMethod.equals(exceptionMethod)) {
             return;
         }
-        if (throwAssertionFailedError) {
-            AssertionFailedError error = new AssertionFailedError(exceptionMethod.toString());
+        if (throwAssertionError) {
+            AssertionError error = new AssertionError(exceptionMethod.toString());
             currentThrowable = error;
             throw error;
         }

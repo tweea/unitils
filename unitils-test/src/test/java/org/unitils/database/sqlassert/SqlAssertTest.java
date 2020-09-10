@@ -21,8 +21,6 @@ import org.unitils.UnitilsJUnit4;
 import org.unitils.core.UnitilsException;
 import org.unitils.database.annotations.TestDataSource;
 
-import junit.framework.AssertionFailedError;
-
 import static org.unitils.database.SQLUnitils.executeUpdate;
 import static org.unitils.database.SQLUnitils.executeUpdateQuietly;
 import static org.unitils.database.sqlassert.SqlAssert.assertCountSqlResult;
@@ -79,14 +77,14 @@ public class SqlAssertTest
         });
     }
 
-    @Test(expected = AssertionFailedError.class)
+    @Test(expected = AssertionError.class)
     public void assertSingleRowSqlResultMainFailure() {
         assertSingleRowSqlResult(SQL_SELECT_STATEMENT, dataSource, new String[] {
             "two", "1"
         });
     }
 
-    @Test(expected = AssertionFailedError.class)
+    @Test(expected = AssertionError.class)
     public void assertSingleRowSqlResultFailureOnNumber() {
         assertSingleRowSqlResult(SQL_SELECT_STATEMENT, dataSource, new String[] {
             "one", "2"
@@ -114,7 +112,7 @@ public class SqlAssertTest
         });
     }
 
-    @Test(expected = AssertionFailedError.class)
+    @Test(expected = AssertionError.class)
     public void assertMultipleRowSqlResultTestMainFailure() {
         String[][] expected = new String[][] {
             {
@@ -126,7 +124,7 @@ public class SqlAssertTest
         assertMultipleRowSqlResult(SQL_SELECT_STATEMENT, dataSource, expected);
     }
 
-    @Test(expected = AssertionFailedError.class)
+    @Test(expected = AssertionError.class)
     public void assertMultipleRowSqlResultTestMainFailureDifferentNumber() {
         String[][] expected = new String[][] {
             {
@@ -140,7 +138,7 @@ public class SqlAssertTest
         assertMultipleRowSqlResult(SQL_SELECT_STATEMENT, dataSource, expected);
     }
 
-    @Test(expected = AssertionFailedError.class)
+    @Test(expected = AssertionError.class)
     public void assertMultipleRowSqlResultTestMainFailureNotEnough() {
         String[][] expected = new String[][] {
             {
@@ -155,7 +153,7 @@ public class SqlAssertTest
         assertCountSqlResult(SQL_COUNT_STATEMENT, dataSource, 2L);
     }
 
-    @Test(expected = AssertionFailedError.class)
+    @Test(expected = AssertionError.class)
     public void assertCountSqlResultMainFailure() {
         assertCountSqlResult(SQL_COUNT_STATEMENT, dataSource, 1L);
     }
