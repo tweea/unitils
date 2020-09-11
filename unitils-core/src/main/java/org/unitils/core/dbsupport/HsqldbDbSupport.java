@@ -89,8 +89,7 @@ public class HsqldbDbSupport
      */
     @Override
     public Set<String> getTriggerNames() {
-        return getSQLHandler()
-            .getItemsAsStringSet("select TRIGGER_NAME from INFORMATION_SCHEMA.SYSTEM_TRIGGERS where TRIGGER_SCHEM = '" + getSchemaName() + "'");
+        return getSQLHandler().getItemsAsStringSet("select TRIGGER_NAME from INFORMATION_SCHEMA.TRIGGERS where TRIGGER_SCHEMA = '" + getSchemaName() + "'");
     }
 
     /**
@@ -108,7 +107,7 @@ public class HsqldbDbSupport
             alterStatement = connection.createStatement();
 
             resultSet = queryStatement.executeQuery(
-                "select TABLE_NAME, CONSTRAINT_NAME from INFORMATION_SCHEMA.SYSTEM_TABLE_CONSTRAINTS where CONSTRAINT_TYPE = 'FOREIGN KEY' AND CONSTRAINT_SCHEMA = '"
+                "select TABLE_NAME, CONSTRAINT_NAME from INFORMATION_SCHEMA.TABLE_CONSTRAINTS where CONSTRAINT_TYPE = 'FOREIGN KEY' AND CONSTRAINT_SCHEMA = '"
                     + getSchemaName() + "'");
             while (resultSet.next()) {
                 String tableName = resultSet.getString("TABLE_NAME");
@@ -146,7 +145,7 @@ public class HsqldbDbSupport
             alterStatement = connection.createStatement();
 
             resultSet = queryStatement.executeQuery(
-                "select TABLE_NAME, CONSTRAINT_NAME from INFORMATION_SCHEMA.SYSTEM_TABLE_CONSTRAINTS where CONSTRAINT_TYPE IN ('CHECK', 'UNIQUE') AND CONSTRAINT_SCHEMA = '"
+                "select TABLE_NAME, CONSTRAINT_NAME from INFORMATION_SCHEMA.TABLE_CONSTRAINTS where CONSTRAINT_TYPE IN ('CHECK', 'UNIQUE') AND CONSTRAINT_SCHEMA = '"
                     + getSchemaName() + "'");
             while (resultSet.next()) {
                 String tableName = resultSet.getString("TABLE_NAME");
@@ -204,7 +203,7 @@ public class HsqldbDbSupport
      */
     @Override
     public long getSequenceValue(String sequenceName) {
-        return getSQLHandler().getItemAsLong("select START_WITH from INFORMATION_SCHEMA.SYSTEM_SEQUENCES where SEQUENCE_SCHEMA = '" + getSchemaName()
+        return getSQLHandler().getItemAsLong("select NEXT_VALUE from INFORMATION_SCHEMA.SYSTEM_SEQUENCES where SEQUENCE_SCHEMA = '" + getSchemaName()
             + "' and SEQUENCE_NAME = '" + sequenceName + "'");
     }
 

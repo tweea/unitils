@@ -14,7 +14,7 @@ package org.unitils.database.config;
 
 import java.util.Properties;
 
-import org.apache.commons.dbcp.BasicDataSource;
+import org.apache.commons.dbcp2.BasicDataSource;
 import org.junit.Before;
 import org.junit.Test;
 import org.unitils.UnitilsJUnit4;

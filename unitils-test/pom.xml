@@ -106,9 +106,9 @@ License. ~ */ -->
             </exclusions>
         </dependency>
         <dependency>
-            <groupId>hsqldb</groupId>
+            <groupId>org.hsqldb</groupId>
             <artifactId>hsqldb</artifactId>
-            <version>1.8.0.7</version>
+            <version>2.5.1</version>
         </dependency>
         <dependency>
             <groupId>com.h2database</groupId>

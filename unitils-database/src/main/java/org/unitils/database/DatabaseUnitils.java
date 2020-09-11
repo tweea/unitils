@@ -16,8 +16,8 @@ import java.sql.Connection;
 
 import javax.sql.DataSource;
 
-import org.apache.commons.dbcp.BasicDataSource;
-import org.apache.commons.dbcp.DelegatingConnection;
+import org.apache.commons.dbcp2.BasicDataSource;
+import org.apache.commons.dbcp2.DelegatingConnection;
 import org.unitils.core.Unitils;
 import org.unitils.core.dbsupport.SQLHandler;
 import org.unitils.dbmaintainer.DBMaintainer;
