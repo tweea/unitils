@@ -273,6 +273,14 @@ public class LenientMocksControl
         }
 
         /**
+         * @see org.easymock.internal.IMocksControlState#andVoid()
+         */
+        @Override
+        public void andVoid() {
+            recordState.andVoid();
+        }
+
+        /**
          * @see org.easymock.internal.IMocksControlState#andStubDelegateTo(java.lang.Object)
          */
         @Override
