@@ -12,14 +12,18 @@
  */
 package org.unitils.orm.hibernate.util;
 
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.dialect.Dialect;
+import org.hibernate.jdbc.ReturningWork;
 import org.hibernate.tool.hbm2ddl.DatabaseMetadata;
+import org.hibernate.tool.hbm2ddl.SchemaUpdateScript;
 import org.unitils.core.UnitilsException;
 
 import static org.junit.Assert.assertTrue;
@@ -69,9 +73,15 @@ public class HibernateAssert {
      */
     private static String[] generateDatabaseUpdateScript(Configuration configuration, Session session, Dialect databaseDialect) {
         try {
-            DatabaseMetadata dbm = new DatabaseMetadata(session.connection(), databaseDialect);
-            return configuration.generateSchemaUpdateScript(databaseDialect, dbm);
-        } catch (SQLException e) {
+            return session.doReturningWork(new ReturningWork<String[]>() {
+                @Override
+                public String[] execute(Connection connection)
+                    throws SQLException {
+                    DatabaseMetadata dbm = new DatabaseMetadata(connection, databaseDialect, configuration);
+                    return SchemaUpdateScript.toStringArray(configuration.generateSchemaUpdateScriptList(databaseDialect, dbm));
+                }
+            });
+        } catch (HibernateException e) {
             throw new UnitilsException("Could not retrieve database metadata", e);
         }
     }

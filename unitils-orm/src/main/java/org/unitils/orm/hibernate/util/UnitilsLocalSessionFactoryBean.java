@@ -15,9 +15,9 @@ package org.unitils.orm.hibernate.util;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-import org.hibernate.HibernateException;
-import org.hibernate.cfg.Configuration;
-import org.springframework.orm.hibernate3.LocalSessionFactoryBean;
+import org.hibernate.SessionFactory;
+import org.springframework.orm.hibernate4.LocalSessionFactoryBean;
+import org.springframework.orm.hibernate4.LocalSessionFactoryBuilder;
 import org.unitils.core.UnitilsException;
 import org.unitils.util.ReflectionUtils;
 
@@ -36,14 +36,14 @@ public class UnitilsLocalSessionFactoryBean
     }
 
     @Override
-    protected void postProcessConfiguration(Configuration config)
-        throws HibernateException {
+    protected SessionFactory buildSessionFactory(LocalSessionFactoryBuilder sfb) {
         if (customConfigMethod != null) {
             try {
-                ReflectionUtils.invokeMethod(testObject, customConfigMethod, config);
+                ReflectionUtils.invokeMethod(testObject, customConfigMethod, sfb);
             } catch (InvocationTargetException e) {
                 throw new UnitilsException("Error while invoking custom config method", e.getCause());
             }
         }
+        return super.buildSessionFactory(sfb);
     }
 }

@@ -22,11 +22,12 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.dialect.Dialect;
+import org.hibernate.engine.spi.SessionFactoryImplementor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.orm.hibernate3.HibernateTransactionManager;
-import org.springframework.orm.hibernate3.SessionFactoryUtils;
-import org.springframework.orm.hibernate3.SessionHolder;
+import org.springframework.orm.hibernate4.HibernateTransactionManager;
+import org.springframework.orm.hibernate4.SessionHolder;
+import org.springframework.orm.hibernate4.SpringSessionContext;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.support.TransactionSynchronizationManager;
 import org.unitils.core.TestListener;
@@ -42,10 +43,8 @@ import org.unitils.orm.hibernate.util.HibernateAnnotationConfigLoader;
 import org.unitils.orm.hibernate.util.HibernateAssert;
 import org.unitils.orm.hibernate.util.HibernateSessionFactoryLoader;
 import org.unitils.util.AnnotationUtils;
-import org.unitils.util.ReflectionUtils;
 
 import static org.apache.commons.lang3.StringUtils.isEmpty;
-import static org.unitils.util.PropertyUtils.getString;
 
 /**
  * Module providing support for unit tests for code that uses Hibernate. It offers an easy way of loading hibernate
@@ -65,16 +64,8 @@ import static org.unitils.util.PropertyUtils.getString;
 public class HibernateModule
     extends OrmModule<SessionFactory, Session, Configuration, HibernateSessionFactory, OrmConfig, HibernateAnnotationConfigLoader> {
 
-    /* Property that defines the class name of the hibernate configuration */
-    public static final String PROPKEY_CONFIGURATION_CLASS_NAME = "HibernateModule.configuration.implClassName";
-
     /* The logger instance for this class */
     private static Logger logger = LoggerFactory.getLogger(HibernateModule.class);
-
-    /**
-     * Subclass of org.hibernate.cfg.Configuration that is used for configuring hibernate
-     */
-    private Class<? extends Configuration> configurationObjectClass;
 
     /**
      * @param configuration
@@ -83,9 +74,6 @@ public class HibernateModule
     @Override
     public void init(Properties configuration) {
         super.init(configuration);
-
-        String configurationImplClassName = getString(PROPKEY_CONFIGURATION_CLASS_NAME, configuration);
-        configurationObjectClass = ReflectionUtils.getClassWithName(configurationImplClassName);
     }
 
     @Override
@@ -151,7 +139,8 @@ public class HibernateModule
 
     @Override
     protected Session doGetPersistenceContext(Object testObject) {
-        return SessionFactoryUtils.getSession(getPersistenceUnit(testObject), true);
+        SpringSessionContext sessionContext = new SpringSessionContext((SessionFactoryImplementor) getPersistenceUnit(testObject));
+        return sessionContext.currentSession();
     }
 
     @Override
@@ -182,13 +171,6 @@ public class HibernateModule
         Dialect databaseDialect = getDatabaseDialect(configuration);
 
         HibernateAssert.assertMappingWithDatabaseConsistent(configuration, session, databaseDialect);
-    }
-
-    /**
-     * @return The subclass of <code>org.hibernate.cfg.Configuration</code> that is used for configuring hibernate
-     */
-    public Class<? extends Configuration> getConfigurationObjectClass() {
-        return configurationObjectClass;
     }
 
     /**

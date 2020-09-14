@@ -42,7 +42,6 @@ public class HibernateModuleConfigurationInheritanceTest {
         throws Exception {
         hibernateModule = new HibernateModule();
         Properties properties = new Properties();
-        properties.put(HibernateModule.PROPKEY_CONFIGURATION_CLASS_NAME, Configuration.class.getName());
         hibernateModule.init(properties);
     }
 

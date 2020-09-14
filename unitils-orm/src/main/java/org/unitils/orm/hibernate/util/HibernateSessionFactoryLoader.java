@@ -18,7 +18,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
-import org.springframework.orm.hibernate3.LocalSessionFactoryBean;
+import org.springframework.orm.hibernate4.LocalSessionFactoryBean;
 import org.unitils.core.Unitils;
 import org.unitils.core.UnitilsException;
 import org.unitils.database.DatabaseModule;
@@ -48,7 +48,6 @@ public class HibernateSessionFactoryLoader
         // A custom subclass of spring's LocalSessionFactoryBean is used, to enable calling a custom config method
         UnitilsLocalSessionFactoryBean factoryBean = new UnitilsLocalSessionFactoryBean();
         factoryBean.setDataSource(getDataSource());
-        factoryBean.setConfigurationClass(getConfigurationObjectClass());
         Resource[] hibernateConfigFiles = new Resource[entityManagerConfig.getConfigFiles().size()];
         int index = 0;
         for (String configFileName : entityManagerConfig.getConfigFiles()) {
@@ -68,10 +67,6 @@ public class HibernateSessionFactoryLoader
         }
 
         return factoryBean;
-    }
-
-    protected Class<? extends Configuration> getConfigurationObjectClass() {
-        return getHibernateModule().getConfigurationObjectClass();
     }
 
     protected DataSource getDataSource() {
