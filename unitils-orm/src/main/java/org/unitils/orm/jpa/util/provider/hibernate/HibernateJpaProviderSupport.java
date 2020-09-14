@@ -16,8 +16,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.spi.PersistenceProvider;
 
 import org.hibernate.Session;
+import org.hibernate.cfg.Configuration;
 import org.hibernate.dialect.Dialect;
-import org.hibernate.ejb.Ejb3Configuration;
 import org.springframework.instrument.classloading.LoadTimeWeaver;
 import org.springframework.orm.jpa.JpaVendorAdapter;
 import org.unitils.core.UnitilsException;
@@ -39,10 +39,10 @@ public class HibernateJpaProviderSupport
      */
     @Override
     public void assertMappingWithDatabaseConsistent(EntityManager entityManager, Object configurationObject) {
-        Ejb3Configuration configuration = (Ejb3Configuration) configurationObject;
+        Configuration configuration = (Configuration) configurationObject;
         Dialect databaseDialect = getHibernateDatabaseDialect(configuration);
 
-        HibernateAssert.assertMappingWithDatabaseConsistent(configuration.getHibernateConfiguration(), (Session) entityManager.getDelegate(), databaseDialect);
+        HibernateAssert.assertMappingWithDatabaseConsistent(configuration, (Session) entityManager.getDelegate(), databaseDialect);
     }
 
     /**
@@ -52,7 +52,7 @@ public class HibernateJpaProviderSupport
      *     The hibernate config, not null
      * @return the database Dialect, not null
      */
-    protected Dialect getHibernateDatabaseDialect(Ejb3Configuration configuration) {
+    protected Dialect getHibernateDatabaseDialect(Configuration configuration) {
         String dialectClassName = configuration.getProperties().getProperty("hibernate.dialect");
         if (isEmpty(dialectClassName)) {
             throw new UnitilsException("Property hibernate.dialect not specified");

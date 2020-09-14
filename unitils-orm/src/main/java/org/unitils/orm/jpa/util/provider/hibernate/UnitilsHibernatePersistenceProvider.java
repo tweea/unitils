@@ -14,11 +14,11 @@ package org.unitils.orm.jpa.util.provider.hibernate;
 
 import java.util.Map;
 
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.spi.PersistenceUnitInfo;
-
-import org.hibernate.ejb.Ejb3Configuration;
-import org.hibernate.ejb.HibernatePersistence;
+import org.hibernate.cfg.Configuration;
+import org.hibernate.jpa.HibernatePersistenceProvider;
+import org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl;
+import org.hibernate.jpa.boot.spi.EntityManagerFactoryBuilder;
+import org.hibernate.jpa.boot.spi.PersistenceUnitDescriptor;
 
 /**
  * Subclass of hibernate's own implementation of <code>javax.persistence.spi.PersistenceProvider</code>.
@@ -29,18 +29,19 @@ import org.hibernate.ejb.HibernatePersistence;
  * @author Tim Ducheyne
  */
 public class UnitilsHibernatePersistenceProvider
-    extends HibernatePersistence {
+    extends HibernatePersistenceProvider {
     /**
      * The hibernate configuration object that was used for configuring the <code>EntityManagerFactory</code>
      */
-    private Ejb3Configuration hibernateConfiguration;
+    private Configuration hibernateConfiguration;
 
     @Override
-    @SuppressWarnings("unchecked")
-    public EntityManagerFactory createContainerEntityManagerFactory(PersistenceUnitInfo info, Map map) {
-        Ejb3Configuration configuration = new Ejb3Configuration();
-        hibernateConfiguration = configuration.configure(info, map);
-        return hibernateConfiguration != null ? hibernateConfiguration.buildEntityManagerFactory() : null;
+    public EntityManagerFactoryBuilder getEntityManagerFactoryBuilder(PersistenceUnitDescriptor persistenceUnitDescriptor, Map integration,
+        ClassLoader providedClassLoader) {
+        EntityManagerFactoryBuilderImpl builder = (EntityManagerFactoryBuilderImpl) super.getEntityManagerFactoryBuilder(persistenceUnitDescriptor, integration,
+            providedClassLoader);
+        hibernateConfiguration = builder.getHibernateConfiguration();
+        return builder;
     }
 
     /**
@@ -49,7 +50,7 @@ public class UnitilsHibernatePersistenceProvider
      * 
      * @return The hibernate configuration object that was used for configuring the <code>EntityManagerFactory</code>.
      */
-    public Ejb3Configuration getHibernateConfiguration() {
+    public Configuration getHibernateConfiguration() {
         return hibernateConfiguration;
     }
 }
