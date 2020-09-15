@@ -139,8 +139,13 @@ public class HibernateModule
 
     @Override
     protected Session doGetPersistenceContext(Object testObject) {
-        SpringSessionContext sessionContext = new SpringSessionContext((SessionFactoryImplementor) getPersistenceUnit(testObject));
-        return sessionContext.currentSession();
+        SessionFactoryImplementor sessionFactory = (SessionFactoryImplementor) getPersistenceUnit(testObject);
+        if (TransactionSynchronizationManager.isSynchronizationActive()) {
+            SpringSessionContext sessionContext = new SpringSessionContext(sessionFactory);
+            return sessionContext.currentSession();
+        } else {
+            return sessionFactory.openSession();
+        }
     }
 
     @Override
