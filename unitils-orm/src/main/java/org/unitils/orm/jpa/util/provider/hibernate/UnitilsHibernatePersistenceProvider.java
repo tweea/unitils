@@ -14,11 +14,16 @@ package org.unitils.orm.jpa.util.provider.hibernate;
 
 import java.util.Map;
 
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.spi.PersistenceUnitInfo;
+
+import org.hibernate.boot.MetadataSources;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.jpa.HibernatePersistenceProvider;
 import org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl;
 import org.hibernate.jpa.boot.spi.EntityManagerFactoryBuilder;
 import org.hibernate.jpa.boot.spi.PersistenceUnitDescriptor;
+import org.hibernate.service.ServiceRegistry;
 
 /**
  * Subclass of hibernate's own implementation of <code>javax.persistence.spi.PersistenceProvider</code>.
@@ -30,6 +35,8 @@ import org.hibernate.jpa.boot.spi.PersistenceUnitDescriptor;
  */
 public class UnitilsHibernatePersistenceProvider
     extends HibernatePersistenceProvider {
+    private EntityManagerFactoryBuilderImpl entityManagerFactoryBuilder;
+
     /**
      * The hibernate configuration object that was used for configuring the <code>EntityManagerFactory</code>
      */
@@ -38,10 +45,17 @@ public class UnitilsHibernatePersistenceProvider
     @Override
     public EntityManagerFactoryBuilder getEntityManagerFactoryBuilder(PersistenceUnitDescriptor persistenceUnitDescriptor, Map integration,
         ClassLoader providedClassLoader) {
-        EntityManagerFactoryBuilderImpl builder = (EntityManagerFactoryBuilderImpl) super.getEntityManagerFactoryBuilder(persistenceUnitDescriptor, integration,
+        entityManagerFactoryBuilder = (EntityManagerFactoryBuilderImpl) super.getEntityManagerFactoryBuilder(persistenceUnitDescriptor, integration,
             providedClassLoader);
-        hibernateConfiguration = builder.getHibernateConfiguration();
-        return builder;
+        return entityManagerFactoryBuilder;
+    }
+
+    @Override
+    public EntityManagerFactory createContainerEntityManagerFactory(PersistenceUnitInfo info, Map properties) {
+        EntityManagerFactory entityManagerFactory = super.createContainerEntityManagerFactory(info, properties);
+        ServiceRegistry serviceRegistry = entityManagerFactoryBuilder.getMetadata().getMetadataBuildingOptions().getServiceRegistry();
+        hibernateConfiguration = new Configuration(new MetadataSources(serviceRegistry));
+        return entityManagerFactory;
     }
 
     /**

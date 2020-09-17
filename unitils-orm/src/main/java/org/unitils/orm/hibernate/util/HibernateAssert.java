@@ -12,18 +12,30 @@
  */
 package org.unitils.orm.hibernate.util;
 
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
+import org.hibernate.boot.MetadataBuilder;
+import org.hibernate.boot.MetadataSources;
+import org.hibernate.boot.registry.StandardServiceRegistry;
+import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import org.hibernate.boot.spi.MetadataImplementor;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.dialect.Dialect;
-import org.hibernate.jdbc.ReturningWork;
-import org.hibernate.tool.hbm2ddl.DatabaseMetadata;
-import org.hibernate.tool.hbm2ddl.SchemaUpdateScript;
+import org.hibernate.engine.config.spi.ConfigurationService;
+import org.hibernate.engine.jdbc.connections.spi.JdbcConnectionAccess;
+import org.hibernate.engine.jdbc.env.spi.JdbcEnvironment;
+import org.hibernate.engine.jdbc.spi.JdbcServices;
+import org.hibernate.service.ServiceRegistry;
+import org.hibernate.tool.schema.extract.internal.DatabaseInformationImpl;
+import org.hibernate.tool.schema.extract.spi.DatabaseInformation;
+import org.hibernate.tool.schema.spi.SchemaManagementTool;
+import org.hibernate.tool.schema.spi.SchemaMigrator;
+import org.hibernate.tool.schema.spi.Target;
 import org.unitils.core.UnitilsException;
 
 import static org.junit.Assert.assertTrue;
@@ -47,7 +59,7 @@ public class HibernateAssert {
      *     The database dialect, not null
      */
     public static void assertMappingWithDatabaseConsistent(Configuration configuration, Session session, Dialect databaseDialect) {
-        String[] script = generateDatabaseUpdateScript(configuration, session, databaseDialect);
+        List<String> script = generateDatabaseUpdateScript(configuration, session, databaseDialect);
 
         List<String> differences = new ArrayList<>();
         for (String line : script) {
@@ -69,18 +81,58 @@ public class HibernateAssert {
      *     The hibernate session, not null
      * @param databaseDialect
      *     The database dialect, not null
-     * @return String[] array of DDL statements that were needed to keep the database in sync with the mapping file
+     * @return List<String> array of DDL statements that were needed to keep the database in sync with the mapping file
      */
-    private static String[] generateDatabaseUpdateScript(Configuration configuration, Session session, Dialect databaseDialect) {
+    private static List<String> generateDatabaseUpdateScript(Configuration configuration, Session session, Dialect databaseDialect) {
         try {
-            return session.doReturningWork(new ReturningWork<String[]>() {
+            StandardServiceRegistryBuilder ssrBuilder = configuration.getStandardServiceRegistryBuilder();
+            StandardServiceRegistry ssr = ssrBuilder.build();
+            MetadataSources metadataSources = new MetadataSources(ssr);
+            MetadataBuilder metadataBuilder = metadataSources.getMetadataBuilder();
+            MetadataImplementor metadata = (MetadataImplementor) metadataBuilder.build();
+
+            ServiceRegistry serviceRegistry = metadata.getMetadataBuildingOptions().getServiceRegistry();
+            JdbcConnectionAccess jdbcConnectionAccess = serviceRegistry.getService(JdbcServices.class).getBootstrapJdbcConnectionAccess();
+
+            ConfigurationService cfgService = serviceRegistry.getService(ConfigurationService.class);
+            SchemaMigrator schemaMigrator = serviceRegistry.getService(SchemaManagementTool.class).getSchemaMigrator(cfgService.getSettings());
+
+            JdbcServices jdbcServices = serviceRegistry.getService(JdbcServices.class);
+            DatabaseInformation databaseInformation;
+            try {
+                databaseInformation = new DatabaseInformationImpl(serviceRegistry, serviceRegistry.getService(JdbcEnvironment.class), jdbcConnectionAccess,
+                    metadata.getDatabase().getDefaultNamespace().getPhysicalName().getCatalog(),
+                    metadata.getDatabase().getDefaultNamespace().getPhysicalName().getSchema());
+            } catch (SQLException e) {
+                throw jdbcServices.getSqlExceptionHelper().convert(e, "Error creating DatabaseInformation for schema migration");
+            }
+
+            List<String> script = new ArrayList<>();
+            Target target = new Target() {
                 @Override
-                public String[] execute(Connection connection)
-                    throws SQLException {
-                    DatabaseMetadata dbm = new DatabaseMetadata(connection, databaseDialect, configuration);
-                    return SchemaUpdateScript.toStringArray(configuration.generateSchemaUpdateScriptList(databaseDialect, dbm));
+                public boolean acceptsImportScriptActions() {
+                    return true;
                 }
-            });
+
+                @Override
+                public void prepare() {
+                }
+
+                @Override
+                public void accept(String action) {
+                    script.add(action);
+                }
+
+                @Override
+                public void release() {
+                }
+            };
+            try {
+                schemaMigrator.doMigration(metadata, databaseInformation, true, Arrays.asList(target));
+            } finally {
+                databaseInformation.cleanup();
+            }
+            return script;
         } catch (HibernateException e) {
             throw new UnitilsException("Could not retrieve database metadata", e);
         }
