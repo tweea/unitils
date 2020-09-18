@@ -242,6 +242,16 @@ public class LenientMocksControl
         }
 
         @Override
+        public void verifyRecording() {
+            recordState.verifyRecording();
+        }
+
+        @Override
+        public void verifyUnexpectedCalls() {
+            recordState.verifyUnexpectedCalls();
+        }
+
+        @Override
         public void verify() {
             recordState.verify();
         }

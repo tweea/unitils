@@ -104,20 +104,24 @@ public class DatabaseModuleTransactionManagerTest
     public void testRollback()
         throws Exception {
         expect(mockConnection1.getAutoCommit()).andReturn(true).andReturn(false).anyTimes();
+        expect(mockConnection1.isReadOnly()).andReturn(false).anyTimes();
         mockConnection1.setAutoCommit(false);
         mockConnection1.rollback();
+        mockConnection1.setAutoCommit(true);
         mockConnection1.close();
         replay(mockConnection1, mockConnection2);
 
         Method testMethod = RollbackTest.class.getMethod("test", new Class[] {});
         DataSource dataSource = wrapper.getTransactionalDataSourceAndActivateTransactionIfNeeded(rollbackTest);
         databaseModule.startTransactionForTestMethod(rollbackTest, testMethod);
-        Connection connection1 = dataSource.getConnection();
-        Connection targetConnection1 = ((ConnectionProxy) connection1).getTargetConnection();
-        connection1.close();
-        Connection connection2 = dataSource.getConnection();
-        Connection targetConnection2 = ((ConnectionProxy) connection2).getTargetConnection();
-        connection2.close();
+        Connection targetConnection1;
+        try (Connection connection1 = dataSource.getConnection()) {
+            targetConnection1 = ((ConnectionProxy) connection1).getTargetConnection();
+        }
+        Connection targetConnection2;
+        try (Connection connection2 = dataSource.getConnection()) {
+            targetConnection2 = ((ConnectionProxy) connection2).getTargetConnection();
+        }
         assertSame(targetConnection1, targetConnection2);
         databaseModule.endTransactionForTestMethod(rollbackTest, testMethod);
 
@@ -131,20 +135,24 @@ public class DatabaseModuleTransactionManagerTest
     public void testCommit()
         throws Exception {
         expect(mockConnection1.getAutoCommit()).andReturn(true).andReturn(false).anyTimes();
+        expect(mockConnection1.isReadOnly()).andReturn(false).anyTimes();
         mockConnection1.setAutoCommit(false);
         mockConnection1.commit();
+        mockConnection1.setAutoCommit(true);
         mockConnection1.close();
         replay(mockConnection1, mockConnection2);
 
         Method testMethod = CommitTest.class.getMethod("test", new Class[] {});
         DataSource dataSource = wrapper.getTransactionalDataSourceAndActivateTransactionIfNeeded(commitTest);
         databaseModule.startTransactionForTestMethod(commitTest, testMethod);
-        Connection connection1 = dataSource.getConnection();
-        Connection targetConnection1 = ((ConnectionProxy) connection1).getTargetConnection();
-        connection1.close();
-        Connection connection2 = dataSource.getConnection();
-        Connection targetConnection2 = ((ConnectionProxy) connection2).getTargetConnection();
-        connection2.close();
+        Connection targetConnection1;
+        try (Connection connection1 = dataSource.getConnection()) {
+            targetConnection1 = ((ConnectionProxy) connection1).getTargetConnection();
+        }
+        Connection targetConnection2;
+        try(Connection connection2 = dataSource.getConnection()){
+        targetConnection2 = ((ConnectionProxy) connection2).getTargetConnection();
+        }
         assertSame(targetConnection1, targetConnection2);
         databaseModule.endTransactionForTestMethod(commitTest, testMethod);
 
