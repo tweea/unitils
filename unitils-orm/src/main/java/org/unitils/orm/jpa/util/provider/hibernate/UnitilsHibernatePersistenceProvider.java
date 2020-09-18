@@ -22,7 +22,6 @@ import org.hibernate.cfg.Configuration;
 import org.hibernate.jpa.HibernatePersistenceProvider;
 import org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl;
 import org.hibernate.jpa.boot.spi.EntityManagerFactoryBuilder;
-import org.hibernate.jpa.boot.spi.PersistenceUnitDescriptor;
 import org.hibernate.service.ServiceRegistry;
 
 /**
@@ -43,10 +42,8 @@ public class UnitilsHibernatePersistenceProvider
     private Configuration hibernateConfiguration;
 
     @Override
-    public EntityManagerFactoryBuilder getEntityManagerFactoryBuilder(PersistenceUnitDescriptor persistenceUnitDescriptor, Map integration,
-        ClassLoader providedClassLoader) {
-        entityManagerFactoryBuilder = (EntityManagerFactoryBuilderImpl) super.getEntityManagerFactoryBuilder(persistenceUnitDescriptor, integration,
-            providedClassLoader);
+    public EntityManagerFactoryBuilder getEntityManagerFactoryBuilder(PersistenceUnitInfo info, Map integration) {
+        entityManagerFactoryBuilder = (EntityManagerFactoryBuilderImpl) super.getEntityManagerFactoryBuilder(info, integration);
         return entityManagerFactoryBuilder;
     }
 
