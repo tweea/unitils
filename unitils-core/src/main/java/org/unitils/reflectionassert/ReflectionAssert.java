@@ -429,8 +429,7 @@ public class ReflectionAssert {
      */
     protected static Object getProperty(Object object, String ognlExpression) {
         try {
-            OgnlContext ognlContext = new OgnlContext();
-            ognlContext.setMemberAccess(new DefaultMemberAccess(true));
+            OgnlContext ognlContext = new OgnlContext(null, null, new DefaultMemberAccess());
             Object ognlExprObj = Ognl.parseExpression(ognlExpression);
             return Ognl.getValue(ognlExprObj, ognlContext, object);
         } catch (OgnlException e) {

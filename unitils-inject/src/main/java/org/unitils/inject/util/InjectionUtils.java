@@ -69,8 +69,7 @@ public class InjectionUtils {
             throw new UnitilsException("Target for injection should not be null");
         }
         try {
-            OgnlContext ognlContext = new OgnlContext();
-            ognlContext.setMemberAccess(new DefaultMemberAccess(true));
+            OgnlContext ognlContext = new OgnlContext(null, null, new DefaultMemberAccess());
             Object ognlExpression = Ognl.parseExpression(property);
 
             Object oldValue = null;
