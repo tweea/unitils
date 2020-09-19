@@ -29,12 +29,12 @@ License. ~ */ -->
         <dependency>
             <groupId>org.ow2.asm</groupId>
             <artifactId>asm</artifactId>
-            <version>5.0.3</version>
+            <version>5.2</version>
         </dependency>
         <dependency>
             <groupId>cglib</groupId>
             <artifactId>cglib</artifactId>
-            <version>3.1</version>
+            <version>3.2.5</version>
         </dependency>
 
         <dependency>
