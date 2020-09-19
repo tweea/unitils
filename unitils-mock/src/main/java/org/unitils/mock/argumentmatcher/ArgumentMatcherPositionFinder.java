@@ -295,6 +295,7 @@ public class ArgumentMatcherPositionFinder {
          */
         public MethodInterpreter(Class<?> interpretedClass, String interpretedMethodName, String invokedMethodName, String invokedMethodDescriptor,
             int fromLineNr, int toLineNr, int index) {
+            super(ASM6);
             this.interpretedClass = interpretedClass;
             this.interpretedMethodName = interpretedMethodName;
             this.invokedMethodName = invokedMethodName;
