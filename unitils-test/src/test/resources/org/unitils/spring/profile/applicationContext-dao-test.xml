@@ -6,8 +6,5 @@
     <!-- override the datasource for tests. -->
 	<bean id="dataSource" class="org.unitils.database.UnitilsDataSourceFactoryBean" />
 
-  <bean id="lobHandler" class="org.springframework.jdbc.support.lob.OracleLobHandler">
-    <property name="nativeJdbcExtractor" ref="commonsDbcpNativeJdbcExtractor" />
-  </bean>
-  <bean id="commonsDbcpNativeJdbcExtractor" class="org.springframework.jdbc.support.nativejdbc.CommonsDbcpNativeJdbcExtractor" />
+  <bean id="lobHandler" class="org.springframework.jdbc.support.lob.DefaultLobHandler" />
 </beans>

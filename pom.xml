@@ -62,7 +62,7 @@
     </licenses>
 
     <properties>
-        <spring.version>4.3.28.RELEASE</spring.version>
+        <spring.version>5.0.19.RELEASE</spring.version>
     </properties>
 
     <!-- Environment Settings -->
