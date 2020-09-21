@@ -10,7 +10,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.unitils.UnitilsJUnit4TestClassRunner;
 
-import junitx.framework.FileAssert;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Test {@link FileHandler#writeToFile(java.io.File, java.io.InputStream)}.
@@ -35,7 +35,7 @@ public class FileHandlerWriteToFileTest {
         throws IOException {
         File actualFile = File.createTempFile("FileHandlerWriteToFileTest-", ".txt");
         sut.writeToFile(actualFile, new FileInputStream(expectedFile));
-        FileAssert.assertBinaryEquals(expectedFile, actualFile);
+        assertThat(actualFile).hasSameBinaryContentAs(expectedFile);
     }
 
     @Test
@@ -45,7 +45,7 @@ public class FileHandlerWriteToFileTest {
         BufferedInputStream inputStream = new BufferedInputStream(new FileInputStream(expectedFile));
         sut.writeToFile(actualFile, inputStream);
 
-        FileAssert.assertBinaryEquals(expectedFile, actualFile);
+        assertThat(actualFile).hasSameBinaryContentAs(expectedFile);
     }
 
     @Test
