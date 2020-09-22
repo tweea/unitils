@@ -43,8 +43,8 @@ public class H2DbSupport
      */
     @Override
     public Set<String> getTableNames() {
-        return getSQLHandler().getItemsAsStringSet(
-            "select TABLE_NAME from " + "INFORMATION_SCHEMA.TABLES where TABLE_TYPE = 'TABLE' AND " + "TABLE_SCHEMA = '" + getSchemaName() + "'");
+        return getSQLHandler()
+            .getItemsAsStringSet("select TABLE_NAME from INFORMATION_SCHEMA.TABLES where TABLE_TYPE = 'TABLE' AND TABLE_SCHEMA = '" + getSchemaName() + "'");
     }
 
     /**
@@ -57,7 +57,7 @@ public class H2DbSupport
     @Override
     public Set<String> getColumnNames(String tableName) {
         return getSQLHandler().getItemsAsStringSet(
-            "select COLUMN_NAME from " + "INFORMATION_SCHEMA.COLUMNS where TABLE_NAME = '" + tableName + "' AND TABLE_SCHEMA = '" + getSchemaName() + "'");
+            "select COLUMN_NAME from INFORMATION_SCHEMA.COLUMNS where TABLE_NAME = '" + tableName + "' AND TABLE_SCHEMA = '" + getSchemaName() + "'");
     }
 
     /**
@@ -70,7 +70,7 @@ public class H2DbSupport
      */
     @Override
     public Set<String> getIdentityColumnNames(String tableName) {
-        return getSQLHandler().getItemsAsStringSet("select COLUMN_NAME from " + "INFORMATION_SCHEMA.INDEXES where PRIMARY_KEY = 'TRUE' AND " + "TABLE_NAME = '"
+        return getSQLHandler().getItemsAsStringSet("select COLUMN_NAME from INFORMATION_SCHEMA.INDEXES where PRIMARY_KEY = 'TRUE' AND TABLE_NAME = '"
             + tableName + "' AND TABLE_SCHEMA = '" + getSchemaName() + "'");
     }
 
@@ -81,7 +81,7 @@ public class H2DbSupport
      */
     @Override
     public Set<String> getViewNames() {
-        return getSQLHandler().getItemsAsStringSet("select TABLE_NAME from " + "INFORMATION_SCHEMA.VIEWS WHERE TABLE_SCHEMA = '" + getSchemaName() + "'");
+        return getSQLHandler().getItemsAsStringSet("select TABLE_NAME from INFORMATION_SCHEMA.VIEWS WHERE TABLE_SCHEMA = '" + getSchemaName() + "'");
     }
 
     /**
@@ -91,8 +91,7 @@ public class H2DbSupport
      */
     @Override
     public Set<String> getSequenceNames() {
-        return getSQLHandler()
-            .getItemsAsStringSet("select SEQUENCE_NAME from " + "INFORMATION_SCHEMA.SEQUENCES where SEQUENCE_SCHEMA = '" + getSchemaName() + "'");
+        return getSQLHandler().getItemsAsStringSet("select SEQUENCE_NAME from INFORMATION_SCHEMA.SEQUENCES where SEQUENCE_SCHEMA = '" + getSchemaName() + "'");
     }
 
     /**
@@ -102,8 +101,7 @@ public class H2DbSupport
      */
     @Override
     public Set<String> getTriggerNames() {
-        return getSQLHandler()
-            .getItemsAsStringSet("select TRIGGER_NAME from " + "INFORMATION_SCHEMA.TRIGGERS where TRIGGER_SCHEMA = '" + getSchemaName() + "'");
+        return getSQLHandler().getItemsAsStringSet("select TRIGGER_NAME from INFORMATION_SCHEMA.TRIGGERS where TRIGGER_SCHEMA = '" + getSchemaName() + "'");
     }
 
     /**
@@ -117,7 +115,7 @@ public class H2DbSupport
      */
     @Override
     public long getSequenceValue(String sequenceName) {
-        return getSQLHandler().getItemAsLong("select CURRENT_VALUE from " + "INFORMATION_SCHEMA.SEQUENCES where SEQUENCE_SCHEMA = '" + getSchemaName()
+        return getSQLHandler().getItemAsLong("select CURRENT_VALUE from INFORMATION_SCHEMA.SEQUENCES where SEQUENCE_SCHEMA = '" + getSchemaName()
             + "' and SEQUENCE_NAME = '" + sequenceName + "'");
     }
 
@@ -182,15 +180,15 @@ public class H2DbSupport
             queryStatement = connection.createStatement();
             alterStatement = connection.createStatement();
 
-            resultSet = queryStatement.executeQuery("select TABLE_NAME, " + "CONSTRAINT_NAME from INFORMATION_SCHEMA.CONSTRAINTS where "
-                + "CONSTRAINT_TYPE IN ('CHECK', 'UNIQUE') AND CONSTRAINT_SCHEMA " + "= '" + getSchemaName() + "'");
+            resultSet = queryStatement.executeQuery("select TABLE_NAME, CONSTRAINT_NAME from INFORMATION_SCHEMA.CONSTRAINTS where "
+                + "CONSTRAINT_TYPE IN ('CHECK', 'UNIQUE') AND CONSTRAINT_SCHEMA = '" + getSchemaName() + "'");
             while (resultSet.next()) {
                 String tableName = resultSet.getString("TABLE_NAME");
                 String constraintName = resultSet.getString("CONSTRAINT_NAME");
                 alterStatement.executeUpdate("alter table " + qualified(tableName) + " drop constraint " + quoted(constraintName));
             }
         } catch (Exception e) {
-            throw new UnitilsException("Error while disabling check and unique " + "constraints on schema " + getSchemaName(), e);
+            throw new UnitilsException("Error while disabling check and unique constraints on schema " + getSchemaName(), e);
         } finally {
             closeQuietly(queryStatement);
             closeQuietly(connection, alterStatement, resultSet);
@@ -211,17 +209,17 @@ public class H2DbSupport
             alterStatement = connection.createStatement();
 
             // Do not remove PK constraints
-            resultSet = queryStatement.executeQuery(
-                "select col.TABLE_NAME, " + "col.COLUMN_NAME from INFORMATION_SCHEMA.COLUMNS col where " + "col.IS_NULLABLE = 'NO' and col.TABLE_SCHEMA = '"
-                    + getSchemaName() + "' " + "AND NOT EXISTS (select COLUMN_NAME " + "from INFORMATION_SCHEMA.INDEXES pk where pk.TABLE_NAME = "
-                    + "col.TABLE_NAME and pk.COLUMN_NAME = col.COLUMN_NAME and " + "pk.TABLE_SCHEMA = '" + getSchemaName() + "' AND pk.PRIMARY_KEY = TRUE)");
+            resultSet = queryStatement
+                .executeQuery("select col.TABLE_NAME, col.COLUMN_NAME from INFORMATION_SCHEMA.COLUMNS col where col.IS_NULLABLE = 'NO' and col.TABLE_SCHEMA = '"
+                    + getSchemaName() + "' AND NOT EXISTS (select COLUMN_NAME from INFORMATION_SCHEMA.INDEXES pk where pk.TABLE_NAME = "
+                    + "col.TABLE_NAME and pk.COLUMN_NAME = col.COLUMN_NAME and pk.TABLE_SCHEMA = '" + getSchemaName() + "' AND pk.PRIMARY_KEY = TRUE)");
             while (resultSet.next()) {
                 String tableName = resultSet.getString("TABLE_NAME");
                 String columnName = resultSet.getString("COLUMN_NAME");
                 alterStatement.executeUpdate("alter table " + qualified(tableName) + " alter column " + quoted(columnName) + " set null");
             }
         } catch (Exception e) {
-            throw new UnitilsException("Error while disabling not null " + "constraints on schema " + getSchemaName(), e);
+            throw new UnitilsException("Error while disabling not null constraints on schema " + getSchemaName(), e);
         } finally {
             closeQuietly(queryStatement);
             closeQuietly(connection, alterStatement, resultSet);
