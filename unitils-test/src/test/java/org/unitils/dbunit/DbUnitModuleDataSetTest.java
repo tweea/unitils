@@ -23,10 +23,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.unitils.UnitilsJUnit4;
 import org.unitils.core.ConfigurationLoader;
-import org.unitils.core.Unitils;
 import org.unitils.core.UnitilsException;
-import org.unitils.database.DataSourceWrapper;
-import org.unitils.database.DatabaseModule;
 import org.unitils.database.annotations.TestDataSource;
 import org.unitils.dbunit.annotation.DataSet;
 import org.unitils.dbunit.datasetfactory.impl.MultiSchemaXmlDataSetFactory;
@@ -346,11 +343,5 @@ public class DbUnitModuleDataSetTest
 
     public class DataSetTestSubClass_dataSetAnnotationOnSuperClass
         extends DataSetTestSuperclass_classLevelAnnotation {
-    }
-
-    private String getDatabaseName(Properties config) {
-        DatabaseModule databaseModule = Unitils.getInstance().getModulesRepository().getModuleOfType(DatabaseModule.class);
-        DataSourceWrapper wrapper = databaseModule.getWrapper("");
-        return wrapper.getDatabaseName();
     }
 }

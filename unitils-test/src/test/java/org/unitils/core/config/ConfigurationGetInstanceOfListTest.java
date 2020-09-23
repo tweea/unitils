@@ -13,12 +13,10 @@
 package org.unitils.core.config;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Properties;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.unitils.core.Factory;
 import org.unitils.core.UnitilsException;
 
 import static org.junit.Assert.assertEquals;
@@ -117,13 +115,5 @@ public class ConfigurationGetInstanceOfListTest {
 
     private static class TestClass3
         implements TestInterface {
-    }
-
-    private static class FactoryClass
-        implements Factory<Map> {
-        @Override
-        public Map create() {
-            return new Properties();
-        }
     }
 }

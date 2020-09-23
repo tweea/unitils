@@ -152,23 +152,6 @@ public class FileUtils {
 
     // -----------------------------------------------------------------------
     /**
-     * Converts an array of file extensions to suffixes for use
-     * with IOFileFilters.
-     *
-     * @param extensions
-     *     an array of extensions. Format: {"java", "xml"}
-     * @return an array of suffixes. Format: {".java", ".xml"}
-     */
-    private static String[] toSuffixes(String[] extensions) {
-        String[] suffixes = new String[extensions.length];
-        for (int i = 0; i < extensions.length; i++) {
-            suffixes[i] = "." + extensions[i];
-        }
-        return suffixes;
-    }
-
-    // -----------------------------------------------------------------------
-    /**
      * Compare the contents of two files to determine if they are equal or not.
      * <p>
      * This method checks to see if the two files are different lengths

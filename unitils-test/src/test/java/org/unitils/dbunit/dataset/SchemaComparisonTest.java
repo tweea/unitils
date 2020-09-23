@@ -20,7 +20,6 @@ import org.unitils.core.UnitilsException;
 import org.unitils.dbunit.dataset.comparison.SchemaDifference;
 import org.unitils.dbunit.dataset.comparison.TableDifference;
 
-import static org.dbunit.dataset.datatype.DataType.VARCHAR;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
@@ -124,15 +123,6 @@ public class SchemaComparisonTest
     private void assertMissingTable(SchemaDifference schemaDifference, String tableName) {
         Table table = schemaDifference.getMissingTables().get(0);
         assertEquals(tableName, table.getName());
-    }
-
-    private void addRowWithPrimaryKey(Table table, String pkValue, String... values) {
-        Row row = new Row();
-        row.addPrimaryKeyColumn(new Column("column0", VARCHAR, pkValue));
-        for (int i = 0; i < values.length; i++) {
-            row.addColumn(new Column("column" + (i + 1), VARCHAR, values[i]));
-        }
-        table.addRow(row);
     }
 
     private void addTable(Schema schema, String tableName, String value) {

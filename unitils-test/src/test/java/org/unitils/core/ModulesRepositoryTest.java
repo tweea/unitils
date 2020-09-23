@@ -19,6 +19,7 @@ import java.util.Properties;
 import org.junit.Before;
 import org.junit.Test;
 import org.unitils.UnitilsJUnit4;
+import org.unitils.core.annotation.UsedForTesting;
 import org.unitils.database.DatabaseModule;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -143,6 +144,7 @@ public class ModulesRepositoryTest
             return new TestListener1();
         }
 
+        @UsedForTesting
         public DatabaseModule getDatabaseModule() {
             return null;
         }

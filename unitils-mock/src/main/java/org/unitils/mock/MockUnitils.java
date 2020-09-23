@@ -17,7 +17,6 @@ package org.unitils.mock;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.unitils.core.Unitils;
 import org.unitils.mock.core.MockObject;
 import org.unitils.mock.core.Scenario;
 import org.unitils.mock.dummy.DummyObjectUtil;
@@ -72,9 +71,5 @@ public class MockUnitils {
 
     private static Scenario getScenario() {
         return MockObject.getCurrentScenario();
-    }
-
-    private static MockModule getMockModule() {
-        return Unitils.getInstance().getModulesRepository().getModuleOfType(MockModule.class);
     }
 }
