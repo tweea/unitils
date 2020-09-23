@@ -5,6 +5,7 @@
 		<xsd:complexType>
 			<xsd:choice minOccurs="0" maxOccurs="unbounded">
 				<xsd:element name="DBMAINTAIN_SCRIPTS" type="dflt:DBMAINTAIN_SCRIPTS__type" />
+				<xsd:element name="PERSON" type="dflt:PERSON__type" />
 				<xsd:any namespace="PUBLIC" />
 			</xsd:choice>
 		</xsd:complexType>
