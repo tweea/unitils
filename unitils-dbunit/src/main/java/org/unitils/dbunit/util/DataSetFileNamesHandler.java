@@ -97,13 +97,10 @@ public class DataSetFileNamesHandler {
         String cloneResource = new String(nameResource);
 
         String packageName = (packageTestClass != null) ? packageTestClass.getName() : "";
-        String tempName = "";
         if (cloneResource.startsWith(packageName.replace(".", "/"))) {
-            cloneResource = tempName = cloneResource.substring(packageName.length());
+            cloneResource = cloneResource.substring(packageName.length());
         } else if (cloneResource.startsWith(packageName)) {
-            cloneResource = tempName = cloneResource.substring(packageName.length() + 1);
-        } else {
-            tempName = cloneResource;
+            cloneResource = cloneResource.substring(packageName.length() + 1);
         }
 
         return cloneResource;

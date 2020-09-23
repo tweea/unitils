@@ -14,6 +14,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.unitils.UnitilsJUnit4;
 import org.unitils.core.ConfigurationLoader;
 import org.unitils.core.Unitils;
@@ -39,6 +41,7 @@ import static org.unitils.thirdparty.org.apache.commons.dbutils.DbUtils.closeQui
  */
 public class DtdDataSetStructureGeneratorTest
     extends UnitilsJUnit4 {
+    private static final Logger LOG = LoggerFactory.getLogger(DtdDataSetStructureGeneratorTest.class);
 
     /* Tested object */
     private DataSetStructureGenerator dataSetStructureGenerator;
@@ -134,11 +137,13 @@ public class DtdDataSetStructureGeneratorTest
             try {
                 st.executeUpdate("drop table TABLEONE");
             } catch (SQLException e) {
+                LOG.trace("", e);
                 // Ignored
             }
             try {
                 st.executeUpdate("drop table TABLETWO");
             } catch (SQLException e) {
+                LOG.trace("", e);
                 // Ignored
             }
         } finally {

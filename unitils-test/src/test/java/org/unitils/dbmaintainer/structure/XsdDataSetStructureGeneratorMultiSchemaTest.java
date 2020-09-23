@@ -120,6 +120,7 @@ public class XsdDataSetStructureGeneratorMultiSchemaTest
         try {
             deleteDirectory(xsdDirectory);
         } catch (Exception e) {
+            logger.trace("", e);
             // ignore
         }
     }

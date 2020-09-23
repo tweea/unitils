@@ -20,6 +20,8 @@ import javax.sql.DataSource;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.unitils.UnitilsJUnit4;
 import org.unitils.core.ConfigurationLoader;
 import org.unitils.core.UnitilsException;
@@ -37,6 +39,7 @@ import static org.unitils.database.SQLUnitils.executeUpdate;
  */
 public class ExpectedDataSetNoAnnotationOnClassLevelTest
     extends UnitilsJUnit4 {
+    private static final Logger LOG = LoggerFactory.getLogger(ExpectedDataSetNoAnnotationOnClassLevelTest.class);
 
     /* Tested object */
     private DbUnitModule dbUnitModule;
@@ -137,6 +140,7 @@ public class ExpectedDataSetNoAnnotationOnClassLevelTest
         try {
             executeUpdate("drop table TEST", dataSource);
         } catch (UnitilsException e) {
+            LOG.trace("", e);
             // Ignored
         }
     }

@@ -55,9 +55,6 @@ public class DummyObjectUtil {
         /* The type of the dummy object */
         private Class<?> dummyObjectType;
 
-        /* The hash code that is returned when the hashCode method is called */
-        private Integer dummyObjectHashCode = new Object().hashCode();
-
         /* The behavior that will return the default values */
         private MockBehavior dummyObjectBehavior;
 
