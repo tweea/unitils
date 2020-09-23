@@ -14,12 +14,9 @@ package org.unitils.mock.core;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowableOfType;
 
 /**
  * Tests the mock object functionality.
@@ -28,8 +25,6 @@ import static org.junit.Assert.fail;
  * @author Filip Neven
  */
 public class MockObjectRaisesTest {
-    private static final Logger LOG = LoggerFactory.getLogger(MockObjectRaisesTest.class);
-
     /* Class under test */
     private MockObject<TestClass> mockObject;
 
@@ -46,22 +41,10 @@ public class MockObjectRaisesTest {
     public void raises() {
         mockObject.raises(new ThreadDeath()).testMethodString();
 
-        boolean exception1 = false;
-        try {
-            mockObject.getMock().testMethodString();
-        } catch (ThreadDeath e) {
-            LOG.trace("", e);
-            exception1 = true;
-        }
-        boolean exception2 = false;
-        try {
-            mockObject.getMock().testMethodString();
-        } catch (ThreadDeath e) {
-            LOG.trace("", e);
-            exception2 = true;
-        }
-        assertTrue(exception1);
-        assertTrue(exception2);
+        ThreadDeath error1 = catchThrowableOfType(() -> mockObject.getMock().testMethodString(), ThreadDeath.class);
+        assertThat(error1).isNotNull();
+        ThreadDeath error2 = catchThrowableOfType(() -> mockObject.getMock().testMethodString(), ThreadDeath.class);
+        assertThat(error2).isNotNull();
     }
 
     /**
@@ -72,48 +55,26 @@ public class MockObjectRaisesTest {
     public void onceRaises() {
         mockObject.onceRaises(new ThreadDeath()).testMethodString();
 
-        boolean exception1 = false;
-        try {
-            mockObject.getMock().testMethodString();
-        } catch (ThreadDeath e) {
-            LOG.trace("", e);
-            exception1 = true;
-        }
-        boolean exception2 = false;
-        try {
-            mockObject.getMock().testMethodString();
-        } catch (ThreadDeath e) {
-            LOG.trace("", e);
-            exception2 = true;
-        }
-        assertTrue(exception1);
-        assertFalse(exception2);
+        ThreadDeath error1 = catchThrowableOfType(() -> mockObject.getMock().testMethodString(), ThreadDeath.class);
+        assertThat(error1).isNotNull();
+        ThreadDeath error2 = catchThrowableOfType(() -> mockObject.getMock().testMethodString(), ThreadDeath.class);
+        assertThat(error2).isNull();
     }
 
     @Test
     public void raisesWithExceptionClass() {
         mockObject.raises(IllegalArgumentException.class).testMethodString();
 
-        try {
-            mockObject.getMock().testMethodString();
-            fail("Expected exception");
-        } catch (IllegalArgumentException e) {
-            LOG.trace("", e);
-            // expected
-        }
+        IllegalArgumentException exception = catchThrowableOfType(() -> mockObject.getMock().testMethodString(), IllegalArgumentException.class);
+        assertThat(exception).as("Expected exception").isNotNull();
     }
 
     @Test
     public void onceRaisesWithexceptionClass() {
         mockObject.onceRaises(IllegalArgumentException.class).testMethodString();
 
-        try {
-            mockObject.getMock().testMethodString();
-            fail("Expected exception");
-        } catch (IllegalArgumentException e) {
-            LOG.trace("", e);
-            // expected
-        }
+        IllegalArgumentException exception = catchThrowableOfType(() -> mockObject.getMock().testMethodString(), IllegalArgumentException.class);
+        assertThat(exception).as("Expected exception").isNotNull();
     }
 
     /**

@@ -19,8 +19,6 @@ import java.util.Set;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.unitils.core.ConfigurationLoader;
 import org.unitils.core.UnitilsException;
 import org.unitils.spring.annotation.SpringApplicationContext;
@@ -28,9 +26,10 @@ import org.unitils.spring.annotation.SpringBean;
 import org.unitils.spring.annotation.SpringBeanByName;
 import org.unitils.spring.annotation.SpringBeanByType;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowableOfType;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
-import static org.junit.Assert.fail;
 
 /**
  * Test for the {@link SpringModule}.
@@ -39,8 +38,6 @@ import static org.junit.Assert.fail;
  * @author Filip Neven
  */
 public class SpringModuleSpringBeansTest {
-    private static final Logger LOG = LoggerFactory.getLogger(SpringModuleSpringBeansTest.class);
-
     /* Tested object */
     private SpringModule springModule;
 
@@ -107,13 +104,8 @@ public class SpringModuleSpringBeansTest {
     @Test
     public void testAssignSpringBeans_notFound() {
         SpringTestNotFound springTestNotFound = new SpringTestNotFound();
-        try {
-            springModule.injectSpringBeans(springTestNotFound);
-            fail("Expected UnitilsException");
-        } catch (UnitilsException e) {
-            LOG.trace("", e);
-            // expected
-        }
+        UnitilsException exception = catchThrowableOfType(() -> springModule.injectSpringBeans(springTestNotFound), UnitilsException.class);
+        assertThat(exception).as("Expected UnitilsException").isNotNull();
         assertNull(springTestNotFound.testBean);
     }
 
@@ -123,13 +115,8 @@ public class SpringModuleSpringBeansTest {
     @Test
     public void testAssignSpringBeansByType_notFound() {
         SpringTestByTypeNotFound springTestByTypeNotFound = new SpringTestByTypeNotFound();
-        try {
-            springModule.injectSpringBeansByType(springTestByTypeNotFound);
-            fail("Expected UnitilsException");
-        } catch (UnitilsException e) {
-            LOG.trace("", e);
-            // expected
-        }
+        UnitilsException exception = catchThrowableOfType(() -> springModule.injectSpringBeansByType(springTestByTypeNotFound), UnitilsException.class);
+        assertThat(exception).as("Expected UnitilsException").isNotNull();
         assertNull(springTestByTypeNotFound.testBean);
     }
 
@@ -139,13 +126,8 @@ public class SpringModuleSpringBeansTest {
     @Test
     public void testAssignSpringBeansByType_ambiguous() {
         SpringTestByTypeAmbiguous springTestByTypeAmbiguous = new SpringTestByTypeAmbiguous();
-        try {
-            springModule.injectSpringBeansByType(springTestByTypeAmbiguous);
-            fail("Expected UnitilsException");
-        } catch (UnitilsException e) {
-            LOG.trace("", e);
-            // expected
-        }
+        UnitilsException exception = catchThrowableOfType(() -> springModule.injectSpringBeansByType(springTestByTypeAmbiguous), UnitilsException.class);
+        assertThat(exception).as("Expected UnitilsException").isNotNull();
         assertNull(springTestByTypeAmbiguous.testBean);
     }
 
@@ -155,13 +137,8 @@ public class SpringModuleSpringBeansTest {
     @Test
     public void testAssignSpringBeansByName_notFound() {
         SpringTestByNameNotFound springTestByNameNotFound = new SpringTestByNameNotFound();
-        try {
-            springModule.injectSpringBeansByName(springTestByNameNotFound);
-            fail("Expected UnitilsException");
-        } catch (UnitilsException e) {
-            LOG.trace("", e);
-            // expected
-        }
+        UnitilsException exception = catchThrowableOfType(() -> springModule.injectSpringBeansByName(springTestByNameNotFound), UnitilsException.class);
+        assertThat(exception).as("Expected UnitilsException").isNotNull();
         assertNull(springTestByNameNotFound.xxxx);
     }
 

@@ -16,20 +16,17 @@ import java.util.Properties;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.unitils.core.UnitilsException;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowableOfType;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
 
 /**
  * @author Tim Ducheyne
  * @author Filip Neven
  */
 public class UnitilsConfigurationGetIntTest {
-    private static final Logger LOG = LoggerFactory.getLogger(UnitilsConfigurationGetIntTest.class);
-
     /* Tested object */
     private UnitilsConfiguration unitilsConfiguration;
 
@@ -69,13 +66,8 @@ public class UnitilsConfigurationGetIntTest {
 
     @Test
     public void notFoundNoDefault() {
-        try {
-            unitilsConfiguration.getInt("xxx");
-            fail("Expected UnitilsException");
-        } catch (UnitilsException e) {
-            LOG.trace("", e);
-            // expected
-        }
+        UnitilsException exception = catchThrowableOfType(() -> unitilsConfiguration.getInt("xxx"), UnitilsException.class);
+        assertThat(exception).as("Expected UnitilsException").isNotNull();
     }
 
     @Test
@@ -86,23 +78,13 @@ public class UnitilsConfigurationGetIntTest {
 
     @Test
     public void invalidIntValueWithoutDefault() {
-        try {
-            unitilsConfiguration.getInt("invalidIntValue");
-            fail("Expected UnitilsException");
-        } catch (UnitilsException e) {
-            LOG.trace("", e);
-            // expected
-        }
+        UnitilsException exception = catchThrowableOfType(() -> unitilsConfiguration.getInt("invalidIntValue"), UnitilsException.class);
+        assertThat(exception).as("Expected UnitilsException").isNotNull();
     }
 
     @Test
     public void invalidIntValueWithDefault() {
-        try {
-            unitilsConfiguration.getInt("invalidIntValue", 6);
-            fail("Expected UnitilsException");
-        } catch (UnitilsException e) {
-            LOG.trace("", e);
-            // expected
-        }
+        UnitilsException exception = catchThrowableOfType(() -> unitilsConfiguration.getInt("invalidIntValue", 6), UnitilsException.class);
+        assertThat(exception).as("Expected UnitilsException").isNotNull();
     }
 }

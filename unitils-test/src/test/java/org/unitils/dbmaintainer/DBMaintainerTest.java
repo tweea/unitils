@@ -19,8 +19,6 @@ import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.unitils.UnitilsJUnit4;
 import org.unitils.core.UnitilsException;
 import org.unitils.dbmaintainer.clean.DBClearer;
@@ -39,7 +37,8 @@ import org.unitils.mock.ArgumentMatchers;
 import org.unitils.mock.Mock;
 import org.unitils.mock.MockUnitils;
 
-import static org.junit.Assert.fail;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowableOfType;
 import static org.unitils.mock.MockUnitils.assertNoMoreInvocations;
 
 /**
@@ -50,8 +49,6 @@ import static org.unitils.mock.MockUnitils.assertNoMoreInvocations;
  */
 public class DBMaintainerTest
     extends UnitilsJUnit4 {
-    private static final Logger LOG = LoggerFactory.getLogger(DBMaintainerTest.class);
-
     @InjectIntoByType
     private Mock<ExecutedScriptInfoSource> mockExecutedScriptInfoSource;
 
@@ -190,13 +187,8 @@ public class DBMaintainerTest
         expectNoPostProcessingCodeScripts();
         mockScriptRunner.raises(UnitilsException.class).execute(scripts.get(0).getScriptContentHandle());
 
-        try {
-            dbMaintainer.updateDatabase(schema, true);
-            fail("A UnitilsException should have been thrown");
-        } catch (UnitilsException e) {
-            LOG.trace("", e);
-            // expected
-        }
+        UnitilsException exception = catchThrowableOfType(() -> dbMaintainer.updateDatabase(schema, true), UnitilsException.class);
+        assertThat(exception).as("A UnitilsException should have been thrown").isNotNull();
         mockExecutedScriptInfoSource.assertInvoked().registerExecutedScript(new ExecutedScript(scripts.get(0), null, false));
     }
 
@@ -207,13 +199,8 @@ public class DBMaintainerTest
         expectPostProcessingScripts(postProcessingScripts);
         mockScriptRunner.raises(UnitilsException.class).execute(ArgumentMatchers.same(postProcessingScripts.get(1).getScriptContentHandle()));
 
-        try {
-            dbMaintainer.updateDatabase(schema, true);
-            fail("A UnitilsException should have been thrown");
-        } catch (UnitilsException e) {
-            LOG.trace("", e);
-            // Expected
-        }
+        UnitilsException exception = catchThrowableOfType(() -> dbMaintainer.updateDatabase(schema, true), UnitilsException.class);
+        assertThat(exception).as("A UnitilsException should have been thrown").isNotNull();
         assertScriptsExecutedAndDbVersionSet();
     }
 

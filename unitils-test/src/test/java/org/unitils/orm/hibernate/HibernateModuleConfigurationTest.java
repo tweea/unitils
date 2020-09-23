@@ -19,18 +19,17 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.junit.Before;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.unitils.UnitilsJUnit4;
 import org.unitils.core.ConfigurationLoader;
 import org.unitils.core.UnitilsException;
 import org.unitils.orm.hibernate.annotation.HibernateSessionFactory;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowableOfType;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 /**
  * Test class for the loading of the configuration in the HibernateModule
@@ -40,8 +39,6 @@ import static org.junit.Assert.fail;
  */
 public class HibernateModuleConfigurationTest
     extends UnitilsJUnit4 {
-    private static final Logger LOG = LoggerFactory.getLogger(HibernateModuleConfigurationTest.class);
-
     /* Tested object */
     private HibernateModule hibernateModule;
 
@@ -74,13 +71,9 @@ public class HibernateModuleConfigurationTest
     @Test
     public void testGetHibernateConfiguration_classLevelNoLocation() {
         HibernateTestClassLevelNoLocation hibernateTestClassLevelNoLocation = new HibernateTestClassLevelNoLocation();
-        try {
-            hibernateModule.getConfigurationObject(hibernateTestClassLevelNoLocation);
-            fail("Expected UnitilsException");
-        } catch (UnitilsException e) {
-            LOG.trace("", e);
-            // expected
-        }
+        UnitilsException exception = catchThrowableOfType(() -> hibernateModule.getConfigurationObject(hibernateTestClassLevelNoLocation),
+            UnitilsException.class);
+        assertThat(exception).as("Expected UnitilsException").isNotNull();
     }
 
     /**
@@ -101,13 +94,9 @@ public class HibernateModuleConfigurationTest
     @Test
     public void testGetHibernateConfiguration_fieldLevelNoLocation() {
         HibernateTestFieldLevelNoLocation hibernateTestFieldLevelNoLocation = new HibernateTestFieldLevelNoLocation();
-        try {
-            hibernateModule.getConfigurationObject(hibernateTestFieldLevelNoLocation);
-            fail("Expected UnitilsException");
-        } catch (UnitilsException e) {
-            LOG.trace("", e);
-            // expected
-        }
+        UnitilsException exception = catchThrowableOfType(() -> hibernateModule.getConfigurationObject(hibernateTestFieldLevelNoLocation),
+            UnitilsException.class);
+        assertThat(exception).as("Expected UnitilsException").isNotNull();
     }
 
     /**
@@ -128,13 +117,9 @@ public class HibernateModuleConfigurationTest
     @Test
     public void testGetHibernateConfiguration_setterLevelNoLocation() {
         HibernateTestSetterLevelNoLocation hibernateTestSetterLevelNoLocation = new HibernateTestSetterLevelNoLocation();
-        try {
-            hibernateModule.getConfigurationObject(hibernateTestSetterLevelNoLocation);
-            fail("Expected UnitilsException");
-        } catch (UnitilsException e) {
-            LOG.trace("", e);
-            // expected
-        }
+        UnitilsException exception = catchThrowableOfType(() -> hibernateModule.getConfigurationObject(hibernateTestSetterLevelNoLocation),
+            UnitilsException.class);
+        assertThat(exception).as("Expected UnitilsException").isNotNull();
     }
 
     /**
@@ -143,13 +128,9 @@ public class HibernateModuleConfigurationTest
     @Test
     public void testGetApplicationContext_multipleAnnotationsWithValues() {
         HibernateTestMultipleAnnotationsWithValues hibernateTestMultipleAnnotationsWithValues = new HibernateTestMultipleAnnotationsWithValues();
-        try {
-            hibernateModule.getConfigurationObject(hibernateTestMultipleAnnotationsWithValues);
-            fail("Expected UnitilsException");
-        } catch (UnitilsException e) {
-            LOG.trace("", e);
-            // expected
-        }
+        UnitilsException exception = catchThrowableOfType(() -> hibernateModule.getConfigurationObject(hibernateTestMultipleAnnotationsWithValues),
+            UnitilsException.class);
+        assertThat(exception).as("Expected UnitilsException").isNotNull();
     }
 
     /**
@@ -158,13 +139,9 @@ public class HibernateModuleConfigurationTest
     @Test
     public void testGetHibernateConfiguration_customCreateWrongSignature() {
         HibernateTestCustomCreateWrongSignature hibernateTestCustomCreateWrongSignature = new HibernateTestCustomCreateWrongSignature();
-        try {
-            hibernateModule.getConfigurationObject(hibernateTestCustomCreateWrongSignature);
-            fail("Expected UnitilsException");
-        } catch (UnitilsException e) {
-            LOG.trace("", e);
-            // expected
-        }
+        UnitilsException exception = catchThrowableOfType(() -> hibernateModule.getConfigurationObject(hibernateTestCustomCreateWrongSignature),
+            UnitilsException.class);
+        assertThat(exception).as("Expected UnitilsException").isNotNull();
     }
 
     /**
@@ -184,13 +161,8 @@ public class HibernateModuleConfigurationTest
     @Test
     public void testGetHibernateConfiguration_wrongLocation() {
         HibernateTestWrongLocation hibernateTestWrongLocation = new HibernateTestWrongLocation();
-        try {
-            hibernateModule.getConfigurationObject(hibernateTestWrongLocation);
-            fail("Expected UnitilsException");
-        } catch (UnitilsException e) {
-            LOG.trace("", e);
-            // expected
-        }
+        UnitilsException exception = catchThrowableOfType(() -> hibernateModule.getConfigurationObject(hibernateTestWrongLocation), UnitilsException.class);
+        assertThat(exception).as("Expected UnitilsException").isNotNull();
     }
 
     /**

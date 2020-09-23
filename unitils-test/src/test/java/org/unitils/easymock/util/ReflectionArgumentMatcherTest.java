@@ -17,13 +17,12 @@ import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowableOfType;
 import static org.easymock.EasyMock.createMock;
 import static org.easymock.EasyMock.replay;
 import static org.easymock.EasyMock.verify;
-import static org.junit.Assert.fail;
 import static org.unitils.easymock.EasyMockUnitils.lenEq;
 import static org.unitils.easymock.EasyMockUnitils.refEq;
 import static org.unitils.reflectionassert.ReflectionComparatorMode.IGNORE_DEFAULTS;
@@ -33,8 +32,6 @@ import static org.unitils.reflectionassert.ReflectionComparatorMode.LENIENT_ORDE
  * Test for {@link org.unitils.easymock.util.ReflectionArgumentMatcher}.
  */
 public class ReflectionArgumentMatcherTest {
-    private static final Logger LOG = LoggerFactory.getLogger(ReflectionArgumentMatcherTest.class);
-
     /* A test mock instance */
     private TestMock testMock;
 
@@ -67,13 +64,8 @@ public class ReflectionArgumentMatcherTest {
         testMock.method(refEq("stringValue"), refEq(3), refEq("objectValue1"), refEq("objectValue2"));
         replay(testMock);
 
-        try {
-            testMock.method("xxxx", 3, "objectValue1", "objectValue2");
-            fail("Expected AssertionError");
-        } catch (AssertionError e) {
-            LOG.trace("", e);
-            // expected
-        }
+        AssertionError error = catchThrowableOfType(() -> testMock.method("xxxx", 3, "objectValue1", "objectValue2"), AssertionError.class);
+        assertThat(error).as("Expected AssertionError").isNotNull();
     }
 
     /**
@@ -84,13 +76,8 @@ public class ReflectionArgumentMatcherTest {
         testMock.method(refEq("stringValue"), refEq(3), refEq("objectValue1"), refEq("objectValue2"));
         replay(testMock);
 
-        try {
-            testMock.method("stringValue", 3, "objectValue1");
-            fail("Expected AssertionError");
-        } catch (AssertionError e) {
-            LOG.trace("", e);
-            // expected
-        }
+        AssertionError error = catchThrowableOfType(() -> testMock.method("stringValue", 3, "objectValue1"), AssertionError.class);
+        assertThat(error).as("Expected AssertionError").isNotNull();
     }
 
     /**
@@ -126,13 +113,8 @@ public class ReflectionArgumentMatcherTest {
         testMock.method(refEq(Arrays.asList("element1", "element2", "element3")));
         replay(testMock);
 
-        try {
-            testMock.method(Arrays.asList("element3", "element1", "element2"));
-            fail("Expected AssertionError");
-        } catch (AssertionError e) {
-            LOG.trace("", e);
-            // expected
-        }
+        AssertionError error = catchThrowableOfType(() -> testMock.method(Arrays.asList("element3", "element1", "element2")), AssertionError.class);
+        assertThat(error).as("Expected AssertionError").isNotNull();
     }
 
     /**
@@ -155,13 +137,8 @@ public class ReflectionArgumentMatcherTest {
         testMock.method(refEq((List<String>) null));
         replay(testMock);
 
-        try {
-            testMock.method(Arrays.asList("element3", "element1", "element2"));
-            fail("Expected AssertionError");
-        } catch (AssertionError e) {
-            LOG.trace("", e);
-            // expected
-        }
+        AssertionError error = catchThrowableOfType(() -> testMock.method(Arrays.asList("element3", "element1", "element2")), AssertionError.class);
+        assertThat(error).as("Expected AssertionError").isNotNull();
     }
 
     /**

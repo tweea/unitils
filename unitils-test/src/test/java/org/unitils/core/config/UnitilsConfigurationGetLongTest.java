@@ -16,20 +16,17 @@ import java.util.Properties;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.unitils.core.UnitilsException;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowableOfType;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
 
 /**
  * @author Tim Ducheyne
  * @author Filip Neven
  */
 public class UnitilsConfigurationGetLongTest {
-    private static final Logger LOG = LoggerFactory.getLogger(UnitilsConfigurationGetLongTest.class);
-
     /* Tested object */
     private UnitilsConfiguration unitilsConfiguration;
 
@@ -69,13 +66,8 @@ public class UnitilsConfigurationGetLongTest {
 
     @Test
     public void notFoundNoDefault() {
-        try {
-            unitilsConfiguration.getLong("xxx");
-            fail("Expected UnitilsException");
-        } catch (UnitilsException e) {
-            LOG.trace("", e);
-            // expected
-        }
+        UnitilsException exception = catchThrowableOfType(() -> unitilsConfiguration.getLong("xxx"), UnitilsException.class);
+        assertThat(exception).as("Expected UnitilsException").isNotNull();
     }
 
     @Test
@@ -86,23 +78,13 @@ public class UnitilsConfigurationGetLongTest {
 
     @Test
     public void invalidLongValueWithoutDefault() {
-        try {
-            unitilsConfiguration.getLong("invalidLongValue");
-            fail("Expected UnitilsException");
-        } catch (UnitilsException e) {
-            LOG.trace("", e);
-            // expected
-        }
+        UnitilsException exception = catchThrowableOfType(() -> unitilsConfiguration.getLong("invalidLongValue"), UnitilsException.class);
+        assertThat(exception).as("Expected UnitilsException").isNotNull();
     }
 
     @Test
     public void invalidLongValueWithDefault() {
-        try {
-            unitilsConfiguration.getLong("invalidLongValue", 6L);
-            fail("Expected UnitilsException");
-        } catch (UnitilsException e) {
-            LOG.trace("", e);
-            // expected
-        }
+        UnitilsException exception = catchThrowableOfType(() -> unitilsConfiguration.getLong("invalidLongValue", 6L), UnitilsException.class);
+        assertThat(exception).as("Expected UnitilsException").isNotNull();
     }
 }

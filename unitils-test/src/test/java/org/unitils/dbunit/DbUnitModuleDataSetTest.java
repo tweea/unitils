@@ -21,8 +21,6 @@ import javax.sql.DataSource;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.unitils.UnitilsJUnit4;
 import org.unitils.core.ConfigurationLoader;
 import org.unitils.core.Unitils;
@@ -34,9 +32,10 @@ import org.unitils.dbunit.annotation.DataSet;
 import org.unitils.dbunit.datasetfactory.impl.MultiSchemaXmlDataSetFactory;
 import org.unitils.dbunit.datasetloadstrategy.impl.CleanInsertLoadStrategy;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowableOfType;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 import static org.unitils.database.SQLUnitils.executeUpdate;
 import static org.unitils.database.SQLUnitils.executeUpdateQuietly;
 import static org.unitils.database.SQLUnitils.getItemAsLong;
@@ -52,8 +51,6 @@ import static org.unitils.reflectionassert.ReflectionAssert.assertLenientEquals;
  */
 public class DbUnitModuleDataSetTest
     extends UnitilsJUnit4 {
-    private static final Logger LOG = LoggerFactory.getLogger(DbUnitModuleDataSetTest.class);
-
     /* Tested object */
     private DbUnitModule dbUnitModule;
 
@@ -112,13 +109,9 @@ public class DbUnitModuleDataSetTest
     @Test
     public void testInsertDataSet_notFound()
         throws Exception {
-        try {
-            dbUnitModule.insertDataSet(DataSetTest.class.getMethod("testNotFound1"), new DataSetTest());
-            fail("Expected UnitilsException");
-        } catch (UnitilsException e) {
-            LOG.trace("", e);
-            // expected
-        }
+        UnitilsException exception = catchThrowableOfType(() -> dbUnitModule.insertDataSet(DataSetTest.class.getMethod("testNotFound1"), new DataSetTest()),
+            UnitilsException.class);
+        assertThat(exception).as("Expected UnitilsException").isNotNull();
     }
 
     /**
@@ -127,13 +120,9 @@ public class DbUnitModuleDataSetTest
     @Test
     public void testInsertDataSet_customNotFound()
         throws Exception {
-        try {
-            dbUnitModule.insertDataSet(DataSetTest.class.getMethod("testNotFound2"), new DataSetTest());
-            fail("Expected UnitilsException");
-        } catch (UnitilsException e) {
-            LOG.trace("", e);
-            // expected
-        }
+        UnitilsException exception = catchThrowableOfType(() -> dbUnitModule.insertDataSet(DataSetTest.class.getMethod("testNotFound2"), new DataSetTest()),
+            UnitilsException.class);
+        assertThat(exception).as("Expected UnitilsException").isNotNull();
     }
 
     /**

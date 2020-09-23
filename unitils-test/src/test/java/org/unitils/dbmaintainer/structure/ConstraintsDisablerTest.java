@@ -20,8 +20,6 @@ import javax.sql.DataSource;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.unitils.UnitilsJUnit4;
 import org.unitils.core.ConfigurationLoader;
 import org.unitils.core.UnitilsException;
@@ -31,7 +29,8 @@ import org.unitils.core.dbsupport.SQLHandler;
 import org.unitils.database.annotations.TestDataSource;
 import org.unitils.util.PropertyUtils;
 
-import static org.junit.Assert.fail;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowableOfType;
 import static org.unitils.core.dbsupport.DbSupportFactory.getDefaultDbSupport;
 import static org.unitils.database.SQLUnitils.executeUpdate;
 import static org.unitils.database.SQLUnitils.executeUpdateQuietly;
@@ -46,8 +45,6 @@ import static org.unitils.dbmaintainer.util.DatabaseModuleConfigUtils.getConfigu
  */
 public class ConstraintsDisablerTest
     extends UnitilsJUnit4 {
-    private static final Logger LOG = LoggerFactory.getLogger(ConstraintsDisablerTest.class);
-
     /* The tested object */
     private ConstraintsDisabler constraintsDisabler;
 
@@ -94,13 +91,8 @@ public class ConstraintsDisablerTest
     @Test
     public void testDisableConstraints_foreignKey()
         throws Exception {
-        try {
-            executeUpdate("insert into table2 (col1) values ('test')", dataSource);
-            fail("UnitilsException should have been thrown");
-        } catch (UnitilsException e) {
-            LOG.trace("", e);
-            // Expected foreign key violation
-        }
+        UnitilsException exception = catchThrowableOfType(() -> executeUpdate("insert into table2 (col1) values ('test')", dataSource), UnitilsException.class);
+        assertThat(exception).as("UnitilsException should have been thrown").isNotNull();
         constraintsDisabler.disableConstraints();
         // Should not throw exception anymore
         executeUpdate("insert into table2 (col1) values ('test')", dataSource);
@@ -113,13 +105,8 @@ public class ConstraintsDisablerTest
     @Test
     public void testDisableConstraints_foreignKeyToAlternateKey()
         throws Exception {
-        try {
-            executeUpdate("insert into table3 (col1) values ('test')", dataSource);
-            fail("UnitilsException should have been thrown");
-        } catch (UnitilsException e) {
-            LOG.trace("", e);
-            // Expected foreign key violation
-        }
+        UnitilsException exception = catchThrowableOfType(() -> executeUpdate("insert into table3 (col1) values ('test')", dataSource), UnitilsException.class);
+        assertThat(exception).as("UnitilsException should have been thrown").isNotNull();
         constraintsDisabler.disableConstraints();
         // Should not throw exception anymore
         executeUpdate("insert into table3 (col1) values ('test')", dataSource);
@@ -131,13 +118,9 @@ public class ConstraintsDisablerTest
     @Test
     public void testDisableConstraints_notNull()
         throws Exception {
-        try {
-            executeUpdate("insert into table1 (col1, col2) values ('test', null)", dataSource);
-            fail("UnitilsException should have been thrown");
-        } catch (UnitilsException e) {
-            LOG.trace("", e);
-            // Expected not null violation
-        }
+        UnitilsException exception = catchThrowableOfType(() -> executeUpdate("insert into table1 (col1, col2) values ('test', null)", dataSource),
+            UnitilsException.class);
+        assertThat(exception).as("UnitilsException should have been thrown").isNotNull();
         constraintsDisabler.disableConstraints();
         // Should not throw exception anymore
         executeUpdate("insert into table1 (col1, col2) values ('test', null)", dataSource);

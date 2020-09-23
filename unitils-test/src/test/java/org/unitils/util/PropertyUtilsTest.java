@@ -16,14 +16,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.unitils.core.UnitilsException;
 
 import junit.framework.TestCase;
 
 import static java.util.Arrays.asList;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowableOfType;
 import static org.unitils.reflectionassert.ReflectionAssert.assertLenientEquals;
 import static org.unitils.util.PropertyUtils.getBoolean;
 import static org.unitils.util.PropertyUtils.getInstance;
@@ -39,8 +39,6 @@ import static org.unitils.util.PropertyUtils.getStringList;
  */
 public class PropertyUtilsTest
     extends TestCase {
-    private static final Logger LOG = LoggerFactory.getLogger(PropertyUtilsTest.class);
-
     /* A test properties instance */
     private Properties testProperties;
 
@@ -74,13 +72,8 @@ public class PropertyUtilsTest
      * Test for getting an unknown string property
      */
     public void testGetString_notFound() {
-        try {
-            getString("xxxx", testProperties);
-            fail("Expected UnitilsException");
-        } catch (UnitilsException e) {
-            LOG.trace("", e);
-            // expected
-        }
+        UnitilsException exception = catchThrowableOfType(() -> getString("xxxx", testProperties), UnitilsException.class);
+        assertThat(exception).as("Expected UnitilsException").isNotNull();
     }
 
     /**
@@ -119,13 +112,8 @@ public class PropertyUtilsTest
      * Test for getting an unknown string list property
      */
     public void testGetStringList_requiredNotFound() {
-        try {
-            getStringList("xxxx", testProperties, true);
-            fail("Expected UnitilsException");
-        } catch (UnitilsException e) {
-            LOG.trace("", e);
-            // expected
-        }
+        UnitilsException exception = catchThrowableOfType(() -> getStringList("xxxx", testProperties, true), UnitilsException.class);
+        assertThat(exception).as("Expected UnitilsException").isNotNull();
     }
 
     /**
@@ -140,13 +128,8 @@ public class PropertyUtilsTest
      * Test for getting an unknown boolean property
      */
     public void testGetBoolean_notFound() {
-        try {
-            getBoolean("xxxx", testProperties);
-            fail("Expected UnitilsException");
-        } catch (UnitilsException e) {
-            LOG.trace("", e);
-            // expected
-        }
+        UnitilsException exception = catchThrowableOfType(() -> getBoolean("xxxx", testProperties), UnitilsException.class);
+        assertThat(exception).as("Expected UnitilsException").isNotNull();
     }
 
     /**
@@ -177,26 +160,16 @@ public class PropertyUtilsTest
      * Test for getting a long property that is not a number
      */
     public void testGetLong_notNumber() {
-        try {
-            getLong("stringProperty", testProperties);
-            fail("Expected UnitilsException");
-        } catch (UnitilsException e) {
-            LOG.trace("", e);
-            // expected
-        }
+        UnitilsException exception = catchThrowableOfType(() -> getLong("stringProperty", testProperties), UnitilsException.class);
+        assertThat(exception).as("Expected UnitilsException").isNotNull();
     }
 
     /**
      * Test for getting an unknown long property
      */
     public void testGetLong_notFound() {
-        try {
-            getLong("xxxx", testProperties);
-            fail("Expected UnitilsException");
-        } catch (UnitilsException e) {
-            LOG.trace("", e);
-            // expected
-        }
+        UnitilsException exception = catchThrowableOfType(() -> getLong("xxxx", testProperties), UnitilsException.class);
+        assertThat(exception).as("Expected UnitilsException").isNotNull();
     }
 
     /**
@@ -211,13 +184,8 @@ public class PropertyUtilsTest
      * Test for getting a long property that is not a number passing a default
      */
     public void testGetLong_defaultNotNumber() {
-        try {
-            getLong("stringProperty", 10, testProperties);
-            fail("Expected UnitilsException");
-        } catch (UnitilsException e) {
-            LOG.trace("", e);
-            // expected
-        }
+        UnitilsException exception = catchThrowableOfType(() -> getLong("stringProperty", 10, testProperties), UnitilsException.class);
+        assertThat(exception).as("Expected UnitilsException").isNotNull();
     }
 
     /**
@@ -240,26 +208,16 @@ public class PropertyUtilsTest
      * Test for getting an unknown object instance property
      */
     public void testGetInstance_notFound() {
-        try {
-            getInstance("xxxx", testProperties);
-            fail("Expected UnitilsException");
-        } catch (UnitilsException e) {
-            LOG.trace("", e);
-            // expected
-        }
+        UnitilsException exception = catchThrowableOfType(() -> getInstance("xxxx", testProperties), UnitilsException.class);
+        assertThat(exception).as("Expected UnitilsException").isNotNull();
     }
 
     /**
      * Test for getting a object instance property that does not contain a class name
      */
     public void testGetInstance_couldNotCreate() {
-        try {
-            getInstance("stringProperty", testProperties);
-            fail("Expected UnitilsException");
-        } catch (UnitilsException e) {
-            LOG.trace("", e);
-            // expected
-        }
+        UnitilsException exception = catchThrowableOfType(() -> getInstance("stringProperty", testProperties), UnitilsException.class);
+        assertThat(exception).as("Expected UnitilsException").isNotNull();
     }
 
     /**
@@ -282,12 +240,7 @@ public class PropertyUtilsTest
      * Test for getting a object instance property that does not contain a class name passing a default
      */
     public void testGetInstance_defaultCouldNotCreate() {
-        try {
-            getInstance("stringProperty", new ArrayList<>(), testProperties);
-            fail("Expected UnitilsException");
-        } catch (UnitilsException e) {
-            LOG.trace("", e);
-            // expected
-        }
+        UnitilsException exception = catchThrowableOfType(() -> getInstance("stringProperty", new ArrayList<>(), testProperties), UnitilsException.class);
+        assertThat(exception).as("Expected UnitilsException").isNotNull();
     }
 }

@@ -16,24 +16,21 @@ import java.util.Properties;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.unitils.core.UnitilsException;
 import org.unitils.core.util.Configurable;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowableOfType;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertSame;
-import static org.junit.Assert.fail;
 
 /**
  * @author Tim Ducheyne
  * @author Filip Neven
  */
 public class UnitilsConfigurationGetInstanceTest {
-    private static final Logger LOG = LoggerFactory.getLogger(UnitilsConfigurationGetInstanceTest.class);
-
     /* Tested object */
     private UnitilsConfiguration unitilsConfiguration;
 
@@ -75,13 +72,8 @@ public class UnitilsConfigurationGetInstanceTest {
 
     @Test
     public void notFoundNoDefault() {
-        try {
-            unitilsConfiguration.getInstance("xxx");
-            fail("Expected UnitilsException");
-        } catch (UnitilsException e) {
-            LOG.trace("", e);
-            // expected
-        }
+        UnitilsException exception = catchThrowableOfType(() -> unitilsConfiguration.getInstance("xxx"), UnitilsException.class);
+        assertThat(exception).as("Expected UnitilsException").isNotNull();
     }
 
     @Test
@@ -99,24 +91,15 @@ public class UnitilsConfigurationGetInstanceTest {
 
     @Test
     public void invalidClassNameWithoutDefault() {
-        try {
-            unitilsConfiguration.getInstance("invalidClassNameProperty");
-            fail("Expected UnitilsException");
-        } catch (UnitilsException e) {
-            LOG.trace("", e);
-            // expected
-        }
+        UnitilsException exception = catchThrowableOfType(() -> unitilsConfiguration.getInstance("invalidClassNameProperty"), UnitilsException.class);
+        assertThat(exception).as("Expected UnitilsException").isNotNull();
     }
 
     @Test
     public void invalidClassNameWithDefault() {
-        try {
-            unitilsConfiguration.getInstance("invalidClassNameProperty", new StringBuffer());
-            fail("Expected UnitilsException");
-        } catch (UnitilsException e) {
-            LOG.trace("", e);
-            // expected
-        }
+        UnitilsException exception = catchThrowableOfType(() -> unitilsConfiguration.getInstance("invalidClassNameProperty", new StringBuffer()),
+            UnitilsException.class);
+        assertThat(exception).as("Expected UnitilsException").isNotNull();
     }
 
     @Test

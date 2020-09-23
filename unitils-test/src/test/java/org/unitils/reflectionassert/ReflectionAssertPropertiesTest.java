@@ -12,11 +12,10 @@
  */
 package org.unitils.reflectionassert;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import junit.framework.TestCase;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowableOfType;
 import static org.unitils.reflectionassert.ReflectionAssert.assertPropertyLenientEquals;
 import static org.unitils.reflectionassert.ReflectionAssert.assertPropertyReflectionEquals;
 import static org.unitils.reflectionassert.ReflectionComparatorMode.IGNORE_DEFAULTS;
@@ -29,8 +28,6 @@ import static org.unitils.reflectionassert.ReflectionComparatorMode.IGNORE_DEFAU
  */
 public class ReflectionAssertPropertiesTest
     extends TestCase {
-    private static final Logger LOG = LoggerFactory.getLogger(ReflectionAssertPropertiesTest.class);
-
     /* Test object */
     private TestObject testObject;
 
@@ -84,26 +81,16 @@ public class ReflectionAssertPropertiesTest
      * Test for different property value.
      */
     public void testAssertPropertyReflectionEquals_notEqualsDifferentValues() {
-        try {
-            assertPropertyReflectionEquals("stringProperty", "xxxxxx", testObject);
-            fail("Expected AssertionError");
-        } catch (AssertionError a) {
-            LOG.trace("", a);
-            // expected
-        }
+        AssertionError error = catchThrowableOfType(() -> assertPropertyReflectionEquals("stringProperty", "xxxxxx", testObject), AssertionError.class);
+        assertThat(error).as("Expected AssertionError").isNotNull();
     }
 
     /**
      * Test case for a null left-argument.
      */
     public void testAssertPropertyReflectionEquals_leftNull() {
-        try {
-            assertPropertyReflectionEquals("stringProperty", null, testObject);
-            fail("Expected AssertionError");
-        } catch (AssertionError a) {
-            LOG.trace("", a);
-            // expected
-        }
+        AssertionError error = catchThrowableOfType(() -> assertPropertyReflectionEquals("stringProperty", null, testObject), AssertionError.class);
+        assertThat(error).as("Expected AssertionError").isNotNull();
     }
 
     /**
@@ -111,26 +98,16 @@ public class ReflectionAssertPropertiesTest
      */
     public void testAssertPropertyReflectionEquals_rightNull() {
         testObject.setStringProperty(null);
-        try {
-            assertPropertyReflectionEquals("stringProperty", "stringValue", testObject);
-            fail("Expected AssertionError");
-        } catch (AssertionError a) {
-            LOG.trace("", a);
-            // expected
-        }
+        AssertionError error = catchThrowableOfType(() -> assertPropertyReflectionEquals("stringProperty", "stringValue", testObject), AssertionError.class);
+        assertThat(error).as("Expected AssertionError").isNotNull();
     }
 
     /**
      * Test case for null as actual object argument.
      */
     public void testAssertPropertyReflectionEquals_actualObjectNull() {
-        try {
-            assertPropertyReflectionEquals("aProperty", "aValue", null);
-            fail("Expected AssertionError");
-        } catch (AssertionError a) {
-            LOG.trace("", a);
-            // expected
-        }
+        AssertionError error = catchThrowableOfType(() -> assertPropertyReflectionEquals("aProperty", "aValue", null), AssertionError.class);
+        assertThat(error).as("Expected AssertionError").isNotNull();
     }
 
     /**
