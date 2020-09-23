@@ -61,7 +61,7 @@ public class DefaultDBCleanerTest
     /* The name of the version tabel */
     private String versionTableName;
 
-    private static String dialect = "h2";
+    private static String dialect = "hsqldb";
 
     private List<String> schemas;
 

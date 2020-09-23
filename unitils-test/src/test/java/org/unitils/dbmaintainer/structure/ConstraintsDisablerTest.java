@@ -58,7 +58,7 @@ public class ConstraintsDisablerTest
     @TestDataSource
     protected DataSource dataSource = null;
 
-    private static String dialect = "h2";
+    private static String dialect = "hsqldb";
 
     private List<String> schemas;
 

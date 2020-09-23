@@ -72,7 +72,7 @@ public class XsdDataSetStructureGeneratorTest
     /* True if current test is not for the current dialect */
     private boolean disabled;
 
-    private static String dialect = "h2";
+    private static String dialect = "hsqldb";
 
     private List<String> schemas;
 

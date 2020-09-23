@@ -68,7 +68,7 @@ public class SequenceUpdaterTest
     /* DbSupport instance */
     private DbSupport dbSupport;
 
-    private static String dialect = "h2";
+    private static String dialect = "hsqldb";
 
     private List<String> schemas;
 
