@@ -31,7 +31,8 @@ import org.unitils.dbmaintainer.clean.DBClearer;
 import org.unitils.dbmaintainer.util.DatabaseModuleConfigUtils;
 import org.unitils.util.PropertyUtils;
 
-import static org.junit.Assert.fail;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowableOfType;
 import static org.unitils.core.dbsupport.DbSupportFactory.getDefaultDbSupport;
 import static org.unitils.dbmaintainer.clean.impl.DefaultDBClearer.PROPKEY_PRESERVE_MATERIALIZED_VIEWS;
 import static org.unitils.dbmaintainer.clean.impl.DefaultDBClearer.PROPKEY_PRESERVE_SCHEMAS;
@@ -134,13 +135,9 @@ public class DefaultDBClearerPreserveDoesNotExistTest
             logger.warn("Current dialect does not support sequences. Skipping test.");
             return;
         }
-        try {
-            configuration.setProperty(PROPKEY_PRESERVE_SEQUENCES, "unexisting_sequence1, unexisting_sequence2");
-            defaultDbClearer.init(configuration, sqlHandler, dialect, schemas);
-            fail("UnitilsException expected.");
-        } catch (UnitilsException e) {
-            // expected
-        }
+        configuration.setProperty(PROPKEY_PRESERVE_SEQUENCES, "unexisting_sequence1, unexisting_sequence2");
+        UnitilsException exception = catchThrowableOfType(() -> defaultDbClearer.init(configuration, sqlHandler, dialect, schemas), UnitilsException.class);
+        assertThat(exception).as("UnitilsException expected.").isNotNull();
     }
 
     /**
@@ -153,12 +150,8 @@ public class DefaultDBClearerPreserveDoesNotExistTest
             logger.warn("Current dialect does not support synonyms. Skipping test.");
             return;
         }
-        try {
-            configuration.setProperty(PROPKEY_PRESERVE_SYNONYMS, "unexisting_synonym1, unexisting_synonym2");
-            defaultDbClearer.init(configuration, sqlHandler, dialect, schemas);
-            fail("UnitilsException expected.");
-        } catch (UnitilsException e) {
-            // expected
-        }
+        configuration.setProperty(PROPKEY_PRESERVE_SYNONYMS, "unexisting_synonym1, unexisting_synonym2");
+        UnitilsException exception = catchThrowableOfType(() -> defaultDbClearer.init(configuration, sqlHandler, dialect, schemas), UnitilsException.class);
+        assertThat(exception).as("UnitilsException expected.").isNotNull();
     }
 }

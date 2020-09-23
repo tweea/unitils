@@ -23,11 +23,12 @@ import org.unitils.core.ConfigurationLoader;
 import org.unitils.core.UnitilsException;
 import org.unitils.spring.annotation.SpringApplicationContext;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowableOfType;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 /**
  * Test for ApplicationContext creation in the {@link SpringModule}.
@@ -112,12 +113,9 @@ public class SpringModuleApplicationContextTest {
     @Test
     public void testGetApplicationContext_multipleAnnotationsWithValues() {
         SpringTestMultipleAnnotationsWithValues springTestMultipleAnnotationsWithValues = new SpringTestMultipleAnnotationsWithValues();
-        try {
-            springModule.getApplicationContext(springTestMultipleAnnotationsWithValues);
-            fail("Expected UnitilsException");
-        } catch (UnitilsException e) {
-            // expected
-        }
+        UnitilsException exception = catchThrowableOfType(() -> springModule.getApplicationContext(springTestMultipleAnnotationsWithValues),
+            UnitilsException.class);
+        assertThat(exception).as("Expected UnitilsException").isNotNull();
     }
 
     /**
@@ -126,12 +124,8 @@ public class SpringModuleApplicationContextTest {
     @Test
     public void testGetApplicationContext_twoCustomCreateMethods() {
         SpringTestTwoCreateMethods springTestTwoCreateMethods = new SpringTestTwoCreateMethods();
-        try {
-            springModule.getApplicationContext(springTestTwoCreateMethods);
-            fail("Expected UnitilsException");
-        } catch (UnitilsException e) {
-            // expected
-        }
+        UnitilsException exception = catchThrowableOfType(() -> springModule.getApplicationContext(springTestTwoCreateMethods), UnitilsException.class);
+        assertThat(exception).as("Expected UnitilsException").isNotNull();
     }
 
     /**
@@ -197,12 +191,9 @@ public class SpringModuleApplicationContextTest {
     @Test
     public void testGetApplicationContext_customCreateWrongSignature() {
         SpringTestCreateMethodWrongSignature springTestCreateMethodWrongSignature = new SpringTestCreateMethodWrongSignature();
-        try {
-            springModule.getApplicationContext(springTestCreateMethodWrongSignature);
-            fail("Expected UnitilsException");
-        } catch (UnitilsException e) {
-            // expected
-        }
+        UnitilsException exception = catchThrowableOfType(() -> springModule.getApplicationContext(springTestCreateMethodWrongSignature),
+            UnitilsException.class);
+        assertThat(exception).as("Expected UnitilsException").isNotNull();
     }
 
     /**
@@ -211,12 +202,8 @@ public class SpringModuleApplicationContextTest {
     @Test
     public void testGetApplicationContext_wrongLocation() {
         SpringTestWrongLocation springTestWrongLocation = new SpringTestWrongLocation();
-        try {
-            springModule.getApplicationContext(springTestWrongLocation);
-            fail("Expected UnitilsException");
-        } catch (UnitilsException e) {
-            // expected
-        }
+        UnitilsException exception = catchThrowableOfType(() -> springModule.getApplicationContext(springTestWrongLocation), UnitilsException.class);
+        assertThat(exception).as("Expected UnitilsException").isNotNull();
     }
 
     /**

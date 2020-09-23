@@ -21,9 +21,10 @@ import org.unitils.core.ConfigurationLoader;
 import org.unitils.core.UnitilsException;
 import org.unitils.spring.annotation.SpringApplicationContext;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowableOfType;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
-import static org.junit.Assert.fail;
 
 /**
  * Test for the application context injection in the {@link SpringModule}.
@@ -65,11 +66,8 @@ public class SpringModuleInjectApplicationContextTest {
     @Test
     public void testInjectApplicationContext_noContextCreated() {
         SpringTestNoContextCreated springTestNoContextCreated = new SpringTestNoContextCreated();
-        try {
-            springModule.injectApplicationContext(springTestNoContextCreated);
-            fail("Expected UnitilsException");
-        } catch (UnitilsException e) {
-        }
+        UnitilsException exception = catchThrowableOfType(() -> springModule.injectApplicationContext(springTestNoContextCreated), UnitilsException.class);
+        assertThat(exception).as("Expected UnitilsException").isNotNull();
         assertNull(springTestNoContextCreated.field);
     }
 

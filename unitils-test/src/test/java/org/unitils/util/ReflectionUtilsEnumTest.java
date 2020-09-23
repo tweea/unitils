@@ -16,6 +16,9 @@ import org.unitils.core.UnitilsException;
 
 import junit.framework.TestCase;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowableOfType;
+
 /**
  * Test for {@link ReflectionUtils} that use enumeration values.
  *
@@ -45,12 +48,8 @@ public class ReflectionUtilsEnumTest
      * Should fail with a runtime exception.
      */
     public void testGetEnumValue_unexisting() {
-        try {
-            ReflectionUtils.getEnumValue(TestEnum.class, "xxxxxxxxx");
-            fail("Expected UnitilsException");
-        } catch (UnitilsException e) {
-            // expected
-        }
+        UnitilsException exception = catchThrowableOfType(() -> ReflectionUtils.getEnumValue(TestEnum.class, "xxxxxxxxx"), UnitilsException.class);
+        assertThat(exception).as("Expected UnitilsException").isNotNull();
     }
 
     /**

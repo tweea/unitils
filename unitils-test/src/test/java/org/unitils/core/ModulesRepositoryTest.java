@@ -21,9 +21,10 @@ import org.junit.Test;
 import org.unitils.UnitilsJUnit4;
 import org.unitils.database.DatabaseModule;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowableOfType;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 import static org.unitils.reflectionassert.ReflectionAssert.assertLenientEquals;
 
 /**
@@ -83,12 +84,8 @@ public class ModulesRepositoryTest
      */
     @Test
     public void testGetModuleOfType_noneFound() {
-        try {
-            modulesRepository.getModuleOfType(DatabaseModule.class);
-            fail("A UnitilsException should have been thrown");
-        } catch (UnitilsException e) {
-            // Expected
-        }
+        UnitilsException exception = catchThrowableOfType(() -> modulesRepository.getModuleOfType(DatabaseModule.class), UnitilsException.class);
+        assertThat(exception).as("A UnitilsException should have been thrown").isNotNull();
     }
 
     /**
@@ -96,12 +93,8 @@ public class ModulesRepositoryTest
      */
     @Test
     public void testGetModuleOfType_moreThanOneFound() {
-        try {
-            modulesRepository.getModuleOfType(TestModule1.class);
-            fail("A UnitilsException should have been thrown");
-        } catch (UnitilsException e) {
-            // Expected
-        }
+        UnitilsException exception = catchThrowableOfType(() -> modulesRepository.getModuleOfType(TestModule1.class), UnitilsException.class);
+        assertThat(exception).as("A UnitilsException should have been thrown").isNotNull();
     }
 
     /**

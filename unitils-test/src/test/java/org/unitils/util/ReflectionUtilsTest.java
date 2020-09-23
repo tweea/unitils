@@ -21,6 +21,8 @@ import org.unitils.core.annotation.UsedForTesting;
 
 import junit.framework.TestCase;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowableOfType;
 import static org.unitils.util.CollectionUtils.asSet;
 import static org.unitils.util.ReflectionUtils.createInstanceOfType;
 import static org.unitils.util.ReflectionUtils.getFieldValue;
@@ -74,12 +76,8 @@ public class ReflectionUtilsTest
      * Test for creating a class instance, but with an unexisting class name.
      */
     public void testCreateInstanceOfType_classNotFound() {
-        try {
-            createInstanceOfType("xxxxxx", false);
-            fail("UnitilsException expected");
-        } catch (UnitilsException e) {
-            // expected
-        }
+        UnitilsException exception = catchThrowableOfType(() -> createInstanceOfType("xxxxxx", false), UnitilsException.class);
+        assertThat(exception).as("UnitilsException expected").isNotNull();
     }
 
     /**
@@ -97,12 +95,8 @@ public class ReflectionUtilsTest
         throws Exception {
         // get another field
         Field anotherField = getClass().getDeclaredField("testObject");
-        try {
-            getFieldValue(testObject, anotherField);
-            fail("UnitilsException expected");
-        } catch (UnitilsException e) {
-            // expected
-        }
+        UnitilsException exception = catchThrowableOfType(() -> getFieldValue(testObject, anotherField), UnitilsException.class);
+        assertThat(exception).as("UnitilsException expected").isNotNull();
     }
 
     /**
@@ -129,12 +123,8 @@ public class ReflectionUtilsTest
         // get another field
         Field anotherField = getClass().getDeclaredField("testObject");
 
-        try {
-            setFieldValue(testObject, anotherField, "newValue");
-            fail("UnitilsException expected");
-        } catch (UnitilsException e) {
-            // expected
-        }
+        UnitilsException exception = catchThrowableOfType(() -> setFieldValue(testObject, anotherField, "newValue"), UnitilsException.class);
+        assertThat(exception).as("UnitilsException expected").isNotNull();
     }
 
     /**
@@ -168,12 +158,9 @@ public class ReflectionUtilsTest
         throws Exception {
         // get another field
         Field anotherField = getClass().getDeclaredField("testObject");
-        try {
-            setFieldAndSetterValue(testObject, asSet(anotherField), asSet(fieldSetterMethod), "newValue");
-            fail("UnitilsException expected");
-        } catch (UnitilsException e) {
-            // expected
-        }
+        UnitilsException exception = catchThrowableOfType(() -> setFieldAndSetterValue(testObject, asSet(anotherField), asSet(fieldSetterMethod), "newValue"),
+            UnitilsException.class);
+        assertThat(exception).as("UnitilsException expected").isNotNull();
     }
 
     /**
@@ -183,12 +170,9 @@ public class ReflectionUtilsTest
         throws Exception {
         // get another field
         Method anotherMethod = getClass().getDeclaredMethod("testInvokeMethod_unexistingMethod");
-        try {
-            setFieldAndSetterValue(testObject, asSet(field), asSet(anotherMethod), "newValue");
-            fail("UnitilsException expected");
-        } catch (UnitilsException e) {
-            // expected
-        }
+        UnitilsException exception = catchThrowableOfType(() -> setFieldAndSetterValue(testObject, asSet(field), asSet(anotherMethod), "newValue"),
+            UnitilsException.class);
+        assertThat(exception).as("UnitilsException expected").isNotNull();
     }
 
     /**
@@ -196,12 +180,8 @@ public class ReflectionUtilsTest
      */
     public void testSetFieldValue_wrongType()
         throws Exception {
-        try {
-            setFieldValue(testObject, field, 0);
-            fail("UnitilsException expected");
-        } catch (UnitilsException e) {
-            // expected
-        }
+        UnitilsException exception = catchThrowableOfType(() -> setFieldValue(testObject, field, 0), UnitilsException.class);
+        assertThat(exception).as("UnitilsException expected").isNotNull();
     }
 
     /**
@@ -231,12 +211,8 @@ public class ReflectionUtilsTest
         throws Exception {
         // get another method
         Method anotherMethod = getClass().getDeclaredMethod("testInvokeMethod_unexistingMethod");
-        try {
-            invokeMethod(testObject, anotherMethod);
-            fail("UnitilsException expected");
-        } catch (UnitilsException e) {
-            // expected
-        }
+        UnitilsException exception = catchThrowableOfType(() -> invokeMethod(testObject, anotherMethod), UnitilsException.class);
+        assertThat(exception).as("UnitilsException expected").isNotNull();
     }
 
     /**
@@ -244,12 +220,8 @@ public class ReflectionUtilsTest
      */
     public void testInvokeMethod_wrongType()
         throws Exception {
-        try {
-            invokeMethod(testObject, fieldSetterMethod, 0);
-            fail("UnitilsException expected");
-        } catch (UnitilsException e) {
-            // expected
-        }
+        UnitilsException exception = catchThrowableOfType(() -> invokeMethod(testObject, fieldSetterMethod, 0), UnitilsException.class);
+        assertThat(exception).as("UnitilsException expected").isNotNull();
     }
 
     /**
@@ -267,12 +239,8 @@ public class ReflectionUtilsTest
     public void testGetFieldName_noSetter()
         throws Exception {
         Method anotherMethod = getClass().getDeclaredMethod("testGetFieldName_noSetter");
-        try {
-            getPropertyName(anotherMethod);
-            fail("UnitilsException expected");
-        } catch (UnitilsException e) {
-            // expected
-        }
+        UnitilsException exception = catchThrowableOfType(() -> getPropertyName(anotherMethod), UnitilsException.class);
+        assertThat(exception).as("UnitilsException expected").isNotNull();
     }
 
     /**

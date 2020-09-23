@@ -113,7 +113,7 @@ public class ReflectionComparatorHibernateProxyTest
             logger.warn("Test is not for current dialect. Skipping test.");
             return;
         }
-        Child childWithParentProxy = (Child) sessionFactory.getCurrentSession().get(Child.class, 1L);
+        Child childWithParentProxy = sessionFactory.getCurrentSession().get(Child.class, 1L);
         Difference result = reflectionComparator.getDifference(testChild, childWithParentProxy);
         assertNull(result);
     }
@@ -127,7 +127,7 @@ public class ReflectionComparatorHibernateProxyTest
             logger.warn("Test is not for current dialect. Skipping test.");
             return;
         }
-        Child childWithParentProxy = (Child) sessionFactory.getCurrentSession().get(Child.class, 1L);
+        Child childWithParentProxy = sessionFactory.getCurrentSession().get(Child.class, 1L);
         Difference result = reflectionComparator.getDifference(childWithParentProxy, testChild);
 
         ReflectionAssert.assertLenientEquals(childWithParentProxy, testChild);
@@ -145,8 +145,8 @@ public class ReflectionComparatorHibernateProxyTest
             return;
         }
         // open 2 session two avoid the values being taken from the cache
-        Child childWithParentProxy1 = (Child) sessionFactory.openSession().get(Child.class, 1L);
-        Child childWithParentProxy2 = (Child) sessionFactory.openSession().get(Child.class, 1L);
+        Child childWithParentProxy1 = sessionFactory.openSession().get(Child.class, 1L);
+        Child childWithParentProxy2 = sessionFactory.openSession().get(Child.class, 1L);
         Difference result = reflectionComparator.getDifference(childWithParentProxy1, childWithParentProxy2);
         assertNull(result);
     }
@@ -162,8 +162,8 @@ public class ReflectionComparatorHibernateProxyTest
             return;
         }
         // open 2 session two avoid the values being taken from the cache
-        Child childWithParentProxy1 = (Child) sessionFactory.openSession().get(Child.class, 1L);
-        Child childWithParentProxy2 = (Child) sessionFactory.openSession().get(Child.class, 2L);
+        Child childWithParentProxy1 = sessionFactory.openSession().get(Child.class, 1L);
+        Child childWithParentProxy2 = sessionFactory.openSession().get(Child.class, 2L);
         Difference result = reflectionComparator.getDifference(childWithParentProxy1, childWithParentProxy2);
         assertNotNull(result);
     }

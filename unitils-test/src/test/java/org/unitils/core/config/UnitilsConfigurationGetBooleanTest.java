@@ -18,9 +18,10 @@ import org.junit.Before;
 import org.junit.Test;
 import org.unitils.core.UnitilsException;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowableOfType;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 /**
  * @author Tim Ducheyne
@@ -80,12 +81,8 @@ public class UnitilsConfigurationGetBooleanTest {
 
     @Test
     public void notFoundNoDefault() {
-        try {
-            unitilsConfiguration.getBoolean("xxx");
-            fail("Expected UnitilsException");
-        } catch (UnitilsException e) {
-            // expected
-        }
+        UnitilsException exception = catchThrowableOfType(() -> unitilsConfiguration.getBoolean("xxx"), UnitilsException.class);
+        assertThat(exception).as("Expected UnitilsException").isNotNull();
     }
 
     @Test
@@ -96,11 +93,7 @@ public class UnitilsConfigurationGetBooleanTest {
 
     @Test
     public void invalidBooleanValue() {
-        try {
-            unitilsConfiguration.getBoolean("invalidBooleanValue");
-            fail("Expected UnitilsException");
-        } catch (UnitilsException e) {
-            // expected
-        }
+        UnitilsException exception = catchThrowableOfType(() -> unitilsConfiguration.getBoolean("invalidBooleanValue"), UnitilsException.class);
+        assertThat(exception).as("Expected UnitilsException").isNotNull();
     }
 }

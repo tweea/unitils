@@ -22,6 +22,8 @@ import org.unitils.core.UnitilsException;
 
 import junit.framework.TestCase;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowableOfType;
 import static org.unitils.util.ModuleUtils.getAnnotationPropertyDefaults;
 import static org.unitils.util.ModuleUtils.getEnumValueReplaceDefault;
 
@@ -76,12 +78,9 @@ public class ModuleUtilsTest
 
         TestEnum enumValue1 = getEnumValueReplaceDefault(TestAnnotation1.class, "testEnum", TestEnum.DEFAULT, result);
         assertSame(TestEnum.VALUE1, enumValue1);
-        try {
-            getEnumValueReplaceDefault(TestAnnotation2.class, "testEnum", TestEnum.DEFAULT, result);
-            fail("Expected UnitilsException");
-        } catch (UnitilsException e) {
-            // expected
-        }
+        UnitilsException exception = catchThrowableOfType(() -> getEnumValueReplaceDefault(TestAnnotation2.class, "testEnum", TestEnum.DEFAULT, result),
+            UnitilsException.class);
+        assertThat(exception).as("Expected UnitilsException").isNotNull();
     }
 
     /**
@@ -98,12 +97,9 @@ public class ModuleUtilsTest
 
         TestEnum enumValue1 = getEnumValueReplaceDefault(TestAnnotation1.class, "testEnum", TestEnum.DEFAULT, result);
         assertSame(TestEnum.VALUE1, enumValue1);
-        try {
-            getEnumValueReplaceDefault(TestAnnotation2.class, "testEnum", TestEnum.DEFAULT, result);
-            fail("Expected UnitilsException");
-        } catch (UnitilsException e) {
-            // expected
-        }
+        UnitilsException exception = catchThrowableOfType(() -> getEnumValueReplaceDefault(TestAnnotation2.class, "testEnum", TestEnum.DEFAULT, result),
+            UnitilsException.class);
+        assertThat(exception).as("Expected UnitilsException").isNotNull();
     }
 
     /**
@@ -142,12 +138,9 @@ public class ModuleUtilsTest
     @SuppressWarnings("unchecked")
     public void testGetEnumValueReplaceDefault_noDefaultValueFound() {
         Map<Class<? extends Annotation>, Map<String, String>> result = getAnnotationPropertyDefaults(TestModule.class, configuration, TestAnnotation1.class);
-        try {
-            getEnumValueReplaceDefault(TestAnnotation2.class, "testEnum", TestEnum.DEFAULT, result);
-            fail("Expected UnitilsException");
-        } catch (UnitilsException e) {
-            // expected
-        }
+        UnitilsException exception = catchThrowableOfType(() -> getEnumValueReplaceDefault(TestAnnotation2.class, "testEnum", TestEnum.DEFAULT, result),
+            UnitilsException.class);
+        assertThat(exception).as("Expected UnitilsException").isNotNull();
     }
 
     /**

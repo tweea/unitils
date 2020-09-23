@@ -27,7 +27,8 @@ import org.unitils.database.annotations.TestDataSource;
 import org.unitils.dbunit.annotation.DataSet;
 import org.unitils.dbunit.annotation.ExpectedDataSet;
 
-import static org.junit.Assert.fail;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowableOfType;
 import static org.unitils.database.SQLUnitils.executeUpdate;
 
 /**
@@ -155,14 +156,9 @@ public class ExpectedDataSetTest
         assertEqualDataSet("nullValue");
     }
 
-    private void assertDifferentDataSet(String methodName)
-        throws Exception {
-        try {
-            assertEqualDataSet(methodName);
-        } catch (AssertionError e) {
-            return;
-        }
-        fail("No differences found for dataset. Method name: " + methodName);
+    private void assertDifferentDataSet(String methodName) {
+        AssertionError error = catchThrowableOfType(() -> assertEqualDataSet(methodName), AssertionError.class);
+        assertThat(error).as("No differences found for dataset. Method name: " + methodName).isNotNull();
     }
 
     private void assertEqualDataSet(String methodName)

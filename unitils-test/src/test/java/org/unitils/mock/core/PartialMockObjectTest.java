@@ -21,8 +21,9 @@ import org.unitils.core.UnitilsException;
 import org.unitils.mock.core.proxy.ProxyInvocation;
 import org.unitils.mock.mockbehavior.MockBehavior;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowableOfType;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 import static org.unitils.reflectionassert.ReflectionAssert.assertLenientEquals;
 
 /**
@@ -75,13 +76,8 @@ public class PartialMockObjectTest {
     public void testRaises() {
         mockObject.raises(new ThreadDeath()).testMethod();
 
-        boolean exception = false;
-        try {
-            mockObject.getMock().testMethod();
-        } catch (ThreadDeath e) {
-            exception = true;
-        }
-        assertTrue(exception);
+        ThreadDeath error = catchThrowableOfType(() -> mockObject.getMock().testMethod(), ThreadDeath.class);
+        assertThat(error).isNotNull();
         assertLenientEquals(0, TestClass.invocationCount);
     }
 

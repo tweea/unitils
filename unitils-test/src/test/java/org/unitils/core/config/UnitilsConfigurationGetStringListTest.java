@@ -21,8 +21,9 @@ import org.unitils.core.UnitilsException;
 
 import static java.util.Arrays.asList;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowableOfType;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 import static org.unitils.reflectionassert.ReflectionAssert.assertLenientEquals;
 
 /**
@@ -65,12 +66,8 @@ public class UnitilsConfigurationGetStringListTest {
 
     @Test
     public void requiredNotFound() {
-        try {
-            unitilsConfiguration.getStringList("xxx", true);
-            fail("Expected UnitilsException");
-        } catch (UnitilsException e) {
-            // expected
-        }
+        UnitilsException exception = catchThrowableOfType(() -> unitilsConfiguration.getStringList("xxx", true), UnitilsException.class);
+        assertThat(exception).as("Expected UnitilsException").isNotNull();
     }
 
     @Test
@@ -93,11 +90,8 @@ public class UnitilsConfigurationGetStringListTest {
 
     @Test
     public void requiredOnlyEmptyValues() {
-        try {
-            unitilsConfiguration.getStringList("propertyWithOnlyEmptyValues", true);
-            fail("Expected UnitilsException");
-        } catch (UnitilsException e) {
-            // expected
-        }
+        UnitilsException exception = catchThrowableOfType(() -> unitilsConfiguration.getStringList("propertyWithOnlyEmptyValues", true),
+            UnitilsException.class);
+        assertThat(exception).as("Expected UnitilsException").isNotNull();
     }
 }

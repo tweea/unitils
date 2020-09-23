@@ -19,10 +19,11 @@ import org.junit.Before;
 import org.junit.Test;
 import org.unitils.UnitilsJUnit4;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowableOfType;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 import static org.unitils.core.ModulesLoader.PROPKEY_MODULES;
 import static org.unitils.core.ModulesLoader.PROPKEY_MODULE_PREFIX;
 import static org.unitils.core.ModulesLoader.PROPKEY_MODULE_SUFFIX_CLASS_NAME;
@@ -146,12 +147,8 @@ public class ModulesLoaderTest
     @Test
     public void testLoadModules_wrongClassName() {
         configuration.setProperty(PROPKEY_MODULE_PREFIX + "a" + PROPKEY_MODULE_SUFFIX_CLASS_NAME, "java.lang.String");
-        try {
-            modulesLoader.loadModules(configuration);
-            fail();
-        } catch (UnitilsException e) {
-            // expected
-        }
+        UnitilsException exception = catchThrowableOfType(() -> modulesLoader.loadModules(configuration), UnitilsException.class);
+        assertThat(exception).isNotNull();
     }
 
     /**
@@ -184,12 +181,8 @@ public class ModulesLoaderTest
     @Test
     public void circularRunAfter() {
         configuration.setProperty(PROPKEY_MODULE_PREFIX + "b" + PROPKEY_MODULE_SUFFIX_RUN_AFTER, "c");
-        try {
-            modulesLoader.loadModules(configuration);
-            fail();
-        } catch (UnitilsException e) {
-            // expected
-        }
+        UnitilsException exception = catchThrowableOfType(() -> modulesLoader.loadModules(configuration), UnitilsException.class);
+        assertThat(exception).isNotNull();
     }
 
     /**

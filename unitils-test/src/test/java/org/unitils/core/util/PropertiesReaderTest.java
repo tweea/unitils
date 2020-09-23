@@ -22,6 +22,8 @@ import org.unitils.core.UnitilsException;
 import org.unitils.inject.annotation.TestedObject;
 import org.unitils.thirdparty.org.apache.commons.io.FileUtils;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowableOfType;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
@@ -102,14 +104,9 @@ public class PropertiesReaderTest
     public void loadPropertiesFileFromClasspath_withEmptyStringFile_shouldThrowUnitilsException() {
         String configurationFile = "";
         String expectedMessage = "Unable to load configuration file: " + configurationFile;
-        try {
-            sut.loadPropertiesFileFromClasspath(configurationFile);
-            fail("UnitilsExcepton expected");
-        } catch (UnitilsException ue) {
-            assertEquals(expectedMessage, ue.getMessage());
-        } catch (Exception e) {
-            fail("UnitilsExcepton expected");
-        }
+        UnitilsException exception = catchThrowableOfType(() -> sut.loadPropertiesFileFromClasspath(configurationFile), UnitilsException.class);
+        assertThat(exception).as("UnitilsExcepton expected").isNotNull();
+        assertThat(exception).hasMessage(expectedMessage);
     }
 
     @Test

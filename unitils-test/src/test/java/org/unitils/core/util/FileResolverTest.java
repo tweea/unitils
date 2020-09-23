@@ -18,8 +18,9 @@ import java.net.URI;
 import org.junit.Test;
 import org.unitils.core.UnitilsException;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowableOfType;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
 
 /**
  * Tests the file resolver.
@@ -85,24 +86,16 @@ public class FileResolverTest {
     @Test
     public void fileNotFoundInClassPath()
         throws Exception {
-        try {
-            fileResolver.resolveFileName("xxx.txt", FileResolverTest.class);
-            fail("UnitilsException expected");
-        } catch (UnitilsException e) {
-            // expected
-        }
+        UnitilsException exception = catchThrowableOfType(() -> fileResolver.resolveFileName("xxx.txt", FileResolverTest.class), UnitilsException.class);
+        assertThat(exception).as("UnitilsException expected").isNotNull();
     }
 
     @Test
     public void absoluteFileNotFound()
         throws Exception {
         fileResolver = new FileResolver(false, "/xxxx");
-        try {
-            fileResolver.resolveFileName("xxx.txt", FileResolverTest.class);
-            fail("UnitilsException expected");
-        } catch (UnitilsException e) {
-            // expected
-        }
+        UnitilsException exception = catchThrowableOfType(() -> fileResolver.resolveFileName("xxx.txt", FileResolverTest.class), UnitilsException.class);
+        assertThat(exception).as("UnitilsException expected").isNotNull();
     }
 
     @Test

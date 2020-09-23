@@ -20,9 +20,10 @@ import org.junit.Test;
 import org.unitils.core.UnitilsException;
 import org.unitils.core.util.Configurable;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowableOfType;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 /**
  * @author Tim Ducheyne
@@ -90,12 +91,8 @@ public class UnitilsConfigurationGetInstanceOfTest {
 
     @Test
     public void notFound() {
-        try {
-            unitilsConfiguration.getInstanceOf(List.class);
-            fail("Expected UnitilsException");
-        } catch (UnitilsException e) {
-            // expected
-        }
+        UnitilsException exception = catchThrowableOfType(() -> unitilsConfiguration.getInstanceOf(List.class), UnitilsException.class);
+        assertThat(exception).as("Expected UnitilsException").isNotNull();
     }
 
     @Test

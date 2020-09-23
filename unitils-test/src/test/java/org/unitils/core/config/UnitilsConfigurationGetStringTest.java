@@ -18,9 +18,10 @@ import org.junit.Before;
 import org.junit.Test;
 import org.unitils.core.UnitilsException;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowableOfType;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
-import static org.junit.Assert.fail;
 
 /**
  * @author Tim Ducheyne
@@ -66,12 +67,8 @@ public class UnitilsConfigurationGetStringTest {
 
     @Test
     public void notFoundNoDefault() {
-        try {
-            unitilsConfiguration.getString("xxx");
-            fail("Expected UnitilsException");
-        } catch (UnitilsException e) {
-            // expected
-        }
+        UnitilsException exception = catchThrowableOfType(() -> unitilsConfiguration.getString("xxx"), UnitilsException.class);
+        assertThat(exception).as("Expected UnitilsException").isNotNull();
     }
 
     @Test

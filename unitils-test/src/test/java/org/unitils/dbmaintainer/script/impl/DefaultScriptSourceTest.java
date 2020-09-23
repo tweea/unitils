@@ -28,6 +28,8 @@ import java.util.Properties;
 
 import javax.sql.DataSource;
 
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
@@ -46,10 +48,11 @@ import org.unitils.reflectionassert.ReflectionComparatorMode;
 
 import static java.util.Arrays.asList;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowableOfType;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 import static org.unitils.thirdparty.org.apache.commons.io.FileUtils.copyDirectory;
 import static org.unitils.thirdparty.org.apache.commons.io.FileUtils.copyFile;
 import static org.unitils.thirdparty.org.apache.commons.io.FileUtils.forceDeleteOnExit;
@@ -136,8 +139,7 @@ public class DefaultScriptSourceTest
         throws NoSuchAlgorithmException, IOException {
         MessageDigest digest = MessageDigest.getInstance("MD5");
         try (InputStream is = new DigestInputStream(new FileInputStream(scriptsDirName + "/test_scripts/" + fileName), digest)) {
-            while (is.read() != -1)
-                ;
+            IOUtils.consume(is);
         }
         return getHexPresentation(digest.digest());
     }
@@ -171,23 +173,14 @@ public class DefaultScriptSourceTest
     @Test
     public void testDuplicateIndex()
         throws Exception {
-        File duplicateIndexScript = null;
+        File scriptA = new File(scriptsDirName + "/test_scripts/1_scripts/001_scriptA.sql");
+        File duplicateIndexScript = new File(scriptsDirName + "/test_scripts/1_scripts/001_duplicateIndexScript.sql");
         try {
-            File scriptA = new File(scriptsDirName + "/test_scripts/1_scripts/001_scriptA.sql");
-            duplicateIndexScript = new File(scriptsDirName + "/test_scripts/1_scripts/001_duplicateIndexScript.sql");
             copyFile(scriptA, duplicateIndexScript);
-            try {
-                scriptSource.getAllUpdateScripts(dialect, schemas.get(0), true);
-                fail("Expected a UnitilsException because of a duplicate script");
-            } catch (UnitilsException e) {
-                // expected
-            }
+            UnitilsException exception = catchThrowableOfType(() -> scriptSource.getAllUpdateScripts(dialect, schemas.get(0), true), UnitilsException.class);
+            assertThat(exception).as("Expected a UnitilsException because of a duplicate script").isNotNull();
         } finally {
-            try {
-                duplicateIndexScript.delete();
-            } catch (Exception e) {
-                // Safely ignore NPE or any IOException...
-            }
+            FileUtils.deleteQuietly(duplicateIndexScript);
         }
     }
 

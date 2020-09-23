@@ -19,13 +19,14 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowableOfType;
 import static org.easymock.EasyMock.eq;
 import static org.easymock.EasyMock.expect;
 import static org.easymock.EasyMock.replay;
 import static org.easymock.EasyMock.verify;
 import static org.easymock.MockType.DEFAULT;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
 import static org.unitils.easymock.EasyMockUnitils.refEq;
 import static org.unitils.reflectionassert.ReflectionComparatorMode.IGNORE_DEFAULTS;
 
@@ -120,12 +121,8 @@ public class LenientMocksControlTest {
         expect(mock.someBehavior(true, 999, "XXXX", new ArrayList<>())).andReturn("Result");
         replay(mock);
 
-        try {
-            verify(mock);
-            fail();
-        } catch (AssertionError e) {
-            // expected
-        }
+        AssertionError error = catchThrowableOfType(() -> verify(mock), AssertionError.class);
+        assertThat(error).isNotNull();
     }
 
     /**
@@ -137,12 +134,8 @@ public class LenientMocksControlTest {
         expect(mock.someBehavior(true, 999, "XXXX", new ArrayList<>())).andReturn("Result");
         replay(mock);
 
-        try {
-            mock.someBehavior(true, 999, "Test", new ArrayList<>());
-            fail();
-        } catch (AssertionError e) {
-            // expected
-        }
+        AssertionError error = catchThrowableOfType(() -> mock.someBehavior(true, 999, "Test", new ArrayList<>()), AssertionError.class);
+        assertThat(error).isNotNull();
     }
 
     /**
