@@ -2,7 +2,7 @@ package org.unitils.reflectionassert;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.unitils.UnitilsJUnit4TestClassRunner;
+import org.unitils.UnitilsBlockJUnit4ClassRunner;
 import org.unitils.core.UnitilsException;
 import org.unitils.core.annotation.UsedForTesting;
 
@@ -14,7 +14,7 @@ import org.unitils.core.annotation.UsedForTesting;
  * @author Willemijn Wouters
  * @since 3.4
  */
-@RunWith(UnitilsJUnit4TestClassRunner.class)
+@RunWith(UnitilsBlockJUnit4ClassRunner.class)
 public class ReflectionAssertAssertPropertiesNotNullTest {
     @Test(expected = AssertionError.class)
     public void assertAccessablePropertiesNotNullTest_missingPublicProtected_and_PrivateVariables() {

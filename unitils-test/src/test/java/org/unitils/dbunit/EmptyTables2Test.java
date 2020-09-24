@@ -21,7 +21,7 @@ import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.unitils.UnitilsJUnit4TestClassRunner;
+import org.unitils.UnitilsBlockJUnit4ClassRunner;
 import org.unitils.core.Unitils;
 import org.unitils.database.DatabaseModule;
 import org.unitils.database.annotations.TestDataSource;
@@ -33,7 +33,7 @@ import org.unitils.dbunit.annotation.DataSets;
  * @author willemijnwouters
  */
 @Ignore
-@RunWith(UnitilsJUnit4TestClassRunner.class)
+@RunWith(UnitilsBlockJUnit4ClassRunner.class)
 public class EmptyTables2Test {
     @TestDataSource("database1")
     private DataSource dataSource;

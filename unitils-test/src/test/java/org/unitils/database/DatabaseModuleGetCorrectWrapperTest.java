@@ -10,7 +10,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.unitils.UnitilsJUnit4TestClassRunner;
+import org.unitils.UnitilsBlockJUnit4ClassRunner;
 import org.unitils.core.Unitils;
 import org.unitils.core.UnitilsException;
 import org.unitils.core.config.Configuration;
@@ -23,7 +23,7 @@ import org.unitils.database.transaction.impl.DefaultUnitilsTransactionManager;
  * @author Willemijn Wouters
  * @since 3.4.1
  */
-@RunWith(UnitilsJUnit4TestClassRunner.class)
+@RunWith(UnitilsBlockJUnit4ClassRunner.class)
 public class DatabaseModuleGetCorrectWrapperTest {
     private DatabaseModule sut;
 

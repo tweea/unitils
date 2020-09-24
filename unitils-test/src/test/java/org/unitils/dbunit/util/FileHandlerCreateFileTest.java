@@ -6,7 +6,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.unitils.UnitilsJUnit4TestClassRunner;
+import org.unitils.UnitilsBlockJUnit4ClassRunner;
 
 /**
  * Test {@link FileHandler#createTempFile(String)}.
@@ -14,7 +14,7 @@ import org.unitils.UnitilsJUnit4TestClassRunner;
  * @author wiw
  * @since 3.4
  */
-@RunWith(UnitilsJUnit4TestClassRunner.class)
+@RunWith(UnitilsBlockJUnit4ClassRunner.class)
 public class FileHandlerCreateFileTest {
     private FileHandler sut;
 

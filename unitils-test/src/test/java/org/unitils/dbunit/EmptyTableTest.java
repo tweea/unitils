@@ -6,7 +6,7 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.unitils.UnitilsJUnit4TestClassRunner;
+import org.unitils.UnitilsBlockJUnit4ClassRunner;
 import org.unitils.core.Unitils;
 import org.unitils.database.DatabaseModule;
 import org.unitils.database.sqlassert.SqlAssert;
@@ -17,7 +17,7 @@ import org.unitils.dbunit.annotation.DataSet;
  * 
  * @author Willemijn Wouters
  */
-@RunWith(UnitilsJUnit4TestClassRunner.class)
+@RunWith(UnitilsBlockJUnit4ClassRunner.class)
 public class EmptyTableTest {
     @BeforeClass
     public static void beforeClass() {

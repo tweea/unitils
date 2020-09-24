@@ -12,7 +12,7 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.unitils.UnitilsJUnit4TestClassRunner;
+import org.unitils.UnitilsBlockJUnit4ClassRunner;
 import org.unitils.dbmaintainer.script.ExecutedScript;
 import org.unitils.dbmaintainer.script.Script;
 import org.unitils.reflectionassert.ReflectionAssert;
@@ -25,7 +25,7 @@ import static org.unitils.thirdparty.org.apache.commons.io.FileUtils.forceDelete
  * @since 1.0.2
  */
 @Ignore
-@RunWith(UnitilsJUnit4TestClassRunner.class)
+@RunWith(UnitilsBlockJUnit4ClassRunner.class)
 public class ExtendedScriptSourceTest {
 
     /* Tested object */

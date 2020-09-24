@@ -11,7 +11,7 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabase;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
-import org.unitils.UnitilsJUnit4TestClassRunner;
+import org.unitils.UnitilsBlockJUnit4ClassRunner;
 import org.unitils.core.annotation.UsedForTesting;
 
 import static org.unitils.database.SQLUnitils.executeUpdate;
@@ -24,7 +24,7 @@ import static org.unitils.database.SQLUnitils.executeUpdate;
  * @author Willemijn Wouters
  * @since 3.4
  */
-@RunWith(UnitilsJUnit4TestClassRunner.class)
+@RunWith(UnitilsBlockJUnit4ClassRunner.class)
 public class ProfileModuleInjectBeansTest {
     private ProfileModule module;
 

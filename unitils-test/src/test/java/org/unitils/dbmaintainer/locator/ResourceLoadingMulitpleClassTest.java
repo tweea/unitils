@@ -5,7 +5,7 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.unitils.UnitilsJUnit4TestClassRunner;
+import org.unitils.UnitilsBlockJUnit4ClassRunner;
 import org.unitils.core.Unitils;
 import org.unitils.database.DatabaseModule;
 import org.unitils.database.SQLUnitils;
@@ -17,7 +17,7 @@ import org.unitils.dbunit.annotation.ExpectedDataSet;
  * 
  * @author tdr
  */
-@RunWith(UnitilsJUnit4TestClassRunner.class)
+@RunWith(UnitilsBlockJUnit4ClassRunner.class)
 @DataSet({
     "/org/unitils/testdata/exampleResourceData.xml", "/org/unitils/testdata/exampleResourceData.xml"
 })

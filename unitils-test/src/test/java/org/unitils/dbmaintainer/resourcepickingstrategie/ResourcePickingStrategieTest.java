@@ -13,7 +13,7 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.unitils.UnitilsJUnit4TestClassRunner;
+import org.unitils.UnitilsBlockJUnit4ClassRunner;
 import org.unitils.dbmaintainer.locator.resourcepickingstrategie.impl.UniqueMostRecentPickingStrategie;
 import org.unitils.reflectionassert.ReflectionAssert;
 
@@ -23,7 +23,7 @@ import org.unitils.reflectionassert.ReflectionAssert;
  * @author wiw
  * @since 3.4
  */
-@RunWith(UnitilsJUnit4TestClassRunner.class)
+@RunWith(UnitilsBlockJUnit4ClassRunner.class)
 public class ResourcePickingStrategieTest {
     private String pathSeperator;
 

@@ -5,7 +5,7 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.unitils.UnitilsJUnit4TestClassRunner;
+import org.unitils.UnitilsBlockJUnit4ClassRunner;
 import org.unitils.core.Unitils;
 import org.unitils.database.DatabaseModule;
 import org.unitils.database.SQLUnitils;
@@ -18,7 +18,7 @@ import org.unitils.dbunit.datasetfactory.impl.ResourceMultiSchemaXmlDataSetFacto
  * 
  * @author tdr
  */
-@RunWith(UnitilsJUnit4TestClassRunner.class)
+@RunWith(UnitilsBlockJUnit4ClassRunner.class)
 @DataSet(factory = ResourceMultiSchemaXmlDataSetFactory.class)
 public class ResourceLoadingDefaultClassTest {
     @BeforeClass

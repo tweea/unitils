@@ -12,7 +12,7 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.unitils.UnitilsJUnit4TestClassRunner;
+import org.unitils.UnitilsBlockJUnit4ClassRunner;
 import org.unitils.core.ModulesRepository;
 import org.unitils.core.Unitils;
 import org.unitils.database.DatabaseModule;
@@ -27,7 +27,7 @@ import org.unitils.dbunit.annotation.ExpectedDataSet;
  * @author wiw
  * @since 1.3.2
  */
-@RunWith(UnitilsJUnit4TestClassRunner.class)
+@RunWith(UnitilsBlockJUnit4ClassRunner.class)
 @DataSet
 public class ExpectedDataSetDifferentColumnsTest {
     @BeforeClass

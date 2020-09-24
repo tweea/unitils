@@ -10,7 +10,7 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.unitils.UnitilsJUnit4TestClassRunner;
+import org.unitils.UnitilsBlockJUnit4ClassRunner;
 import org.unitils.core.Unitils;
 import org.unitils.spring.SpringModule;
 import org.unitils.spring.annotation.SpringApplicationContext;
@@ -22,7 +22,7 @@ import org.unitils.spring.annotation.SpringApplicationContext;
  * @since 3.4.3
  */
 @SpringApplicationContext("classpath:org/unitils/spring/profile/applicationContext-dao-test.xml")
-@RunWith(UnitilsJUnit4TestClassRunner.class)
+@RunWith(UnitilsBlockJUnit4ClassRunner.class)
 public class SpringModuleLoadOnMethodTest {
     @BeforeClass
     public static void setUpClass() {

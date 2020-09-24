@@ -16,7 +16,7 @@ import org.springframework.core.env.StandardEnvironment;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabase;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
-import org.unitils.UnitilsJUnit4TestClassRunner;
+import org.unitils.UnitilsBlockJUnit4ClassRunner;
 import org.unitils.core.ConfigurationLoader;
 import org.unitils.core.Unitils;
 import org.unitils.core.UnitilsException;
@@ -37,7 +37,7 @@ import static org.unitils.database.SQLUnitils.executeUpdate;
  * @author Willemijn Wouters
  * @since 3.4
  */
-@RunWith(UnitilsJUnit4TestClassRunner.class)
+@RunWith(UnitilsBlockJUnit4ClassRunner.class)
 public class ProfileModuleTest {
     @TestedObject
     private ProfileModule profileModule;

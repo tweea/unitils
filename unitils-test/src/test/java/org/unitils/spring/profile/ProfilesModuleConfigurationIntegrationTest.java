@@ -8,7 +8,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabase;
-import org.unitils.UnitilsJUnit4TestClassRunner;
+import org.unitils.UnitilsBlockJUnit4ClassRunner;
 import org.unitils.spring.annotation.ConfigureProfile;
 
 /**
@@ -19,7 +19,7 @@ import org.unitils.spring.annotation.ConfigureProfile;
  * @author Willemijn Wouters
  * @since 3.4
  */
-@RunWith(UnitilsJUnit4TestClassRunner.class)
+@RunWith(UnitilsBlockJUnit4ClassRunner.class)
 @ConfigureProfile(value = "dev", configuration = TypeConfiguration.CONFIGURATION, packageProfile = "org.unitils.spring.profile")
 public class ProfilesModuleConfigurationIntegrationTest {
     @Autowired

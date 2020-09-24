@@ -11,7 +11,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.unitils.UnitilsJUnit4TestClassRunner;
+import org.unitils.UnitilsBlockJUnit4ClassRunner;
 import org.unitils.core.Unitils;
 import org.unitils.dbmaintainer.locator.resourcepickingstrategie.ResourcePickingStrategie;
 import org.unitils.dbmaintainer.script.Script;
@@ -25,7 +25,7 @@ import org.unitils.inject.annotation.TestedObject;
  * @author tdr
  * @since 1.0.2
  */
-@RunWith(UnitilsJUnit4TestClassRunner.class)
+@RunWith(UnitilsBlockJUnit4ClassRunner.class)
 public class ClassPathScriptLocatorTest {
     @TestedObject
     private ClassPathScriptLocator classPathScriptLocator;

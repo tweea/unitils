@@ -12,7 +12,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.unitils.UnitilsJUnit4TestClassRunner;
+import org.unitils.UnitilsBlockJUnit4ClassRunner;
 import org.unitils.dbmaintainer.locator.resourcepickingstrategie.ResourcePickingStrategie;
 import org.unitils.easymock.EasyMockUnitils;
 import org.unitils.easymock.annotation.Mock;
@@ -24,7 +24,7 @@ import org.unitils.inject.annotation.TestedObject;
  * @author tdr
  * @since 1.0.2
  */
-@RunWith(UnitilsJUnit4TestClassRunner.class)
+@RunWith(UnitilsBlockJUnit4ClassRunner.class)
 @SuppressWarnings("unchecked")
 public class ClassPathDataLocatorTest {
     @TestedObject
