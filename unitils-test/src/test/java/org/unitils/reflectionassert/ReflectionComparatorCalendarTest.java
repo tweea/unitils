@@ -17,10 +17,12 @@ package org.unitils.reflectionassert;
 
 import java.util.Calendar;
 
+import org.junit.Before;
+import org.junit.Test;
 import org.unitils.reflectionassert.difference.Difference;
 
-import junit.framework.TestCase;
-
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 import static org.unitils.reflectionassert.ReflectionComparatorFactory.createRefectionComparator;
 
 /**
@@ -29,9 +31,7 @@ import static org.unitils.reflectionassert.ReflectionComparatorFactory.createRef
  * @author Tim Ducheyne
  * @author Filip Neven
  */
-public class ReflectionComparatorCalendarTest
-    extends TestCase {
-
+public class ReflectionComparatorCalendarTest {
     /* Test object */
     private Calendar calendarA;
 
@@ -47,11 +47,9 @@ public class ReflectionComparatorCalendarTest
     /**
      * Initializes the test fixture.
      */
-    @Override
-    protected void setUp()
+    @Before
+    public void setUp()
         throws Exception {
-        super.setUp();
-
         calendarA = Calendar.getInstance();
         calendarA.set(2000, 11, 5);
         calendarB = Calendar.getInstance();
@@ -64,6 +62,7 @@ public class ReflectionComparatorCalendarTest
     /**
      * Test for two equal dates.
      */
+    @Test
     public void testGetDifference_equals() {
         Difference result = reflectionComparator.getDifference(calendarA, calendarB);
         assertNull(result);
@@ -72,6 +71,7 @@ public class ReflectionComparatorCalendarTest
     /**
      * Test for two different dates.
      */
+    @Test
     public void testGetDifference_notEqualsDifferentValues() {
         Difference result = reflectionComparator.getDifference(calendarA, differentCalendar);
 

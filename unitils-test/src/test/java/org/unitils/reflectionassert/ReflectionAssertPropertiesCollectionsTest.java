@@ -14,7 +14,8 @@ package org.unitils.reflectionassert;
 
 import java.util.List;
 
-import junit.framework.TestCase;
+import org.junit.Before;
+import org.junit.Test;
 
 import static java.util.Arrays.asList;
 
@@ -31,26 +32,23 @@ import static org.unitils.reflectionassert.ReflectionComparatorMode.LENIENT_ORDE
  * @author Tim Ducheyne
  * @author Filip Neven
  */
-public class ReflectionAssertPropertiesCollectionsTest
-    extends TestCase {
-
+public class ReflectionAssertPropertiesCollectionsTest {
     /* A test collection */
     private List<TestObject> list;
 
     /**
      * Initializes the test fixture.
      */
-    @Override
-    protected void setUp()
+    @Before
+    public void setUp()
         throws Exception {
-        super.setUp();
-
         list = asList(new TestObject(1L, "el1"), new TestObject(2L, "el2"));
     }
 
     /**
      * Test for equal property values.
      */
+    @Test
     public void testAssertPropertyReflectionEquals() {
         assertPropertyReflectionEquals("stringProperty", asList("el1", "el2"), list);
     }
@@ -58,6 +56,7 @@ public class ReflectionAssertPropertiesCollectionsTest
     /**
      * Test for equal property values but of different types (int versus long).
      */
+    @Test
     public void testAssertPropertyReflectionEquals_differentTypes() {
         assertPropertyReflectionEquals("primitiveProperty", asList(1L, 2L), list);
     }
@@ -65,6 +64,7 @@ public class ReflectionAssertPropertiesCollectionsTest
     /**
      * Test for different property values.
      */
+    @Test
     public void testAssertPropertyReflectionEquals_notEqualsDifferentValues() {
         AssertionError error = catchThrowableOfType(() -> assertPropertyReflectionEquals("stringProperty", asList("xxxxx", "xxxxx"), list),
             AssertionError.class);
@@ -74,6 +74,7 @@ public class ReflectionAssertPropertiesCollectionsTest
     /**
      * Test for property values with different order.
      */
+    @Test
     public void testAssertPropertyReflectionEquals_equalsDifferentOrder() {
         assertPropertyReflectionEquals("stringProperty", asList("el1", "el2"), list, LENIENT_ORDER);
     }
@@ -81,6 +82,7 @@ public class ReflectionAssertPropertiesCollectionsTest
     /**
      * Test for property values with different order.
      */
+    @Test
     public void testAssertPropertyLenientEquals_equalsDifferentOrder() {
         assertPropertyLenientEquals("stringProperty", asList("el1", "el2"), list);
     }
@@ -88,6 +90,7 @@ public class ReflectionAssertPropertiesCollectionsTest
     /**
      * Test for property values with different order.
      */
+    @Test
     public void testAssertPropertyReflectionEquals_notEqualsDifferentOrder() {
         AssertionError error = catchThrowableOfType(() -> assertPropertyReflectionEquals("stringProperty", asList("el2", "el1"), list), AssertionError.class);
         assertThat(error).as("Expected AssertionError").isNotNull();
@@ -96,6 +99,7 @@ public class ReflectionAssertPropertiesCollectionsTest
     /**
      * Test for equal primitive property values. Using ints instead of longs.
      */
+    @Test
     public void testAssertPropertyReflectionEquals_equalsPrimitivesList() {
         assertPropertyLenientEquals("primitiveProperty", asList(2, 1), list);
     }
@@ -103,6 +107,7 @@ public class ReflectionAssertPropertiesCollectionsTest
     /**
      * Test for different primitive property values. Using ints instead of longs.
      */
+    @Test
     public void testAssertPropertyReflectionEquals_notEqualsPrimitivesList() {
         AssertionError error = catchThrowableOfType(() -> assertPropertyLenientEquals("primitiveProperty", asList(999, 1), list), AssertionError.class);
         assertThat(error).as("Expected AssertionError").isNotNull();
@@ -111,6 +116,7 @@ public class ReflectionAssertPropertiesCollectionsTest
     /**
      * Test case for null as actual object argument.
      */
+    @Test
     public void testAssertPropertyReflectionEquals_actualObjectNull() {
         AssertionError error = catchThrowableOfType(() -> assertPropertyLenientEquals("stringProperty", asList(1, 2), null), AssertionError.class);
         assertThat(error).as("Expected AssertionError").isNotNull();

@@ -35,7 +35,6 @@ import static org.unitils.reflectionassert.util.InnerDifferenceFinder.getInnerDi
  * @author Filip Neven
  */
 public class ReflectionComparatorLenientTest {
-
     /* Test object with no java defaults */
     private Element elementNoDefaultsA;
 

@@ -31,7 +31,6 @@ import static org.unitils.reflectionassert.ReflectionComparatorMode.LENIENT_ORDE
  * @author Filip Neven
  */
 public class ReflectionComparatorLenientOrderCollectionsTest {
-
     /* Class under test */
     private ReflectionComparator reflectionComparator;
 

@@ -15,7 +15,8 @@ package org.unitils.reflectionassert;
 import java.util.HashSet;
 import java.util.Set;
 
-import junit.framework.TestCase;
+import org.junit.Before;
+import org.junit.Test;
 
 import static org.unitils.reflectionassert.ReflectionAssert.assertLenientEquals;
 import static org.unitils.reflectionassert.ReflectionAssert.assertReflectionEquals;
@@ -28,9 +29,7 @@ import static org.unitils.reflectionassert.ReflectionAssert.assertReflectionEqua
  * @author Tim Ducheyne
  * @author Filip Neven
  */
-public class ReflectionAssertCyclicCollectionTest
-    extends TestCase {
-
+public class ReflectionAssertCyclicCollectionTest {
     /* Test object containing a collection that contains a loop */
     private TestObject testObjectA;
 
@@ -40,11 +39,9 @@ public class ReflectionAssertCyclicCollectionTest
     /**
      * Initializes the test fixture.
      */
-    @Override
+    @Before
     public void setUp()
         throws Exception {
-        super.setUp();
-
         testObjectA = createTestObject();
         testObjectB = createTestObject();
     }
@@ -53,6 +50,7 @@ public class ReflectionAssertCyclicCollectionTest
      * Tests the comparison of objects containing the cyclic dependency.
      * This should pass and should not cause a StackOverflow.
      */
+    @Test
     public void testAssertReflectionEquals_infiniteLoop() {
         assertReflectionEquals(testObjectA, testObjectB);
     }
@@ -61,6 +59,7 @@ public class ReflectionAssertCyclicCollectionTest
      * Tests the comparison of objects containing the cyclic dependency.
      * This should pass and should not cause a StackOverflow.
      */
+    @Test
     public void testAssertLenientEquals_infiniteLoop() {
         assertLenientEquals(testObjectA, testObjectB);
     }
