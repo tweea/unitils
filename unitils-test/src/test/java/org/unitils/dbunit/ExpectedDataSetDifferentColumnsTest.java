@@ -79,13 +79,9 @@ public class ExpectedDataSetDifferentColumnsTest {
     public static void afterClass() {
         DataSource dataSource2 = Unitils.getInstance().getModulesRepository().getModuleOfType(DatabaseModule.class).getWrapper("").getDataSource();
         SQLUnitils.executeUpdate("DROP TABLE fruit", dataSource2);
-
-        Unitils.initSingletonInstance();
     }
 
     private static Properties getCorrectProperties() {
-        Unitils.initSingletonInstance();
-
         Properties config = (Properties) Unitils.getInstance().getConfiguration().clone();
         config.setProperty("database.names", "database1, database2");
         config.setProperty("database.userName", "sa");
