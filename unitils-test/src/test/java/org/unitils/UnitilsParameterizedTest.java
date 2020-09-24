@@ -5,8 +5,8 @@ import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.junit.internal.runners.TestClass;
 import org.junit.runner.RunWith;
+import org.junit.runners.model.TestClass;
 import org.unitils.UnitilsParameterized.TestClassRunnerForParameters;
 import org.unitils.UnitilsParameterized.UnitilsMethodValidator;
 import org.unitils.core.annotation.UsedForTesting;
@@ -22,25 +22,27 @@ import org.unitils.util.ReflectionUtils;
  * @author Willemijn Wouters
  * @since 3.4
  */
-@RunWith(UnitilsJUnit4TestClassRunner.class)
+@RunWith(UnitilsBlockJUnit4ClassRunner.class)
 public class UnitilsParameterizedTest {
     @Test
     public void testValidateTestMethods()
         throws Throwable {
         UnitilsMethodValidator methodValidator = new UnitilsMethodValidator(new TestClass(JustATestClass.class));
-        methodValidator.validateTestMethods(Test.class, false);
-        Assert.assertEquals(getErrors().get(0).getMessage(), methodValidator.getErrors().get(0).getMessage());
-        Assert.assertEquals(getErrors().get(1).getMessage(), methodValidator.getErrors().get(1).getMessage());
-        Assert.assertEquals(getErrors().get(2).getMessage(), methodValidator.getErrors().get(2).getMessage());
-        Assert.assertEquals(getErrors().get(3).getMessage(), methodValidator.getErrors().get(3).getMessage());
+        List<Throwable> errors = new ArrayList<>();
+        methodValidator.validateTestMethods(errors, Test.class, false);
+        Assert.assertEquals(getErrors().get(0).getMessage(), errors.get(0).getMessage());
+        Assert.assertEquals(getErrors().get(1).getMessage(), errors.get(1).getMessage());
+        Assert.assertEquals(getErrors().get(2).getMessage(), errors.get(2).getMessage());
+        Assert.assertEquals(getErrors().get(3).getMessage(), errors.get(3).getMessage());
     }
 
     @Test
     public void testGetParametersMethod() {
         UnitilsMethodValidator methodValidator = new UnitilsMethodValidator(new TestClass(Testclass2.class));
-        methodValidator.validateInstanceMethods();
-        Assert.assertTrue(methodValidator.getErrors() != null && !methodValidator.getErrors().isEmpty());
-        Assert.assertEquals("No runnable methods", methodValidator.getErrors().get(0).getMessage());
+        List<Throwable> errors = new ArrayList<>();
+        methodValidator.validateInstanceMethods(errors);
+        Assert.assertTrue(errors != null && !errors.isEmpty());
+        Assert.assertEquals("No runnable methods", errors.get(0).getMessage());
     }
 
     @Test(expected = Exception.class)
@@ -89,16 +91,18 @@ public class UnitilsParameterizedTest {
     public void testValidateArgConstructorNoParameters()
         throws Exception {
         UnitilsMethodValidator validator = new UnitilsMethodValidator(new TestClass(JustATestClass.class));
-        validator.validateArgConstructor();
-        Assert.assertFalse(validator.getErrors().isEmpty());
+        List<Throwable> errors = new ArrayList<>();
+        validator.validateArgConstructor(errors);
+        Assert.assertFalse(errors.isEmpty());
     }
 
     @Test
     public void testValidateArgConstructorWithParameters()
         throws Exception {
         UnitilsMethodValidator validator = new UnitilsMethodValidator(new TestClass(Testclass3.class));
-        validator.validateArgConstructor();
-        Assert.assertTrue(validator.getErrors().isEmpty());
+        List<Throwable> errors = new ArrayList<>();
+        validator.validateArgConstructor(errors);
+        Assert.assertTrue(errors.isEmpty());
     }
 
     private List<Throwable> getErrors() {

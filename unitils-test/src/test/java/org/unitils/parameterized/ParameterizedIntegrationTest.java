@@ -11,6 +11,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized.Parameters;
 import org.unitils.UnitilsParameterized;
+import org.unitils.core.annotation.UsedForTesting;
 import org.unitils.easymock.EasyMockUnitils;
 import org.unitils.easymock.annotation.Mock;
 
@@ -58,6 +59,7 @@ public class ParameterizedIntegrationTest {
         return Arrays.asList(data);
     }
 
+    @UsedForTesting
     private int number;
 
     /***/

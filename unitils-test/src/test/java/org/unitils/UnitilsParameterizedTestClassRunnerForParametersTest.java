@@ -1,15 +1,17 @@
 package org.unitils;
 
-import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runners.Parameterized.Parameters;
+import org.junit.runners.model.FrameworkMethod;
 import org.unitils.UnitilsParameterized.TestClassRunnerForParameters;
 import org.unitils.core.annotation.UsedForTesting;
-import org.unitils.parameterized.ParameterizedIntegrationTest;
 import org.unitils.reflectionassert.ReflectionAssert;
 
 /**
@@ -28,7 +30,7 @@ public class UnitilsParameterizedTestClassRunnerForParametersTest {
     @Before
     public void init()
         throws Throwable {
-        unitilsParameterized = new UnitilsParameterized(ParameterizedIntegrationTest.class);
+        unitilsParameterized = new UnitilsParameterized(Testclass1.class);
     }
 
     @Test
@@ -74,7 +76,7 @@ public class UnitilsParameterizedTestClassRunnerForParametersTest {
     @Test
     public void testTestName()
         throws Exception {
-        Method method = Testclass1.class.getMethod("testMethod1");
+        FrameworkMethod method = new FrameworkMethod(Testclass1.class.getMethod("testMethod1"));
         List<Object[]> parameters = new ArrayList<>();
         parameters.add(new Object[] {
             1, 2
@@ -102,8 +104,20 @@ public class UnitilsParameterizedTestClassRunnerForParametersTest {
         ReflectionAssert.assertLenientEquals(expected, actual);
     }
 
-    private class Testclass1 {
+    public static class Testclass1 {
         @UsedForTesting
+        private int number;
+
+        @Parameters
+        public static Collection<Object[]> data() {
+            return Collections.emptyList();
+        }
+
+        public Testclass1(int number) {
+            this.number = number;
+        }
+
+        @Test
         public void testMethod1() {
             // do nothing
         }

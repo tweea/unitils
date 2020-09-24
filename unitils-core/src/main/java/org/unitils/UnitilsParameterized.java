@@ -13,8 +13,6 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.junit.internal.runners.InitializationError;
-import org.junit.internal.runners.MethodValidator;
 import org.junit.runner.Runner;
 import org.junit.runners.Parameterized.Parameters;
 import org.junit.runners.Suite;
@@ -33,11 +31,11 @@ import org.slf4j.LoggerFactory;
  */
 public class UnitilsParameterized
     extends Suite {
-    private Class<?> clazz;
-
     private static final Logger LOGGER = LoggerFactory.getLogger(UnitilsParameterized.class);
 
     private static final String METHOD = "Method ";
+
+    private Class<?> clazz;
 
     /**
      * TestClassRunnerForParameters.
@@ -45,33 +43,24 @@ public class UnitilsParameterized
      * @author wiw
      */
     protected class TestClassRunnerForParameters
-        extends UnitilsJUnit4TestClassRunner {
+        extends UnitilsBlockJUnit4ClassRunner {
         private final int fParameterSetNumber;
 
         private final List<Object[]> fParameterList;
-
-        private org.junit.internal.runners.TestClass testClassInternalRunners;
 
         public TestClassRunnerForParameters(Class<?> javaClass, List<Object[]> parametersList, int i)
             throws Exception {
             super(javaClass);
             this.fParameterList = parametersList;
             this.fParameterSetNumber = i;
-            this.testClassInternalRunners = new org.junit.internal.runners.TestClass(javaClass);
         }
 
-        /**
-         * @see org.junit.internal.runners.JUnit4ClassRunner#createTest()
-         */
         @Override
         protected Object createTest()
             throws Exception {
             return getfTestClass().getOnlyConstructor().newInstance(computeParams());
         }
 
-        /**
-         * @return
-         */
         private TestClass getfTestClass() {
             return new TestClass(clazz);
         }
@@ -86,9 +75,6 @@ public class UnitilsParameterized
             }
         }
 
-        /**
-         * @see org.junit.internal.runners.JUnit4ClassRunner#getName()
-         */
         @Override
         protected String getName() {
             StringBuffer name = new StringBuffer();
@@ -110,26 +96,21 @@ public class UnitilsParameterized
             return String.format("dataset [%s]", name.toString());
         }
 
-        /**
-         * @see org.junit.internal.runners.JUnit4ClassRunner#testName(java.lang.reflect.Method)
-         */
         @Override
-        protected String testName(Method method) {
+        protected String testName(FrameworkMethod method) {
             return String.format("%s[%s]", method.getName(), fParameterSetNumber);
         }
 
-        /**
-         * @see org.junit.internal.runners.JUnit4ClassRunner#validate()
-         */
         @Override
-        protected void validate()
-            throws InitializationError {
-            testClassInternalRunners = new org.junit.internal.runners.TestClass(clazz);
-            UnitilsMethodValidator validator = new UnitilsMethodValidator(testClassInternalRunners);
-            List<Throwable> errors = validator.validateMethodsForParameterizedRunner();
-            if (!errors.isEmpty()) {
-                throw new InitializationError(errors);
-            }
+        protected void collectInitializationErrors(List<Throwable> errors) {
+            super.collectInitializationErrors(errors);
+
+            UnitilsMethodValidator validator = new UnitilsMethodValidator(getTestClass());
+            validator.validateMethodsForParameterizedRunner(errors);
+        }
+
+        @Override
+        protected void validateZeroArgConstructor(List<Throwable> errors) {
         }
     }
 
@@ -148,13 +129,6 @@ public class UnitilsParameterized
         }
     }
 
-    /**
-     * @param testClass
-     * @return {@link List}
-     * @throws Throwable
-     * @throws Exception
-     */
-    @SuppressWarnings("unchecked")
     private List<Object[]> getParametersList(TestClass testClass)
         throws Exception, Throwable {
         return (List<Object[]>) getParametersMethod(testClass).invokeExplosively(null);
@@ -187,30 +161,23 @@ public class UnitilsParameterized
      * 
      * @author wiw
      */
-    protected static class UnitilsMethodValidator
-        extends MethodValidator {
-        private org.junit.internal.runners.TestClass testclass;
+    protected static class UnitilsMethodValidator {
+        private TestClass testclass;
 
-        private List<Throwable> errors = new ArrayList<>();
-
-        public UnitilsMethodValidator(org.junit.internal.runners.TestClass testClass) {
-            super(testClass);
+        public UnitilsMethodValidator(TestClass testClass) {
             this.testclass = testClass;
         }
 
-        public List<Throwable> validateMethodsForParameterizedRunner() {
-            validateArgConstructor();
-            validateStaticMethods();
-            validateInstanceMethods();
-
-            return errors;
+        public void validateMethodsForParameterizedRunner(List<Throwable> errors) {
+            validateArgConstructor(errors);
+            validateStaticMethods(errors);
+            validateInstanceMethods(errors);
         }
 
-        // private methods
-        protected void validateTestMethods(Class<? extends Annotation> annotation, boolean isStatic) {
-            List<Method> methods = testclass.getAnnotatedMethods(annotation);
-
-            for (Method each : methods) {
+        protected void validateTestMethods(List<Throwable> errors, Class<? extends Annotation> annotation, boolean isStatic) {
+            List<FrameworkMethod> methods = testclass.getAnnotatedMethods(annotation);
+            for (FrameworkMethod method : methods) {
+                Method each = method.getMethod();
                 if (Modifier.isStatic(each.getModifiers()) != isStatic) {
                     String state = isStatic ? "should" : "should not";
                     errors.add(new Exception(METHOD + each.getName() + "() " + state + " be static"));
@@ -230,44 +197,29 @@ public class UnitilsParameterized
             }
         }
 
-        /**
-         * @see org.junit.internal.runners.MethodValidator#validateInstanceMethods()
-         */
-        @Override
-        public void validateInstanceMethods() {
-            validateTestMethods(After.class, false);
-            validateTestMethods(Before.class, false);
-            validateTestMethods(Test.class, false);
+        protected void validateInstanceMethods(List<Throwable> errors) {
+            validateTestMethods(errors, After.class, false);
+            validateTestMethods(errors, Before.class, false);
+            validateTestMethods(errors, Test.class, false);
 
-            List<Method> methods = testclass.getAnnotatedMethods(Test.class);
+            List<FrameworkMethod> methods = testclass.getAnnotatedMethods(Test.class);
             if (methods.size() == 0) {
                 errors.add(new Exception("No runnable methods"));
             }
         }
 
-        /**
-         * @see org.junit.internal.runners.MethodValidator#validateStaticMethods()
-         */
-        @Override
-        public void validateStaticMethods() {
-            validateTestMethods(BeforeClass.class, true);
-            validateTestMethods(AfterClass.class, true);
+        protected void validateStaticMethods(List<Throwable> errors) {
+            validateTestMethods(errors, BeforeClass.class, true);
+            validateTestMethods(errors, AfterClass.class, true);
         }
 
-        public void validateArgConstructor() {
-            org.junit.runners.model.TestClass clazz = new org.junit.runners.model.TestClass(testclass.getJavaClass());
+        protected void validateArgConstructor(List<Throwable> errors) {
+            TestClass clazz = new TestClass(testclass.getJavaClass());
             Constructor<?> onlyConstructor = clazz.getOnlyConstructor();
 
             if (onlyConstructor.getParameterTypes().length == 0) {
                 errors.add(new Exception("Test class shouldn't have a public zero-argument constructor"));
             }
-        }
-
-        /**
-         * @return the errors
-         */
-        protected List<Throwable> getErrors() {
-            return errors;
         }
     }
 }
