@@ -78,7 +78,6 @@ public class SpringModule
 
     /* TestContext used by the spring testcontext framework */
     // private TestContext testContext;
-    private LoadTime loadTime;
 
     private ApplicationContext applicationContext;
 
