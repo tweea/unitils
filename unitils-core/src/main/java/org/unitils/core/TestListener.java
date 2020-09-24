@@ -18,7 +18,7 @@ import java.lang.reflect.Method;
  * Listener for test events. The events must follow following ordering:
  * <ul>
  * <li>[Unitils] beforeTestClass - TestClass1</li>
- * <li>[Test] testBeforeClass - TestClass1 (not for JUnit3)</li>
+ * <li>[Test] testBeforeClass - TestClass1</li>
  * <li>[Unitils] afterCreateTestObject - TestClass1</li>
  * <li>[Unitils] beforeTestSetUp - TestClass1</li>
  * <li>[Test] testSetUp - TestClass1</li>
@@ -35,7 +35,7 @@ import java.lang.reflect.Method;
  * <li>[Unitils] afterTestMethod - TestClass1 - test2</li>
  * <li>[Test] testTearDown - TestClass1</li>
  * <li>[Unitils] afterTestTearDown - TestClass1</li>
- * <li>[Test] testAfterClass - TestClass1 (not for JUnit3)</li>
+ * <li>[Test] testAfterClass - TestClass1</li>
  * </ul>
  * <p/>
  * The after methods will always when the before counterpart has run (or begun). For example if an exception occurs during

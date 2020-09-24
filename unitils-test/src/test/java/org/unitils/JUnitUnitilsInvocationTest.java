@@ -15,35 +15,26 @@ package org.unitils;
 import java.util.Arrays;
 import java.util.Collection;
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 import org.unitils.TracingTestListener.TestFramework;
-import org.unitils.core.TestListener;
-import org.unitils.core.Unitils;
-import org.unitils.inject.util.InjectionUtils;
 
-import static org.unitils.TracingTestListener.TestFramework.JUNIT3;
 import static org.unitils.TracingTestListener.TestFramework.JUNIT4;
 
 /**
- * Test for the main flow of the unitils test listeners for JUnit3 ({@link UnitilsJUnit3}),
+ * Test for the main flow of the unitils test listeners for
  * JUnit4 (@link UnitilsJUnit4TestClassRunner}) and TestNG.
  * <p/>
  * Except for some minor differences, the flows for all these test frameworks
  * are expected to be the same.
  * <p/>
  * 3 tests are performed: TestClass1 and TestClass2 both with 2 test methods and EmptyTestClass
- * that does not contain any methods. TestClass1 also contains an ignored test (not for JUnit3).
+ * that does not contain any methods. TestClass1 also contains an ignored test.
  *
  * @author Tim Ducheyne
  * @author Filip Neven
- * @see UnitilsJUnit3Test_TestClass1
- * @see UnitilsJUnit3Test_TestClass2
- * @see UnitilsJUnit3Test_EmptyTestClass
  * @see UnitilsJUnit4Test_TestClass1
  * @see UnitilsJUnit4Test_TestClass2
  */
@@ -62,24 +53,10 @@ public class JUnitUnitilsInvocationTest
     public static Collection<Object[]> testData() {
         return Arrays.asList(new Object[][] {
             {
-                JUNIT3, new JUnit3TestExecutor(), UnitilsJUnit3Test_TestClass1.class, UnitilsJUnit3Test_TestClass2.class
-            }, {
                 JUNIT4, new JUnit4TestExecutor(), UnitilsJUnit4Test_TestClass1.class, UnitilsJUnit4Test_TestClass2.class
             },
-            // {JUNIT3, new JUnit3TestExecutor(), SpringUnitilsJUnit38Test_TestClass1.class, SpringUnitilsJUnit38Test_TestClass2.class},
             // {JUNIT4, new JUnit4TestExecutor(), SpringUnitilsJUnit4Test_TestClass1.class, SpringUnitilsJUnit4Test_TestClass2.class},
         });
-    }
-
-    @Before
-    public void resetJunit3() {
-        UnitilsJUnit3Test_EmptyTestClass.setTracingTestListener(tracingTestListener);
-        InjectionUtils.injectIntoStatic(null, UnitilsJUnit3.class, "currentTestClass");
-    }
-
-    @After
-    public void tearDown() {
-        UnitilsJUnit3Test_EmptyTestClass.setTracingTestListener(null);
     }
 
     @Test
@@ -87,30 +64,5 @@ public class JUnitUnitilsInvocationTest
         throws Exception {
         testExecutor.runTests(testClass1, testClass2);
         assertInvocationOrder(testClass1, testClass2);
-    }
-
-    /**
-     * JUnit 3 test class without any tests. Inner class to avoid a failing test.
-     */
-    protected static class UnitilsJUnit3Test_EmptyTestClass
-        extends UnitilsJUnit3 {
-        private static TracingTestListener tracingTestListener;
-
-        public static void setTracingTestListener(TracingTestListener testListener) {
-            tracingTestListener = testListener;
-        }
-
-        @Override
-        protected Unitils getUnitils() {
-            if (tracingTestListener != null) {
-                return new Unitils() {
-                    @Override
-                    public TestListener getTestListener() {
-                        return tracingTestListener;
-                    }
-                };
-            }
-            return super.getUnitils();
-        }
     }
 }

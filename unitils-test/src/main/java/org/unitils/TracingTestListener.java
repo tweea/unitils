@@ -38,7 +38,7 @@ import static org.unitils.TracingTestListener.ListenerInvocation.LISTENER_BEFORE
 public class TracingTestListener
     extends TestListener {
     public static enum TestFramework {
-        JUNIT3, JUNIT4, TESTNG
+        JUNIT4, TESTNG
     }
 
     public interface Invocation {

@@ -41,7 +41,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
  * <pre>
  * <code>
  * '    @DataSet
- *      public class MyTestClass extends UnitilsJUnit3 {
+ *      public class MyTestClass extends UnitilsJUnit4 {
  * '
  *          public void testMethod1(){
  *          }
@@ -60,7 +60,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
  * 
  * <pre>
  * <code>
- *      public class MyTestClass extends UnitilsJUnit3 {
+ *      public class MyTestClass extends UnitilsJUnit4 {
  * '
  *          public void testMethod1(){
  *          }
