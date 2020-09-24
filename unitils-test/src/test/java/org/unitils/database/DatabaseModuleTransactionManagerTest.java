@@ -87,10 +87,14 @@ public class DatabaseModuleTransactionManagerTest
 
         Method testMethod = TransactionsDisabledTest.class.getMethod("test", new Class[] {});
         databaseModule.startTransactionForTestMethod(transactionsDisabledTest, testMethod);
-        Connection conn1 = wrapper.getDataSourceAndActivateTransactionIfNeeded().getConnection();
-        conn1.close();
-        Connection conn2 = wrapper.getDataSourceAndActivateTransactionIfNeeded().getConnection();
-        conn2.close();
+        Connection conn1;
+        try (Connection conn = wrapper.getDataSourceAndActivateTransactionIfNeeded().getConnection()) {
+            conn1 = conn;
+        }
+        Connection conn2;
+        try (Connection conn = wrapper.getDataSourceAndActivateTransactionIfNeeded().getConnection()) {
+            conn2 = conn;
+        }
         assertNotSame(conn1, conn2);
         databaseModule.endTransactionForTestMethod(transactionsDisabledTest, testMethod);
 
@@ -150,8 +154,8 @@ public class DatabaseModuleTransactionManagerTest
             targetConnection1 = ((ConnectionProxy) connection1).getTargetConnection();
         }
         Connection targetConnection2;
-        try(Connection connection2 = dataSource.getConnection()){
-        targetConnection2 = ((ConnectionProxy) connection2).getTargetConnection();
+        try (Connection connection2 = dataSource.getConnection()) {
+            targetConnection2 = ((ConnectionProxy) connection2).getTargetConnection();
         }
         assertSame(targetConnection1, targetConnection2);
         databaseModule.endTransactionForTestMethod(commitTest, testMethod);

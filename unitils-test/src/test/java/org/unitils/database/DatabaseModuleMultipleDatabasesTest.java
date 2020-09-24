@@ -91,16 +91,6 @@ public class DatabaseModuleMultipleDatabasesTest {
         return new DataSourceWrapper(conf, unitilsConfig, module.getTransactionManager());
     }
 
-    private class TestClassDefaultDatabase {
-        @TestDataSource
-        private DataSource datasource;
-
-        @Test
-        public void testMethod() {
-            // do nothing
-        }
-    }
-
     private class TestClassDatabase1 {
         @TestDataSource("database1")
         private DataSource dataSource;

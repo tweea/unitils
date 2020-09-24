@@ -80,7 +80,7 @@ public class ExpectedDataSetDifferentColumnsTest {
         DataSource dataSource2 = Unitils.getInstance().getModulesRepository().getModuleOfType(DatabaseModule.class).getWrapper("").getDataSource();
         SQLUnitils.executeUpdate("DROP TABLE fruit", dataSource2);
 
-        Unitils.getInstance().initSingletonInstance();
+        Unitils.initSingletonInstance();
     }
 
     private static Properties getCorrectProperties() {
