@@ -25,7 +25,6 @@ import org.junit.runner.RunWith;
  *
  * @author Tim Ducheyne
  */
-@RunWith(UnitilsJUnit4TestClassRunner.class)
+@RunWith(UnitilsBlockJUnit4ClassRunner.class)
 public abstract class UnitilsJUnit4 {
-
 }
