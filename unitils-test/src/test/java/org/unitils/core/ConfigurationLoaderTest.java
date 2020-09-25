@@ -26,6 +26,7 @@ import org.unitils.inject.annotation.TestedObject;
 import org.unitils.mock.Mock;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static org.unitils.core.ConfigurationLoader.DEFAULT_PROPERTIES_FILE_NAME;
@@ -203,22 +204,50 @@ public class ConfigurationLoaderTest
 
     @Test
     public void customConfigurationFileNameOverriddenBySystemProperty() {
-        System.setProperty(PROPKEY_CUSTOM_CONFIGURATION, "custom-filename.properties");
+        String customConfigurationFileName = "custom-filename.properties";
+        System.setProperty(PROPKEY_CUSTOM_CONFIGURATION, customConfigurationFileName);
         propertiesReader.returns(unitilsDefaultProperties).loadPropertiesFileFromClasspath(DEFAULT_PROPERTIES_FILE_NAME);
 
         Properties returnedProperties = configurationLoader.loadConfiguration();
+        assertNotNull(returnedProperties);
 
-        propertiesReader.assertInvoked().loadPropertiesFileFromClasspath("custom-filename.properties");
+        propertiesReader.assertInvoked().loadPropertiesFileFromClasspath(customConfigurationFileName);
     }
 
     @Test
     public void localConfigurationFileNameOverriddenBySystemProperty() {
-        System.setProperty(PROPKEY_LOCAL_CONFIGURATION, "custom-local-filename.properties");
+        String localConfigurationFileName = "custom-local-filename.properties";
+        System.setProperty(PROPKEY_LOCAL_CONFIGURATION, localConfigurationFileName);
         propertiesReader.returns(unitilsDefaultProperties).loadPropertiesFileFromClasspath(DEFAULT_PROPERTIES_FILE_NAME);
 
         Properties returnedProperties = configurationLoader.loadConfiguration();
+        assertNotNull(returnedProperties);
 
-        propertiesReader.assertInvoked().loadPropertiesFileFromClasspath("custom-local-filename.properties");
+        propertiesReader.assertInvoked().loadPropertiesFileFromClasspath(localConfigurationFileName);
+    }
+
+    @Test
+    public void customConfigurationFileNameOverriddenByApi() {
+        String customConfigurationFileName = "custom-filename.properties";
+        configurationLoader.withCustomConfigurationFileName(customConfigurationFileName);
+        propertiesReader.returns(unitilsDefaultProperties).loadPropertiesFileFromClasspath(DEFAULT_PROPERTIES_FILE_NAME);
+
+        Properties returnedProperties = configurationLoader.loadConfiguration();
+        assertNotNull(returnedProperties);
+
+        propertiesReader.assertInvoked().loadPropertiesFileFromClasspath(customConfigurationFileName);
+    }
+
+    @Test
+    public void localConfigurationFileNameOverriddenByApi() {
+        String localConfigurationFileName = "custom-local-filename.properties";
+        configurationLoader.withLocalConfigurationFileName(localConfigurationFileName);
+        propertiesReader.returns(unitilsDefaultProperties).loadPropertiesFileFromClasspath(DEFAULT_PROPERTIES_FILE_NAME);
+
+        Properties returnedProperties = configurationLoader.loadConfiguration();
+        assertNotNull(returnedProperties);
+
+        propertiesReader.assertInvoked().loadPropertiesFileFromClasspath(localConfigurationFileName);
     }
 
     private void assertNoCustomConfigurationFound(String fileName) {

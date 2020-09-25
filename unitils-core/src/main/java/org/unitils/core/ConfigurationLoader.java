@@ -14,6 +14,7 @@ package org.unitils.core;
 
 import java.util.Properties;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.text.StringSubstitutor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -54,6 +55,9 @@ import org.unitils.util.PropertyUtils;
  * @author Fabian Krueger
  */
 public class ConfigurationLoader {
+    /* The logger instance for this class */
+    private static Logger logger = LoggerFactory.getLogger(ConfigurationLoader.class);
+
     /**
      * Name of the fixed configuration file that contains all defaults
      */
@@ -70,13 +74,38 @@ public class ConfigurationLoader {
      */
     public static final String PROPKEY_LOCAL_CONFIGURATION = "unitils.configuration.localFileName";
 
-    /* The logger instance for this class */
-    private static Logger logger = LoggerFactory.getLogger(ConfigurationLoader.class);
+    /**
+     * The custom project level configuration file (unitils.properties)
+     */
+    private String customConfigurationFileName;
+
+    /**
+     * The local configuration file from the user home, or from the classpath
+     */
+    private String localConfigurationFileName;
 
     /**
      * reads properties from configuration file
      */
     private PropertiesReader propertiesReader = new PropertiesReader();
+
+    /**
+     * Set the custom project level configuration file location.
+     */
+    public ConfigurationLoader withCustomConfigurationFileName(String customConfigurationFileName) {
+        this.customConfigurationFileName = customConfigurationFileName;
+
+        return this;
+    }
+
+    /**
+     * Set the local configuration file location.
+     */
+    public ConfigurationLoader withLocalConfigurationFileName(String localConfigurationFileName) {
+        this.localConfigurationFileName = localConfigurationFileName;
+
+        return this;
+    }
 
     /**
      * Creates and loads all configuration settings.
@@ -115,7 +144,13 @@ public class ConfigurationLoader {
      *     The instance to add to loaded properties to, not null
      */
     protected void loadCustomConfiguration(Properties properties) {
-        String customConfigurationFileName = getConfigurationFileName(PROPKEY_CUSTOM_CONFIGURATION, properties);
+        String customConfigurationFileName;
+        if (StringUtils.isBlank(this.customConfigurationFileName)) {
+            customConfigurationFileName = getConfigurationFileName(PROPKEY_CUSTOM_CONFIGURATION, properties);
+        } else {
+            customConfigurationFileName = this.customConfigurationFileName;
+        }
+
         Properties customProperties = propertiesReader.loadPropertiesFileFromClasspath(customConfigurationFileName);
         if (customProperties == null) {
             logger.warn("No custom configuration file " + customConfigurationFileName + " found.");
@@ -131,7 +166,13 @@ public class ConfigurationLoader {
      *     The instance to add to loaded properties to, not null
      */
     protected void loadLocalConfiguration(Properties properties) {
-        String localConfigurationFileName = getConfigurationFileName(PROPKEY_LOCAL_CONFIGURATION, properties);
+        String localConfigurationFileName;
+        if (StringUtils.isBlank(this.localConfigurationFileName)) {
+            localConfigurationFileName = getConfigurationFileName(PROPKEY_LOCAL_CONFIGURATION, properties);
+        } else {
+            localConfigurationFileName = this.localConfigurationFileName;
+        }
+
         Properties localProperties = propertiesReader.loadPropertiesFileFromUserHome(localConfigurationFileName);
         if (localProperties == null) {
             localProperties = propertiesReader.loadPropertiesFileFromClasspath(localConfigurationFileName);
