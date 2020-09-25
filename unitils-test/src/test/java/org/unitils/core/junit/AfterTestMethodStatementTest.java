@@ -5,11 +5,12 @@ package org.unitils.core.junit;
 
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 import org.junit.runners.model.Statement;
 import org.unitils.core.TestListener;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowableOfType;
 
 /**
  * test {@link AfterTestMethodStatement}.
@@ -18,9 +19,6 @@ import org.unitils.core.TestListener;
  * @since 3.4.1
  */
 public class AfterTestMethodStatementTest {
-    @Rule
-    public ExpectedException expectedException = ExpectedException.none();
-
     @Before
     public void setUp()
         throws Exception {
@@ -29,31 +27,32 @@ public class AfterTestMethodStatementTest {
     /**
      * Test method for {@link org.unitils.core.junit.AfterTestMethodStatement#evaluate()}.
      */
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testEvaluateTestListenerIsNull()
         throws Throwable {
-        new AfterTestMethodStatement(null, new Statement() {
+        Statement statement = new AfterTestMethodStatement(null, new Statement() {
             @Override
             public void evaluate()
                 throws Throwable {
-                // TODO Auto-generated method stub
             }
-        }, new TestClass1(), TestClass1.class.getMethod("test1")).evaluate();
+        }, new TestClass1(), TestClass1.class.getMethod("test1"));
+        NullPointerException exception = catchThrowableOfType(() -> statement.evaluate(), NullPointerException.class);
+        assertThat(exception).isNotNull();
     }
 
     @Test
     public void testEvaluateStatementThrowsException()
         throws Throwable {
-        expectedException.expect(Exception.class);
-        expectedException.expectMessage("This is a test exception");
-        new AfterTestMethodStatement(new TestListener() {
+        Statement statement = new AfterTestMethodStatement(new TestListener() {
         }, new Statement() {
             @Override
             public void evaluate()
                 throws Throwable {
                 throw new Exception("This is a test exception");
             }
-        }, new TestClass2(), TestClass2.class.getMethod("test1")).evaluate();
+        }, new TestClass2(), TestClass2.class.getMethod("test1"));
+        Exception exception = catchThrowableOfType(() -> statement.evaluate(), Exception.class);
+        assertThat(exception).isNotNull().hasMessage("This is a test exception");
     }
 
     private class TestClass1 {

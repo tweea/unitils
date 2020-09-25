@@ -15,7 +15,7 @@ import org.unitils.easymock.EasyMockUnitils;
 import org.unitils.easymock.annotation.Mock;
 
 /**
- * TODO: Description of the class.
+ * Test {@link BeforeTestClassStatementTest}.
  * 
  * @author wiw
  * @since 3.4.1

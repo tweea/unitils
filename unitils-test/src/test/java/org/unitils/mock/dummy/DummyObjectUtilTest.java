@@ -96,7 +96,7 @@ public class DummyObjectUtilTest {
         TestClass dummy = DummyObjectUtil.createDummy(TestClass.class);
         assertTrue(dummy.getList().isEmpty());
         assertEquals("", dummy.getString());
-        assertTrue(dummy.getTestClass() instanceof TestClass);
+        assertNotNull(dummy.getTestClass());
         assertEquals(0, dummy.getInt());
         assertEquals(new Integer(0), dummy.getInteger());
         assertEquals(Long.valueOf(0), dummy.getLong());
@@ -107,7 +107,7 @@ public class DummyObjectUtilTest {
         assertEquals(new Short("0"), dummy.getShort());
         assertEquals(new BigDecimal("0"), dummy.getBigDecimal());
         assertEquals(new Byte("0"), dummy.getByte());
-        assertTrue(dummy.getArray() instanceof Object[]);
+        assertNotNull(dummy.getArray());
     }
 
     @Test

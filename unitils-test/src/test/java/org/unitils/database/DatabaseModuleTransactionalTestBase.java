@@ -88,12 +88,10 @@ abstract public class DatabaseModuleTransactionalTestBase {
          */
         @Override
         public void init(DatabaseConfiguration arg0) {
-            // TODO Auto-generated method stub
         }
 
         @Override
         public void init(Properties configuration, String databaseName) {
-            // TODO Auto-generated method stub
         }
     }
 
