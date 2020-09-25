@@ -25,7 +25,7 @@ import static org.unitils.TracingTestListener.TestFramework.JUNIT4;
 
 /**
  * Test for the main flow of the unitils test listeners for
- * JUnit4 (@link UnitilsJUnit4TestClassRunner}) and TestNG.
+ * JUnit4 (@link UnitilsBlockJUnit4ClassRunner}) and TestNG.
  * <p/>
  * Except for some minor differences, the flows for all these test frameworks
  * are expected to be the same.

@@ -26,11 +26,11 @@ public class AfterTestMethodStatement
 
     protected Statement nextStatement;
 
-    private Object testObject;
+    protected Object testObject;
 
-    private Method testMethod;
+    protected Method testMethod;
 
-    public AfterTestMethodStatement(TestListener unitilsTestListener, Statement nextStatement, Method testMethod, Object testObject) {
+    public AfterTestMethodStatement(TestListener unitilsTestListener, Statement nextStatement, Object testObject, Method testMethod) {
         this.unitilsTestListener = unitilsTestListener;
         this.nextStatement = nextStatement;
         this.testObject = testObject;

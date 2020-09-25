@@ -26,9 +26,9 @@ public class AfterTestTearDownStatement
 
     protected Statement nextStatement;
 
-    private Object testObject;
+    protected Object testObject;
 
-    private Method testMethod;
+    protected Method testMethod;
 
     public AfterTestTearDownStatement(TestListener unitilsTestListener, Statement nextStatement, Object testObject, Method testMethod) {
         this.unitilsTestListener = unitilsTestListener;

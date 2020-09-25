@@ -37,7 +37,7 @@ public class AfterTestMethodStatementMockTest {
 
         EasyMockUnitils.replay();
 
-        new AfterTestMethodStatement(listener, statement, method, testObject).evaluate();
+        new AfterTestMethodStatement(listener, statement, testObject, method).evaluate();
     }
 
     @Test(expected = NullPointerException.class)
@@ -51,7 +51,7 @@ public class AfterTestMethodStatementMockTest {
         EasyMock.expectLastCall().andThrow(new UnitilsException());
         EasyMockUnitils.replay();
 
-        new AfterTestMethodStatement(listener, statement, method, testObject).evaluate();
+        new AfterTestMethodStatement(listener, statement, testObject, method).evaluate();
     }
 
     private class TestClass2 {

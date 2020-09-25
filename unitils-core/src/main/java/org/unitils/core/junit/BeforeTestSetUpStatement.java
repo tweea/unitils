@@ -22,19 +22,19 @@ import org.unitils.core.TestListener;
  */
 public class BeforeTestSetUpStatement
     extends Statement {
-    protected Object testObject;
-
-    protected Method testMethod;
-
     protected TestListener unitilsTestListener;
 
     protected Statement nextStatement;
 
-    public BeforeTestSetUpStatement(Object testObject, Method testMethod, TestListener unitilsTestListener, Statement nextStatement) {
-        this.testObject = testObject;
-        this.testMethod = testMethod;
+    protected Object testObject;
+
+    protected Method testMethod;
+
+    public BeforeTestSetUpStatement(TestListener unitilsTestListener, Statement nextStatement, Object testObject, Method testMethod) {
         this.unitilsTestListener = unitilsTestListener;
         this.nextStatement = nextStatement;
+        this.testObject = testObject;
+        this.testMethod = testMethod;
     }
 
     @Override

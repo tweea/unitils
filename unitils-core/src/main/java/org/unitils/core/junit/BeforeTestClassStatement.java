@@ -20,16 +20,16 @@ import org.unitils.core.TestListener;
  */
 public class BeforeTestClassStatement
     extends Statement {
-    protected Class<?> testClass;
-
     protected TestListener unitilsTestListener;
 
     protected Statement nextStatement;
 
-    public BeforeTestClassStatement(Class<?> testClass, TestListener unitilsTestListener, Statement nextStatement) {
-        this.testClass = testClass;
+    protected Class<?> testClass;
+
+    public BeforeTestClassStatement(TestListener unitilsTestListener, Statement nextStatement, Class<?> testClass) {
         this.unitilsTestListener = unitilsTestListener;
         this.nextStatement = nextStatement;
+        this.testClass = testClass;
     }
 
     @Override

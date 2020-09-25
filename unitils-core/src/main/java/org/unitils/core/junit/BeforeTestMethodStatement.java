@@ -26,15 +26,15 @@ public class BeforeTestMethodStatement
 
     protected Statement nextStatement;
 
-    protected Method testMethod;
-
     protected Object testObject;
 
-    public BeforeTestMethodStatement(TestListener unitilsTestListener, Statement nextStatement, Method method, Object testObject) {
+    protected Method testMethod;
+
+    public BeforeTestMethodStatement(TestListener unitilsTestListener, Statement nextStatement, Object testObject, Method testMethod) {
         this.unitilsTestListener = unitilsTestListener;
         this.nextStatement = nextStatement;
-        this.testMethod = method;
         this.testObject = testObject;
+        this.testMethod = testMethod;
     }
 
     @Override

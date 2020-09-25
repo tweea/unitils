@@ -38,7 +38,7 @@ public class AfterTestMethodStatementTest {
                 throws Throwable {
                 // TODO Auto-generated method stub
             }
-        }, TestClass1.class.getMethod("test1"), new TestClass1()).evaluate();
+        }, new TestClass1(), TestClass1.class.getMethod("test1")).evaluate();
     }
 
     @Test
@@ -53,7 +53,7 @@ public class AfterTestMethodStatementTest {
                 throws Throwable {
                 throw new Exception("This is a test exception");
             }
-        }, TestClass2.class.getMethod("test1"), new TestClass2()).evaluate();
+        }, new TestClass2(), TestClass2.class.getMethod("test1")).evaluate();
     }
 
     private class TestClass1 {

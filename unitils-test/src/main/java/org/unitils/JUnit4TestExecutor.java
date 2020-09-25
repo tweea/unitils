@@ -12,9 +12,9 @@
  */
 package org.unitils;
 
-import org.junit.internal.runners.InitializationError;
 import org.junit.runner.Result;
 import org.junit.runner.notification.RunNotifier;
+import org.junit.runners.model.InitializationError;
 
 public class JUnit4TestExecutor
     implements TestExecutor {
@@ -32,7 +32,7 @@ public class JUnit4TestExecutor
         runNotifier.addListener(result.createListener());
 
         for (Class<?> testClass : testClasses) {
-            UnitilsJUnit4TestClassRunner testClassRunner = new TestUnitilsJUnit4TestClassRunner(testClass);
+            UnitilsBlockJUnit4ClassRunner testClassRunner = new UnitilsBlockJUnit4ClassRunner(testClass);
             testClassRunner.run(runNotifier);
         }
     }
@@ -62,7 +62,7 @@ public class JUnit4TestExecutor
      * Overridden test class runner to be able to use the {@link TracingTestListener} as test listener.
      */
     class TestUnitilsJUnit4TestClassRunner
-        extends UnitilsJUnit4TestClassRunner {
+        extends UnitilsBlockJUnit4ClassRunner {
         public TestUnitilsJUnit4TestClassRunner(Class<?> testClass)
             throws InitializationError {
             super(testClass);

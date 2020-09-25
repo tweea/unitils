@@ -42,7 +42,7 @@ public class BeforeTestSetUpStatementTest {
         EasyMock.expectLastCall().andThrow(new NullPointerException());
 
         EasyMockUnitils.replay();
-        new BeforeTestSetUpStatement(testObject, testMethod, listener, statement).evaluate();
+        new BeforeTestSetUpStatement(listener, statement, testObject, testMethod).evaluate();
     }
 
     @Test(expected = NullPointerException.class)
@@ -56,7 +56,7 @@ public class BeforeTestSetUpStatementTest {
         EasyMock.expectLastCall().andThrow(new NullPointerException());
 
         EasyMockUnitils.replay();
-        new BeforeTestSetUpStatement(testObject, testMethod, listener, statement).evaluate();
+        new BeforeTestSetUpStatement(listener, statement, testObject, testMethod).evaluate();
     }
 
     @Test
@@ -69,7 +69,7 @@ public class BeforeTestSetUpStatementTest {
         statement.evaluate();
 
         EasyMockUnitils.replay();
-        new BeforeTestSetUpStatement(testObject, testMethod, listener, statement).evaluate();
+        new BeforeTestSetUpStatement(listener, statement, testObject, testMethod).evaluate();
     }
 
     private class TestClass2 {

@@ -21,11 +21,13 @@ import org.junit.runners.model.InitializationError;
 import org.junit.runners.model.Statement;
 import org.unitils.core.TestListener;
 import org.unitils.core.Unitils;
+import org.unitils.core.junit.AfterCreateTestObjectStatement;
 import org.unitils.core.junit.AfterTestMethodStatement;
 import org.unitils.core.junit.AfterTestTearDownStatement;
 import org.unitils.core.junit.BeforeTestClassStatement;
 import org.unitils.core.junit.BeforeTestMethodStatement;
 import org.unitils.core.junit.BeforeTestSetUpStatement;
+import org.unitils.core.junit.ShouldInvokeTestMethodStatement;
 
 /**
  * @author Tim Ducheyne
@@ -47,7 +49,7 @@ public class UnitilsBlockJUnit4ClassRunner
         Class<?> testClass = getTestClass().getJavaClass();
 
         Statement statement = super.classBlock(notifier);
-        statement = new BeforeTestClassStatement(testClass, unitilsTestListener, statement);
+        statement = new BeforeTestClassStatement(unitilsTestListener, statement, testClass);
         // statement = new AfterTestClassStatement(unitilsTestListener, statement);
         return statement;
     }
@@ -57,8 +59,8 @@ public class UnitilsBlockJUnit4ClassRunner
         this.test = test;
 
         Statement statement = super.methodInvoker(method, test);
-        statement = new BeforeTestMethodStatement(unitilsTestListener, statement, method.getMethod(), test);
-        statement = new AfterTestMethodStatement(unitilsTestListener, statement, method.getMethod(), test);
+        statement = new BeforeTestMethodStatement(unitilsTestListener, statement, test, method.getMethod());
+        statement = new AfterTestMethodStatement(unitilsTestListener, statement, test, method.getMethod());
         return statement;
     }
 
@@ -67,7 +69,11 @@ public class UnitilsBlockJUnit4ClassRunner
         Method testMethod = method.getMethod();
 
         Statement statement = super.methodBlock(method);
-        statement = new BeforeTestSetUpStatement(test, testMethod, unitilsTestListener, statement);
+        statement = new BeforeTestSetUpStatement(unitilsTestListener, statement, test, testMethod);
+        statement = new ShouldInvokeTestMethodStatement(unitilsTestListener, statement, test, testMethod);
+        if (!isIgnored(method)) {
+            statement = new AfterCreateTestObjectStatement(unitilsTestListener, statement, test);
+        }
         statement = new AfterTestTearDownStatement(unitilsTestListener, statement, test, testMethod);
         return statement;
     }

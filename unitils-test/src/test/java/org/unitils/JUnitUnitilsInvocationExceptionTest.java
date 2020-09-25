@@ -39,7 +39,7 @@ import static org.unitils.TracingTestListener.TestInvocation.TEST_TEAR_DOWN;
 
 /**
  * Test for the flows in case an exception occurs in one of the listener or test methods for
- * JUnit4 (@link UnitilsJUnit4TestClassRunner}) and TestNG.
+ * JUnit4 (@link UnitilsBlockJUnit4ClassRunner}) and TestNG.
  * <p/>
  * Except for some minor differences, the flows for all these test frameworks
  * are expected to be the same (see assertInvocationOrder* methods).

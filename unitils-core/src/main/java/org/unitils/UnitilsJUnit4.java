@@ -20,7 +20,7 @@ import org.junit.runner.RunWith;
  * more information on the listener invocation order.
  * <p/>
  * This actually is an empty test class that only instructs JUnit4 to use a custom test runner for the test.
- * As an alternative to subclassing this class, you could also add the @RunWith(UnitilsJUnit4TestClassRunner.class) to
+ * As an alternative to subclassing this class, you could also add the @RunWith(UnitilsBlockJUnit4ClassRunner.class) to
  * your test base class.
  *
  * @author Tim Ducheyne
