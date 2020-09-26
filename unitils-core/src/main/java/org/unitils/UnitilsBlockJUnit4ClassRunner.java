@@ -71,9 +71,7 @@ public class UnitilsBlockJUnit4ClassRunner
         Statement statement = super.methodBlock(method);
         statement = new BeforeTestSetUpStatement(unitilsTestListener, statement, test, testMethod);
         statement = new ShouldInvokeTestMethodStatement(unitilsTestListener, statement, test, testMethod);
-        if (!isIgnored(method)) {
-            statement = new AfterCreateTestObjectStatement(unitilsTestListener, statement, test);
-        }
+        statement = new AfterCreateTestObjectStatement(unitilsTestListener, statement, test);
         statement = new AfterTestTearDownStatement(unitilsTestListener, statement, test, testMethod);
         return statement;
     }
