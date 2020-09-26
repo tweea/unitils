@@ -46,7 +46,7 @@ import java.util.Map;
  * @author Drew Davidson (drew@ognl.org)
  * @version 15 October 1999
  */
-public class DefaultMemberAccess
+public class UnitilsMemberAccess
     implements MemberAccess {
     /*
      * Assign an accessibility modification mechanism, based on Major Java Version.

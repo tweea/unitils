@@ -31,7 +31,7 @@ import org.unitils.reflectionassert.difference.Difference;
 import org.unitils.reflectionassert.report.impl.DefaultDifferenceReport;
 import org.unitils.util.ReflectionUtils;
 
-import ognl.DefaultMemberAccess;
+import ognl.UnitilsMemberAccess;
 import ognl.Ognl;
 import ognl.OgnlContext;
 import ognl.OgnlException;
@@ -429,7 +429,7 @@ public class ReflectionAssert {
      */
     protected static Object getProperty(Object object, String ognlExpression) {
         try {
-            OgnlContext ognlContext = new OgnlContext(null, null, new DefaultMemberAccess());
+            OgnlContext ognlContext = new OgnlContext(null, null, new UnitilsMemberAccess());
             Object ognlExprObj = Ognl.parseExpression(ognlExpression);
             return Ognl.getValue(ognlExprObj, ognlContext, object);
         } catch (OgnlException e) {

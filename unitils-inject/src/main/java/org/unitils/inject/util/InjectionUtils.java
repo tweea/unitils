@@ -26,7 +26,7 @@ import org.unitils.core.UnitilsException;
 import org.unitils.util.AnnotationUtils;
 import org.unitils.util.ReflectionUtils;
 
-import ognl.DefaultMemberAccess;
+import ognl.UnitilsMemberAccess;
 import ognl.Ognl;
 import ognl.OgnlContext;
 import ognl.OgnlException;
@@ -69,7 +69,7 @@ public class InjectionUtils {
             throw new UnitilsException("Target for injection should not be null");
         }
         try {
-            OgnlContext ognlContext = new OgnlContext(null, null, new DefaultMemberAccess());
+            OgnlContext ognlContext = new OgnlContext(null, null, new UnitilsMemberAccess());
             Object ognlExpression = Ognl.parseExpression(property);
 
             Object oldValue = null;
