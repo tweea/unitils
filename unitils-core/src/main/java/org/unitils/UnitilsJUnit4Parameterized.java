@@ -29,5 +29,5 @@ import org.junit.runners.Parameterized.UseParametersRunnerFactory;
  */
 @RunWith(Parameterized.class)
 @UseParametersRunnerFactory(UnitilsBlockJUnit4ClassRunnerWithParametersFactory.class)
-public abstract class UnitilsJUnitParameterized {
+public abstract class UnitilsJUnit4Parameterized {
 }
