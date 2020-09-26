@@ -75,7 +75,7 @@ public class JUnitUnitilsInvocationExceptionTest
      */
     @Test
     public void testTestBeforeClass()
-        throws Exception {
+        throws Throwable {
         tracingTestListener.expectExceptionInMethod(TEST_BEFORE_CLASS, false);
         testExecutor.runTests(testClass);
 
@@ -96,7 +96,7 @@ public class JUnitUnitilsInvocationExceptionTest
      */
     @Test
     public void testBeforeTestSetUp_RuntimeException()
-        throws Exception {
+        throws Throwable {
         tracingTestListener.expectExceptionInMethod(LISTENER_BEFORE_TEST_SET_UP, false);
         testExecutor.runTests(testClass);
 
@@ -116,7 +116,7 @@ public class JUnitUnitilsInvocationExceptionTest
      */
     @Test
     public void testBeforeTestSetUp_AssertionError()
-        throws Exception {
+        throws Throwable {
         tracingTestListener.expectExceptionInMethod(LISTENER_BEFORE_TEST_SET_UP, true);
         testExecutor.runTests(testClass);
 
@@ -136,7 +136,7 @@ public class JUnitUnitilsInvocationExceptionTest
      */
     @Test
     public void testTestSetUp_RuntimeException()
-        throws Exception {
+        throws Throwable {
         tracingTestListener.expectExceptionInMethod(TEST_SET_UP, false);
         testExecutor.runTests(testClass);
 
@@ -156,7 +156,7 @@ public class JUnitUnitilsInvocationExceptionTest
      */
     @Test
     public void testTestSetUp_AssertionError()
-        throws Exception {
+        throws Throwable {
         tracingTestListener.expectExceptionInMethod(TEST_SET_UP, true);
         testExecutor.runTests(testClass);
 
@@ -176,7 +176,7 @@ public class JUnitUnitilsInvocationExceptionTest
      */
     @Test
     public void testBeforeTestMethod_RuntimeException()
-        throws Exception {
+        throws Throwable {
         tracingTestListener.expectExceptionInMethod(LISTENER_BEFORE_TEST_METHOD, false);
         testExecutor.runTests(testClass);
 
@@ -191,7 +191,7 @@ public class JUnitUnitilsInvocationExceptionTest
      */
     @Test
     public void testBeforeTestMethod_AssertionError()
-        throws Exception {
+        throws Throwable {
         tracingTestListener.expectExceptionInMethod(LISTENER_BEFORE_TEST_METHOD, true);
         testExecutor.runTests(testClass);
 
@@ -206,7 +206,7 @@ public class JUnitUnitilsInvocationExceptionTest
      */
     @Test
     public void testTestMethod_RuntimeException()
-        throws Exception {
+        throws Throwable {
         tracingTestListener.expectExceptionInMethod(TEST_METHOD, false);
         testExecutor.runTests(testClass);
 
@@ -221,7 +221,7 @@ public class JUnitUnitilsInvocationExceptionTest
      */
     @Test
     public void testTestMethod_AssertionError()
-        throws Exception {
+        throws Throwable {
         tracingTestListener.expectExceptionInMethod(TEST_METHOD, true);
         testExecutor.runTests(testClass);
 
@@ -236,7 +236,7 @@ public class JUnitUnitilsInvocationExceptionTest
      */
     @Test
     public void testAfterTestMethod_RuntimeException()
-        throws Exception {
+        throws Throwable {
         tracingTestListener.expectExceptionInMethod(LISTENER_AFTER_TEST_METHOD, false);
         testExecutor.runTests(testClass);
 
@@ -251,7 +251,7 @@ public class JUnitUnitilsInvocationExceptionTest
      */
     @Test
     public void testAfterTestMethod_AssertionError()
-        throws Exception {
+        throws Throwable {
         tracingTestListener.expectExceptionInMethod(LISTENER_AFTER_TEST_METHOD, true);
         testExecutor.runTests(testClass);
 
@@ -266,7 +266,7 @@ public class JUnitUnitilsInvocationExceptionTest
      */
     @Test
     public void testTestTearDown_RuntimeException()
-        throws Exception {
+        throws Throwable {
         tracingTestListener.expectExceptionInMethod(TEST_TEAR_DOWN, false);
         testExecutor.runTests(testClass);
 
@@ -283,7 +283,7 @@ public class JUnitUnitilsInvocationExceptionTest
      */
     @Test
     public void testTestTearDown_AssertionError()
-        throws Exception {
+        throws Throwable {
         tracingTestListener.expectExceptionInMethod(TEST_TEAR_DOWN, true);
         testExecutor.runTests(testClass);
 
@@ -300,7 +300,7 @@ public class JUnitUnitilsInvocationExceptionTest
      */
     @Test
     public void testAfterTestTearDown_RuntimeException()
-        throws Exception {
+        throws Throwable {
         tracingTestListener.expectExceptionInMethod(LISTENER_AFTER_TEST_TEARDOWN, false);
         testExecutor.runTests(testClass);
 
@@ -317,7 +317,7 @@ public class JUnitUnitilsInvocationExceptionTest
      */
     @Test
     public void testAfterTestTearDown_AssertionError()
-        throws Exception {
+        throws Throwable {
         tracingTestListener.expectExceptionInMethod(LISTENER_AFTER_TEST_TEARDOWN, true);
         testExecutor.runTests(testClass);
 
@@ -334,7 +334,7 @@ public class JUnitUnitilsInvocationExceptionTest
      */
     @Test
     public void testTestAfterClass()
-        throws Exception {
+        throws Throwable {
         tracingTestListener.expectExceptionInMethod(TEST_AFTER_CLASS, false);
         testExecutor.runTests(testClass);
 

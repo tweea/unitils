@@ -61,7 +61,7 @@ public class JUnitUnitilsInvocationTest
 
     @Test
     public void testSuccessfulRun()
-        throws Exception {
+        throws Throwable {
         testExecutor.runTests(testClass1, testClass2);
         assertInvocationOrder(testClass1, testClass2);
     }

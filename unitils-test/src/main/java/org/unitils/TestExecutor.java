@@ -14,10 +14,10 @@ package org.unitils;
 
 public interface TestExecutor {
     void runTests(Class<?>... testClasses)
-        throws Exception;
+        throws Throwable;
 
     void runTests(String testGroup, Class<?>... testClasses)
-        throws Exception;
+        throws Throwable;
 
     int getRunCount();
 

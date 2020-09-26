@@ -14,19 +14,14 @@ package org.unitils;
 
 import org.junit.runner.Result;
 import org.junit.runner.notification.RunNotifier;
-import org.junit.runners.model.InitializationError;
 
 public class JUnit4TestExecutor
     implements TestExecutor {
     private Result result;
 
-    public JUnit4TestExecutor() {
-        super();
-    }
-
     @Override
     public void runTests(Class<?>... testClasses)
-        throws Exception {
+        throws Throwable {
         result = new Result();
         RunNotifier runNotifier = new RunNotifier();
         runNotifier.addListener(result.createListener());
@@ -39,7 +34,7 @@ public class JUnit4TestExecutor
 
     @Override
     public void runTests(String testGroup, Class<?>... testClasses)
-        throws Exception {
+        throws Throwable {
         runTests(testClasses);
     }
 
@@ -56,16 +51,5 @@ public class JUnit4TestExecutor
     @Override
     public int getIgnoreCount() {
         return result.getIgnoreCount();
-    }
-
-    /**
-     * Overridden test class runner to be able to use the {@link TracingTestListener} as test listener.
-     */
-    class TestUnitilsJUnit4TestClassRunner
-        extends UnitilsBlockJUnit4ClassRunner {
-        public TestUnitilsJUnit4TestClassRunner(Class<?> testClass)
-            throws InitializationError {
-            super(testClass);
-        }
     }
 }
