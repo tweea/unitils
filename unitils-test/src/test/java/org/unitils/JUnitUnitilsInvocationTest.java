@@ -22,10 +22,11 @@ import org.junit.runners.Parameterized.Parameters;
 import org.unitils.TracingTestListener.TestFramework;
 
 import static org.unitils.TracingTestListener.TestFramework.JUNIT4;
+import static org.unitils.TracingTestListener.TestFramework.JUNIT5;
 
 /**
  * Test for the main flow of the unitils test listeners for
- * JUnit4 (@link UnitilsBlockJUnit4ClassRunner}) and TestNG.
+ * JUnit4 ({@link UnitilsBlockJUnit4ClassRunner}) and JUnit5 ({@link UnitilsJUnit5Extension}) and TestNG.
  * <p/>
  * Except for some minor differences, the flows for all these test frameworks
  * are expected to be the same.
@@ -35,8 +36,6 @@ import static org.unitils.TracingTestListener.TestFramework.JUNIT4;
  *
  * @author Tim Ducheyne
  * @author Filip Neven
- * @see UnitilsJUnit4Test_TestClass1
- * @see UnitilsJUnit4Test_TestClass2
  */
 @RunWith(Parameterized.class)
 public class JUnitUnitilsInvocationTest
@@ -56,6 +55,8 @@ public class JUnitUnitilsInvocationTest
                 JUNIT4, new JUnit4TestExecutor(), UnitilsJUnit4Test_TestClass1.class, UnitilsJUnit4Test_TestClass2.class
             }, {
                 JUNIT4, new JUnit4ParameterizedTestExecutor(), UnitilsJUnit4ParameterizedTest_TestClass1.class, UnitilsJUnit4ParameterizedTest_TestClass2.class
+            }, {
+                JUNIT5, new JUnit5TestExecutor(), UnitilsJUnit5Test_TestClass1.class, UnitilsJUnit5Test_TestClass2.class
             },
             // {JUNIT4, new JUnit4TestExecutor(), SpringUnitilsJUnit4Test_TestClass1.class, SpringUnitilsJUnit4Test_TestClass2.class},
         });

@@ -119,6 +119,12 @@
             <version>3.24.1-GA</version>
             <scope>compile</scope>
         </dependency>
+        <dependency>
+            <groupId>org.junit.platform</groupId>
+            <artifactId>junit-platform-runner</artifactId>
+            <version>1.6.2</version>
+            <scope>compile</scope>
+        </dependency>
 
         <dependency>
             <groupId>com.h2database</groupId>

@@ -37,6 +37,7 @@ import static org.unitils.TracingTestListener.ListenerInvocation.LISTENER_BEFORE
 import static org.unitils.TracingTestListener.ListenerInvocation.LISTENER_BEFORE_TEST_METHOD;
 import static org.unitils.TracingTestListener.ListenerInvocation.LISTENER_BEFORE_TEST_SET_UP;
 import static org.unitils.TracingTestListener.TestFramework.JUNIT4;
+import static org.unitils.TracingTestListener.TestFramework.JUNIT5;
 import static org.unitils.TracingTestListener.TestFramework.TESTNG;
 import static org.unitils.TracingTestListener.TestInvocation.TEST_AFTER_CLASS;
 import static org.unitils.TracingTestListener.TestInvocation.TEST_BEFORE_CLASS;
@@ -93,6 +94,7 @@ abstract public class UnitilsInvocationTestBase {
 
         UnitilsJUnit4TestBase.setTracingTestListener(tracingTestListener);
         UnitilsJUnit4ParameterizedTestBase.setTracingTestListener(tracingTestListener);
+        UnitilsJUnit5TestBase.setTracingTestListener(tracingTestListener);
         SpringUnitilsJUnit4TestBase.setTracingTestListener(tracingTestListener);
 
         InjectionUtils.injectInto(tracingTestListener, Unitils.getInstance(), "testListener");
@@ -103,6 +105,7 @@ abstract public class UnitilsInvocationTestBase {
         throws Exception {
         UnitilsJUnit4TestBase.setTracingTestListener(null);
         UnitilsJUnit4ParameterizedTestBase.setTracingTestListener(null);
+        UnitilsJUnit5TestBase.setTracingTestListener(null);
         SpringUnitilsJUnit4TestBase.setTracingTestListener(null);
     }
 
@@ -110,8 +113,8 @@ abstract public class UnitilsInvocationTestBase {
         throws Exception {
         assertInvocation(LISTENER_BEFORE_CLASS, testClass1);
         assertInvocation(LISTENER_AFTER_CREATE_TEST_OBJECT, testClass1, TESTNG);
-        assertInvocation(TEST_BEFORE_CLASS, testClass1, JUNIT4, TESTNG);
-        assertInvocation(LISTENER_AFTER_CREATE_TEST_OBJECT, testClass1, JUNIT4);
+        assertInvocation(TEST_BEFORE_CLASS, testClass1, JUNIT4, JUNIT5, TESTNG);
+        assertInvocation(LISTENER_AFTER_CREATE_TEST_OBJECT, testClass1, JUNIT4, JUNIT5);
         // testClass 1, testMethod 1
         assertInvocation(LISTENER_BEFORE_TEST_SET_UP, testClass1);
         assertInvocation(TEST_SET_UP, testClass1);
@@ -121,7 +124,7 @@ abstract public class UnitilsInvocationTestBase {
         assertInvocation(TEST_TEAR_DOWN, testClass1);
         assertInvocation(LISTENER_AFTER_TEST_TEARDOWN, testClass1);
         // testClass 1, testMethod 2
-        assertInvocation(LISTENER_AFTER_CREATE_TEST_OBJECT, testClass1, JUNIT4);
+        assertInvocation(LISTENER_AFTER_CREATE_TEST_OBJECT, testClass1, JUNIT4, JUNIT5);
         assertInvocation(LISTENER_BEFORE_TEST_SET_UP, testClass1);
         assertInvocation(TEST_SET_UP, testClass1);
         assertInvocation(LISTENER_BEFORE_TEST_METHOD, testClass1);
@@ -129,13 +132,14 @@ abstract public class UnitilsInvocationTestBase {
         assertInvocation(LISTENER_AFTER_TEST_METHOD, testClass1);
         assertInvocation(TEST_TEAR_DOWN, testClass1);
         assertInvocation(LISTENER_AFTER_TEST_TEARDOWN, testClass1);
-        assertInvocation(TEST_AFTER_CLASS, testClass1, JUNIT4, TESTNG);
+        assertInvocation(LISTENER_AFTER_CREATE_TEST_OBJECT, testClass1, JUNIT5);
+        assertInvocation(TEST_AFTER_CLASS, testClass1, JUNIT4, JUNIT5, TESTNG);
 
         // testClass 2, testMethod 1
         assertInvocation(LISTENER_BEFORE_CLASS, testClass2);
         assertInvocation(LISTENER_AFTER_CREATE_TEST_OBJECT, testClass2, TESTNG);
-        assertInvocation(TEST_BEFORE_CLASS, testClass2, JUNIT4, TESTNG);
-        assertInvocation(LISTENER_AFTER_CREATE_TEST_OBJECT, testClass2, JUNIT4);
+        assertInvocation(TEST_BEFORE_CLASS, testClass2, JUNIT4, JUNIT5, TESTNG);
+        assertInvocation(LISTENER_AFTER_CREATE_TEST_OBJECT, testClass2, JUNIT4, JUNIT5);
         assertInvocation(LISTENER_BEFORE_TEST_SET_UP, testClass2);
         assertInvocation(TEST_SET_UP, testClass2);
         assertInvocation(LISTENER_BEFORE_TEST_METHOD, testClass2);
@@ -144,7 +148,7 @@ abstract public class UnitilsInvocationTestBase {
         assertInvocation(TEST_TEAR_DOWN, testClass2);
         assertInvocation(LISTENER_AFTER_TEST_TEARDOWN, testClass2);
         // testClass 2, testMethod 2
-        assertInvocation(LISTENER_AFTER_CREATE_TEST_OBJECT, testClass2, JUNIT4);
+        assertInvocation(LISTENER_AFTER_CREATE_TEST_OBJECT, testClass2, JUNIT4, JUNIT5);
         assertInvocation(LISTENER_BEFORE_TEST_SET_UP, testClass2);
         assertInvocation(TEST_SET_UP, testClass2);
         assertInvocation(LISTENER_BEFORE_TEST_METHOD, testClass2);
@@ -152,7 +156,7 @@ abstract public class UnitilsInvocationTestBase {
         assertInvocation(LISTENER_AFTER_TEST_METHOD, testClass2);
         assertInvocation(TEST_TEAR_DOWN, testClass2);
         assertInvocation(LISTENER_AFTER_TEST_TEARDOWN, testClass2);
-        assertInvocation(TEST_AFTER_CLASS, testClass2, JUNIT4, TESTNG);
+        assertInvocation(TEST_AFTER_CLASS, testClass2, JUNIT4, JUNIT5, TESTNG);
         assertNoMoreInvocations();
 
         assertEquals(4, testExecutor.getRunCount());
