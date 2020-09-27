@@ -9,10 +9,10 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 import org.junit.runners.Parameterized.UseParametersRunnerFactory;
 import org.unitils.UnitilsBlockJUnit4ClassRunnerWithParametersFactory;
+import org.unitils.UnitilsJUnit4ParameterizedClassRunner;
 import org.unitils.core.annotation.UsedForTesting;
 import org.unitils.easymock.EasyMockUnitils;
 import org.unitils.easymock.annotation.Mock;
@@ -25,7 +25,7 @@ import org.unitils.easymock.annotation.Mock;
  * @author Willemijn Wouters
  * @since 3.4
  */
-@RunWith(Parameterized.class)
+@RunWith(UnitilsJUnit4ParameterizedClassRunner.class)
 @UseParametersRunnerFactory(UnitilsBlockJUnit4ClassRunnerWithParametersFactory.class)
 public class ParameterizedIntegrationTest {
     @Mock

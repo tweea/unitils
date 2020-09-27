@@ -63,6 +63,8 @@ public class JUnitUnitilsInvocationExceptionTest
         return Arrays.asList(new Object[][] {
             {
                 JUNIT4, new JUnit4TestExecutor(), UnitilsJUnit4Test_TestClass1.class
+            }, {
+                JUNIT4, new JUnit4ParameterizedTestExecutor(), UnitilsJUnit4ParameterizedTest_TestClass1.class
             },
             // {JUNIT4, new JUnit4TestExecutor(), SpringUnitilsJUnit4Test_TestClass1.class},
         });

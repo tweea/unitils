@@ -92,6 +92,7 @@ abstract public class UnitilsInvocationTestBase {
         tracingTestListener = new TracingTestListener(originalTestListener);
 
         UnitilsJUnit4TestBase.setTracingTestListener(tracingTestListener);
+        UnitilsJUnit4ParameterizedTestBase.setTracingTestListener(tracingTestListener);
         SpringUnitilsJUnit4TestBase.setTracingTestListener(tracingTestListener);
 
         InjectionUtils.injectInto(tracingTestListener, Unitils.getInstance(), "testListener");
@@ -101,6 +102,7 @@ abstract public class UnitilsInvocationTestBase {
     public void cleanUp()
         throws Exception {
         UnitilsJUnit4TestBase.setTracingTestListener(null);
+        UnitilsJUnit4ParameterizedTestBase.setTracingTestListener(null);
         SpringUnitilsJUnit4TestBase.setTracingTestListener(null);
     }
 

@@ -5,12 +5,12 @@ import java.util.Collection;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 import org.junit.runners.Parameterized.UseParametersRunnerFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.unitils.UnitilsBlockJUnit4ClassRunnerWithParametersFactory;
+import org.unitils.UnitilsJUnit4ParameterizedClassRunner;
 
 /**
  * Test {@link UnitilsBlockJUnit4ClassRunnerWithParametersFactory}
@@ -20,7 +20,7 @@ import org.unitils.UnitilsBlockJUnit4ClassRunnerWithParametersFactory;
  * @author Willemijn Wouters
  * @since 3.4
  */
-@RunWith(Parameterized.class)
+@RunWith(UnitilsJUnit4ParameterizedClassRunner.class)
 @UseParametersRunnerFactory(UnitilsBlockJUnit4ClassRunnerWithParametersFactory.class)
 public class UnitilsParametersNullParametersTest {
     private static final Logger LOGGER = LoggerFactory.getLogger(UnitilsParametersNullParametersTest.class);

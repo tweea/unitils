@@ -14,7 +14,6 @@ package org.unitils;
 
 import java.lang.reflect.Method;
 
-import org.junit.runner.notification.RunNotifier;
 import org.junit.runners.model.FrameworkMethod;
 import org.junit.runners.model.InitializationError;
 import org.junit.runners.model.Statement;
@@ -25,7 +24,6 @@ import org.unitils.core.Unitils;
 import org.unitils.core.junit.AfterCreateTestObjectStatement;
 import org.unitils.core.junit.AfterTestMethodStatement;
 import org.unitils.core.junit.AfterTestTearDownStatement;
-import org.unitils.core.junit.BeforeTestClassStatement;
 import org.unitils.core.junit.BeforeTestMethodStatement;
 import org.unitils.core.junit.BeforeTestSetUpStatement;
 import org.unitils.core.junit.ShouldInvokeTestMethodStatement;
@@ -40,16 +38,6 @@ public class UnitilsBlockJUnit4ClassRunnerWithParameters
         throws InitializationError {
         super(test);
         this.unitilsTestListener = getUnitilsTestListener();
-    }
-
-    @Override
-    protected Statement classBlock(RunNotifier notifier) {
-        Class<?> testClass = getTestClass().getJavaClass();
-
-        Statement statement = super.classBlock(notifier);
-        statement = new BeforeTestClassStatement(unitilsTestListener, statement, testClass);
-        // statement = new AfterTestClassStatement(unitilsTestListener, statement);
-        return statement;
     }
 
     @Override

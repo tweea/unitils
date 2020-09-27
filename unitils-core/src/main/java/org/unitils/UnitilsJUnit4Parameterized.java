@@ -13,7 +13,6 @@
 package org.unitils;
 
 import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.UseParametersRunnerFactory;
 
 /**
@@ -27,7 +26,7 @@ import org.junit.runners.Parameterized.UseParametersRunnerFactory;
  *
  * @author Tim Ducheyne
  */
-@RunWith(Parameterized.class)
+@RunWith(UnitilsJUnit4ParameterizedClassRunner.class)
 @UseParametersRunnerFactory(UnitilsBlockJUnit4ClassRunnerWithParametersFactory.class)
 public abstract class UnitilsJUnit4Parameterized {
 }

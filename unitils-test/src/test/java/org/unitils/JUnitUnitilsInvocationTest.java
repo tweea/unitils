@@ -54,6 +54,8 @@ public class JUnitUnitilsInvocationTest
         return Arrays.asList(new Object[][] {
             {
                 JUNIT4, new JUnit4TestExecutor(), UnitilsJUnit4Test_TestClass1.class, UnitilsJUnit4Test_TestClass2.class
+            }, {
+                JUNIT4, new JUnit4ParameterizedTestExecutor(), UnitilsJUnit4ParameterizedTest_TestClass1.class, UnitilsJUnit4ParameterizedTest_TestClass2.class
             },
             // {JUNIT4, new JUnit4TestExecutor(), SpringUnitilsJUnit4Test_TestClass1.class, SpringUnitilsJUnit4Test_TestClass2.class},
         });
