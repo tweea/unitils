@@ -15,11 +15,14 @@ package org.unitils.io.temp.impl;
 import java.io.File;
 import java.io.FileOutputStream;
 
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.DisabledOnOs;
+import org.junit.jupiter.api.condition.OS;
 import org.unitils.core.UnitilsException;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowableOfType;
 import static org.junit.Assert.assertFalse;
 
 /**
@@ -35,7 +38,7 @@ public class DefaultTempServiceDeleteTempFileOrDirTest {
 
     private File rootTempDir;
 
-    @Before
+    @BeforeEach
     public void initialize()
         throws Exception {
         rootTempDir = new File("target/" + DefaultTempServiceDeleteTempFileOrDirTest.class.getSimpleName());
@@ -87,24 +90,26 @@ public class DefaultTempServiceDeleteTempFileOrDirTest {
         assertFalse(nonExistingDir.exists());
     }
 
-    @Ignore // (works on mac)
-    @Test(expected = UnitilsException.class)
+    @DisabledOnOs(OS.MAC) // (works on mac)
+    @Test
     public void fileInUse()
         throws Exception {
         File tempFile = defaultTempService.createTempFile("tempFile.tmp");
         try (FileOutputStream out = new FileOutputStream(tempFile)) {
-            defaultTempService.deleteTempFileOrDir(tempFile);
+            UnitilsException exception = catchThrowableOfType(() -> defaultTempService.deleteTempFileOrDir(tempFile), UnitilsException.class);
+            assertThat(exception).isNotNull();
         }
     }
 
-    @Ignore // works on mac
-    @Test(expected = UnitilsException.class)
+    @DisabledOnOs(OS.MAC) // works on mac
+    @Test
     public void dirInUse()
         throws Exception {
         File tempDir = defaultTempService.createTempDir("tempDir");
         File inUseFile = new File(tempDir, "file.tmp");
         try (FileOutputStream out = new FileOutputStream(inUseFile)) {
-            defaultTempService.deleteTempFileOrDir(tempDir);
+            UnitilsException exception = catchThrowableOfType(() -> defaultTempService.deleteTempFileOrDir(tempDir), UnitilsException.class);
+            assertThat(exception).isNotNull();
         }
     }
 }

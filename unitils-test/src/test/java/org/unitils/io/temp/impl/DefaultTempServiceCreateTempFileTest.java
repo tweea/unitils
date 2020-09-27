@@ -15,11 +15,14 @@ package org.unitils.io.temp.impl;
 import java.io.File;
 import java.io.FileOutputStream;
 
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.DisabledOnOs;
+import org.junit.jupiter.api.condition.OS;
 import org.unitils.core.UnitilsException;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowableOfType;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.unitils.util.FileUtils.writeStringToFile;
@@ -37,7 +40,7 @@ public class DefaultTempServiceCreateTempFileTest {
 
     private File rootTempDir;
 
-    @Before
+    @BeforeEach
     public void initialize() {
         rootTempDir = new File("target/" + DefaultTempServiceCreateTempFileTest.class.getSimpleName());
 
@@ -75,18 +78,20 @@ public class DefaultTempServiceCreateTempFileTest {
         assertEquals(0, result.length());
     }
 
-    @Test(expected = UnitilsException.class)
+    @Test
     public void invalidFileName() {
-        defaultTempService.createTempFile("x::://\\^@,.?@#.tmp");
+        UnitilsException exception = catchThrowableOfType(() -> defaultTempService.createTempFile("x::://\\^@,.?@#.tmp"), UnitilsException.class);
+        assertThat(exception).isNotNull();
     }
 
-    @Ignore // works on mac
-    @Test(expected = UnitilsException.class)
+    @DisabledOnOs(OS.MAC) // works on mac
+    @Test
     public void existingFileInUse()
         throws Exception {
         File existingFile = defaultTempService.createTempFile("tempFile.tmp");
         try (FileOutputStream out = new FileOutputStream(existingFile)) {
-            defaultTempService.createTempFile("tempFile.tmp");
+            UnitilsException exception = catchThrowableOfType(() -> defaultTempService.createTempFile("tempFile.tmp"), UnitilsException.class);
+            assertThat(exception).isNotNull();
         }
     }
 }

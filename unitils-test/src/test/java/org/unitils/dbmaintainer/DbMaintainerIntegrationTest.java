@@ -24,13 +24,14 @@ import java.util.Set;
 
 import javax.sql.DataSource;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.DisabledOnOs;
+import org.junit.jupiter.api.condition.OS;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.unitils.UnitilsJUnit4;
+import org.unitils.UnitilsJUnit5;
 import org.unitils.core.ConfigurationLoader;
 import org.unitils.core.Unitils;
 import org.unitils.core.UnitilsException;
@@ -57,7 +58,7 @@ import static org.unitils.dbmaintainer.version.impl.DefaultExecutedScriptInfoSou
  * @author Tim Ducheyne
  */
 public class DbMaintainerIntegrationTest
-    extends UnitilsJUnit4 {
+    extends UnitilsJUnit5 {
     private static final String INITIAL_INCREMENTAL_1 = "initial_incremental_1";
 
     private static final String INITIAL_INCREMENTAL_2 = "initial_incremental_2";
@@ -102,7 +103,7 @@ public class DbMaintainerIntegrationTest
     /* True if current test is not for the current dialect */
     private boolean disabled;
 
-    @Before
+    @BeforeEach
     public void setUp()
         throws Exception {
         schemas = new ArrayList<>();
@@ -130,7 +131,7 @@ public class DbMaintainerIntegrationTest
         clearTestDatabase();
     }
 
-    @After
+    @AfterEach
     public void cleanup() {
         if (disabled) {
             return;
@@ -178,7 +179,7 @@ public class DbMaintainerIntegrationTest
         assertTablesExist(NEW_REPEATABLE);
     }
 
-    @Ignore // Does not work on mac
+    @DisabledOnOs(OS.MAC) // Does not work on mac
     @Test
     public void updateRepeatable() {
         if (disabled) {
@@ -192,7 +193,7 @@ public class DbMaintainerIntegrationTest
         assertTablesExist(UPDATED_REPEATABLE);
     }
 
-    @Ignore // does not work on mac
+    @DisabledOnOs(OS.MAC) // does not work on mac
     @Test
     public void updateIncremental_fromScratchEnabled() {
         if (disabled) {
@@ -287,7 +288,7 @@ public class DbMaintainerIntegrationTest
         }
     }
 
-    @Ignore // does not work on mac
+    @DisabledOnOs(OS.MAC) // does not work on mac
     @Test
     public void errorInIncrementalScript_dontKeepRetrying() {
         if (disabled) {

@@ -15,11 +15,14 @@ package org.unitils.io.temp.impl;
 import java.io.File;
 import java.io.FileOutputStream;
 
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.DisabledOnOs;
+import org.junit.jupiter.api.condition.OS;
 import org.unitils.core.UnitilsException;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowableOfType;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.unitils.util.FileUtils.writeStringToFile;
@@ -37,7 +40,7 @@ public class DefaultTempServiceCreateTempDirTest {
 
     private File rootTempDir;
 
-    @Before
+    @BeforeEach
     public void initialize() {
         rootTempDir = new File("target/" + DefaultTempServiceCreateTempDirTest.class.getSimpleName());
 
@@ -76,21 +79,23 @@ public class DefaultTempServiceCreateTempDirTest {
         assertEquals(0, result.listFiles().length);
     }
 
-    @Ignore // works on mac
-    @Test(expected = UnitilsException.class)
+    @DisabledOnOs(OS.MAC) // works on mac
+    @Test
     public void invalidDirName() {
-        defaultTempService.createTempDir("x::://\\^@,.?@#");
+        UnitilsException exception = catchThrowableOfType(() -> defaultTempService.createTempDir("x::://\\^@,.?@#"), UnitilsException.class);
+        assertThat(exception).isNotNull();
     }
 
-    @Ignore // works on mac
-    @Test(expected = UnitilsException.class)
+    @DisabledOnOs(OS.MAC) // works on mac
+    @Test
     public void existingDirInUse()
         throws Exception {
         File existingDir = defaultTempService.createTempDir("tempDir");
         File existingFile = new File(existingDir, "file.txt");
         existingFile.createNewFile();
         try (FileOutputStream out = new FileOutputStream(existingFile)) {
-            defaultTempService.createTempDir("tempDir");
+            UnitilsException exception = catchThrowableOfType(() -> defaultTempService.createTempDir("tempDir"), UnitilsException.class);
+            assertThat(exception).isNotNull();
         }
     }
 }
