@@ -18,7 +18,6 @@ import javax.sql.DataSource;
 
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.unitils.UnitilsBlockJUnit4ClassRunner;
@@ -32,9 +31,8 @@ import org.unitils.dbunit.annotation.DataSets;
 /**
  * @author willemijnwouters
  */
-@Ignore
 @RunWith(UnitilsBlockJUnit4ClassRunner.class)
-public class EmptyTables2Test {
+public class EmptyTable2Test {
     @TestDataSource("database1")
     private DataSource dataSource;
 
@@ -51,7 +49,7 @@ public class EmptyTables2Test {
     }
 
     @Test
-    @DataSet("DbunitDifferentColumnsTest-FirstContainsMoreAttributes.xml")
+    @DataSet(value = "DbunitDifferentColumnsTest-FirstContainsMoreAttributes.xml", databaseName = "database1")
     public void testFirstContainsMoreAttributes() {
         SqlAssert.assertCountSqlResult("select count(*) from person", dataSource, 2l);
         SqlAssert.assertMultipleRowSqlResult("select * from person", dataSource, new String[] {
@@ -62,7 +60,7 @@ public class EmptyTables2Test {
     }
 
     @Test
-    @DataSet("DbunitDifferentColumnsTest-FirstContainsLessAttributes.xml")
+    @DataSet(value = "DbunitDifferentColumnsTest-FirstContainsLessAttributes.xml", databaseName = "database1")
     public void testFirstContainsLessAttributes() {
         SqlAssert.assertCountSqlResult("select count(*) from person", dataSource, 2l);
         SqlAssert.assertSingleRowSqlResult("select personname from person where personid='1'", dataSource, new String[] {
@@ -72,7 +70,7 @@ public class EmptyTables2Test {
     }
 
     @Test
-    @DataSet("DbunitDifferentColumnsTest-FirstContainsSameAttributes.xml")
+    @DataSet(value = "DbunitDifferentColumnsTest-FirstContainsSameAttributes.xml", databaseName = "database1")
     public void testFirstContainsSameAttributes() {
         SqlAssert.assertCountSqlResult("select count(*) from person", dataSource, 2l);
         SqlAssert.assertMultipleRowSqlResult("select * from person", dataSource, new String[] {
@@ -83,15 +81,15 @@ public class EmptyTables2Test {
     }
 
     @Test
-    @DataSet("DbunitDifferentColumnsTest-FirstContainsNoAttributes.xml")
+    @DataSet(value = "DbunitDifferentColumnsTest-FirstContainsNoAttributes.xml", databaseName = "database1")
     public void testFirstContainsNoAttributes() {
         SqlAssert.assertCountSqlResult("select count(*) from person", dataSource, 0L);
     }
 
     @Test
-    @DataSet({
+    @DataSet(value = {
         "DbunitDifferentCollumnsTest-WithAllColumns.xml", "DbunitDifferentCollumnsTest-WithOnlyOneColumn.xml"
-    })
+    }, databaseName = "database1")
     public void testFirstDataSetContainsMoreAttributes() {
         SqlAssert.assertCountSqlResult("select count(*) from person", dataSource, 4L);
         String[][] expected = new String[][] {
@@ -110,9 +108,9 @@ public class EmptyTables2Test {
     }
 
     @Test
-    @DataSet({
+    @DataSet(value = {
         "DbunitDifferentCollumnsTest-WithOnlyOneColumn.xml", "DbunitDifferentCollumnsTest-WithAllColumns.xml"
-    })
+    }, databaseName = "database1")
     public void testFirstDataSetContainsLessAttributes() {
         SqlAssert.assertCountSqlResult("select count(*) from person", dataSource, 4L);
         String[][] expected = new String[][] {
@@ -131,9 +129,9 @@ public class EmptyTables2Test {
     }
 
     @Test
-    @DataSet({
+    @DataSet(value = {
         "DbunitDifferentCollumnsTest-WithOnlyOneColumn.xml", "DbunitDifferentCollumnsTest-WithOnlyPersonName.xml"
-    })
+    }, databaseName = "database1")
     public void testFirstDataSetContainsDifferentColumnsThanSecond() {
         SqlAssert.assertCountSqlResult("select count(*) from person", dataSource, 4L);
         String[][] expected = new String[][] {
@@ -153,8 +151,8 @@ public class EmptyTables2Test {
 
     @Test
     @DataSets({
-
-        @DataSet("DbunitDifferentCollumnsTest-WithOnlyOneColumn.xml"), @DataSet("DbunitDifferentCollumnsTest-WithOnlyPersonName.xml")
+        @DataSet(value = "DbunitDifferentCollumnsTest-WithOnlyOneColumn.xml", databaseName = "database1"),
+        @DataSet(value = "DbunitDifferentCollumnsTest-WithOnlyPersonName.xml", databaseName = "database1")
     })
     public void testFirstDataSetContainsDifferentColumnsThanSecondWithDataSetsAnnotation() {
         SqlAssert.assertCountSqlResult("select count(*) from person", dataSource, 4L);
@@ -175,8 +173,8 @@ public class EmptyTables2Test {
 
     @Test
     @DataSets({
-
-        @DataSet("DbunitDifferentCollumnsTest-WithOnlyOneColumn.xml"), @DataSet("DbunitDifferentCollumnsTest-WithAllColumns.xml")
+        @DataSet(value = "DbunitDifferentCollumnsTest-WithOnlyOneColumn.xml", databaseName = "database1"),
+        @DataSet(value = "DbunitDifferentCollumnsTest-WithAllColumns.xml", databaseName = "database1")
     })
     public void testFirstDataSetContainsLessAttributesWithDataSetsAnnotation() {
         SqlAssert.assertCountSqlResult("select count(*) from person", dataSource, 4L);
