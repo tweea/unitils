@@ -13,6 +13,7 @@
 package org.unitils.dbunit.annotation;
 
 import java.lang.annotation.Inherited;
+import java.lang.annotation.Repeatable;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
@@ -83,6 +84,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 })
 @Retention(RUNTIME)
 @Inherited
+@Repeatable(ExpectedDataSets.class)
 public @interface ExpectedDataSet {
     /**
      * The file name of the data set. If left empty, the default filename will be
