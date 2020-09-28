@@ -28,7 +28,7 @@ import org.unitils.reflectionassert.ReflectionComparatorMode;
  */
 @RunWith(UnitilsBlockJUnit4ClassRunner.class)
 public class ResourceScriptSourceQualifiersMultiSupportTest {
-    private static final String LOCATION = "org/unitils/dbunit/testdbscripts";
+    private static final String LOCATION = "org/unitils/dbunit";
 
     @Rule
     public TemporaryFolder tempFolder = new TemporaryFolder(new File("target/test-classes/" + LOCATION));

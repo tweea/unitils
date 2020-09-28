@@ -9,7 +9,6 @@ import java.util.Properties;
 
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.unitils.UnitilsBlockJUnit4ClassRunner;
@@ -24,7 +23,6 @@ import static org.unitils.thirdparty.org.apache.commons.io.FileUtils.forceDelete
  * @author tdr
  * @since 1.0.2
  */
-@Ignore
 @RunWith(UnitilsBlockJUnit4ClassRunner.class)
 public class ExtendedScriptSourceTest {
 
@@ -65,7 +63,7 @@ public class ExtendedScriptSourceTest {
      */
     @Test
     public void loadAllScriptsTest() {
-        Assert.assertEquals(7, scriptSource.loadAllScripts("public", "users", true).size());
+        Assert.assertEquals(4, scriptSource.loadAllScripts("public", "users", true).size());
     }
 
     @Test
@@ -79,11 +77,8 @@ public class ExtendedScriptSourceTest {
             actualNames.add(script.getFileName());
         }
 
-        Assert.assertEquals(7, actual.size());
-        ReflectionAssert
-            .assertReflectionEquals(
-                Arrays.asList("file2.sql", "@users_addusers.sql", "01_@users_addusers.sql", "testsubpackage/004_Initial_TESTcreate.sql",
-                    "001_Initial_TESTcreate.sql", "002_Initial_TESTcreate.sql", "003_Initial_TESTcreate.sql"),
-                actualNames, ReflectionComparatorMode.LENIENT_ORDER);
+        Assert.assertEquals(4, actual.size());
+        ReflectionAssert.assertReflectionEquals(Arrays.asList("testsubpackage/004_Initial_TESTcreate.sql", "001_Initial_TESTcreate.sql",
+            "002_Initial_TESTcreate.sql", "003_Initial_TESTcreate.sql"), actualNames, ReflectionComparatorMode.LENIENT_ORDER);
     }
 }
