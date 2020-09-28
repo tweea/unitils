@@ -6,7 +6,6 @@ import java.util.List;
 
 import org.easymock.EasyMock;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized.Parameters;
@@ -82,7 +81,6 @@ public class ParameterizedIntegrationTest {
         EasyMock.verify(playerDao);
     }
 
-    @Ignore
     public void testWrongChampionService() {
         EasyMock.expect(trophyDao.findByChampionshipsName("spi")).andReturn(trophy);
         EasyMock.expect(playerDao.getPlayersHavingTrophy(trophy)).andReturn(null);

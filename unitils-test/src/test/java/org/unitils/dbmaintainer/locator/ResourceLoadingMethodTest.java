@@ -3,7 +3,6 @@ package org.unitils.dbmaintainer.locator;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -39,14 +38,6 @@ public class ResourceLoadingMethodTest {
         Assert.assertTrue(true);
     }
 
-    /** */
-    @Ignore
-    @DataSet("../testdata/exampleResourceData.xml")
-    @Test
-    public void testLoadingDataset() {
-        Assert.assertTrue(true);
-    }
-
     @Test
     public void testTest() {
         String name = "../testdata/exampleResourceData.xml";
@@ -57,7 +48,6 @@ public class ResourceLoadingMethodTest {
     /** */
     @DataSet
     @Test
-    @Ignore
     @ExpectedDataSet
     public void testLoadingResourceDatasetDefault() {
         LOGGER.debug("STVE :" + DbUnitModule.class.getPackage().toString());
@@ -88,7 +78,6 @@ public class ResourceLoadingMethodTest {
 
     /** */
     @Test
-    @Ignore
     @DataSet({
         "/org/unitils/testdata/exampleResourceData.xml", "/org/unitils/testdata/exampleResourceData.xml"
     })
