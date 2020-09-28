@@ -20,6 +20,8 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 import org.unitils.TracingTestListener.TestFramework;
+import org.unitils.spring.SpringUnitilsJUnit4Test_TestClass1;
+import org.unitils.spring.SpringUnitilsJUnit4Test_TestClass2;
 
 import static org.unitils.TracingTestListener.TestFramework.JUNIT4;
 import static org.unitils.TracingTestListener.TestFramework.JUNIT5;
@@ -56,9 +58,10 @@ public class JUnitUnitilsInvocationTest
             }, {
                 JUNIT4, new JUnit4ParameterizedTestExecutor(), UnitilsJUnit4ParameterizedTest_TestClass1.class, UnitilsJUnit4ParameterizedTest_TestClass2.class
             }, {
+                JUNIT4, new JUnit4TestExecutor(), SpringUnitilsJUnit4Test_TestClass1.class, SpringUnitilsJUnit4Test_TestClass2.class
+            }, {
                 JUNIT5, new JUnit5TestExecutor(), UnitilsJUnit5Test_TestClass1.class, UnitilsJUnit5Test_TestClass2.class
             },
-            // {JUNIT4, new JUnit4TestExecutor(), SpringUnitilsJUnit4Test_TestClass1.class, SpringUnitilsJUnit4Test_TestClass2.class},
         });
     }
 

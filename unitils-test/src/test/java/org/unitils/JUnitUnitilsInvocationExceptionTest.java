@@ -21,6 +21,7 @@ import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 import org.unitils.TracingTestListener.TestFramework;
 import org.unitils.core.TestListener;
+import org.unitils.spring.SpringUnitilsJUnit4Test_TestClass1;
 
 import static org.junit.Assert.assertEquals;
 import static org.unitils.TracingTestListener.ListenerInvocation.LISTENER_AFTER_CREATE_TEST_OBJECT;
@@ -66,9 +67,10 @@ public class JUnitUnitilsInvocationExceptionTest
             }, {
                 JUNIT4, new JUnit4ParameterizedTestExecutor(), UnitilsJUnit4ParameterizedTest_TestClass1.class
             }, {
+                JUNIT4, new JUnit4TestExecutor(), SpringUnitilsJUnit4Test_TestClass1.class
+            }, {
                 JUNIT5, new JUnit5TestExecutor(), UnitilsJUnit5Test_TestClass1.class
             },
-            // {JUNIT4, new JUnit4TestExecutor(), SpringUnitilsJUnit4Test_TestClass1.class},
         });
     }
 
