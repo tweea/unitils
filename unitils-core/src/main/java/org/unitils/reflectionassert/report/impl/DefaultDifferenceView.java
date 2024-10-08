@@ -96,6 +96,10 @@ public class DefaultDifferenceView
         return result.toString();
     }
 
+    /**
+     * @param fieldName
+     *     unused
+     */
     protected String formatDifferrence(ClassDifference classDifference, String fieldName) {
         StringBuilder result = new StringBuilder();
         result.append("Expected: object of type ").append(getShortClassName(classDifference.getLeftClass()));

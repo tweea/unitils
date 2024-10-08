@@ -36,6 +36,10 @@ public class SpringUnitilsAdaptorTestExecutionListener
         getTestListener().afterTestTearDown(testContext.getTestInstance(), testContext.getTestMethod());
     }
 
+    /**
+     * @param testContext
+     *     unused
+     */
     private void registerTestContext(TestContext testContext) {
         // getSpringModule().registerTestContext(testContext);
     }

@@ -44,8 +44,7 @@ public class FileHandler {
      * Write {@link InputStream} to {@link File}
      */
     public void writeToFile(File file, InputStream in) {
-        try {
-            FileOutputStream fos = new FileOutputStream(file);
+        try (FileOutputStream fos = new FileOutputStream(file)) {
             String path = file.getAbsolutePath();
             LOGGER.debug("Writing preprocessed dataset to temp file: " + path);
 
@@ -57,7 +56,6 @@ public class FileHandler {
                 IOUtils.copy(in, fos);
             }
             LOGGER.trace("inputstream visualised: \n" + IOUtils.toString(in));
-            fos.close();
             LOGGER.debug("End writing preprocessed dataset to file: " + path);
         } catch (IOException e) {
             LOGGER.error(e.getMessage(), e);

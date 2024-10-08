@@ -35,12 +35,20 @@ import static org.unitils.mock.core.proxy.StackTraceUtils.getInvocationLineNr;
  * @author Kenny Claes
  */
 public class ArgumentMatchers {
+    /**
+     * @param argumentClass
+     *     unused
+     */
     @ArgumentMatcher
     public static <T> T notNull(Class<T> argumentClass) {
         registerArgumentMatcher(new NotNullArgumentMatcher());
         return null;
     }
 
+    /**
+     * @param argumentClass
+     *     unused
+     */
     @ArgumentMatcher
     public static <T> T isNull(Class<T> argumentClass) {
         registerArgumentMatcher(new NullArgumentMatcher());

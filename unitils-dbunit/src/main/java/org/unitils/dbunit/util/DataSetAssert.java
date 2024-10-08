@@ -92,7 +92,6 @@ public class DataSetAssert {
     protected String generateErrorMessage(SchemaDifference schemaDifference) {
         StringBuilder result = new StringBuilder("Assertion failed. Differences found between the expected data set and actual database content.");
 
-        String schemaName = schemaDifference.getSchema().getName();
         appendMissingTableDifferences(schemaDifference, result);
         appendTableDifferences(schemaDifference, result);
         result.append("\n\nActual database content:\n\n");

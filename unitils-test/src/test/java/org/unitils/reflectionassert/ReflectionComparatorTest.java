@@ -335,6 +335,11 @@ public class ReflectionComparatorTest {
         public boolean equals(Object o) {
             return false;
         }
+
+        @Override
+        public int hashCode() {
+            return super.hashCode();
+        }
     }
 
     /**

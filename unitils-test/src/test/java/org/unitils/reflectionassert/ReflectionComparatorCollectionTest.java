@@ -291,5 +291,10 @@ public class ReflectionComparatorCollectionTest {
         public boolean equals(Object o) {
             return false;
         }
+
+        @Override
+        public int hashCode() {
+            return super.hashCode();
+        }
     }
 }

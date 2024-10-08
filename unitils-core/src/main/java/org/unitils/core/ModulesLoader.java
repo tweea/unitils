@@ -113,7 +113,7 @@ public class ModulesLoader {
         Map<Integer, List<String>> runAfterCounts = new TreeMap<>();
         for (String moduleName : moduleNames) {
             // calculate the nr of times a core is (indirectly) referenced
-            int count = countRunAfters(moduleName, runAfters, new HashMap<String, String>());
+            int count = countRunAfters(moduleName, runAfters, new HashMap<>());
 
             // store in map with count as key and a list corresponding modules as values
             List<String> countModuleNames = runAfterCounts.get(count);

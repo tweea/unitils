@@ -90,7 +90,7 @@ public class SuggestedAssertsReportTest {
      */
     @Test
     public void objects() {
-        testProxy.testMethodObject(new ArrayList<String>());
+        testProxy.testMethodObject(new ArrayList<>());
 
         String report = suggestedAssertsReport.createReport(this, getCurrentScenario().getObservedInvocations());
 

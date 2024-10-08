@@ -114,6 +114,10 @@ public class TracingTestListener
         throwExceptionIfRequested(invocation);
     }
 
+    /**
+     * @param test
+     *     unused
+     */
     public void registerListenerInvocation(ListenerInvocation listenerInvocation, Class<?> testClass, Object test, Method testMethod, Throwable throwable) {
         callList.add(new Call(listenerInvocation, testClass, testMethod == null ? null : testMethod.getName(), throwable));
     }

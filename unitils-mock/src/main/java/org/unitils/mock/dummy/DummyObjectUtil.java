@@ -63,6 +63,10 @@ public class DummyObjectUtil {
             this.dummyObjectBehavior = mockBehavior;
         }
 
+        public Class<?> getDummyObjectType() {
+            return dummyObjectType;
+        }
+
         /**
          * Handles the given method invocation of the dummy object.
          *

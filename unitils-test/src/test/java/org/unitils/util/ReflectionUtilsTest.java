@@ -138,7 +138,7 @@ public class ReflectionUtilsTest {
      */
     @Test
     public void testSetFieldAndSetterValue_field() {
-        setFieldAndSetterValue(testObject, asSet(field), new HashSet<Method>(), "newValue");
+        setFieldAndSetterValue(testObject, asSet(field), new HashSet<>(), "newValue");
         assertEquals("newValue", testObject.getField());
     }
 
@@ -147,7 +147,7 @@ public class ReflectionUtilsTest {
      */
     @Test
     public void testSetFieldAndSetterValue_setter() {
-        setFieldAndSetterValue(testObject, new HashSet<Field>(), asSet(fieldSetterMethod), "newValue");
+        setFieldAndSetterValue(testObject, new HashSet<>(), asSet(fieldSetterMethod), "newValue");
         assertEquals("newValue", testObject.getField());
     }
 

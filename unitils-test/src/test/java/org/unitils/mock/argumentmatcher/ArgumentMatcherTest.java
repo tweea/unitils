@@ -266,7 +266,7 @@ public class ArgumentMatcherTest {
 
         list.add("test");
         mockObject.assertNotInvoked().testMethodObject(lenEq(list));
-        mockObject.assertInvoked().testMethodObject(lenEq(new ArrayList<String>()));
+        mockObject.assertInvoked().testMethodObject(lenEq(new ArrayList<>()));
     }
 
     /**
@@ -342,7 +342,7 @@ public class ArgumentMatcherTest {
 
         list.add("test");
         mockObject.assertNotInvoked().testMethodObject(refEq(list));
-        mockObject.assertInvoked().testMethodObject(refEq(new ArrayList<String>()));
+        mockObject.assertInvoked().testMethodObject(refEq(new ArrayList<>()));
     }
 
     /**
@@ -414,7 +414,7 @@ public class ArgumentMatcherTest {
         mockObject.getMock().testMethodObject(list);
 
         list.add("test");
-        mockObject.assertNotInvoked().testMethodObject(same(new ArrayList<String>()));
+        mockObject.assertNotInvoked().testMethodObject(same(new ArrayList<>()));
         mockObject.assertInvoked().testMethodObject(same(list));
     }
 
@@ -439,7 +439,7 @@ public class ArgumentMatcherTest {
     public void testDefaultArgumentMatcher_objectChangesBetweenCalls_assertInvoked() {
         List<String> list = new ArrayList<>();
         mockObject.getMock().testMethodObject(list);
-        mockObject.assertInvoked().testMethodObject(refEq(new ArrayList<String>()));
+        mockObject.assertInvoked().testMethodObject(refEq(new ArrayList<>()));
 
         mockObject.getMock().testMethodObject(list);
         list.add("test");

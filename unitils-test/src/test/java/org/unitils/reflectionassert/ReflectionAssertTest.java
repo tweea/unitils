@@ -243,6 +243,11 @@ public class ReflectionAssertTest
         public boolean equals(Object o) {
             return false;
         }
+
+        @Override
+        public int hashCode() {
+            return super.hashCode();
+        }
     }
 
     /**

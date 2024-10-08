@@ -114,5 +114,10 @@ public class MockObjectMatchingBehaviorTest {
         public boolean equals(Object obj) {
             return true;
         }
+
+        @Override
+        public int hashCode() {
+            return super.hashCode();
+        }
     }
 }

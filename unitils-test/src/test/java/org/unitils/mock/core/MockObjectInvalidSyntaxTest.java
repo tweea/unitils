@@ -172,7 +172,7 @@ public class MockObjectInvalidSyntaxTest {
     @Test
     public void tryToLetMethodReturnIncompatibleReturnValue() {
         try {
-            mockObject.returns(new ArrayList<String>()).testMethod();
+            mockObject.returns(new ArrayList<>()).testMethod();
             mockObject.getMock().testMethod();
         } catch (UnitilsException e) {
             assertCorrectTopLevelClassInStackTrace(e);

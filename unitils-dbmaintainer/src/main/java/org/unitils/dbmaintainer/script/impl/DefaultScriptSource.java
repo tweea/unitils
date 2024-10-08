@@ -245,6 +245,8 @@ public class DefaultScriptSource
     }
 
     /**
+     * @param dialect
+     *     unused
      * @return A List containing all scripts in the given script locations, not null
      */
     protected List<Script> loadAllScripts(String dialect, String databaseName, boolean defaultDatabase) {
