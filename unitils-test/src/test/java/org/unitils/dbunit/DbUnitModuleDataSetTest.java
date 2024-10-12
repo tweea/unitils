@@ -106,8 +106,8 @@ public class DbUnitModuleDataSetTest
     @Test
     public void testInsertDataSet_notFound()
         throws Exception {
-        UnitilsException exception = catchThrowableOfType(() -> dbUnitModule.insertDataSet(DataSetTest.class.getMethod("testNotFound1"), new DataSetTest()),
-            UnitilsException.class);
+        UnitilsException exception = catchThrowableOfType(UnitilsException.class,
+            () -> dbUnitModule.insertDataSet(DataSetTest.class.getMethod("testNotFound1"), new DataSetTest()));
         assertThat(exception).as("Expected UnitilsException").isNotNull();
     }
 
@@ -117,8 +117,8 @@ public class DbUnitModuleDataSetTest
     @Test
     public void testInsertDataSet_customNotFound()
         throws Exception {
-        UnitilsException exception = catchThrowableOfType(() -> dbUnitModule.insertDataSet(DataSetTest.class.getMethod("testNotFound2"), new DataSetTest()),
-            UnitilsException.class);
+        UnitilsException exception = catchThrowableOfType(UnitilsException.class,
+            () -> dbUnitModule.insertDataSet(DataSetTest.class.getMethod("testNotFound2"), new DataSetTest()));
         assertThat(exception).as("Expected UnitilsException").isNotNull();
     }
 

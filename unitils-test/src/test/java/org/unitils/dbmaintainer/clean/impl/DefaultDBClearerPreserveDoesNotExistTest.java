@@ -136,7 +136,7 @@ public class DefaultDBClearerPreserveDoesNotExistTest
             return;
         }
         configuration.setProperty(PROPKEY_PRESERVE_SEQUENCES, "unexisting_sequence1, unexisting_sequence2");
-        UnitilsException exception = catchThrowableOfType(() -> defaultDbClearer.init(configuration, sqlHandler, dialect, schemas), UnitilsException.class);
+        UnitilsException exception = catchThrowableOfType(UnitilsException.class, () -> defaultDbClearer.init(configuration, sqlHandler, dialect, schemas));
         assertThat(exception).as("UnitilsException expected.").isNotNull();
     }
 
@@ -151,7 +151,7 @@ public class DefaultDBClearerPreserveDoesNotExistTest
             return;
         }
         configuration.setProperty(PROPKEY_PRESERVE_SYNONYMS, "unexisting_synonym1, unexisting_synonym2");
-        UnitilsException exception = catchThrowableOfType(() -> defaultDbClearer.init(configuration, sqlHandler, dialect, schemas), UnitilsException.class);
+        UnitilsException exception = catchThrowableOfType(UnitilsException.class, () -> defaultDbClearer.init(configuration, sqlHandler, dialect, schemas));
         assertThat(exception).as("UnitilsException expected.").isNotNull();
     }
 }

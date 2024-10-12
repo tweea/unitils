@@ -66,7 +66,7 @@ public class SpringModuleInjectApplicationContextTest {
     @Test
     public void testInjectApplicationContext_noContextCreated() {
         SpringTestNoContextCreated springTestNoContextCreated = new SpringTestNoContextCreated();
-        UnitilsException exception = catchThrowableOfType(() -> springModule.injectApplicationContext(springTestNoContextCreated), UnitilsException.class);
+        UnitilsException exception = catchThrowableOfType(UnitilsException.class, () -> springModule.injectApplicationContext(springTestNoContextCreated));
         assertThat(exception).as("Expected UnitilsException").isNotNull();
         assertNull(springTestNoContextCreated.field);
     }

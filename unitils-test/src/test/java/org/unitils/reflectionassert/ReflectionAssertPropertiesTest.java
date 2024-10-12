@@ -85,7 +85,7 @@ public class ReflectionAssertPropertiesTest {
      */
     @Test
     public void testAssertPropertyReflectionEquals_notEqualsDifferentValues() {
-        AssertionError error = catchThrowableOfType(() -> assertPropertyReflectionEquals("stringProperty", "xxxxxx", testObject), AssertionError.class);
+        AssertionError error = catchThrowableOfType(AssertionError.class, () -> assertPropertyReflectionEquals("stringProperty", "xxxxxx", testObject));
         assertThat(error).as("Expected AssertionError").isNotNull();
     }
 
@@ -94,7 +94,7 @@ public class ReflectionAssertPropertiesTest {
      */
     @Test
     public void testAssertPropertyReflectionEquals_leftNull() {
-        AssertionError error = catchThrowableOfType(() -> assertPropertyReflectionEquals("stringProperty", null, testObject), AssertionError.class);
+        AssertionError error = catchThrowableOfType(AssertionError.class, () -> assertPropertyReflectionEquals("stringProperty", null, testObject));
         assertThat(error).as("Expected AssertionError").isNotNull();
     }
 
@@ -104,7 +104,7 @@ public class ReflectionAssertPropertiesTest {
     @Test
     public void testAssertPropertyReflectionEquals_rightNull() {
         testObject.setStringProperty(null);
-        AssertionError error = catchThrowableOfType(() -> assertPropertyReflectionEquals("stringProperty", "stringValue", testObject), AssertionError.class);
+        AssertionError error = catchThrowableOfType(AssertionError.class, () -> assertPropertyReflectionEquals("stringProperty", "stringValue", testObject));
         assertThat(error).as("Expected AssertionError").isNotNull();
     }
 
@@ -113,7 +113,7 @@ public class ReflectionAssertPropertiesTest {
      */
     @Test
     public void testAssertPropertyReflectionEquals_actualObjectNull() {
-        AssertionError error = catchThrowableOfType(() -> assertPropertyReflectionEquals("aProperty", "aValue", null), AssertionError.class);
+        AssertionError error = catchThrowableOfType(AssertionError.class, () -> assertPropertyReflectionEquals("aProperty", "aValue", null));
         assertThat(error).as("Expected AssertionError").isNotNull();
     }
 

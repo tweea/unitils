@@ -64,7 +64,7 @@ public class ReflectionArgumentMatcherTest {
         testMock.method(refEq("stringValue"), refEq(3), refEq("objectValue1"), refEq("objectValue2"));
         replay(testMock);
 
-        AssertionError error = catchThrowableOfType(() -> testMock.method("xxxx", 3, "objectValue1", "objectValue2"), AssertionError.class);
+        AssertionError error = catchThrowableOfType(AssertionError.class, () -> testMock.method("xxxx", 3, "objectValue1", "objectValue2"));
         assertThat(error).as("Expected AssertionError").isNotNull();
     }
 
@@ -76,7 +76,7 @@ public class ReflectionArgumentMatcherTest {
         testMock.method(refEq("stringValue"), refEq(3), refEq("objectValue1"), refEq("objectValue2"));
         replay(testMock);
 
-        AssertionError error = catchThrowableOfType(() -> testMock.method("stringValue", 3, "objectValue1"), AssertionError.class);
+        AssertionError error = catchThrowableOfType(AssertionError.class, () -> testMock.method("stringValue", 3, "objectValue1"));
         assertThat(error).as("Expected AssertionError").isNotNull();
     }
 
@@ -113,7 +113,7 @@ public class ReflectionArgumentMatcherTest {
         testMock.method(refEq(Arrays.asList("element1", "element2", "element3")));
         replay(testMock);
 
-        AssertionError error = catchThrowableOfType(() -> testMock.method(Arrays.asList("element3", "element1", "element2")), AssertionError.class);
+        AssertionError error = catchThrowableOfType(AssertionError.class, () -> testMock.method(Arrays.asList("element3", "element1", "element2")));
         assertThat(error).as("Expected AssertionError").isNotNull();
     }
 
@@ -137,7 +137,7 @@ public class ReflectionArgumentMatcherTest {
         testMock.method(refEq((List<String>) null));
         replay(testMock);
 
-        AssertionError error = catchThrowableOfType(() -> testMock.method(Arrays.asList("element3", "element1", "element2")), AssertionError.class);
+        AssertionError error = catchThrowableOfType(AssertionError.class, () -> testMock.method(Arrays.asList("element3", "element1", "element2")));
         assertThat(error).as("Expected AssertionError").isNotNull();
     }
 

@@ -104,7 +104,7 @@ public class SpringModuleSpringBeansTest {
     @Test
     public void testAssignSpringBeans_notFound() {
         SpringTestNotFound springTestNotFound = new SpringTestNotFound();
-        UnitilsException exception = catchThrowableOfType(() -> springModule.injectSpringBeans(springTestNotFound), UnitilsException.class);
+        UnitilsException exception = catchThrowableOfType(UnitilsException.class, () -> springModule.injectSpringBeans(springTestNotFound));
         assertThat(exception).as("Expected UnitilsException").isNotNull();
         assertNull(springTestNotFound.testBean);
     }
@@ -115,7 +115,7 @@ public class SpringModuleSpringBeansTest {
     @Test
     public void testAssignSpringBeansByType_notFound() {
         SpringTestByTypeNotFound springTestByTypeNotFound = new SpringTestByTypeNotFound();
-        UnitilsException exception = catchThrowableOfType(() -> springModule.injectSpringBeansByType(springTestByTypeNotFound), UnitilsException.class);
+        UnitilsException exception = catchThrowableOfType(UnitilsException.class, () -> springModule.injectSpringBeansByType(springTestByTypeNotFound));
         assertThat(exception).as("Expected UnitilsException").isNotNull();
         assertNull(springTestByTypeNotFound.testBean);
     }
@@ -126,7 +126,7 @@ public class SpringModuleSpringBeansTest {
     @Test
     public void testAssignSpringBeansByType_ambiguous() {
         SpringTestByTypeAmbiguous springTestByTypeAmbiguous = new SpringTestByTypeAmbiguous();
-        UnitilsException exception = catchThrowableOfType(() -> springModule.injectSpringBeansByType(springTestByTypeAmbiguous), UnitilsException.class);
+        UnitilsException exception = catchThrowableOfType(UnitilsException.class, () -> springModule.injectSpringBeansByType(springTestByTypeAmbiguous));
         assertThat(exception).as("Expected UnitilsException").isNotNull();
         assertNull(springTestByTypeAmbiguous.testBean);
     }
@@ -137,7 +137,7 @@ public class SpringModuleSpringBeansTest {
     @Test
     public void testAssignSpringBeansByName_notFound() {
         SpringTestByNameNotFound springTestByNameNotFound = new SpringTestByNameNotFound();
-        UnitilsException exception = catchThrowableOfType(() -> springModule.injectSpringBeansByName(springTestByNameNotFound), UnitilsException.class);
+        UnitilsException exception = catchThrowableOfType(UnitilsException.class, () -> springModule.injectSpringBeansByName(springTestByNameNotFound));
         assertThat(exception).as("Expected UnitilsException").isNotNull();
         assertNull(springTestByNameNotFound.xxxx);
     }

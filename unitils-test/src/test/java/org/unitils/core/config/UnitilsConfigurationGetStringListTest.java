@@ -66,7 +66,7 @@ public class UnitilsConfigurationGetStringListTest {
 
     @Test
     public void requiredNotFound() {
-        UnitilsException exception = catchThrowableOfType(() -> unitilsConfiguration.getStringList("xxx", true), UnitilsException.class);
+        UnitilsException exception = catchThrowableOfType(UnitilsException.class, () -> unitilsConfiguration.getStringList("xxx", true));
         assertThat(exception).as("Expected UnitilsException").isNotNull();
     }
 
@@ -90,8 +90,8 @@ public class UnitilsConfigurationGetStringListTest {
 
     @Test
     public void requiredOnlyEmptyValues() {
-        UnitilsException exception = catchThrowableOfType(() -> unitilsConfiguration.getStringList("propertyWithOnlyEmptyValues", true),
-            UnitilsException.class);
+        UnitilsException exception = catchThrowableOfType(UnitilsException.class,
+            () -> unitilsConfiguration.getStringList("propertyWithOnlyEmptyValues", true));
         assertThat(exception).as("Expected UnitilsException").isNotNull();
     }
 }

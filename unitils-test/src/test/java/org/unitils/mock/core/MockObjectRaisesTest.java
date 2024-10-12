@@ -41,9 +41,9 @@ public class MockObjectRaisesTest {
     public void raises() {
         mockObject.raises(new ThreadDeath()).testMethodString();
 
-        ThreadDeath error1 = catchThrowableOfType(() -> mockObject.getMock().testMethodString(), ThreadDeath.class);
+        ThreadDeath error1 = catchThrowableOfType(ThreadDeath.class, () -> mockObject.getMock().testMethodString());
         assertThat(error1).isNotNull();
-        ThreadDeath error2 = catchThrowableOfType(() -> mockObject.getMock().testMethodString(), ThreadDeath.class);
+        ThreadDeath error2 = catchThrowableOfType(ThreadDeath.class, () -> mockObject.getMock().testMethodString());
         assertThat(error2).isNotNull();
     }
 
@@ -55,9 +55,9 @@ public class MockObjectRaisesTest {
     public void onceRaises() {
         mockObject.onceRaises(new ThreadDeath()).testMethodString();
 
-        ThreadDeath error1 = catchThrowableOfType(() -> mockObject.getMock().testMethodString(), ThreadDeath.class);
+        ThreadDeath error1 = catchThrowableOfType(ThreadDeath.class, () -> mockObject.getMock().testMethodString());
         assertThat(error1).isNotNull();
-        ThreadDeath error2 = catchThrowableOfType(() -> mockObject.getMock().testMethodString(), ThreadDeath.class);
+        ThreadDeath error2 = catchThrowableOfType(ThreadDeath.class, () -> mockObject.getMock().testMethodString());
         assertThat(error2).isNull();
     }
 
@@ -65,7 +65,7 @@ public class MockObjectRaisesTest {
     public void raisesWithExceptionClass() {
         mockObject.raises(IllegalArgumentException.class).testMethodString();
 
-        IllegalArgumentException exception = catchThrowableOfType(() -> mockObject.getMock().testMethodString(), IllegalArgumentException.class);
+        IllegalArgumentException exception = catchThrowableOfType(IllegalArgumentException.class, () -> mockObject.getMock().testMethodString());
         assertThat(exception).as("Expected exception").isNotNull();
     }
 
@@ -73,7 +73,7 @@ public class MockObjectRaisesTest {
     public void onceRaisesWithexceptionClass() {
         mockObject.onceRaises(IllegalArgumentException.class).testMethodString();
 
-        IllegalArgumentException exception = catchThrowableOfType(() -> mockObject.getMock().testMethodString(), IllegalArgumentException.class);
+        IllegalArgumentException exception = catchThrowableOfType(IllegalArgumentException.class, () -> mockObject.getMock().testMethodString());
         assertThat(exception).as("Expected exception").isNotNull();
     }
 

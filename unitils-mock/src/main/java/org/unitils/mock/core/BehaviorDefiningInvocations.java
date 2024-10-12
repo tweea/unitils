@@ -74,7 +74,7 @@ public class BehaviorDefiningInvocations {
                 bestMatchingBehaviorDefiningInvocation = behaviorDefiningInvocation;
                 continue;
             }
-            if (matchingScore == bestMatchingScore) {
+            if (matchingScore == bestMatchingScore && bestMatchingBehaviorDefiningInvocation != null) {
                 // same score, nr of not-null values determines the best match
                 int nrOfNotNullArguments = behaviorDefiningInvocation.getNrOfNotNullArguments();
                 int bestMatchingNrOfNotNullArguments = bestMatchingBehaviorDefiningInvocation.getNrOfNotNullArguments();

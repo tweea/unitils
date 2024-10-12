@@ -66,7 +66,7 @@ public class UnitilsConfigurationGetIntTest {
 
     @Test
     public void notFoundNoDefault() {
-        UnitilsException exception = catchThrowableOfType(() -> unitilsConfiguration.getInt("xxx"), UnitilsException.class);
+        UnitilsException exception = catchThrowableOfType(UnitilsException.class, () -> unitilsConfiguration.getInt("xxx"));
         assertThat(exception).as("Expected UnitilsException").isNotNull();
     }
 
@@ -78,13 +78,13 @@ public class UnitilsConfigurationGetIntTest {
 
     @Test
     public void invalidIntValueWithoutDefault() {
-        UnitilsException exception = catchThrowableOfType(() -> unitilsConfiguration.getInt("invalidIntValue"), UnitilsException.class);
+        UnitilsException exception = catchThrowableOfType(UnitilsException.class, () -> unitilsConfiguration.getInt("invalidIntValue"));
         assertThat(exception).as("Expected UnitilsException").isNotNull();
     }
 
     @Test
     public void invalidIntValueWithDefault() {
-        UnitilsException exception = catchThrowableOfType(() -> unitilsConfiguration.getInt("invalidIntValue", 6), UnitilsException.class);
+        UnitilsException exception = catchThrowableOfType(UnitilsException.class, () -> unitilsConfiguration.getInt("invalidIntValue", 6));
         assertThat(exception).as("Expected UnitilsException").isNotNull();
     }
 }

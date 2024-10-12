@@ -72,7 +72,7 @@ public class MockObjectPartialMockTest {
     public void testRaises() {
         mockObject.raises(new ThreadDeath()).testMethod();
 
-        ThreadDeath error = catchThrowableOfType(() -> mockObject.getMock().testMethod(), ThreadDeath.class);
+        ThreadDeath error = catchThrowableOfType(ThreadDeath.class, () -> mockObject.getMock().testMethod());
         assertThat(error).isNotNull();
         assertLenientEquals(0, TestClass.invocationCount);
     }

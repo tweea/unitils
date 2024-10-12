@@ -4,9 +4,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
-import org.apache.commons.collections.ListUtils;
 import org.easymock.EasyMock;
 import org.junit.Assert;
 import org.junit.Before;
@@ -56,7 +56,7 @@ public class ClassPathDataLocatorTest {
     /*** */
     @Test
     public void getDataResourceTestAbsolutePath() {
-        EasyMock.expect(resourcePickingStrategie.filter(ListUtils.EMPTY_LIST, resourceName)).andReturn(urlResultList);
+        EasyMock.expect(resourcePickingStrategie.filter(Collections.EMPTY_LIST, resourceName)).andReturn(urlResultList);
 
         EasyMockUnitils.replay();
 
@@ -78,7 +78,7 @@ public class ClassPathDataLocatorTest {
     /*** */
     @Test
     public void getDataResourceTestNonExisting() {
-        EasyMock.expect(resourcePickingStrategie.filter((List<URL>) EasyMock.anyObject(), (String) EasyMock.anyObject())).andReturn(ListUtils.EMPTY_LIST);
+        EasyMock.expect(resourcePickingStrategie.filter((List<URL>) EasyMock.anyObject(), (String) EasyMock.anyObject())).andReturn(Collections.EMPTY_LIST);
 
         EasyMockUnitils.replay();
 

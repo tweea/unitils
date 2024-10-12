@@ -77,7 +77,7 @@ public class ReflectionUtilsTest {
      */
     @Test
     public void testCreateInstanceOfType_classNotFound() {
-        UnitilsException exception = catchThrowableOfType(() -> createInstanceOfType("xxxxxx", false), UnitilsException.class);
+        UnitilsException exception = catchThrowableOfType(UnitilsException.class, () -> createInstanceOfType("xxxxxx", false));
         assertThat(exception).as("UnitilsException expected").isNotNull();
     }
 
@@ -98,7 +98,7 @@ public class ReflectionUtilsTest {
         throws Exception {
         // get another field
         Field anotherField = getClass().getDeclaredField("testObject");
-        UnitilsException exception = catchThrowableOfType(() -> getFieldValue(testObject, anotherField), UnitilsException.class);
+        UnitilsException exception = catchThrowableOfType(UnitilsException.class, () -> getFieldValue(testObject, anotherField));
         assertThat(exception).as("UnitilsException expected").isNotNull();
     }
 
@@ -129,7 +129,7 @@ public class ReflectionUtilsTest {
         // get another field
         Field anotherField = getClass().getDeclaredField("testObject");
 
-        UnitilsException exception = catchThrowableOfType(() -> setFieldValue(testObject, anotherField, "newValue"), UnitilsException.class);
+        UnitilsException exception = catchThrowableOfType(UnitilsException.class, () -> setFieldValue(testObject, anotherField, "newValue"));
         assertThat(exception).as("UnitilsException expected").isNotNull();
     }
 
@@ -168,8 +168,8 @@ public class ReflectionUtilsTest {
         throws Exception {
         // get another field
         Field anotherField = getClass().getDeclaredField("testObject");
-        UnitilsException exception = catchThrowableOfType(() -> setFieldAndSetterValue(testObject, asSet(anotherField), asSet(fieldSetterMethod), "newValue"),
-            UnitilsException.class);
+        UnitilsException exception = catchThrowableOfType(UnitilsException.class,
+            () -> setFieldAndSetterValue(testObject, asSet(anotherField), asSet(fieldSetterMethod), "newValue"));
         assertThat(exception).as("UnitilsException expected").isNotNull();
     }
 
@@ -181,8 +181,8 @@ public class ReflectionUtilsTest {
         throws Exception {
         // get another field
         Method anotherMethod = getClass().getDeclaredMethod("testInvokeMethod_unexistingMethod");
-        UnitilsException exception = catchThrowableOfType(() -> setFieldAndSetterValue(testObject, asSet(field), asSet(anotherMethod), "newValue"),
-            UnitilsException.class);
+        UnitilsException exception = catchThrowableOfType(UnitilsException.class,
+            () -> setFieldAndSetterValue(testObject, asSet(field), asSet(anotherMethod), "newValue"));
         assertThat(exception).as("UnitilsException expected").isNotNull();
     }
 
@@ -192,7 +192,7 @@ public class ReflectionUtilsTest {
     @Test
     public void testSetFieldValue_wrongType()
         throws Exception {
-        UnitilsException exception = catchThrowableOfType(() -> setFieldValue(testObject, field, 0), UnitilsException.class);
+        UnitilsException exception = catchThrowableOfType(UnitilsException.class, () -> setFieldValue(testObject, field, 0));
         assertThat(exception).as("UnitilsException expected").isNotNull();
     }
 
@@ -226,7 +226,7 @@ public class ReflectionUtilsTest {
         throws Exception {
         // get another method
         Method anotherMethod = getClass().getDeclaredMethod("testInvokeMethod_unexistingMethod");
-        UnitilsException exception = catchThrowableOfType(() -> invokeMethod(testObject, anotherMethod), UnitilsException.class);
+        UnitilsException exception = catchThrowableOfType(UnitilsException.class, () -> invokeMethod(testObject, anotherMethod));
         assertThat(exception).as("UnitilsException expected").isNotNull();
     }
 
@@ -236,7 +236,7 @@ public class ReflectionUtilsTest {
     @Test
     public void testInvokeMethod_wrongType()
         throws Exception {
-        UnitilsException exception = catchThrowableOfType(() -> invokeMethod(testObject, fieldSetterMethod, 0), UnitilsException.class);
+        UnitilsException exception = catchThrowableOfType(UnitilsException.class, () -> invokeMethod(testObject, fieldSetterMethod, 0));
         assertThat(exception).as("UnitilsException expected").isNotNull();
     }
 
@@ -257,7 +257,7 @@ public class ReflectionUtilsTest {
     public void testGetFieldName_noSetter()
         throws Exception {
         Method anotherMethod = getClass().getDeclaredMethod("testGetFieldName_noSetter");
-        UnitilsException exception = catchThrowableOfType(() -> getPropertyName(anotherMethod), UnitilsException.class);
+        UnitilsException exception = catchThrowableOfType(UnitilsException.class, () -> getPropertyName(anotherMethod));
         assertThat(exception).as("UnitilsException expected").isNotNull();
     }
 

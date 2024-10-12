@@ -104,7 +104,7 @@ public class PropertiesReaderTest
     public void loadPropertiesFileFromClasspath_withEmptyStringFile_shouldThrowUnitilsException() {
         String configurationFile = "";
         String expectedMessage = "Unable to load configuration file: " + configurationFile;
-        UnitilsException exception = catchThrowableOfType(() -> sut.loadPropertiesFileFromClasspath(configurationFile), UnitilsException.class);
+        UnitilsException exception = catchThrowableOfType(UnitilsException.class, () -> sut.loadPropertiesFileFromClasspath(configurationFile));
         assertThat(exception).as("UnitilsExcepton expected").isNotNull();
         assertThat(exception).hasMessage(expectedMessage);
     }

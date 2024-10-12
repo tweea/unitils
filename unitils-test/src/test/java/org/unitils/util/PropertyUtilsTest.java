@@ -74,7 +74,7 @@ public class PropertyUtilsTest {
      */
     @Test
     public void testGetString_notFound() {
-        UnitilsException exception = catchThrowableOfType(() -> getString("xxxx", testProperties), UnitilsException.class);
+        UnitilsException exception = catchThrowableOfType(UnitilsException.class, () -> getString("xxxx", testProperties));
         assertThat(exception).as("Expected UnitilsException").isNotNull();
     }
 
@@ -119,7 +119,7 @@ public class PropertyUtilsTest {
      */
     @Test
     public void testGetStringList_requiredNotFound() {
-        UnitilsException exception = catchThrowableOfType(() -> getStringList("xxxx", testProperties, true), UnitilsException.class);
+        UnitilsException exception = catchThrowableOfType(UnitilsException.class, () -> getStringList("xxxx", testProperties, true));
         assertThat(exception).as("Expected UnitilsException").isNotNull();
     }
 
@@ -137,7 +137,7 @@ public class PropertyUtilsTest {
      */
     @Test
     public void testGetBoolean_notFound() {
-        UnitilsException exception = catchThrowableOfType(() -> getBoolean("xxxx", testProperties), UnitilsException.class);
+        UnitilsException exception = catchThrowableOfType(UnitilsException.class, () -> getBoolean("xxxx", testProperties));
         assertThat(exception).as("Expected UnitilsException").isNotNull();
     }
 
@@ -173,7 +173,7 @@ public class PropertyUtilsTest {
      */
     @Test
     public void testGetLong_notNumber() {
-        UnitilsException exception = catchThrowableOfType(() -> getLong("stringProperty", testProperties), UnitilsException.class);
+        UnitilsException exception = catchThrowableOfType(UnitilsException.class, () -> getLong("stringProperty", testProperties));
         assertThat(exception).as("Expected UnitilsException").isNotNull();
     }
 
@@ -182,7 +182,7 @@ public class PropertyUtilsTest {
      */
     @Test
     public void testGetLong_notFound() {
-        UnitilsException exception = catchThrowableOfType(() -> getLong("xxxx", testProperties), UnitilsException.class);
+        UnitilsException exception = catchThrowableOfType(UnitilsException.class, () -> getLong("xxxx", testProperties));
         assertThat(exception).as("Expected UnitilsException").isNotNull();
     }
 
@@ -200,7 +200,7 @@ public class PropertyUtilsTest {
      */
     @Test
     public void testGetLong_defaultNotNumber() {
-        UnitilsException exception = catchThrowableOfType(() -> getLong("stringProperty", 10, testProperties), UnitilsException.class);
+        UnitilsException exception = catchThrowableOfType(UnitilsException.class, () -> getLong("stringProperty", 10, testProperties));
         assertThat(exception).as("Expected UnitilsException").isNotNull();
     }
 
@@ -227,7 +227,7 @@ public class PropertyUtilsTest {
      */
     @Test
     public void testGetInstance_notFound() {
-        UnitilsException exception = catchThrowableOfType(() -> getInstance("xxxx", testProperties), UnitilsException.class);
+        UnitilsException exception = catchThrowableOfType(UnitilsException.class, () -> getInstance("xxxx", testProperties));
         assertThat(exception).as("Expected UnitilsException").isNotNull();
     }
 
@@ -236,7 +236,7 @@ public class PropertyUtilsTest {
      */
     @Test
     public void testGetInstance_couldNotCreate() {
-        UnitilsException exception = catchThrowableOfType(() -> getInstance("stringProperty", testProperties), UnitilsException.class);
+        UnitilsException exception = catchThrowableOfType(UnitilsException.class, () -> getInstance("stringProperty", testProperties));
         assertThat(exception).as("Expected UnitilsException").isNotNull();
     }
 
@@ -263,7 +263,7 @@ public class PropertyUtilsTest {
      */
     @Test
     public void testGetInstance_defaultCouldNotCreate() {
-        UnitilsException exception = catchThrowableOfType(() -> getInstance("stringProperty", new ArrayList<>(), testProperties), UnitilsException.class);
+        UnitilsException exception = catchThrowableOfType(UnitilsException.class, () -> getInstance("stringProperty", new ArrayList<>(), testProperties));
         assertThat(exception).as("Expected UnitilsException").isNotNull();
     }
 }

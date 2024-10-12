@@ -91,7 +91,7 @@ public class UnitilsConfigurationGetInstanceOfTest {
 
     @Test
     public void notFound() {
-        UnitilsException exception = catchThrowableOfType(() -> unitilsConfiguration.getInstanceOf(List.class), UnitilsException.class);
+        UnitilsException exception = catchThrowableOfType(UnitilsException.class, () -> unitilsConfiguration.getInstanceOf(List.class));
         assertThat(exception).as("Expected UnitilsException").isNotNull();
     }
 

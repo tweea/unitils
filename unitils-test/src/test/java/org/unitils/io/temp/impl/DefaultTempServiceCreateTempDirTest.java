@@ -82,7 +82,7 @@ public class DefaultTempServiceCreateTempDirTest {
     @DisabledOnOs(OS.MAC) // works on mac
     @Test
     public void invalidDirName() {
-        UnitilsException exception = catchThrowableOfType(() -> defaultTempService.createTempDir("x::://\\^@,.?@#"), UnitilsException.class);
+        UnitilsException exception = catchThrowableOfType(UnitilsException.class, () -> defaultTempService.createTempDir("x::://\\^@,.?@#"));
         assertThat(exception).isNotNull();
     }
 
@@ -94,7 +94,7 @@ public class DefaultTempServiceCreateTempDirTest {
         File existingFile = new File(existingDir, "file.txt");
         existingFile.createNewFile();
         try (FileOutputStream out = new FileOutputStream(existingFile)) {
-            UnitilsException exception = catchThrowableOfType(() -> defaultTempService.createTempDir("tempDir"), UnitilsException.class);
+            UnitilsException exception = catchThrowableOfType(UnitilsException.class, () -> defaultTempService.createTempDir("tempDir"));
             assertThat(exception).isNotNull();
         }
     }

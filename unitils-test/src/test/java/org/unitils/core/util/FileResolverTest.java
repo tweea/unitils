@@ -86,7 +86,7 @@ public class FileResolverTest {
     @Test
     public void fileNotFoundInClassPath()
         throws Exception {
-        UnitilsException exception = catchThrowableOfType(() -> fileResolver.resolveFileName("xxx.txt", FileResolverTest.class), UnitilsException.class);
+        UnitilsException exception = catchThrowableOfType(UnitilsException.class, () -> fileResolver.resolveFileName("xxx.txt", FileResolverTest.class));
         assertThat(exception).as("UnitilsException expected").isNotNull();
     }
 
@@ -94,7 +94,7 @@ public class FileResolverTest {
     public void absoluteFileNotFound()
         throws Exception {
         fileResolver = new FileResolver(false, "/xxxx");
-        UnitilsException exception = catchThrowableOfType(() -> fileResolver.resolveFileName("xxx.txt", FileResolverTest.class), UnitilsException.class);
+        UnitilsException exception = catchThrowableOfType(UnitilsException.class, () -> fileResolver.resolveFileName("xxx.txt", FileResolverTest.class));
         assertThat(exception).as("UnitilsException expected").isNotNull();
     }
 

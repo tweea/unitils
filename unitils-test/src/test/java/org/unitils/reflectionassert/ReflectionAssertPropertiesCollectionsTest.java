@@ -66,8 +66,8 @@ public class ReflectionAssertPropertiesCollectionsTest {
      */
     @Test
     public void testAssertPropertyReflectionEquals_notEqualsDifferentValues() {
-        AssertionError error = catchThrowableOfType(() -> assertPropertyReflectionEquals("stringProperty", asList("xxxxx", "xxxxx"), list),
-            AssertionError.class);
+        AssertionError error = catchThrowableOfType(AssertionError.class,
+            () -> assertPropertyReflectionEquals("stringProperty", asList("xxxxx", "xxxxx"), list));
         assertThat(error).as("Expected AssertionError").isNotNull();
     }
 
@@ -92,7 +92,7 @@ public class ReflectionAssertPropertiesCollectionsTest {
      */
     @Test
     public void testAssertPropertyReflectionEquals_notEqualsDifferentOrder() {
-        AssertionError error = catchThrowableOfType(() -> assertPropertyReflectionEquals("stringProperty", asList("el2", "el1"), list), AssertionError.class);
+        AssertionError error = catchThrowableOfType(AssertionError.class, () -> assertPropertyReflectionEquals("stringProperty", asList("el2", "el1"), list));
         assertThat(error).as("Expected AssertionError").isNotNull();
     }
 
@@ -109,7 +109,7 @@ public class ReflectionAssertPropertiesCollectionsTest {
      */
     @Test
     public void testAssertPropertyReflectionEquals_notEqualsPrimitivesList() {
-        AssertionError error = catchThrowableOfType(() -> assertPropertyLenientEquals("primitiveProperty", asList(999, 1), list), AssertionError.class);
+        AssertionError error = catchThrowableOfType(AssertionError.class, () -> assertPropertyLenientEquals("primitiveProperty", asList(999, 1), list));
         assertThat(error).as("Expected AssertionError").isNotNull();
     }
 
@@ -118,7 +118,7 @@ public class ReflectionAssertPropertiesCollectionsTest {
      */
     @Test
     public void testAssertPropertyReflectionEquals_actualObjectNull() {
-        AssertionError error = catchThrowableOfType(() -> assertPropertyLenientEquals("stringProperty", asList(1, 2), null), AssertionError.class);
+        AssertionError error = catchThrowableOfType(AssertionError.class, () -> assertPropertyLenientEquals("stringProperty", asList(1, 2), null));
         assertThat(error).as("Expected AssertionError").isNotNull();
     }
 

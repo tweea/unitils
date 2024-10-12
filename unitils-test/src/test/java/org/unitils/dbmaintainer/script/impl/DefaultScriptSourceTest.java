@@ -177,7 +177,7 @@ public class DefaultScriptSourceTest
         File duplicateIndexScript = new File(scriptsDirName + "/test_scripts/1_scripts/001_duplicateIndexScript.sql");
         try {
             copyFile(scriptA, duplicateIndexScript);
-            UnitilsException exception = catchThrowableOfType(() -> scriptSource.getAllUpdateScripts(dialect, schemas.get(0), true), UnitilsException.class);
+            UnitilsException exception = catchThrowableOfType(UnitilsException.class, () -> scriptSource.getAllUpdateScripts(dialect, schemas.get(0), true));
             assertThat(exception).as("Expected a UnitilsException because of a duplicate script").isNotNull();
         } finally {
             FileUtils.deleteQuietly(duplicateIndexScript);

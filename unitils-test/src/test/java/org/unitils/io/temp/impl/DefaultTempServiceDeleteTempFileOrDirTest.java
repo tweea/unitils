@@ -96,7 +96,7 @@ public class DefaultTempServiceDeleteTempFileOrDirTest {
         throws Exception {
         File tempFile = defaultTempService.createTempFile("tempFile.tmp");
         try (FileOutputStream out = new FileOutputStream(tempFile)) {
-            UnitilsException exception = catchThrowableOfType(() -> defaultTempService.deleteTempFileOrDir(tempFile), UnitilsException.class);
+            UnitilsException exception = catchThrowableOfType(UnitilsException.class, () -> defaultTempService.deleteTempFileOrDir(tempFile));
             assertThat(exception).isNotNull();
         }
     }
@@ -108,7 +108,7 @@ public class DefaultTempServiceDeleteTempFileOrDirTest {
         File tempDir = defaultTempService.createTempDir("tempDir");
         File inUseFile = new File(tempDir, "file.tmp");
         try (FileOutputStream out = new FileOutputStream(inUseFile)) {
-            UnitilsException exception = catchThrowableOfType(() -> defaultTempService.deleteTempFileOrDir(tempDir), UnitilsException.class);
+            UnitilsException exception = catchThrowableOfType(UnitilsException.class, () -> defaultTempService.deleteTempFileOrDir(tempDir));
             assertThat(exception).isNotNull();
         }
     }

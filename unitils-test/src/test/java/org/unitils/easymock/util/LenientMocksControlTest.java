@@ -121,7 +121,7 @@ public class LenientMocksControlTest {
         expect(mock.someBehavior(true, 999, "XXXX", new ArrayList<>())).andReturn("Result");
         replay(mock);
 
-        AssertionError error = catchThrowableOfType(() -> verify(mock), AssertionError.class);
+        AssertionError error = catchThrowableOfType(AssertionError.class, () -> verify(mock));
         assertThat(error).isNotNull();
     }
 
@@ -134,7 +134,7 @@ public class LenientMocksControlTest {
         expect(mock.someBehavior(true, 999, "XXXX", new ArrayList<>())).andReturn("Result");
         replay(mock);
 
-        AssertionError error = catchThrowableOfType(() -> mock.someBehavior(true, 999, "Test", new ArrayList<>()), AssertionError.class);
+        AssertionError error = catchThrowableOfType(AssertionError.class, () -> mock.someBehavior(true, 999, "Test", new ArrayList<>()));
         assertThat(error).isNotNull();
     }
 

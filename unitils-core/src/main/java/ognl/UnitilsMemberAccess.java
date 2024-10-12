@@ -32,7 +32,6 @@ package ognl;
 
 import java.lang.reflect.AccessibleObject;
 import java.lang.reflect.Member;
-import java.util.Map;
 
 /**
  * This class provides methods for setting up and restoring
@@ -65,7 +64,7 @@ public class UnitilsMemberAccess
      * ===================================================================
      */
     @Override
-    public Object setup(Map context, Object target, Member member, String propertyName) {
+    public Object setup(OgnlContext context, Object target, Member member, String propertyName) {
         Object result = null;
 
         if (isAccessible(context, target, member, propertyName)) {
@@ -80,7 +79,7 @@ public class UnitilsMemberAccess
     }
 
     @Override
-    public void restore(Map context, Object target, Member member, String propertyName, Object state) {
+    public void restore(OgnlContext context, Object target, Member member, String propertyName, Object state) {
         if (state != null) {
             final AccessibleObject accessible = (AccessibleObject) member;
             final boolean stateboolean = ((Boolean) state).booleanValue(); // Using twice (avoid unboxing)
@@ -108,7 +107,7 @@ public class UnitilsMemberAccess
      * @return true if the member is accessible in the context, false otherwise.
      */
     @Override
-    public boolean isAccessible(Map context, Object target, Member member, String propertyName) {
+    public boolean isAccessible(OgnlContext context, Object target, Member member, String propertyName) {
         return true;
     }
 }

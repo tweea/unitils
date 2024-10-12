@@ -160,7 +160,7 @@ public class ExpectedDataSetTest
     }
 
     private void assertDifferentDataSet(String methodName) {
-        AssertionError error = catchThrowableOfType(() -> assertEqualDataSet(methodName), AssertionError.class);
+        AssertionError error = catchThrowableOfType(AssertionError.class, () -> assertEqualDataSet(methodName));
         assertThat(error).as("No differences found for dataset. Method name: " + methodName).isNotNull();
     }
 

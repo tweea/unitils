@@ -85,7 +85,7 @@ public class ModulesRepositoryTest
      */
     @Test
     public void testGetModuleOfType_noneFound() {
-        UnitilsException exception = catchThrowableOfType(() -> modulesRepository.getModuleOfType(DatabaseModule.class), UnitilsException.class);
+        UnitilsException exception = catchThrowableOfType(UnitilsException.class, () -> modulesRepository.getModuleOfType(DatabaseModule.class));
         assertThat(exception).as("A UnitilsException should have been thrown").isNotNull();
     }
 
@@ -94,7 +94,7 @@ public class ModulesRepositoryTest
      */
     @Test
     public void testGetModuleOfType_moreThanOneFound() {
-        UnitilsException exception = catchThrowableOfType(() -> modulesRepository.getModuleOfType(TestModule1.class), UnitilsException.class);
+        UnitilsException exception = catchThrowableOfType(UnitilsException.class, () -> modulesRepository.getModuleOfType(TestModule1.class));
         assertThat(exception).as("A UnitilsException should have been thrown").isNotNull();
     }
 

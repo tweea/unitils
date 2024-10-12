@@ -147,7 +147,7 @@ public class ModulesLoaderTest
     @Test
     public void testLoadModules_wrongClassName() {
         configuration.setProperty(PROPKEY_MODULE_PREFIX + "a" + PROPKEY_MODULE_SUFFIX_CLASS_NAME, "java.lang.String");
-        UnitilsException exception = catchThrowableOfType(() -> modulesLoader.loadModules(configuration), UnitilsException.class);
+        UnitilsException exception = catchThrowableOfType(UnitilsException.class, () -> modulesLoader.loadModules(configuration));
         assertThat(exception).isNotNull();
     }
 
@@ -181,7 +181,7 @@ public class ModulesLoaderTest
     @Test
     public void circularRunAfter() {
         configuration.setProperty(PROPKEY_MODULE_PREFIX + "b" + PROPKEY_MODULE_SUFFIX_RUN_AFTER, "c");
-        UnitilsException exception = catchThrowableOfType(() -> modulesLoader.loadModules(configuration), UnitilsException.class);
+        UnitilsException exception = catchThrowableOfType(UnitilsException.class, () -> modulesLoader.loadModules(configuration));
         assertThat(exception).isNotNull();
     }
 

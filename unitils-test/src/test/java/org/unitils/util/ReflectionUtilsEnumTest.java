@@ -50,7 +50,7 @@ public class ReflectionUtilsEnumTest {
      */
     @Test
     public void testGetEnumValue_unexisting() {
-        UnitilsException exception = catchThrowableOfType(() -> ReflectionUtils.getEnumValue(TestEnum.class, "xxxxxxxxx"), UnitilsException.class);
+        UnitilsException exception = catchThrowableOfType(UnitilsException.class, () -> ReflectionUtils.getEnumValue(TestEnum.class, "xxxxxxxxx"));
         assertThat(exception).as("Expected UnitilsException").isNotNull();
     }
 

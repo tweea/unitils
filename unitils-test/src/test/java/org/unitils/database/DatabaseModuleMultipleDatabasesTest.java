@@ -85,12 +85,6 @@ public class DatabaseModuleMultipleDatabasesTest {
         return new DataSourceWrapper(conf, unitilsConfig, module.getTransactionManager());
     }
 
-    private DataSourceWrapper getWrapper2() {
-        DatabaseConfiguration conf = new DatabaseConfiguration("database2", "h2", "org.h2.Driver", "jdbc:h2:~/test", "sa", null, "public",
-            Arrays.asList("public"), false, false);
-        return new DataSourceWrapper(conf, unitilsConfig, module.getTransactionManager());
-    }
-
     private class TestClassDatabase1 {
         @TestDataSource("database1")
         private DataSource dataSource;

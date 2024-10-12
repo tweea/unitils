@@ -91,7 +91,7 @@ public class ConstraintsDisablerTest
     @Test
     public void testDisableConstraints_foreignKey()
         throws Exception {
-        UnitilsException exception = catchThrowableOfType(() -> executeUpdate("insert into table2 (col1) values ('test')", dataSource), UnitilsException.class);
+        UnitilsException exception = catchThrowableOfType(UnitilsException.class, () -> executeUpdate("insert into table2 (col1) values ('test')", dataSource));
         assertThat(exception).as("UnitilsException should have been thrown").isNotNull();
         constraintsDisabler.disableConstraints();
         // Should not throw exception anymore
@@ -105,7 +105,7 @@ public class ConstraintsDisablerTest
     @Test
     public void testDisableConstraints_foreignKeyToAlternateKey()
         throws Exception {
-        UnitilsException exception = catchThrowableOfType(() -> executeUpdate("insert into table3 (col1) values ('test')", dataSource), UnitilsException.class);
+        UnitilsException exception = catchThrowableOfType(UnitilsException.class, () -> executeUpdate("insert into table3 (col1) values ('test')", dataSource));
         assertThat(exception).as("UnitilsException should have been thrown").isNotNull();
         constraintsDisabler.disableConstraints();
         // Should not throw exception anymore
@@ -118,8 +118,8 @@ public class ConstraintsDisablerTest
     @Test
     public void testDisableConstraints_notNull()
         throws Exception {
-        UnitilsException exception = catchThrowableOfType(() -> executeUpdate("insert into table1 (col1, col2) values ('test', null)", dataSource),
-            UnitilsException.class);
+        UnitilsException exception = catchThrowableOfType(UnitilsException.class,
+            () -> executeUpdate("insert into table1 (col1, col2) values ('test', null)", dataSource));
         assertThat(exception).as("UnitilsException should have been thrown").isNotNull();
         constraintsDisabler.disableConstraints();
         // Should not throw exception anymore

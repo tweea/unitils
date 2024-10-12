@@ -99,7 +99,7 @@
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
-            <version>5.4.21.Final</version>
+            <version>5.6.15.Final</version>
             <scope>compile</scope>
             <optional>true</optional>
             <exclusions>
@@ -120,8 +120,8 @@
                     <artifactId>jaxb-runtime</artifactId>
                 </exclusion>
                 <exclusion>
-                    <groupId>org.javassist</groupId>
-                    <artifactId>javassist</artifactId>
+                    <groupId>org.jboss.logging</groupId>
+                    <artifactId>jboss-logging</artifactId>
                 </exclusion>
                 <exclusion>
                     <groupId>org.jboss.spec.javax.transaction</groupId>
@@ -130,9 +130,9 @@
             </exclusions>
         </dependency>
         <dependency>
-            <groupId>org.javassist</groupId>
-            <artifactId>javassist</artifactId>
-            <version>3.24.1-GA</version>
+            <groupId>org.jboss.logging</groupId>
+            <artifactId>jboss-logging</artifactId>
+            <version>3.4.3.Final</version>
             <scope>compile</scope>
             <optional>true</optional>
         </dependency>

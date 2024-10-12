@@ -17,8 +17,8 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.Predicate;
+import org.apache.commons.collections4.IterableUtils;
+import org.apache.commons.collections4.Predicate;
 import org.dbunit.dataset.AbstractTableMetaData;
 import org.dbunit.dataset.Column;
 import org.dbunit.dataset.DataSetException;
@@ -50,7 +50,7 @@ public class DbUnitTableMetaData
     }
 
     public void addColumn(Column column) {
-        if (!CollectionUtils.exists(columnNames, new FindColumnPredicate(column.getColumnName()))) {
+        if (!IterableUtils.matchesAny(columnNames, new FindColumnPredicate(column.getColumnName()))) {
             boolean added = columns.add(column);
             if (added) {
                 columnNames.add(column.getColumnName());

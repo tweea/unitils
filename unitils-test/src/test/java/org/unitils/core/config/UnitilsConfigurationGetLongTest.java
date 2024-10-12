@@ -66,7 +66,7 @@ public class UnitilsConfigurationGetLongTest {
 
     @Test
     public void notFoundNoDefault() {
-        UnitilsException exception = catchThrowableOfType(() -> unitilsConfiguration.getLong("xxx"), UnitilsException.class);
+        UnitilsException exception = catchThrowableOfType(UnitilsException.class, () -> unitilsConfiguration.getLong("xxx"));
         assertThat(exception).as("Expected UnitilsException").isNotNull();
     }
 
@@ -78,13 +78,13 @@ public class UnitilsConfigurationGetLongTest {
 
     @Test
     public void invalidLongValueWithoutDefault() {
-        UnitilsException exception = catchThrowableOfType(() -> unitilsConfiguration.getLong("invalidLongValue"), UnitilsException.class);
+        UnitilsException exception = catchThrowableOfType(UnitilsException.class, () -> unitilsConfiguration.getLong("invalidLongValue"));
         assertThat(exception).as("Expected UnitilsException").isNotNull();
     }
 
     @Test
     public void invalidLongValueWithDefault() {
-        UnitilsException exception = catchThrowableOfType(() -> unitilsConfiguration.getLong("invalidLongValue", 6L), UnitilsException.class);
+        UnitilsException exception = catchThrowableOfType(UnitilsException.class, () -> unitilsConfiguration.getLong("invalidLongValue", 6L));
         assertThat(exception).as("Expected UnitilsException").isNotNull();
     }
 }

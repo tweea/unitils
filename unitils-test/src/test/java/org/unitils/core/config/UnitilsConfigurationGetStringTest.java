@@ -67,7 +67,7 @@ public class UnitilsConfigurationGetStringTest {
 
     @Test
     public void notFoundNoDefault() {
-        UnitilsException exception = catchThrowableOfType(() -> unitilsConfiguration.getString("xxx"), UnitilsException.class);
+        UnitilsException exception = catchThrowableOfType(UnitilsException.class, () -> unitilsConfiguration.getString("xxx"));
         assertThat(exception).as("Expected UnitilsException").isNotNull();
     }
 

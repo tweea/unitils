@@ -76,8 +76,8 @@ public class ModuleUtilsTest {
 
         TestEnum enumValue1 = getEnumValueReplaceDefault(TestAnnotation1.class, "testEnum", TestEnum.DEFAULT, result);
         assertSame(TestEnum.VALUE1, enumValue1);
-        UnitilsException exception = catchThrowableOfType(() -> getEnumValueReplaceDefault(TestAnnotation2.class, "testEnum", TestEnum.DEFAULT, result),
-            UnitilsException.class);
+        UnitilsException exception = catchThrowableOfType(UnitilsException.class,
+            () -> getEnumValueReplaceDefault(TestAnnotation2.class, "testEnum", TestEnum.DEFAULT, result));
         assertThat(exception).as("Expected UnitilsException").isNotNull();
     }
 
@@ -95,8 +95,8 @@ public class ModuleUtilsTest {
 
         TestEnum enumValue1 = getEnumValueReplaceDefault(TestAnnotation1.class, "testEnum", TestEnum.DEFAULT, result);
         assertSame(TestEnum.VALUE1, enumValue1);
-        UnitilsException exception = catchThrowableOfType(() -> getEnumValueReplaceDefault(TestAnnotation2.class, "testEnum", TestEnum.DEFAULT, result),
-            UnitilsException.class);
+        UnitilsException exception = catchThrowableOfType(UnitilsException.class,
+            () -> getEnumValueReplaceDefault(TestAnnotation2.class, "testEnum", TestEnum.DEFAULT, result));
         assertThat(exception).as("Expected UnitilsException").isNotNull();
     }
 
@@ -137,8 +137,8 @@ public class ModuleUtilsTest {
     @Test
     public void testGetEnumValueReplaceDefault_noDefaultValueFound() {
         Map<Class<? extends Annotation>, Map<String, String>> result = getAnnotationPropertyDefaults(TestModule.class, configuration, TestAnnotation1.class);
-        UnitilsException exception = catchThrowableOfType(() -> getEnumValueReplaceDefault(TestAnnotation2.class, "testEnum", TestEnum.DEFAULT, result),
-            UnitilsException.class);
+        UnitilsException exception = catchThrowableOfType(UnitilsException.class,
+            () -> getEnumValueReplaceDefault(TestAnnotation2.class, "testEnum", TestEnum.DEFAULT, result));
         assertThat(exception).as("Expected UnitilsException").isNotNull();
     }
 

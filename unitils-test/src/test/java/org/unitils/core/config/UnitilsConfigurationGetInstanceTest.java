@@ -72,7 +72,7 @@ public class UnitilsConfigurationGetInstanceTest {
 
     @Test
     public void notFoundNoDefault() {
-        UnitilsException exception = catchThrowableOfType(() -> unitilsConfiguration.getInstance("xxx"), UnitilsException.class);
+        UnitilsException exception = catchThrowableOfType(UnitilsException.class, () -> unitilsConfiguration.getInstance("xxx"));
         assertThat(exception).as("Expected UnitilsException").isNotNull();
     }
 
@@ -91,14 +91,14 @@ public class UnitilsConfigurationGetInstanceTest {
 
     @Test
     public void invalidClassNameWithoutDefault() {
-        UnitilsException exception = catchThrowableOfType(() -> unitilsConfiguration.getInstance("invalidClassNameProperty"), UnitilsException.class);
+        UnitilsException exception = catchThrowableOfType(UnitilsException.class, () -> unitilsConfiguration.getInstance("invalidClassNameProperty"));
         assertThat(exception).as("Expected UnitilsException").isNotNull();
     }
 
     @Test
     public void invalidClassNameWithDefault() {
-        UnitilsException exception = catchThrowableOfType(() -> unitilsConfiguration.getInstance("invalidClassNameProperty", new StringBuffer()),
-            UnitilsException.class);
+        UnitilsException exception = catchThrowableOfType(UnitilsException.class,
+            () -> unitilsConfiguration.getInstance("invalidClassNameProperty", new StringBuffer()));
         assertThat(exception).as("Expected UnitilsException").isNotNull();
     }
 

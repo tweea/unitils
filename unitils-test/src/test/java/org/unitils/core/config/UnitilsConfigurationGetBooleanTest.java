@@ -81,7 +81,7 @@ public class UnitilsConfigurationGetBooleanTest {
 
     @Test
     public void notFoundNoDefault() {
-        UnitilsException exception = catchThrowableOfType(() -> unitilsConfiguration.getBoolean("xxx"), UnitilsException.class);
+        UnitilsException exception = catchThrowableOfType(UnitilsException.class, () -> unitilsConfiguration.getBoolean("xxx"));
         assertThat(exception).as("Expected UnitilsException").isNotNull();
     }
 
@@ -93,7 +93,7 @@ public class UnitilsConfigurationGetBooleanTest {
 
     @Test
     public void invalidBooleanValue() {
-        UnitilsException exception = catchThrowableOfType(() -> unitilsConfiguration.getBoolean("invalidBooleanValue"), UnitilsException.class);
+        UnitilsException exception = catchThrowableOfType(UnitilsException.class, () -> unitilsConfiguration.getBoolean("invalidBooleanValue"));
         assertThat(exception).as("Expected UnitilsException").isNotNull();
     }
 }

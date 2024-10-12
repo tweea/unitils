@@ -80,7 +80,7 @@ public class DefaultTempServiceCreateTempFileTest {
 
     @Test
     public void invalidFileName() {
-        UnitilsException exception = catchThrowableOfType(() -> defaultTempService.createTempFile("x::://\\^@,.?@#.tmp"), UnitilsException.class);
+        UnitilsException exception = catchThrowableOfType(UnitilsException.class, () -> defaultTempService.createTempFile("x::://\\^@,.?@#.tmp"));
         assertThat(exception).isNotNull();
     }
 
@@ -90,7 +90,7 @@ public class DefaultTempServiceCreateTempFileTest {
         throws Exception {
         File existingFile = defaultTempService.createTempFile("tempFile.tmp");
         try (FileOutputStream out = new FileOutputStream(existingFile)) {
-            UnitilsException exception = catchThrowableOfType(() -> defaultTempService.createTempFile("tempFile.tmp"), UnitilsException.class);
+            UnitilsException exception = catchThrowableOfType(UnitilsException.class, () -> defaultTempService.createTempFile("tempFile.tmp"));
             assertThat(exception).isNotNull();
         }
     }

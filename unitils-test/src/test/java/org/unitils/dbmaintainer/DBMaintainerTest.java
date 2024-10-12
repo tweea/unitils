@@ -187,7 +187,7 @@ public class DBMaintainerTest
         expectNoPostProcessingCodeScripts();
         mockScriptRunner.raises(UnitilsException.class).execute(scripts.get(0).getScriptContentHandle());
 
-        UnitilsException exception = catchThrowableOfType(() -> dbMaintainer.updateDatabase(schema, true), UnitilsException.class);
+        UnitilsException exception = catchThrowableOfType(UnitilsException.class, () -> dbMaintainer.updateDatabase(schema, true));
         assertThat(exception).as("A UnitilsException should have been thrown").isNotNull();
         mockExecutedScriptInfoSource.assertInvoked().registerExecutedScript(new ExecutedScript(scripts.get(0), null, false));
     }
@@ -199,7 +199,7 @@ public class DBMaintainerTest
         expectPostProcessingScripts(postProcessingScripts);
         mockScriptRunner.raises(UnitilsException.class).execute(ArgumentMatchers.same(postProcessingScripts.get(1).getScriptContentHandle()));
 
-        UnitilsException exception = catchThrowableOfType(() -> dbMaintainer.updateDatabase(schema, true), UnitilsException.class);
+        UnitilsException exception = catchThrowableOfType(UnitilsException.class, () -> dbMaintainer.updateDatabase(schema, true));
         assertThat(exception).as("A UnitilsException should have been thrown").isNotNull();
         assertScriptsExecutedAndDbVersionSet();
     }

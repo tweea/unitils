@@ -36,7 +36,7 @@ public class AfterTestMethodStatementTest {
                 throws Throwable {
             }
         }, new TestClass1(), TestClass1.class.getMethod("test1"));
-        NullPointerException exception = catchThrowableOfType(() -> statement.evaluate(), NullPointerException.class);
+        NullPointerException exception = catchThrowableOfType(NullPointerException.class, () -> statement.evaluate());
         assertThat(exception).isNotNull();
     }
 
@@ -51,7 +51,7 @@ public class AfterTestMethodStatementTest {
                 throw new Exception("This is a test exception");
             }
         }, new TestClass2(), TestClass2.class.getMethod("test1"));
-        Exception exception = catchThrowableOfType(() -> statement.evaluate(), Exception.class);
+        Exception exception = catchThrowableOfType(Exception.class, () -> statement.evaluate());
         assertThat(exception).isNotNull().hasMessage("This is a test exception");
     }
 

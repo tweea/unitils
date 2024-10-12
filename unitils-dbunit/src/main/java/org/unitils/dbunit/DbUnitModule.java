@@ -24,7 +24,7 @@ import java.util.Properties;
 
 import javax.sql.DataSource;
 
-import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections4.CollectionUtils;
 import org.dbunit.database.DatabaseConfig;
 import org.dbunit.database.IMetadataHandler;
 import org.dbunit.dataset.IDataSet;
