@@ -12,7 +12,7 @@
  */
 package org.unitils;
 
-import org.junit.platform.runner.JUnitPlatform;
+import org.junit.platform.runner.JUnit5Runner;
 import org.junit.runner.Result;
 import org.junit.runner.notification.RunNotifier;
 
@@ -31,7 +31,7 @@ public class JUnit5TestExecutor
         runNotifier.addListener(result.createListener());
 
         for (Class<?> testClass : testClasses) {
-            JUnitPlatform testClassRunner = new JUnitPlatform(testClass);
+            JUnit5Runner testClassRunner = new JUnit5Runner(testClass);
             testClassRunner.run(runNotifier);
         }
     }
