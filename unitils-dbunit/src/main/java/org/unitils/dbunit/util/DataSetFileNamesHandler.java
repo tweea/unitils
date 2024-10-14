@@ -3,6 +3,7 @@ package org.unitils.dbunit.util;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Method;
 import java.util.Properties;
@@ -122,14 +123,25 @@ public class DataSetFileNamesHandler {
     }
 
     public File locateResource(ClassPathDataLocator locator, String nameResource, ResourcePickingStrategie strategy, Class<?> testClass) {
-        InputStream in = null;
+        FileHandler fileHandler = getFileHandler();
+        File tempFile = fileHandler.createTempFile(nameResource);
+        try (InputStream in = getResource(locator, nameResource, strategy, testClass)) {
+            fileHandler.writeToFile(tempFile, in);
+        } catch (IOException e) {
+            LOG.trace("", e);
+        }
+        return tempFile;
+    }
 
+    private InputStream getResource(ClassPathDataLocator locator, String nameResource, ResourcePickingStrategie strategy, Class<?> testClass) {
+        String resourceName;
         if (nameResource.startsWith("/")) {
-            in = locator.getDataResource(nameResource.substring(1), strategy);
+            resourceName = nameResource.substring(1);
         } else {
-            in = locator.getDataResource(nameResource, strategy);
+            resourceName = nameResource;
         }
 
+        InputStream in = locator.getDataResource(resourceName, strategy);
         if (in == null) {
             File resolvedFile = getDataSetResolver().resolve(testClass, generateResourceName(nameResource, testClass.getPackage()));
             if (resolvedFile == null) {
@@ -143,11 +155,7 @@ public class DataSetFileNamesHandler {
                     (new StringBuilder()).append("DataSetResource file with name '").append(nameResource).append("' cannot be found").toString(), e);
             }
         }
-
-        FileHandler fileHandler = getFileHandler();
-        File tempFile = fileHandler.createTempFile(nameResource);
-        fileHandler.writeToFile(tempFile, in);
-        return tempFile;
+        return in;
     }
 
     /**

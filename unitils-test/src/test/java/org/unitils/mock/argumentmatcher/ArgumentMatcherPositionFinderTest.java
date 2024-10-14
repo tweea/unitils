@@ -222,4 +222,8 @@ public class ArgumentMatcherPositionFinderTest {
             return null;
         }
     }
+
+    public Method getStaticProxyMethod() {
+        return staticProxyMethod;
+    }
 }
