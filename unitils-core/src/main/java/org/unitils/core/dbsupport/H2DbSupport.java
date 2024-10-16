@@ -43,8 +43,8 @@ public class H2DbSupport
      */
     @Override
     public Set<String> getTableNames() {
-        return getSQLHandler()
-            .getItemsAsStringSet("select TABLE_NAME from INFORMATION_SCHEMA.TABLES where TABLE_TYPE = 'TABLE' AND TABLE_SCHEMA = '" + getSchemaName() + "'");
+        return getSQLHandler().getItemsAsStringSet(
+            "select TABLE_NAME from INFORMATION_SCHEMA.TABLES where TABLE_TYPE = 'BASE TABLE' AND TABLE_SCHEMA = '" + getSchemaName() + "'");
     }
 
     /**
@@ -70,8 +70,9 @@ public class H2DbSupport
      */
     @Override
     public Set<String> getIdentityColumnNames(String tableName) {
-        return getSQLHandler().getItemsAsStringSet("select COLUMN_NAME from INFORMATION_SCHEMA.INDEXES where PRIMARY_KEY = 'TRUE' AND TABLE_NAME = '"
-            + tableName + "' AND TABLE_SCHEMA = '" + getSchemaName() + "'");
+        return getSQLHandler().getItemsAsStringSet(
+            "select pkc.COLUMN_NAME from INFORMATION_SCHEMA.INDEXES pk INNER JOIN INFORMATION_SCHEMA.INDEX_COLUMNS pkc ON pkc.TABLE_SCHEMA = pk.TABLE_SCHEMA AND pkc.TABLE_NAME = pk.TABLE_NAME where pk.INDEX_TYPE_NAME = 'PRIMARY KEY' AND pk.TABLE_NAME = '"
+                + tableName + "' AND pk.TABLE_SCHEMA = '" + getSchemaName() + "'");
     }
 
     /**
@@ -115,8 +116,8 @@ public class H2DbSupport
      */
     @Override
     public long getSequenceValue(String sequenceName) {
-        return getSQLHandler().getItemAsLong("select CURRENT_VALUE from INFORMATION_SCHEMA.SEQUENCES where SEQUENCE_SCHEMA = '" + getSchemaName()
-            + "' and SEQUENCE_NAME = '" + sequenceName + "'");
+        return getSQLHandler().getItemAsLong(
+            "select BASE_VALUE from INFORMATION_SCHEMA.SEQUENCES where SEQUENCE_SCHEMA = '" + getSchemaName() + "' and SEQUENCE_NAME = '" + sequenceName + "'");
     }
 
     /**
@@ -180,7 +181,7 @@ public class H2DbSupport
             queryStatement = connection.createStatement();
             alterStatement = connection.createStatement();
 
-            resultSet = queryStatement.executeQuery("select TABLE_NAME, CONSTRAINT_NAME from INFORMATION_SCHEMA.CONSTRAINTS where "
+            resultSet = queryStatement.executeQuery("select TABLE_NAME, CONSTRAINT_NAME from INFORMATION_SCHEMA.TABLE_CONSTRAINTS where "
                 + "CONSTRAINT_TYPE IN ('CHECK', 'UNIQUE') AND CONSTRAINT_SCHEMA = '" + getSchemaName() + "'");
             while (resultSet.next()) {
                 String tableName = resultSet.getString("TABLE_NAME");
@@ -211,8 +212,10 @@ public class H2DbSupport
             // Do not remove PK constraints
             resultSet = queryStatement
                 .executeQuery("select col.TABLE_NAME, col.COLUMN_NAME from INFORMATION_SCHEMA.COLUMNS col where col.IS_NULLABLE = 'NO' and col.TABLE_SCHEMA = '"
-                    + getSchemaName() + "' AND NOT EXISTS (select COLUMN_NAME from INFORMATION_SCHEMA.INDEXES pk where pk.TABLE_NAME = "
-                    + "col.TABLE_NAME and pk.COLUMN_NAME = col.COLUMN_NAME and pk.TABLE_SCHEMA = '" + getSchemaName() + "' AND pk.PRIMARY_KEY = TRUE)");
+                    + getSchemaName()
+                    + "' AND NOT EXISTS (select pkc.COLUMN_NAME from INFORMATION_SCHEMA.INDEXES pk INNER JOIN INFORMATION_SCHEMA.INDEX_COLUMNS pkc ON pkc.TABLE_SCHEMA = pk.TABLE_SCHEMA AND pkc.TABLE_NAME = pk.TABLE_NAME"
+                    + " where pk.TABLE_NAME = col.TABLE_NAME and pkc.COLUMN_NAME = col.COLUMN_NAME and pk.TABLE_SCHEMA = '" + getSchemaName()
+                    + "' AND pk.INDEX_TYPE_NAME = 'PRIMARY KEY')");
             while (resultSet.next()) {
                 String tableName = resultSet.getString("TABLE_NAME");
                 String columnName = resultSet.getString("COLUMN_NAME");
