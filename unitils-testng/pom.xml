@@ -3,18 +3,18 @@
 
     <parent>
         <groupId>net.sf.matrixjavalib</groupId>
-        <artifactId>unitils</artifactId>
+        <artifactId>unitils-java8</artifactId>
         <version>4.0.1-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
-    <artifactId>unitils-testng</artifactId>
+    <artifactId>unitils-testng-java8</artifactId>
     <packaging>jar</packaging>
     <name>Unitils TestNG classes</name>
 
     <dependencies>
         <dependency>
             <groupId>net.sf.matrixjavalib</groupId>
-            <artifactId>unitils-core</artifactId>
+            <artifactId>unitils-core-java8</artifactId>
             <version>${project.version}</version>
             <scope>compile</scope>
         </dependency>
