@@ -15,21 +15,29 @@
  */
 package org.unitils.mock.core.proxy;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.lang.invoke.MethodHandles;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 import org.objenesis.Objenesis;
 import org.objenesis.ObjenesisStd;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.unitils.core.UnitilsException;
+import org.unitils.util.ReflectionUtils;
 
-import net.sf.cglib.proxy.Callback;
-import net.sf.cglib.proxy.Enhancer;
-import net.sf.cglib.proxy.Factory;
-import net.sf.cglib.proxy.MethodInterceptor;
-
-import static java.util.Arrays.asList;
+import net.bytebuddy.ByteBuddy;
+import net.bytebuddy.NamingStrategy;
+import net.bytebuddy.description.method.MethodDescription;
+import net.bytebuddy.description.modifier.Visibility;
+import net.bytebuddy.dynamic.DynamicType;
+import net.bytebuddy.dynamic.loading.ClassInjector;
+import net.bytebuddy.dynamic.loading.ClassLoadingStrategy;
+import net.bytebuddy.implementation.MethodDelegation;
+import net.bytebuddy.implementation.bind.MethodDelegationBinder;
+import net.bytebuddy.implementation.bind.annotation.TargetMethodAnnotationDrivenBinder;
+import net.bytebuddy.matcher.ElementMatchers;
 
 import static org.unitils.util.ReflectionUtils.createInstanceOfType;
 
@@ -42,6 +50,8 @@ import static org.unitils.util.ReflectionUtils.createInstanceOfType;
  */
 public class ProxyFactory {
     private static Logger logger = LoggerFactory.getLogger(ProxyFactory.class);
+
+    public static final String PROXY_METHOD_INTERCEPTOR_FIELD_NAME = "$ProxyMethodInterceptor";
 
     /**
      * Creates a proxy object for the given type. All method invocations will be passed to the given invocation handler.
@@ -98,18 +108,18 @@ public class ProxyFactory {
      */
     protected static <T> T createProxy(String mockName, boolean initialize, ProxyInvocationHandler invocationHandler, Class<T> proxiedClass,
         Class<?>... implementedInterfaces) {
-        Class<T> enhancedClass = createEnhancedClass(proxiedClass, implementedInterfaces);
+        ByteBuddyProxyMethodInterceptor proxyMethodInterceptor = new ByteBuddyProxyMethodInterceptor(mockName, proxiedClass, invocationHandler);
+        Class<T> enhancedClass = createEnhancedClass(proxiedClass, implementedInterfaces, proxyMethodInterceptor);
 
-        Factory proxy;
+        T proxy;
         if (initialize && !proxiedClass.isInterface()) {
-            proxy = (Factory) createInitializedOrUninitializedInstanceOfType(enhancedClass);
+            proxy = createInitializedOrUninitializedInstanceOfType(enhancedClass);
         } else {
-            proxy = (Factory) createUninitializedInstanceOfType(enhancedClass);
+            proxy = createUninitializedInstanceOfType(enhancedClass);
         }
-        proxy.setCallbacks(new Callback[] {
-            new CglibProxyMethodInterceptor(mockName, proxiedClass, invocationHandler)
-        });
-        return (T) proxy;
+        Field proxyMethodInterceptorField = ReflectionUtils.getFieldWithName(enhancedClass, PROXY_METHOD_INTERCEPTOR_FIELD_NAME, false);
+        ReflectionUtils.setFieldValue(proxy, proxyMethodInterceptorField, proxyMethodInterceptor);
+        return proxy;
     }
 
     /**
@@ -150,24 +160,82 @@ public class ProxyFactory {
         return objenesis.newInstance(clazz);
     }
 
-    protected static <T> Class<T> createEnhancedClass(Class<T> proxiedClass, Class<?>... implementedInterfaces) {
-        Enhancer enhancer = new Enhancer();
+    protected static <T> Class<T> createEnhancedClass(Class<T> proxiedClass, Class<?>[] implementedInterfaces,
+        ByteBuddyProxyMethodInterceptor proxyMethodInterceptor) {
+        ByteBuddy byteBuddy = new ByteBuddy();
 
-        Set<Class<?>> interfaces = new HashSet<>();
+        DynamicType.Builder builder;
         if (proxiedClass.isInterface()) {
-            enhancer.setSuperclass(Object.class);
-            interfaces.add(proxiedClass);
+            byteBuddy = byteBuddy
+                .with(new NamingStrategy.SuffixingRandom("ByteBuddy", new NamingStrategy.Suffixing.BaseNameResolver.ForFixedValue(proxiedClass.getName())));
+            builder = byteBuddy.subclass(Object.class);
+            builder = builder.implement(proxiedClass);
         } else {
-            enhancer.setSuperclass(proxiedClass);
+            builder = byteBuddy.subclass(proxiedClass);
         }
         if (implementedInterfaces != null && implementedInterfaces.length > 0) {
-            interfaces.addAll(asList(implementedInterfaces));
+            builder = builder.implement(implementedInterfaces);
         }
-        if (!interfaces.isEmpty()) {
-            enhancer.setInterfaces(interfaces.toArray(new Class<?>[interfaces.size()]));
+        builder = builder.defineField(PROXY_METHOD_INTERCEPTOR_FIELD_NAME, ByteBuddyProxyMethodInterceptor.class, Visibility.PUBLIC);
+        builder = builder.method(ElementMatchers.any()).intercept(MethodDelegation.withEmptyConfiguration().withResolvers(MethodNameResolver.INSTANCE)
+            .withBinders(TargetMethodAnnotationDrivenBinder.ParameterBinder.DEFAULTS).to(proxyMethodInterceptor));
+        return builder.make().load(getClassLoader(proxiedClass), getClassLoadingStrategy(proxiedClass)).getLoaded();
+    }
+
+    enum MethodNameResolver
+        implements MethodDelegationBinder.AmbiguityResolver {
+        /**
+         * The singleton instance.
+         */
+        INSTANCE;
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public Resolution resolve(MethodDescription source, MethodDelegationBinder.MethodBinding left, MethodDelegationBinder.MethodBinding right) {
+            boolean leftEquals = left.getTarget().getName().equals("intercept");
+            boolean rightEquals = right.getTarget().getName().equals("intercept");
+            if (leftEquals ^ rightEquals) {
+                return leftEquals ? Resolution.LEFT : Resolution.RIGHT;
+            } else {
+                return Resolution.UNKNOWN;
+            }
         }
-        enhancer.setCallbackType(MethodInterceptor.class);
-        enhancer.setUseFactory(true);
-        return enhancer.createClass();
+    }
+
+    private static ClassLoader getClassLoader(Class proxiedClass) {
+        ClassLoader classLoader = proxiedClass.getClassLoader();
+        if (classLoader == null) {
+            classLoader = Thread.currentThread().getContextClassLoader();
+        }
+        if (classLoader == null) {
+            classLoader = ProxyFactory.class.getClassLoader();
+        }
+        if (classLoader == null) {
+            throw new IllegalStateException("Cannot determine classloader");
+        }
+        return classLoader;
+    }
+
+    private static ClassLoadingStrategy getClassLoadingStrategy(Class proxiedClass) {
+        if (ClassInjector.UsingLookup.isAvailable()) {
+            MethodHandles.Lookup lookup = MethodHandles.lookup();
+            Method privateLookupIn = ReflectionUtils.getMethod(MethodHandles.class, "privateLookupIn", true, Class.class, MethodHandles.Lookup.class);
+            if (privateLookupIn == null) {
+                throw new IllegalStateException("No code generation strategy available");
+            }
+            Object privateLookup;
+            try {
+                privateLookup = ReflectionUtils.invokeMethod(null, privateLookupIn, proxiedClass, lookup);
+            } catch (InvocationTargetException e) {
+                throw new IllegalStateException("No code generation strategy available", e.getTargetException());
+            }
+            return ClassLoadingStrategy.UsingLookup.of(privateLookup);
+        } else if (ClassInjector.UsingReflection.isAvailable()) {
+            return ClassLoadingStrategy.Default.INJECTION;
+        } else {
+            throw new IllegalStateException("No code generation strategy available");
+        }
     }
 }

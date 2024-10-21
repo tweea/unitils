@@ -15,6 +15,7 @@
  */
 package org.unitils.mock.core.proxy;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.Proxy;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -22,9 +23,7 @@ import java.util.List;
 
 import org.unitils.core.UnitilsException;
 import org.unitils.mock.core.MockObject;
-
-import net.sf.cglib.proxy.Callback;
-import net.sf.cglib.proxy.Factory;
+import org.unitils.util.ReflectionUtils;
 
 /**
  * Utility class to create and work with proxy objects.
@@ -43,14 +42,16 @@ public class ProxyUtils {
         if (object == null) {
             return null;
         }
-        if (object instanceof Factory) {
-            Callback[] callbacks = ((Factory) object).getCallbacks();
-            if (callbacks == null || callbacks.length == 0) {
+        if (isProxyClassName(object.getClass().getName())) {
+            Field proxyMethodInterceptorField = ReflectionUtils.getFieldWithName(object.getClass(), ProxyFactory.PROXY_METHOD_INTERCEPTOR_FIELD_NAME, false);
+            if (proxyMethodInterceptorField == null) {
                 return null;
             }
-            if (callbacks[0] instanceof CglibProxyMethodInterceptor) {
-                return ((CglibProxyMethodInterceptor) callbacks[0]).getProxiedType();
+            ByteBuddyProxyMethodInterceptor proxyMethodInterceptor = ReflectionUtils.getFieldValue(object, proxyMethodInterceptorField);
+            if (proxyMethodInterceptor == null) {
+                return null;
             }
+            return proxyMethodInterceptor.getProxiedType();
         }
         return null;
     }
@@ -58,7 +59,7 @@ public class ProxyUtils {
     /**
      * @param instance
      *     The instance to check, not null
-     * @return True if the given instance is a jdk or cglib proxy
+     * @return True if the given instance is a jdk or ByteBuddy proxy
      */
     public static boolean isProxy(Object instance) {
         if (instance == null) {
@@ -71,10 +72,10 @@ public class ProxyUtils {
     /**
      * @param className
      *     The class name to check, not null
-     * @return True if the given class name is cglib proxy class name
+     * @return True if the given class name is ByteBuddy proxy class name
      */
     public static boolean isProxyClassName(String className) {
-        return className.contains("$$EnhancerByCGLIB$$");
+        return className.contains("$ByteBuddy$");
     }
 
     /**
@@ -91,17 +92,22 @@ public class ProxyUtils {
         if (object instanceof MockObject) {
             return ((MockObject) object).getName();
         }
-        if (object instanceof Factory) {
-            Callback callback = ((Factory) object).getCallback(0);
-            if (callback instanceof CglibProxyMethodInterceptor) {
-                return ((CglibProxyMethodInterceptor) callback).getMockName();
+        if (isProxyClassName(object.getClass().getName())) {
+            Field proxyMethodInterceptorField = ReflectionUtils.getFieldWithName(object.getClass(), ProxyFactory.PROXY_METHOD_INTERCEPTOR_FIELD_NAME, false);
+            if (proxyMethodInterceptorField == null) {
+                return null;
             }
+            ByteBuddyProxyMethodInterceptor proxyMethodInterceptor = ReflectionUtils.getFieldValue(object, proxyMethodInterceptorField);
+            if (proxyMethodInterceptor == null) {
+                return null;
+            }
+            return proxyMethodInterceptor.getMockName();
         }
         return null;
     }
 
     /**
-     * First finds a trace element in which a cglib proxy method was invoked. Then it returns the rest of the stack trace following that
+     * First finds a trace element in which a ByteBuddy proxy method was invoked. Then it returns the rest of the stack trace following that
      * element. The stack trace starts with the element rh r is the method call that was proxied by the proxy method.
      *
      * @return The proxied method trace, not null
@@ -120,7 +126,7 @@ public class ProxyUtils {
             }
         }
         if (stackTrace.isEmpty()) {
-            throw new UnitilsException("No invocation of a cglib proxy method found in stacktrace: " + Arrays.toString(stackTraceElements));
+            throw new UnitilsException("No invocation of a ByteBuddy proxy method found in stacktrace: " + Arrays.toString(stackTraceElements));
         }
         return stackTrace.toArray(new StackTraceElement[stackTrace.size()]);
     }

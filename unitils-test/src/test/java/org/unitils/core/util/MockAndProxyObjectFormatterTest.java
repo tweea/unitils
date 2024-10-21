@@ -18,9 +18,11 @@ import org.junit.Test;
 import org.unitils.UnitilsJUnit4;
 import org.unitils.mock.Mock;
 import org.unitils.mock.core.MockObject;
+import org.unitils.util.ReflectionUtils;
 
-import net.sf.cglib.proxy.Enhancer;
-import net.sf.cglib.proxy.NoOp;
+import net.bytebuddy.ByteBuddy;
+import net.bytebuddy.NamingStrategy;
+import net.bytebuddy.dynamic.DynamicType;
 
 import static org.junit.Assert.assertEquals;
 
@@ -35,8 +37,8 @@ public class MockAndProxyObjectFormatterTest
     private ObjectFormatter objectFormatter = new ObjectFormatter();
 
     @Test
-    public void formatCgLibProxy() {
-        Object proxy = createCgLibProxy();
+    public void formatByteBuddyProxy() {
+        Object proxy = createByteBuddyProxy();
         String result = objectFormatter.format(proxy);
         assertEquals("Proxy<Collection>", result);
     }
@@ -55,11 +57,13 @@ public class MockAndProxyObjectFormatterTest
         assertEquals("Mock<mockName>", result);
     }
 
-    private Object createCgLibProxy() {
-        Enhancer enhancer = new Enhancer();
-        enhancer.setSuperclass(Collection.class);
-        enhancer.setCallback(new NoOp() {
-        });
-        return enhancer.create();
+    private Object createByteBuddyProxy() {
+        ByteBuddy byteBuddy = new ByteBuddy();
+        byteBuddy = byteBuddy
+            .with(new NamingStrategy.SuffixingRandom("ByteBuddy", new NamingStrategy.Suffixing.BaseNameResolver.ForFixedValue(Collection.class.getName())));
+        DynamicType.Builder builder = byteBuddy.subclass(Object.class);
+        builder = builder.implement(Collection.class);
+        Class type = builder.make().load(getClass().getClassLoader()).getLoaded();
+        return ReflectionUtils.createInstanceOfType(type, false);
     }
 }

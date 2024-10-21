@@ -18,10 +18,16 @@ package org.unitils.mock.core.proxy;
 import java.lang.reflect.Method;
 import java.util.List;
 
+import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.CharUtils;
+import org.apache.commons.lang3.math.NumberUtils;
 import org.unitils.core.UnitilsException;
 
-import net.sf.cglib.proxy.MethodInterceptor;
-import net.sf.cglib.proxy.MethodProxy;
+import net.bytebuddy.implementation.bind.annotation.AllArguments;
+import net.bytebuddy.implementation.bind.annotation.Origin;
+import net.bytebuddy.implementation.bind.annotation.RuntimeType;
+import net.bytebuddy.implementation.bind.annotation.SuperMethod;
+import net.bytebuddy.implementation.bind.annotation.This;
 
 import static java.lang.reflect.Modifier.isAbstract;
 import static java.util.Arrays.asList;
@@ -34,10 +40,9 @@ import static org.unitils.util.MethodUtils.isHashCodeMethod;
 import static org.unitils.util.MethodUtils.isToStringMethod;
 
 /**
- * A cglib method intercepter that will delegate the invocations to the given invocation hanlder.
+ * A ByteBuddy method intercepter that will delegate the invocations to the given invocation hanlder.
  */
-public class CglibProxyMethodInterceptor<T>
-    implements MethodInterceptor {
+public class ByteBuddyProxyMethodInterceptor<T> {
     private String mockName;
 
     private Class<T> proxiedType;
@@ -55,14 +60,14 @@ public class CglibProxyMethodInterceptor<T>
      * @param invocationHandler
      *     The handler to delegate the invocations to, not null
      */
-    public CglibProxyMethodInterceptor(String mockName, Class<T> proxiedType, ProxyInvocationHandler invocationHandler) {
+    public ByteBuddyProxyMethodInterceptor(String mockName, Class<T> proxiedType, ProxyInvocationHandler invocationHandler) {
         this.mockName = mockName;
         this.proxiedType = proxiedType;
         this.invocationHandler = invocationHandler;
     }
 
     /**
-     * Intercepts the method call by wrapping the invocation in a {@link CglibProxyInvocation} and delegating the
+     * Intercepts the method call by wrapping the invocation in a {@link ByteBuddyProxyInvocation} and delegating the
      * handling to the invocation handler.
      *
      * @param proxy
@@ -70,14 +75,19 @@ public class CglibProxyMethodInterceptor<T>
      * @param method
      *     The method that was called, not null
      * @param arguments
-     *     The arguments that were used, not null
-     * @param methodProxy
-     *     The cglib method proxy, not null
+     *     The arguments that were used, may null
+     * @param superMethod
+     *     The original method that was called, may null
      * @return The value to return for the method call, ignored for void methods
      */
-    @Override
-    public Object intercept(Object proxy, Method method, Object[] arguments, MethodProxy methodProxy)
+    @RuntimeType
+    public Object intercept(@This Object proxy, @Origin Method method, @AllArguments Object[] arguments,
+        @SuperMethod(nullIfImpossible = true) Method superMethod)
         throws Throwable {
+        if (arguments == null) {
+            arguments = ArrayUtils.EMPTY_OBJECT_ARRAY;
+        }
+
         if (isFinalizeMethod(method)) {
             return null;
         } else if (isEqualsMethod(method)) {
@@ -90,8 +100,36 @@ public class CglibProxyMethodInterceptor<T>
             return getProxiedType().getSimpleName() + "@" + Integer.toHexString(super.hashCode());
         }
 
-        ProxyInvocation invocation = new CglibProxyInvocation(mockName, method, asList(arguments), getProxiedMethodStackTrace(), proxy, methodProxy);
-        return invocationHandler.handleInvocation(invocation);
+        ProxyInvocation invocation = new ByteBuddyProxyInvocation(mockName, method, asList(arguments), getProxiedMethodStackTrace(), proxy, superMethod);
+        Object result = invocationHandler.handleInvocation(invocation);
+        if (result == null) {
+            // prevent NPE when autounboxing the primitive types
+            result = getDefaultValue(method.getReturnType());
+        }
+        return result;
+    }
+
+    private Object getDefaultValue(Class<?> returnType) {
+        if (returnType.isPrimitive()) {
+            if (returnType == Boolean.TYPE) {
+                return Boolean.FALSE;
+            } else if (returnType == Character.TYPE) {
+                return Character.valueOf(CharUtils.NUL);
+            } else if (returnType == Byte.TYPE) {
+                return NumberUtils.BYTE_ZERO;
+            } else if (returnType == Short.TYPE) {
+                return NumberUtils.SHORT_ZERO;
+            } else if (returnType == Integer.TYPE) {
+                return NumberUtils.INTEGER_ZERO;
+            } else if (returnType == Long.TYPE) {
+                return NumberUtils.LONG_ZERO;
+            } else if (returnType == Float.TYPE) {
+                return NumberUtils.FLOAT_ZERO;
+            } else if (returnType == Double.TYPE) {
+                return NumberUtils.DOUBLE_ZERO;
+            }
+        }
+        return null;
     }
 
     public String getMockName() {
@@ -106,13 +144,13 @@ public class CglibProxyMethodInterceptor<T>
     }
 
     /**
-     * An invocation implementation that uses the cglib method proxy to be able to invoke the original behavior.
+     * An invocation implementation that uses the ByteBuddy method proxy to be able to invoke the original behavior.
      */
-    public static class CglibProxyInvocation
+    public static class ByteBuddyProxyInvocation
         extends ProxyInvocation {
 
-        /* The cglib method proxy */
-        private MethodProxy methodProxy;
+        /* The original method that was called, may null */
+        private Method superMethod;
 
         /**
          * Creates an invocation.
@@ -127,13 +165,13 @@ public class CglibProxyMethodInterceptor<T>
          *     The location of the invocation, not null
          * @param proxy
          *     The proxy, not null
-         * @param methodProxy
-         *     The cglib method proxy, not null
+         * @param superMethod
+         *     The original method that was called, may null
          */
-        public CglibProxyInvocation(String mockName, Method method, List<Object> arguments, StackTraceElement[] invokedAt, Object proxy,
-            MethodProxy methodProxy) {
+        public ByteBuddyProxyInvocation(String mockName, Method method, List<Object> arguments, StackTraceElement[] invokedAt, Object proxy,
+            Method superMethod) {
             super(mockName, proxy, method, arguments, invokedAt);
-            this.methodProxy = methodProxy;
+            this.superMethod = superMethod;
         }
 
         /**
@@ -145,11 +183,10 @@ public class CglibProxyMethodInterceptor<T>
         @Override
         public Object invokeOriginalBehavior()
             throws Throwable {
-            Method method = getMethod();
-            if (isAbstract(method.getModifiers())) {
+            if (superMethod == null || isAbstract(superMethod.getModifiers())) {
                 throw new UnitilsException("Unable to invoke original behavior. The method is abstract, it does not have any behavior defined: " + getMethod());
             }
-            return methodProxy.invokeSuper(getProxy(), getArguments().toArray());
+            return superMethod.invoke(getProxy(), getArguments().toArray());
         }
     }
 }

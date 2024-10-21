@@ -296,7 +296,7 @@ public class ObjectFormatter {
             return true;
         }
         String className = getShortClassName(object.getClass());
-        int index = className.indexOf("..EnhancerByCGLIB..");
+        int index = className.indexOf(".ByteBuddy.");
         if (index > 0) {
             result.append("Proxy<");
             result.append(className.substring(0, index));
