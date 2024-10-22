@@ -120,7 +120,7 @@ public class InnerDifferenceFinder {
          */
         @Override
         public Difference visit(CollectionDifference collectionDifference, String indexString) {
-            return collectionDifference.getElementDifferences().get(new Integer(indexString));
+            return collectionDifference.getElementDifferences().get(Integer.valueOf(indexString));
         }
 
         /**
@@ -134,7 +134,7 @@ public class InnerDifferenceFinder {
          */
         @Override
         public Difference visit(UnorderedCollectionDifference unorderedCollectionDifference, String indexString) {
-            int leftIndex = new Integer(indexString);
+            int leftIndex = Integer.valueOf(indexString);
             int rightIndex = unorderedCollectionDifference.getBestMatchingIndexes().get(leftIndex);
             return unorderedCollectionDifference.getElementDifference(leftIndex, rightIndex);
         }

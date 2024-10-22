@@ -98,7 +98,7 @@ public class ReflectionComparatorPrimitivesTest {
      */
     @Test
     public void testGetDifference_equalsAutoboxing() {
-        Difference result = reflectionComparator.getDifference(5L, new Long(5));
+        Difference result = reflectionComparator.getDifference(5L, Long.valueOf(5));
         assertNull(result);
     }
 

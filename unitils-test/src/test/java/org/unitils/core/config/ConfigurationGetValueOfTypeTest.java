@@ -82,7 +82,7 @@ public class ConfigurationGetValueOfTypeTest {
     @Test
     public void integerWrapperType() {
         Integer result = configuration.getValueOfType(Integer.class, "integer");
-        assertEquals(new Integer(5), result);
+        assertEquals(Integer.valueOf(5), result);
     }
 
     @Test(expected = UnitilsException.class)
@@ -99,7 +99,7 @@ public class ConfigurationGetValueOfTypeTest {
     @Test
     public void longWrapperType() {
         Long result = configuration.getValueOfType(Long.class, "long");
-        assertEquals(new Long(5), result);
+        assertEquals(Long.valueOf(5), result);
     }
 
     @Test(expected = UnitilsException.class)

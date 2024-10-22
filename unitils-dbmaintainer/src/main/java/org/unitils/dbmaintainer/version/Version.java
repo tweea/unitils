@@ -137,7 +137,7 @@ public class Version
             if ("x".equalsIgnoreCase(part)) {
                 result.add(null);
             } else {
-                result.add(new Long(part));
+                result.add(Long.valueOf(part));
             }
         }
         return result;

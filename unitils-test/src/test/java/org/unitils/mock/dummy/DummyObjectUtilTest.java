@@ -98,15 +98,15 @@ public class DummyObjectUtilTest {
         assertEquals("", dummy.getString());
         assertNotNull(dummy.getTestClass());
         assertEquals(0, dummy.getInt());
-        assertEquals(new Integer(0), dummy.getInteger());
+        assertEquals(Integer.valueOf(0), dummy.getInteger());
         assertEquals(Long.valueOf(0), dummy.getLong());
-        assertEquals(new Integer(0), dummy.getInteger());
+        assertEquals(Integer.valueOf(0), dummy.getInteger());
         assertEquals(0, dummy.getFloat(), 0.00000001F);
         assertEquals(new BigInteger("0"), dummy.getBigInteger());
         assertEquals(0, dummy.getDouble(), 0.00000001D);
-        assertEquals(new Short("0"), dummy.getShort());
+        assertEquals(Short.valueOf("0"), dummy.getShort());
         assertEquals(new BigDecimal("0"), dummy.getBigDecimal());
-        assertEquals(new Byte("0"), dummy.getByte());
+        assertEquals(Byte.valueOf("0"), dummy.getByte());
         assertNotNull(dummy.getArray());
     }
 
@@ -186,7 +186,7 @@ public class DummyObjectUtilTest {
         }
 
         public Byte getByte() {
-            return new Byte("1");
+            return Byte.valueOf("1");
         }
 
         public TestClass getTestClass() {

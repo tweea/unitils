@@ -240,8 +240,8 @@ public class ReflectionUtilsTypesTest {
     @Test
     public void testByte()
         throws SecurityException, NoSuchFieldException {
-        ReflectionUtils.setFieldValue(testclass, "byteTest", new Byte("125"));
-        ReflectionAssert.assertLenientEquals(new Byte("125"), testclass.getByteTest());
+        ReflectionUtils.setFieldValue(testclass, "byteTest", Byte.valueOf("125"));
+        ReflectionAssert.assertLenientEquals(Byte.valueOf("125"), testclass.getByteTest());
     }
 
     @Test

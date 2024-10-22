@@ -39,8 +39,8 @@ public class ArgumentMatcherLongDoubleTest
 
     @Test
     public void testLongObject() {
-        testInterface.onceReturns(new Long(1l)).getLongObject(null);
-        assertEquals(new Long(1l), testInterface.getMock().getLongObject(null));
+        testInterface.onceReturns(Long.valueOf(1l)).getLongObject(null);
+        assertEquals(Long.valueOf(1l), testInterface.getMock().getLongObject(null));
     }
 
     @Test
@@ -51,8 +51,8 @@ public class ArgumentMatcherLongDoubleTest
 
     @Test
     public void testIntObject() {
-        testInterface.onceReturns(new Integer(1)).getIntObject(null);
-        assertEquals(new Integer(1), testInterface.getMock().getIntObject(null));
+        testInterface.onceReturns(Integer.valueOf(1)).getIntObject(null);
+        assertEquals(Integer.valueOf(1), testInterface.getMock().getIntObject(null));
     }
 
     @Test
@@ -63,8 +63,8 @@ public class ArgumentMatcherLongDoubleTest
 
     @Test
     public void testDoubleObject() {
-        testInterface.onceReturns(new Double(2.0)).getDoubleObject(null);
-        assertEquals(new Double(2.0), testInterface.getMock().getDoubleObject(null));
+        testInterface.onceReturns(Double.valueOf(2.0)).getDoubleObject(null);
+        assertEquals(Double.valueOf(2.0), testInterface.getMock().getDoubleObject(null));
     }
 
     @Test
@@ -75,8 +75,8 @@ public class ArgumentMatcherLongDoubleTest
 
     @Test
     public void testFloatObject() {
-        testInterface.onceReturns(new Float(2.0f)).getFloatObject(null);
-        assertEquals(new Float(2.0f), testInterface.getMock().getFloatObject(null));
+        testInterface.onceReturns(Float.valueOf(2.0f)).getFloatObject(null);
+        assertEquals(Float.valueOf(2.0f), testInterface.getMock().getFloatObject(null));
     }
 
     protected static interface TestInterface {

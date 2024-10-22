@@ -80,7 +80,7 @@ public class ConfigurationGetOptionalValueOfTypeTest {
     @Test
     public void integerWrapperType() {
         Integer result = configuration.getOptionalValueOfType(Integer.class, "integer");
-        assertEquals(new Integer(5), result);
+        assertEquals(Integer.valueOf(5), result);
     }
 
     @Test(expected = UnitilsException.class)
@@ -97,7 +97,7 @@ public class ConfigurationGetOptionalValueOfTypeTest {
     @Test
     public void longWrapperType() {
         Long result = configuration.getOptionalValueOfType(Long.class, "long");
-        assertEquals(new Long(5), result);
+        assertEquals(Long.valueOf(5), result);
     }
 
     @Test(expected = UnitilsException.class)
