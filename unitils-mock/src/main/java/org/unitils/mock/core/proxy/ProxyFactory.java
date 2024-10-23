@@ -39,6 +39,8 @@ import net.bytebuddy.implementation.bind.MethodDelegationBinder;
 import net.bytebuddy.implementation.bind.annotation.TargetMethodAnnotationDrivenBinder;
 import net.bytebuddy.matcher.ElementMatchers;
 
+import static java.lang.reflect.Modifier.isPublic;
+
 import static org.unitils.util.ReflectionUtils.createInstanceOfType;
 
 /**
@@ -219,7 +221,9 @@ public class ProxyFactory {
     }
 
     private static ClassLoadingStrategy getClassLoadingStrategy(Class proxiedClass) {
-        if (ClassInjector.UsingLookup.isAvailable()) {
+        if (isPublic(proxiedClass.getModifiers())) {
+            return new ClassLoadingStrategy.ForUnsafeInjection();
+        } else if (ClassInjector.UsingLookup.isAvailable()) {
             MethodHandles.Lookup lookup = MethodHandles.lookup();
             Method privateLookupIn = ReflectionUtils.getMethod(MethodHandles.class, "privateLookupIn", true, Class.class, MethodHandles.Lookup.class);
             if (privateLookupIn == null) {
