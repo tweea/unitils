@@ -70,7 +70,7 @@ public class UnitilsMemberAccess
         if (isAccessible(context, target, member, propertyName)) {
             AccessibleObject accessible = (AccessibleObject) member;
 
-            if (!accessible.isAccessible()) {
+            if (!accessible.canAccess(target)) {
                 result = Boolean.FALSE;
                 _accessibleObjectHandler.setAccessible(accessible, true);
             }

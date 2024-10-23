@@ -194,7 +194,7 @@ public final class DbUtils {
      */
     public static boolean loadDriver(String driverClassName) {
         try {
-            Class.forName(driverClassName).newInstance();
+            Class.forName(driverClassName).getDeclaredConstructor().newInstance();
             return true;
         } catch (ClassNotFoundException e) {
             LOG.trace("", e);

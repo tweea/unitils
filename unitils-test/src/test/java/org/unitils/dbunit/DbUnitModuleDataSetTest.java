@@ -158,7 +158,7 @@ public class DbUnitModuleDataSetTest
     public void testInsertDataSet_defaultPackageDataSet()
         throws Exception {
         Class<?> defaultPackageDataSetClass = Class.forName("DefaultPackageDataSet");
-        Object testInstance = defaultPackageDataSetClass.newInstance();
+        Object testInstance = defaultPackageDataSetClass.getDeclaredConstructor().newInstance();
         dbUnitModule.insertDataSet(defaultPackageDataSetClass.getMethod("testMethod1"), testInstance);
         assertLoadedDataSet("DefaultPackageDataSet.xml");
     }

@@ -100,7 +100,7 @@ public class ProfileModule
         boolean everythingOk = true;
         for (Field field : testObject.getClass().getDeclaredFields()) {
             if (field.isAnnotationPresent(Autowired.class)) {
-                if (!field.isAccessible()) {
+                if (!field.canAccess(testObject)) {
                     // set accessible
                     field.setAccessible(true);
                 }

@@ -20,7 +20,7 @@
 
     <parent>
         <groupId>net.sf.matrixjavalib</groupId>
-        <artifactId>genesis8</artifactId>
+        <artifactId>genesis11</artifactId>
         <version>43</version>
     </parent>
 

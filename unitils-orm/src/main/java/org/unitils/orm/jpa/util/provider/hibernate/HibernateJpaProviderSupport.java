@@ -58,7 +58,7 @@ public class HibernateJpaProviderSupport
             throw new UnitilsException("Property hibernate.dialect not specified");
         }
         try {
-            return (Dialect) Class.forName(dialectClassName).newInstance();
+            return (Dialect) Class.forName(dialectClassName).getDeclaredConstructor().newInstance();
         } catch (Exception e) {
             throw new UnitilsException("Could not instantiate dialect class " + dialectClassName, e);
         }

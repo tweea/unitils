@@ -33,7 +33,7 @@ import org.unitils.core.UnitilsException;
 public class ArgumentMatcherRepository {
 
     /* The singleton instance */
-    private static ThreadLocal<ArgumentMatcherRepository> instance = new InheritableThreadLocal<ArgumentMatcherRepository>() {
+    private static ThreadLocal<ArgumentMatcherRepository> instance = new InheritableThreadLocal<>() {
         @Override
         protected ArgumentMatcherRepository initialValue() {
             return new ArgumentMatcherRepository();

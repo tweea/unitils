@@ -111,7 +111,7 @@ public class CloneUtilTest {
     @Test
     public void testCreateDeepClone_AnonymousClass()
         throws IllegalArgumentException {
-        Comparable<String> anonymousClass = new Comparable<String>() {
+        Comparable<String> anonymousClass = new Comparable<>() {
             @Override
             public int compareTo(String o) {
                 return 0;
