@@ -3,11 +3,11 @@
 
     <parent>
         <groupId>net.sf.matrixjavalib</groupId>
-        <artifactId>unitils</artifactId>
+        <artifactId>unitils-java11</artifactId>
         <version>4.0.1-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
-    <artifactId>unitils-core</artifactId>
+    <artifactId>unitils-core-java11</artifactId>
     <packaging>jar</packaging>
     <name>Unitils core module</name>
 

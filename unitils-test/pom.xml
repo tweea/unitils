@@ -20,11 +20,11 @@
 
     <parent>
         <groupId>net.sf.matrixjavalib</groupId>
-        <artifactId>unitils</artifactId>
+        <artifactId>unitils-java11</artifactId>
         <version>4.0.1-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
-    <artifactId>unitils-test</artifactId>
+    <artifactId>unitils-test-java11</artifactId>
     <packaging>jar</packaging>
     <name>JUnit tests for Unitils</name>
 
@@ -67,61 +67,61 @@
         </dependency>
         <dependency>
             <groupId>net.sf.matrixjavalib</groupId>
-            <artifactId>unitils-core</artifactId>
+            <artifactId>unitils-core-java11</artifactId>
             <version>${project.version}</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>net.sf.matrixjavalib</groupId>
-            <artifactId>unitils-database</artifactId>
+            <artifactId>unitils-database-java11</artifactId>
             <version>${project.version}</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>net.sf.matrixjavalib</groupId>
-            <artifactId>unitils-dbmaintainer</artifactId>
+            <artifactId>unitils-dbmaintainer-java11</artifactId>
             <version>${project.version}</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>net.sf.matrixjavalib</groupId>
-            <artifactId>unitils-dbunit</artifactId>
+            <artifactId>unitils-dbunit-java11</artifactId>
             <version>${project.version}</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>net.sf.matrixjavalib</groupId>
-            <artifactId>unitils-easymock</artifactId>
+            <artifactId>unitils-easymock-java11</artifactId>
             <version>${project.version}</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>net.sf.matrixjavalib</groupId>
-            <artifactId>unitils-inject</artifactId>
+            <artifactId>unitils-inject-java11</artifactId>
             <version>${project.version}</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>net.sf.matrixjavalib</groupId>
-            <artifactId>unitils-io</artifactId>
+            <artifactId>unitils-io-java11</artifactId>
             <version>${project.version}</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>net.sf.matrixjavalib</groupId>
-            <artifactId>unitils-mock</artifactId>
+            <artifactId>unitils-mock-java11</artifactId>
             <version>${project.version}</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>net.sf.matrixjavalib</groupId>
-            <artifactId>unitils-orm</artifactId>
+            <artifactId>unitils-orm-java11</artifactId>
             <version>${project.version}</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>net.sf.matrixjavalib</groupId>
-            <artifactId>unitils-spring</artifactId>
+            <artifactId>unitils-spring-java11</artifactId>
             <version>${project.version}</version>
             <scope>compile</scope>
         </dependency>

@@ -3,18 +3,18 @@
 
     <parent>
         <groupId>net.sf.matrixjavalib</groupId>
-        <artifactId>unitils</artifactId>
+        <artifactId>unitils-java11</artifactId>
         <version>4.0.1-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
-    <artifactId>unitils-inject</artifactId>
+    <artifactId>unitils-inject-java11</artifactId>
     <packaging>jar</packaging>
     <name>Unitils inject module</name>
 
     <dependencies>
         <dependency>
             <groupId>net.sf.matrixjavalib</groupId>
-            <artifactId>unitils-core</artifactId>
+            <artifactId>unitils-core-java11</artifactId>
             <version>${project.version}</version>
             <scope>compile</scope>
         </dependency>
