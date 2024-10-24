@@ -17,8 +17,6 @@ package org.unitils.mock.core.proxy;
 
 import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 
 import org.objenesis.Objenesis;
 import org.objenesis.ObjenesisStd;
@@ -223,15 +221,11 @@ public class ProxyFactory {
     private static ClassLoadingStrategy getClassLoadingStrategy(Class proxiedClass) {
         if (!isPublic(proxiedClass.getModifiers()) && ClassInjector.UsingLookup.isAvailable()) {
             MethodHandles.Lookup lookup = MethodHandles.lookup();
-            Method privateLookupIn = ReflectionUtils.getMethod(MethodHandles.class, "privateLookupIn", true, Class.class, MethodHandles.Lookup.class);
-            if (privateLookupIn == null) {
-                throw new IllegalStateException("No code generation strategy available");
-            }
-            Object privateLookup;
+            MethodHandles.Lookup privateLookup;
             try {
-                privateLookup = ReflectionUtils.invokeMethod(null, privateLookupIn, proxiedClass, lookup);
-            } catch (InvocationTargetException e) {
-                throw new IllegalStateException("No code generation strategy available", e.getTargetException());
+                privateLookup = MethodHandles.privateLookupIn(proxiedClass, lookup);
+            } catch (IllegalAccessException e) {
+                throw new IllegalStateException("No code generation strategy available", e);
             }
             return ClassLoadingStrategy.UsingLookup.of(privateLookup);
         } else if (ClassInjector.UsingReflection.isAvailable()) {
