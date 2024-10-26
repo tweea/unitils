@@ -28,10 +28,6 @@
     <packaging>jar</packaging>
     <name>JUnit tests for Unitils</name>
 
-    <properties>
-        <argLine />
-    </properties>
-
     <dependencies>
         <dependency>
             <groupId>commons-io</groupId>
@@ -199,7 +195,7 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <configuration>
-                    <argLine>@{argLine} --add-opens java.base/java.lang=ALL-UNNAMED --add-opens java.base/java.util=ALL-UNNAMED</argLine>
+                    <argLine>-Xmx512m -Dfile.encoding=UTF-8 ${jacoco.agent.argLine} --add-opens java.base/java.lang=ALL-UNNAMED --add-opens java.base/java.util=ALL-UNNAMED</argLine>
                 </configuration>
             </plugin>
         </plugins>
