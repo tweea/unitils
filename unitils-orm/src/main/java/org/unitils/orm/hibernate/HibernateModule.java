@@ -179,7 +179,7 @@ public class HibernateModule
     }
 
     /**
-     * Gets the database dialect from the given Hibernate <code>Configuration</code.
+     * Gets the database dialect from the given Hibernate <code>Configuration</code>.
      *
      * @param configuration
      *     The hibernate config, not null

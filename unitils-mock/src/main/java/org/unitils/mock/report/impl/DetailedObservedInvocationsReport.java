@@ -39,14 +39,14 @@ import org.unitils.mock.mockbehavior.impl.OriginalBehaviorInvokingMockBehavior;
  * 
  * <pre>
  * <code>
- * 1. mock.method1() -> string1
+ * 1. mock.method1() -&gt; string1
  *
- * - string1 -> "1234567891234567890"
+ * - string1 -&gt; "1234567891234567890"
  * - Observed at MyTest.testMethod(MyTest.java:75)
  * - Behavior defined at MyTest.myTest(MyTest.java:37)
  *
  *
- * 2. mock.method1("value", 4) -> null
+ * 2. mock.method1("value", 4) -&gt; null
  *
  * - Observed at MyTest.testMethod(MyTest.java:77)
  * - No behavior defined, returned default value.

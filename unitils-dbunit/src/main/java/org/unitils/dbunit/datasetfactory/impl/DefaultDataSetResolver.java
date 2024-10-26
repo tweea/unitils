@@ -31,7 +31,7 @@ import static org.unitils.util.PropertyUtils.getString;
  * E.g. /MyDataSet.xml remains /MyDataSet.xml
  * <p/>
  * Package name prefixing can be disabled using the {@link #PROPKEY_PREFIX_WITH_PACKAGE_NAME} property.<br/>
- * prefixWithPackageName=false => MyDataSet.xml remains MyDataSet.xml
+ * prefixWithPackageName=false =&gt; MyDataSet.xml remains MyDataSet.xml
  * <p/>
  * If a path prefix is specified using the {@link #PROPKEY_DATA_SET_PATH_PREFIX} property it is added to the file name.<br/>
  * Examples:<br/>
@@ -43,8 +43,8 @@ import static org.unitils.util.PropertyUtils.getString;
  * <p/>
  * Examples:
  * <p/>
- * path prefix /c:/datasets --> looks for c:/datasets/myDataSet.xml on the file system
- * path prefix datasets --> looks for datasets/myDataSet.xml on the classpath
+ * path prefix /c:/datasets --&gt; looks for c:/datasets/myDataSet.xml on the file system
+ * path prefix datasets --&gt; looks for datasets/myDataSet.xml on the classpath
  *
  * @author Tim Ducheyne
  * @author Filip Neven

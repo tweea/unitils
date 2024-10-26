@@ -29,7 +29,7 @@ import org.unitils.core.UnitilsException;
  * E.g. /MyFile.xml remains /MyFile.xml
  * <p/>
  * Package name prefixing can be disabled using the prefixWithPackageName property.<br/>
- * prefixWithPackageName=false => MyFile.xml remains MyFile.xml
+ * prefixWithPackageName=false =&gt; MyFile.xml remains MyFile.xml
  * <p/>
  * If a path prefix is specified using the pathPrefix property it is added to the file name.<br/>
  * Examples:<br/>
@@ -41,8 +41,8 @@ import org.unitils.core.UnitilsException;
  * <p/>
  * Examples:
  * <p/>
- * path prefix /c:/testfiles --> looks for c:/testfiles/MyFile.xml on the file system
- * path prefix testfiles --> looks for testfiles/MyFile.xml on the classpath
+ * path prefix /c:/testfiles --&gt; looks for c:/testfiles/MyFile.xml on the file system
+ * path prefix testfiles --&gt; looks for testfiles/MyFile.xml on the classpath
  *
  * @author Tim Ducheyne
  * @author Filip Neven

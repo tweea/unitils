@@ -244,7 +244,7 @@ public class ArgumentMatcherPositionFinder {
      * .... stack ( NotAnArgumentMatcherValue, NotAnArgumentMatcherValue)<br>
      * 3) invoke argment matcher (pops last operand)<br>
      * .... stack ( NotAnArgumentMatcherValue, ArgumentMatcherValue)<br>
-     * 4) invoke mock method using last 2 operands => we've found an argument matcher as second operand
+     * 4) invoke mock method using last 2 operands =&gt; we've found an argument matcher as second operand
      */
     protected static class MethodInterpreter
         extends BasicInterpreter {
