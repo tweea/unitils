@@ -14,8 +14,8 @@ package org.unitils.orm.jpa.util.provider.hibernate;
 
 import java.util.Map;
 
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.spi.PersistenceUnitInfo;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.spi.PersistenceUnitInfo;
 
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.cfg.Configuration;

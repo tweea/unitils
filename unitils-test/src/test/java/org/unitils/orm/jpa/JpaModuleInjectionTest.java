@@ -14,7 +14,7 @@ package org.unitils.orm.jpa;
 
 import java.util.Properties;
 
-import javax.persistence.EntityManagerFactory;
+import jakarta.persistence.EntityManagerFactory;
 
 import org.junit.Before;
 import org.junit.Test;

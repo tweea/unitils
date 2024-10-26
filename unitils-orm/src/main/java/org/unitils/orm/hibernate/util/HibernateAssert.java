@@ -31,6 +31,7 @@ import org.hibernate.engine.config.spi.ConfigurationService;
 import org.hibernate.service.ServiceRegistry;
 import org.hibernate.tool.schema.TargetType;
 import org.hibernate.tool.schema.internal.ExceptionHandlerLoggedImpl;
+import org.hibernate.tool.schema.spi.ContributableMatcher;
 import org.hibernate.tool.schema.spi.ExceptionHandler;
 import org.hibernate.tool.schema.spi.ExecutionOptions;
 import org.hibernate.tool.schema.spi.SchemaManagementTool;
@@ -128,7 +129,7 @@ public class HibernateAssert {
                     return scriptTarget;
                 }
             };
-            tool.getSchemaMigrator(config).doMigration(metadata, executionOptions, targetDescriptor);
+            tool.getSchemaMigrator(config).doMigration(metadata, executionOptions, ContributableMatcher.ALL, targetDescriptor);
             return script;
         } catch (HibernateException e) {
             throw new UnitilsException("Could not retrieve database metadata", e);

@@ -12,7 +12,7 @@
  */
 package org.unitils.orm.jpa.util.provider.hibernate;
 
-import javax.persistence.spi.PersistenceProvider;
+import jakarta.persistence.spi.PersistenceProvider;
 
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 

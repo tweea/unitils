@@ -12,8 +12,8 @@
  */
 package org.unitils.orm.jpa.util.provider.hibernate;
 
-import javax.persistence.EntityManager;
-import javax.persistence.spi.PersistenceProvider;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.spi.PersistenceProvider;
 
 import org.hibernate.Session;
 import org.hibernate.cfg.Configuration;

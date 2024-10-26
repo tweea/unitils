@@ -14,8 +14,9 @@ package org.unitils.orm.jpa.util;
 
 import java.lang.reflect.InvocationTargetException;
 
-import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
+
+import jakarta.persistence.EntityManagerFactory;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.instrument.classloading.LoadTimeWeaver;

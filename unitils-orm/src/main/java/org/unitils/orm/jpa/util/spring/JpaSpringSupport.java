@@ -14,7 +14,7 @@ package org.unitils.orm.jpa.util.spring;
 
 import java.util.Collection;
 
-import javax.persistence.EntityManagerFactory;
+import jakarta.persistence.EntityManagerFactory;
 
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.orm.jpa.AbstractEntityManagerFactoryBean;

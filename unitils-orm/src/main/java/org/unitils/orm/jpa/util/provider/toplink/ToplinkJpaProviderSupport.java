@@ -12,8 +12,8 @@
  */
 package org.unitils.orm.jpa.util.provider.toplink;
 
-import javax.persistence.EntityManager;
-import javax.persistence.spi.PersistenceProvider;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.spi.PersistenceProvider;
 
 import org.springframework.instrument.classloading.InstrumentationLoadTimeWeaver;
 import org.springframework.instrument.classloading.LoadTimeWeaver;
