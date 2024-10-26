@@ -410,9 +410,9 @@ abstract public class DbSupport {
      * above. Quoting the schema name will make it case sensitive.
      * Examples:
      * <p/>
-     * mySchema.myTable -> MYSCHEMA.MYTABLE
-     * "mySchema".myTable -> mySchema.MYTABLE
-     * "mySchema"."myTable" -> mySchema.myTable
+     * mySchema.myTable -&gt; MYSCHEMA.MYTABLE
+     * "mySchema".myTable -&gt; mySchema.MYTABLE
+     * "mySchema"."myTable" -&gt; mySchema.myTable
      *
      * @param identifier
      *     The identifier, not null

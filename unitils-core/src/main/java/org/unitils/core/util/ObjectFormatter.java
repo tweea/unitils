@@ -67,9 +67,9 @@ public class ObjectFormatter {
      * NOTE: there is no cycle detection. A large max depth value can cause lots of output in case of a cycle.
      *
      * @param maxDepth
-     *     The max depth > 0
+     *     The max depth &gt; 0
      * @param maxNrArrayOrCollectionElements
-     *     The maximum nr of elements for arrays and collections to display > 0
+     *     The maximum nr of elements for arrays and collections to display &gt; 0
      */
     public ObjectFormatter(int maxDepth, int maxNrArrayOrCollectionElements) {
         this.maxDepth = maxDepth;

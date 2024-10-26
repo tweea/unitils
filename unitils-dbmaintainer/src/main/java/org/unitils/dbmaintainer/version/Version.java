@@ -25,11 +25,11 @@ import static org.apache.commons.lang3.StringUtils.split;
  * A version is represented by a modification timestamp and a list of version indexes.
  * The indexes should be defined as follows:
  * <p/>
- * 01_folder/01_subfolder/1_script ==> 1,1,1<br>
- * 01_folder/02_subfolder/1_script ==> 1,2,1<br>
- * 01_folder/02_subfolder/script ==> 1,2,null<br>
- * folder/subfolder/2_script ==> null,null,2<br>
- * script ==> null<br>
+ * 01_folder/01_subfolder/1_script ==&gt; 1,1,1<br>
+ * 01_folder/02_subfolder/1_script ==&gt; 1,2,1<br>
+ * 01_folder/02_subfolder/script ==&gt; 1,2,null<br>
+ * folder/subfolder/2_script ==&gt; null,null,2<br>
+ * script ==&gt; null<br>
  * <p/>
  * The last index should always be the index of the script.
  *
@@ -95,7 +95,7 @@ public class Version
 
     /**
      * Gets a string representation of the indexes as followes:
-     * 1, null, 2, null => 1.x.2.x
+     * 1, null, 2, null =&gt; 1.x.2.x
      *
      * @return The string, not null
      */
@@ -120,7 +120,7 @@ public class Version
 
     /**
      * Extracts the indexes out of the given string as followes:
-     * 1.x.2.x => 1, null, 2, null
+     * 1.x.2.x =&gt; 1, null, 2, null
      *
      * @param indexString
      *     The string

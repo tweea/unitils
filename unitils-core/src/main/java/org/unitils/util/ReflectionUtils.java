@@ -529,7 +529,7 @@ public class ReflectionUtils {
      * For each method, check if it can be a setter for an object of the given
      * type. A setter is a method with the following properties:
      * <ul>
-     * <li>Method name is > 3 characters long and starts with set</li>
+     * <li>Method name is &gt; 3 characters long and starts with set</li>
      * <li>The fourth character is in uppercase</li>
      * <li>The method has one parameter, with the type of the property to set</li>
      * </ul>

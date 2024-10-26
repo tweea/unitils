@@ -36,7 +36,7 @@ public class ArrayAndCollectionFormatter {
      * Creates a formatter with the given maximum nr of elements.
      *
      * @param maxNrOfElements
-     *     The maximum nr of elements for arrays and collections to display > 0
+     *     The maximum nr of elements for arrays and collections to display &gt; 0
      * @param objectFormatter
      *     The object formatter that uses this array/collection formatter, not null
      */

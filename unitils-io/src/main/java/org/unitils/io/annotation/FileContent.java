@@ -34,7 +34,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
  * E.g. /MyFile.xml remains /MyFile.xml
  * <p/>
  * Package name prefixing can be disabled using the IOModule.file.prefixWithPackageName property.<br/>
- * IOModule.file.prefixWithPackageName=false => MyFile.xml remains MyFile.xml
+ * IOModule.file.prefixWithPackageName=false =&gt; MyFile.xml remains MyFile.xml
  * <p/>
  * If a path prefix is specified using the IOModule.file.pathPrefix property it is added to the file name.<br/>
  * Examples:<br/>
@@ -46,8 +46,8 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
  * <p/>
  * Examples:
  * <p/>
- * path prefix /c:/testfiles --> looks for c:/testfiles/MyFile.xml on the file system
- * path prefix testfiles --> looks for testfiles/MyFile.xml on the classpath
+ * path prefix /c:/testfiles --&gt; looks for c:/testfiles/MyFile.xml on the file system
+ * path prefix testfiles --&gt; looks for testfiles/MyFile.xml on the classpath
  * <p/>
  * <p/>
  * Example usage:

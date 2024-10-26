@@ -30,14 +30,14 @@ import static org.unitils.core.util.ObjectFormatter.MOCK_NAME_CHAIN_SEPARATOR;
 /**
  * A view that displays the observed invocations and the location where they were invoked.
  * The arguments are shown inline when the length is small enough, else the argument is named using the
- * type (eg Person => person1).
+ * type (eg Person =&gt; person1).
  * <p/>
  * Example:
  * 
  * <pre>
  * <code>
- * 1.  mock.method1()) -> string1  ..... at MyTest.testMethod(MyTest.java:60)
- * 2.  mock.method1("bla", 4) -> null  ..... at MyTest.testMethod(MyTest.java:62)
+ * 1.  mock.method1()) -&gt; string1  ..... at MyTest.testMethod(MyTest.java:60)
+ * 2.  mock.method1("bla", 4) -&gt; null  ..... at MyTest.testMethod(MyTest.java:62)
  * 3.  mock.anotherMethod(myClass1)  ..... at MyTest.testMethod(MyTest.java:64)
  * <code>
  * </pre>

@@ -21,7 +21,7 @@ import org.unitils.core.UnitilsException;
  * A repository for holding the current set of argument matchers.
  * <p/>
  * Argument matchers are placed inline in method invocations. Java will evaluate them before the method is performed.
- * E.g. method1(notNull()) => not null will be called before method1.
+ * E.g. method1(notNull()) =&gt; not null will be called before method1.
  * <p/>
  * For this we need to store the current argument matchers so that they can be linked to the method invocation that
  * will follow.

@@ -273,7 +273,7 @@ public class UnitilsConfiguration {
 
     /**
      * Gets an instance of the class name specified by the property with the given name. If no such property is found, the
-     * value is empty, the given default value is returned. An exception will be raised if the instance cannot be created.<br/
+     * value is empty, the given default value is returned. An exception will be raised if the instance cannot be created.<br/>
      * <br/>
      * If the created instance is implementation of {@link Configurable}, the init method will be called.
      *

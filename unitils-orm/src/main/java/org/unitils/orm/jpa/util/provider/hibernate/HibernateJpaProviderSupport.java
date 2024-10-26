@@ -46,7 +46,7 @@ public class HibernateJpaProviderSupport
     }
 
     /**
-     * Gets the database dialect from the Hibernate <code>Ejb3Configuration</code.
+     * Gets the database dialect from the Hibernate <code>Ejb3Configuration</code>.
      *
      * @param configuration
      *     The hibernate config, not null
